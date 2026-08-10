@@ -297,16 +297,33 @@ async function processMessage(
     })
     .eq("id", storedMessage.id);
 
-  void sendWhatsAppText({
+  const acknowledgment = await sendWhatsAppText({
     to: message.from,
     body:
       "KhataOne received your document. Your CA team will review it before it affects your books.",
   });
 
+  await supabase
+    .from("whatsapp_messages")
+    .update({
+      raw_payload: {
+        ...rawPayload,
+        acknowledgment: acknowledgment.ok
+          ? {
+              status: "sent",
+            }
+          : {
+              status: "failed",
+              error: acknowledgment.error,
+            },
+      },
+    })
+    .eq("id", storedMessage.id);
+
   return {
     messageId: message.id,
     status: "stored",
-    error: mediaResult.error ?? undefined,
+    error: mediaResult.error ?? (!acknowledgment.ok ? acknowledgment.error : undefined),
   };
 }
 
