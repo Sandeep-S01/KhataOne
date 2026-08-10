@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
   status: "idle" | "success" | "error";
@@ -203,8 +203,17 @@ export async function createFirm(
 
   const slugBase = slugify(name) || "firm";
   const slug = `${slugBase}-${user.id.slice(0, 8)}`;
+  const admin = createAdminClient();
 
-  const { data: firm, error: firmError } = await supabase
+  if (!admin) {
+    return {
+      status: "error",
+      message:
+        "Supabase service role is not configured. Add SUPABASE_SERVICE_ROLE_KEY before creating a firm workspace.",
+    };
+  }
+
+  const { data: firm, error: firmError } = await admin
     .from("firms")
     .insert({
       name,
@@ -227,7 +236,7 @@ export async function createFirm(
     };
   }
 
-  const { error: membershipError } = await supabase.from("firm_users").insert({
+  const { error: membershipError } = await admin.from("firm_users").insert({
     firm_id: firm.id,
     user_id: user.id,
     role: "owner",
