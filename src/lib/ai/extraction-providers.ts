@@ -195,7 +195,7 @@ function parseNumber(value: string | undefined) {
 function numberAfter(text: string, label: string) {
   const match = text.match(
     new RegExp(
-      `\\b${label}\\b\\s*(?:amount|amt)?\\s*[:=\\-]?\\s*(?:rs\\.?|inr|₹)?\\s*([0-9][0-9,]*(?:\\.\\d{1,2})?)`,
+      `\\b${label}\\b\\s*(?:amount|amt)?\\s*[:=\\-]?\\s*(?:rs\\.?|inr)?\\s*([0-9][0-9,]*(?:\\.\\d{1,2})?)`,
       "i",
     ),
   );
