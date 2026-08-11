@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/jobs/ai-extraction/run-queued",
-      "schedule": "* * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }

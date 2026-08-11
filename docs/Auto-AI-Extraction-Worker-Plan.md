@@ -171,13 +171,13 @@ Add a root `vercel.json` entry after the worker route exists:
   "crons": [
     {
       "path": "/api/jobs/ai-extraction/run-queued",
-      "schedule": "* * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
 ```
 
-Before committing, verify the current Vercel plan limits and supported schedule frequency. If the active Vercel plan does not support every-minute cron, use the smallest supported interval and keep the manual run action available.
+Vercel Hobby supports daily cron frequency. Use `0 0 * * *` on Hobby so deployment succeeds. For near-real-time automatic processing, upgrade to a plan that supports per-minute cron or use an external scheduler to call the protected worker route.
 
 Required Vercel environment variable:
 
