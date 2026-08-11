@@ -146,7 +146,7 @@ Phase 6 note: extraction is structured and schema-validated. If a document has n
 
 Fallback note: `ai_extractions.model = rule_based_text_v1` identifies no-cost deterministic text parsing. These rows should carry risk flags such as `RULE_BASED_EXTRACTION` and remain reviewable before approval.
 
-Legacy compatibility note: older imported databases may still have a `transactions.date` column. KhataOne uses `transaction_date` as the canonical field and allows it to be null until CA review confirms uncertain extractions.
+Legacy compatibility note: older imported databases may still have `transactions.date` or `transactions.amount` columns. KhataOne uses `transaction_date` and `total_amount` as canonical fields and allows them to be null until CA review confirms uncertain extractions.
 
 ### transactions
 
