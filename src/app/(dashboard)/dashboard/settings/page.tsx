@@ -59,6 +59,7 @@ export default async function SettingsPage() {
     ["OpenAI API key", Boolean(getOptionalServerEnv("OPENAI_API_KEY"))],
     ["AI extraction model", Boolean(getOptionalServerEnv("OPENAI_EXTRACTION_MODEL"))],
     ["Job runner secret", Boolean(getOptionalServerEnv("JOB_RUNNER_SECRET"))],
+    ["Cron secret", Boolean(getOptionalServerEnv("CRON_SECRET"))],
   ] as const;
 
   const configuredCount = integrationRows.filter(([, configured]) => configured)

@@ -15,7 +15,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 
 type ExtractionResult = {
   ok: boolean;
-  status: "extracted" | "needs_review" | "failed";
+  status: "extracted" | "needs_review" | "failed" | "skipped";
   message: string;
   extractionId?: string;
   transactionId?: string;
@@ -67,10 +67,12 @@ function documentInput(document: DocumentRecord) {
 }
 
 async function markJob({
+  jobId,
   documentId,
   status,
   error,
 }: {
+  jobId?: string;
   documentId: string;
   status: "processing" | "completed" | "failed";
   error?: string;
@@ -81,16 +83,24 @@ async function markJob({
     return;
   }
 
-  await supabase
+  let query = supabase
     .from("processing_jobs")
     .update({
       status,
       last_error: error ?? null,
       completed_at: status === "completed" || status === "failed" ? new Date().toISOString() : null,
+      locked_at: status === "processing" ? new Date().toISOString() : null,
+      locked_by: status === "processing" ? "khataone-extraction-processor" : null,
     })
     .eq("entity_type", "document")
     .eq("entity_id", documentId)
     .eq("job_type", "ai_extraction");
+
+  if (jobId) {
+    query = query.eq("id", jobId);
+  }
+
+  await query;
 }
 
 async function writeAuditLog({
@@ -134,6 +144,7 @@ async function writeAuditLog({
 
 export async function processDocumentExtraction(
   documentId: string,
+  options: { jobId?: string } = {},
 ): Promise<ExtractionResult> {
   const supabase = createAdminClient();
 
@@ -145,8 +156,64 @@ export async function processDocumentExtraction(
     };
   }
 
+  const { data: document, error: documentError } = await supabase
+    .from("documents")
+    .select(
+      "id, firm_id, client_id, document_type, file_name, file_mime_type, storage_path, source_text",
+    )
+    .eq("id", documentId)
+    .single();
+
+  if (documentError || !document) {
+    await markJob({
+      jobId: options.jobId,
+      documentId,
+      status: "failed",
+      error: documentError?.message ?? "Document not found.",
+    });
+
+    return {
+      ok: false,
+      status: "failed",
+      message: documentError?.message ?? "Document not found.",
+    };
+  }
+
+  const { data: existingTransaction } = await supabase
+    .from("transactions")
+    .select("id, status, ai_extraction_id")
+    .eq("document_id", document.id)
+    .limit(1)
+    .maybeSingle();
+
+  if (existingTransaction) {
+    await supabase
+      .from("documents")
+      .update({
+        status:
+          existingTransaction.status === "needs_review"
+            ? "needs_review"
+            : "extracted",
+      })
+      .eq("id", document.id);
+    await markJob({
+      jobId: options.jobId,
+      documentId,
+      status: "completed",
+    });
+
+    return {
+      ok: true,
+      status: "skipped",
+      message: "Extraction skipped because this document already has a transaction.",
+      extractionId: existingTransaction.ai_extraction_id ?? undefined,
+      transactionId: existingTransaction.id,
+    };
+  }
+
   if (!hasOpenAIExtractionConfig()) {
     await markJob({
+      jobId: options.jobId,
       documentId,
       status: "failed",
       error:
@@ -160,23 +227,7 @@ export async function processDocumentExtraction(
     };
   }
 
-  const { data: document, error: documentError } = await supabase
-    .from("documents")
-    .select(
-      "id, firm_id, client_id, document_type, file_name, file_mime_type, storage_path, source_text",
-    )
-    .eq("id", documentId)
-    .single();
-
-  if (documentError || !document) {
-    return {
-      ok: false,
-      status: "failed",
-      message: documentError?.message ?? "Document not found.",
-    };
-  }
-
-  await markJob({ documentId, status: "processing" });
+  await markJob({ jobId: options.jobId, documentId, status: "processing" });
   await supabase.from("documents").update({ status: "extracting" }).eq("id", documentId);
 
   const model = getExtractionModel()!;
@@ -279,7 +330,7 @@ export async function processDocumentExtraction(
       .from("documents")
       .update({ status: status === "extracted" ? "extracted" : "needs_review" })
       .eq("id", document.id);
-    await markJob({ documentId, status: "completed" });
+    await markJob({ jobId: options.jobId, documentId, status: "completed" });
     await writeAuditLog({
       firmId: document.firm_id,
       clientId: document.client_id,
@@ -301,7 +352,12 @@ export async function processDocumentExtraction(
       error instanceof Error ? error.message : "AI extraction failed.";
 
     await supabase.from("documents").update({ status: "failed" }).eq("id", document.id);
-    await markJob({ documentId, status: "failed", error: message });
+    await markJob({
+      jobId: options.jobId,
+      documentId,
+      status: "failed",
+      error: message,
+    });
 
     return {
       ok: false,

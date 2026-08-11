@@ -295,8 +295,13 @@ Phase 10 note: production v1 supports approved transaction CSV exports, GST summ
 - `scheduled_at`
 - `completed_at`
 - `created_at`
+- `locked_at`
+- `locked_by`
+- `updated_at`
 
 Phase 11 note: processing jobs are visible from the Operations dashboard for queue health, failed AI extraction work, and future background workflows. Sensitive API routes use lightweight in-process rate limiting as a first guard; production deployments should pair this with platform or edge rate limiting.
+
+Post-phase worker note: AI extraction jobs are claimed through database functions before processing. Claiming sets `status = processing`, increments `attempt_count`, and stores `locked_at`/`locked_by` so cron/manual runs do not process the same queued document twice. The extraction processor remains idempotent and skips documents that already have a transaction.
 
 ## Operations And Security Notes
 

@@ -3,6 +3,7 @@ import type { Route } from "next";
 import { AlertTriangle, RefreshCw } from "lucide-react";
 
 import { StatusChip } from "@/components/status-chip";
+import { runExtractionJobNowAction } from "@/app/actions/operations";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
@@ -25,6 +26,10 @@ function statusTone(status: string) {
 
 function readParam(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function canRunJobs(role: string) {
+  return ["owner", "admin", "staff"].includes(role);
 }
 
 export default async function OperationsPage({
@@ -50,6 +55,7 @@ export default async function OperationsPage({
   }
 
   const firm = await getActiveFirm();
+  const canRunExtractionJobs = firm ? canRunJobs(firm.role) : false;
   const supabase = await createClient();
   let query = supabase
     .from("processing_jobs")
@@ -207,6 +213,7 @@ export default async function OperationsPage({
                   <th className="px-4 py-3 text-right font-medium">Attempts</th>
                   <th className="px-4 py-3 font-medium">Last error</th>
                   <th className="px-4 py-3 text-right font-medium">Created</th>
+                  <th className="px-4 py-3 text-right font-medium">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -246,6 +253,20 @@ export default async function OperationsPage({
                       </td>
                       <td className="px-4 py-3 text-right font-mono text-xs">
                         {new Date(job.created_at).toLocaleString("en-IN")}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        {canRunExtractionJobs &&
+                        job.job_type === "ai_extraction" &&
+                        ["queued", "failed"].includes(job.status) ? (
+                          <form action={runExtractionJobNowAction}>
+                            <input type="hidden" name="job_id" value={job.id} />
+                            <button className="inline-flex h-9 items-center justify-center rounded-md border border-khata-border bg-white px-3 text-xs font-semibold hover:bg-khata-paperMuted">
+                              Run now
+                            </button>
+                          </form>
+                        ) : (
+                          <span className="text-xs text-khata-muted">-</span>
+                        )}
                       </td>
                     </tr>
                   );

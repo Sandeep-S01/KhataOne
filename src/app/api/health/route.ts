@@ -55,6 +55,19 @@ export async function GET() {
         : "OpenAI extraction environment is incomplete.",
   });
   checks.push({
+    name: "ai_worker",
+    status:
+      getOptionalServerEnv("CRON_SECRET") ||
+      getOptionalServerEnv("JOB_RUNNER_SECRET")
+        ? "ok"
+        : "warning",
+    message:
+      getOptionalServerEnv("CRON_SECRET") ||
+      getOptionalServerEnv("JOB_RUNNER_SECRET")
+        ? "AI worker trigger secret is configured."
+        : "AI worker trigger secret is missing; queued jobs cannot run through the protected worker route.",
+  });
+  checks.push({
     name: "whatsapp",
     status:
       getOptionalServerEnv("WHATSAPP_APP_SECRET") &&
