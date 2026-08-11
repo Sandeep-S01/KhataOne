@@ -9,7 +9,17 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      GIT_SSL_CAINFO: /etc/ssl/certs/ca-certificates.crt
+      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
     steps:
+      - name: Configure CA certificates
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ca-certificates
+          sudo update-ca-certificates
+          git config --global http.sslCAInfo /etc/ssl/certs/ca-certificates.crt
+
       - name: Checkout
         uses: actions/checkout@v4
 
