@@ -34,6 +34,10 @@ function formatCurrency(value: number | null) {
   }).format(value);
 }
 
+function extractionSource(model?: string | null) {
+  return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
+}
+
 export default async function ReviewQueuePage() {
   if (!hasSupabaseConfig()) {
     return (
@@ -54,7 +58,7 @@ export default async function ReviewQueuePage() {
   const { data: transactions, error } = await supabase
     .from("transactions")
     .select(
-      "id, client_id, transaction_type, status, transaction_date, party_name, invoice_number, total_amount, confidence_score, clients(business_name), ai_extractions(risk_flags)",
+      "id, client_id, transaction_type, status, transaction_date, party_name, invoice_number, total_amount, confidence_score, clients(business_name), ai_extractions(risk_flags, model)",
     )
     .eq("firm_id", firm!.id)
     .in("status", ["draft", "needs_review", "duplicate"])
@@ -138,6 +142,9 @@ export default async function ReviewQueuePage() {
                             {riskCount} risk flag{riskCount === 1 ? "" : "s"}
                           </p>
                         )}
+                        <p className="mt-1 text-xs text-khata-muted">
+                          {extractionSource(extraction?.model)}
+                        </p>
                       </td>
                       <td className="px-4 py-3 font-mono">
                         {transaction.invoice_number ?? "Pending"}

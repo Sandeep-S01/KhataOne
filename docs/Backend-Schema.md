@@ -144,6 +144,8 @@ Extraction statuses:
 
 Phase 6 note: extraction is structured and schema-validated. If a document has no `source_text` yet, the extraction processor must not invent values from unread media; it should use null fields and risk flags such as `OCR_REQUIRED` until OCR/audio/PDF text extraction is implemented.
 
+Fallback note: `ai_extractions.model = rule_based_text_v1` identifies no-cost deterministic text parsing. These rows should carry risk flags such as `RULE_BASED_EXTRACTION` and remain reviewable before approval.
+
 ### transactions
 
 - `id`

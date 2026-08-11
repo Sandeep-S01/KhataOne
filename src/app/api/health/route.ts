@@ -5,6 +5,7 @@ import {
   getPublicEnv,
   hasSupabaseConfig,
 } from "@/lib/env";
+import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -53,6 +54,15 @@ export async function GET() {
       getOptionalServerEnv("OPENAI_EXTRACTION_MODEL")
         ? "OpenAI extraction environment is configured."
         : "OpenAI extraction environment is incomplete.",
+  });
+  checks.push({
+    name: "ai_extraction_fallback",
+    status: getExtractionProviderOrder().includes("rule_based_text")
+      ? "ok"
+      : "warning",
+    message: getExtractionProviderOrder().includes("rule_based_text")
+      ? `AI extraction provider order: ${getExtractionProviderOrder().join(", ")}.`
+      : "Rule-based text fallback is disabled.",
   });
   checks.push({
     name: "ai_worker",

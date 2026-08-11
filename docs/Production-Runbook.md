@@ -35,6 +35,7 @@ Required for full workflow:
 
 - `OPENAI_API_KEY`
 - `OPENAI_EXTRACTION_MODEL`
+- `AI_EXTRACTION_PROVIDER_ORDER`
 - `JOB_RUNNER_SECRET`
 - `CRON_SECRET`
 - `WHATSAPP_APP_SECRET`
@@ -46,6 +47,14 @@ Required for full workflow:
 Recommended for production:
 
 - `ERROR_TRACKING_DSN`
+
+For no-credit AI testing, set:
+
+```bash
+AI_EXTRACTION_PROVIDER_ORDER=rule_based_text
+```
+
+This keeps simple WhatsApp text invoices flowing into Review Queue with conservative rule-based extraction.
 
 For legacy key mapping from the old application env file, see
 `docs/Environment-Mapping.md`.

@@ -1,16 +1,13 @@
 import {
-  accountingExtractionJsonSchema,
-  accountingExtractionSchema,
-  EXTRACTION_PROMPT_VERSION,
-  EXTRACTION_SCHEMA_VERSION,
   isReviewNeeded,
   type AccountingExtraction,
 } from "@/lib/ai/extraction-schema";
 import {
-  createOpenAIClient,
-  getExtractionModel,
-  hasOpenAIExtractionConfig,
-} from "@/lib/ai/openai";
+  getExtractionProviderOrder,
+  runExtractionProvider,
+  type ExtractionProviderFailure,
+  type ExtractionProviderSuccess,
+} from "@/lib/ai/extraction-providers";
 import { createAdminClient } from "@/lib/supabase/server";
 
 type ExtractionResult = {
@@ -48,22 +45,6 @@ function normalizeDate(value: string | null) {
 
 function transactionStatus(extraction: AccountingExtraction) {
   return isReviewNeeded(extraction) ? "needs_review" : "draft";
-}
-
-function documentInput(document: DocumentRecord) {
-  if (document.source_text?.trim()) {
-    return document.source_text.trim();
-  }
-
-  return [
-    "No extracted text is available for this document yet.",
-    `Document type hint: ${document.document_type}.`,
-    document.file_name ? `File name: ${document.file_name}.` : null,
-    document.file_mime_type ? `MIME type: ${document.file_mime_type}.` : null,
-    "Return null for unknown accounting fields and add risk flag OCR_REQUIRED.",
-  ]
-    .filter(Boolean)
-    .join("\n");
 }
 
 async function markJob({
@@ -110,6 +91,9 @@ async function writeAuditLog({
   extractionId,
   transactionId,
   status,
+  provider,
+  promptVersion,
+  schemaVersion,
 }: {
   firmId: string;
   clientId: string;
@@ -117,6 +101,9 @@ async function writeAuditLog({
   extractionId?: string;
   transactionId?: string;
   status: string;
+  provider: string;
+  promptVersion: string;
+  schemaVersion: string;
 }) {
   const supabase = createAdminClient();
 
@@ -136,10 +123,41 @@ async function writeAuditLog({
       status,
     },
     metadata: {
-      prompt_version: EXTRACTION_PROMPT_VERSION,
-      schema_version: EXTRACTION_SCHEMA_VERSION,
+      provider,
+      prompt_version: promptVersion,
+      schema_version: schemaVersion,
     },
   });
+}
+
+async function extractWithConfiguredProviders(document: DocumentRecord) {
+  const failures: ExtractionProviderFailure[] = [];
+
+  for (const provider of getExtractionProviderOrder()) {
+    const result = await runExtractionProvider({
+      provider,
+      document,
+      previousFailures: failures,
+    });
+
+    if (result.ok) {
+      return {
+        result,
+        failures,
+      };
+    }
+
+    failures.push(result);
+
+    if (!result.fallbackAllowed) {
+      break;
+    }
+  }
+
+  return {
+    result: null,
+    failures,
+  };
 }
 
 export async function processDocumentExtraction(
@@ -211,65 +229,36 @@ export async function processDocumentExtraction(
     };
   }
 
-  if (!hasOpenAIExtractionConfig()) {
+  await markJob({ jobId: options.jobId, documentId, status: "processing" });
+  await supabase.from("documents").update({ status: "extracting" }).eq("id", documentId);
+
+  const extractionAttempt = await extractWithConfiguredProviders(
+    document as DocumentRecord,
+  );
+  const providerResult = extractionAttempt.result as ExtractionProviderSuccess | null;
+
+  if (!providerResult) {
+    const message =
+      extractionAttempt.failures.at(-1)?.message ??
+      "No extraction provider could process this document.";
+
+    await supabase.from("documents").update({ status: "failed" }).eq("id", document.id);
     await markJob({
       jobId: options.jobId,
       documentId,
       status: "failed",
-      error:
-        "OpenAI extraction config is missing. Set OPENAI_API_KEY and OPENAI_EXTRACTION_MODEL.",
+      error: message,
     });
+
     return {
       ok: false,
       status: "failed",
-      message:
-        "OpenAI extraction config is missing. Set OPENAI_API_KEY and OPENAI_EXTRACTION_MODEL.",
-    };
-  }
-
-  await markJob({ jobId: options.jobId, documentId, status: "processing" });
-  await supabase.from("documents").update({ status: "extracting" }).eq("id", documentId);
-
-  const model = getExtractionModel()!;
-  const openai = createOpenAIClient();
-
-  if (!openai) {
-    return {
-      ok: false,
-      status: "failed",
-      message: "OpenAI client could not be created.",
+      message,
     };
   }
 
   try {
-    const response = await openai.responses.create({
-      model,
-      input: [
-        {
-          role: "system",
-          content:
-            "You extract Indian SMB accounting transaction data for CA review. Return only fields supported by the document text. Use null for unknown values. Never invent GSTINs, invoice numbers, dates, or tax amounts. Add risk flags for uncertainty.",
-        },
-        {
-          role: "user",
-          content: `Extract one accounting transaction from this KhataOne document.\n\n${documentInput(
-            document as DocumentRecord,
-          )}`,
-        },
-      ],
-      text: {
-        format: {
-          type: "json_schema",
-          name: "khataone_accounting_extraction",
-          strict: true,
-          schema: accountingExtractionJsonSchema,
-        },
-      },
-    });
-
-    const parsed = accountingExtractionSchema.parse(
-      JSON.parse(response.output_text),
-    );
+    const parsed = providerResult.extraction;
     const status = isReviewNeeded(parsed) ? "needs_review" : "extracted";
 
     const { data: extraction, error: extractionError } = await supabase
@@ -278,10 +267,17 @@ export async function processDocumentExtraction(
         firm_id: document.firm_id,
         client_id: document.client_id,
         document_id: document.id,
-        model,
-        prompt_version: EXTRACTION_PROMPT_VERSION,
-        schema_version: EXTRACTION_SCHEMA_VERSION,
-        raw_output: response,
+        model: providerResult.model,
+        prompt_version: providerResult.promptVersion,
+        schema_version: providerResult.schemaVersion,
+        raw_output: {
+          provider: providerResult.provider,
+          provider_failures: extractionAttempt.failures.map((failure) => ({
+            provider: failure.provider,
+            message: failure.message,
+          })),
+          output: providerResult.rawOutput,
+        },
         normalized_output: parsed,
         confidence_score: parsed.confidence_score,
         risk_flags: parsed.risk_flags,
@@ -338,6 +334,9 @@ export async function processDocumentExtraction(
       extractionId: extraction.id,
       transactionId: transaction.id,
       status,
+      provider: providerResult.provider,
+      promptVersion: providerResult.promptVersion,
+      schemaVersion: providerResult.schemaVersion,
     });
 
     return {

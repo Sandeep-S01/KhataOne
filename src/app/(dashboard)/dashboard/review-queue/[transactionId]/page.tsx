@@ -46,6 +46,10 @@ function formatCurrency(value: number | null) {
   }).format(value);
 }
 
+function extractionSource(model?: string | null) {
+  return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
+}
+
 export default async function TransactionReviewPage({
   params,
 }: {
@@ -72,7 +76,7 @@ export default async function TransactionReviewPage({
   const { data: transaction } = await supabase
     .from("transactions")
     .select(
-      "*, clients(business_name, whatsapp_phone, phone), documents(source_text, storage_path, file_name, file_mime_type), ai_extractions(risk_flags, normalized_output, confidence_score)",
+      "*, clients(business_name, whatsapp_phone, phone), documents(source_text, storage_path, file_name, file_mime_type), ai_extractions(risk_flags, normalized_output, confidence_score, model, prompt_version)",
     )
     .eq("id", transactionId)
     .eq("firm_id", firm!.id)
@@ -133,6 +137,7 @@ export default async function TransactionReviewPage({
                   "Confidence",
                   `${Math.round(transaction.confidence_score * 100)}%`,
                 ],
+                ["Source", extractionSource(extraction?.model)],
                 ["File", document?.file_name ?? document?.storage_path ?? "No file"],
               ].map(([label, value]) => (
                 <div

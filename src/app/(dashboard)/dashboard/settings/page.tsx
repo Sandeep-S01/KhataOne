@@ -1,6 +1,7 @@
 import { CheckCircle2, CircleAlert } from "lucide-react";
 
 import { StatusChip } from "@/components/status-chip";
+import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
@@ -58,6 +59,7 @@ export default async function SettingsPage() {
     ["WhatsApp access token", Boolean(getOptionalServerEnv("WHATSAPP_ACCESS_TOKEN"))],
     ["OpenAI API key", Boolean(getOptionalServerEnv("OPENAI_API_KEY"))],
     ["AI extraction model", Boolean(getOptionalServerEnv("OPENAI_EXTRACTION_MODEL"))],
+    ["Rule-based fallback", getExtractionProviderOrder().includes("rule_based_text")],
     ["Job runner secret", Boolean(getOptionalServerEnv("JOB_RUNNER_SECRET"))],
     ["Cron secret", Boolean(getOptionalServerEnv("CRON_SECRET"))],
   ] as const;
@@ -121,6 +123,9 @@ export default async function SettingsPage() {
               {configuredCount}/{integrationRows.length}
             </span>
           </div>
+          <p className="mt-2 font-mono text-xs text-khata-muted">
+            AI order: {getExtractionProviderOrder().join(", ")}
+          </p>
           <div className="mt-3">
             {integrationRows.map(([label, configured]) => (
               <ConfigStatus
