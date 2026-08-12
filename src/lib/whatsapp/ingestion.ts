@@ -23,6 +23,8 @@ type MessageResult = {
 };
 
 const mediaTypes = new Set(["image", "document", "audio", "video", "sticker"]);
+const helpMenuCommands = new Set(["hi", "hello", "hey", "help", "menu", "start"]);
+const khataOneWebsiteUrl = "https://khataone.vercel.app/";
 
 function phoneCandidates(phone: string) {
   const digits = phone.replace(/[^\d]/g, "");
@@ -39,6 +41,57 @@ function documentTypeFor(message: WhatsAppInboundMessage) {
   }
 
   return "unclear";
+}
+
+function normalizeHelpMenuCommand(text?: string | null) {
+  return (
+    text
+      ?.trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .replace(/^[.,!?;:'"()[\]{}<>]+|[.,!?;:'"()[\]{}<>]+$/g, "") ?? ""
+  );
+}
+
+function isHelpMenuCommand(message: WhatsAppInboundMessage) {
+  if (message.type !== "text") {
+    return false;
+  }
+
+  return helpMenuCommands.has(normalizeHelpMenuCommand(message.text?.body));
+}
+
+function buildMatchedHelpMenu(businessName: string) {
+  const greetingName = businessName.trim() || "there";
+
+  return `Hello ${greetingName}! Here is what you can do with KhataOne:
+
+Send Documents
+Upload invoices, receipts, PDFs, payment proofs, or accounting notes. Your CA team will review everything before it affects your books.
+
+Send Invoice Text
+Example:
+Invoice INV-301 from ABC Traders dated 11 Aug 2026 total 11800 taxable 10000 CGST 900 SGST 900
+
+Ask For Help
+Type help anytime to see this menu again.
+
+GST / Reports
+Your CA team can prepare GST summaries, ledger handoff, reports, and exports from reviewed data inside KhataOne.
+
+Website:
+${khataOneWebsiteUrl}`;
+}
+
+function buildUnmatchedHelpMenu() {
+  return `Hello! This is KhataOne.
+
+You can send invoices, receipts, PDFs, payment proofs, or accounting notes here. Your CA team reviews the data before it affects your books.
+
+This WhatsApp number is not linked to a client workspace yet. Please ask your CA team to add your WhatsApp number in KhataOne.
+
+Website:
+${khataOneWebsiteUrl}`;
 }
 
 function getMedia(message: WhatsAppInboundMessage) {
@@ -244,6 +297,39 @@ async function processMessage(
     return {
       messageId: message.id,
       status: "duplicate",
+    };
+  }
+
+  if (isHelpMenuCommand(message)) {
+    const helpMenu = await sendWhatsAppText({
+      to: message.from,
+      body: client
+        ? buildMatchedHelpMenu(client.business_name)
+        : buildUnmatchedHelpMenu(),
+    });
+
+    await supabase
+      .from("whatsapp_messages")
+      .update({
+        processing_status: "ignored",
+        raw_payload: {
+          ...rawPayload,
+          help_menu_response: helpMenu.ok
+            ? {
+                status: "sent",
+              }
+            : {
+                status: "failed",
+                error: helpMenu.error,
+              },
+        },
+      })
+      .eq("id", storedMessage.id);
+
+    return {
+      messageId: message.id,
+      status: "stored",
+      error: helpMenu.ok ? undefined : helpMenu.error,
     };
   }
 
