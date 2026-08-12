@@ -52,10 +52,13 @@ function extractionSource(model?: string | null) {
 
 export default async function TransactionReviewPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ transactionId: string }>;
+  searchParams: Promise<{ error?: string }>;
 }) {
   const { transactionId } = await params;
+  const { error: actionError } = await searchParams;
 
   if (!hasSupabaseConfig()) {
     return (
@@ -119,6 +122,12 @@ export default async function TransactionReviewPage({
           {transaction.status.replaceAll("_", " ")}
         </StatusChip>
       </div>
+
+      {actionError && (
+        <div className="mb-5 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-medium text-khata-danger">
+          {actionError}
+        </div>
+      )}
 
       <div className="grid gap-5 xl:grid-cols-[1fr_0.85fr]">
         <TransactionReviewForm
