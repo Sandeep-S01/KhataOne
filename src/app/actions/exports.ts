@@ -4,11 +4,8 @@ import PDFDocument from "pdfkit";
 import { revalidatePath } from "next/cache";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
-import {
-  createAdminClient,
-  createClient,
-} from "@/lib/supabase/server";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
+import { createAdminClient } from "@/lib/supabase/server";
 
 export type ExportActionState = {
   status: "idle" | "success" | "error";
@@ -142,6 +139,7 @@ async function pdfBuffer(build: (doc: PDFKit.PDFDocument) => void) {
 }
 
 async function writeExportAuditLog({
+  supabase,
   firmId,
   clientId,
   actorUserId,
@@ -149,6 +147,7 @@ async function writeExportAuditLog({
   exportType,
   metadata,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId: string | null;
   actorUserId: string | null;
@@ -156,8 +155,6 @@ async function writeExportAuditLog({
   exportType: string;
   metadata: unknown;
 }) {
-  const supabase = await createClient();
-
   await supabase.from("audit_logs").insert({
     firm_id: firmId,
     client_id: clientId,
@@ -174,17 +171,18 @@ async function writeExportAuditLog({
 }
 
 async function generateTransactionsCsv({
+  supabase,
   firmId,
   clientId,
   periodStart,
   periodEnd,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId: string;
   periodStart: string;
   periodEnd: string;
 }) {
-  const supabase = await createClient();
   const { data, error } = await supabase
     .from("transactions")
     .select(
@@ -249,8 +247,11 @@ async function generateTransactionsCsv({
   };
 }
 
-async function loadGstPeriod(firmId: string, periodId: string) {
-  const supabase = await createClient();
+async function loadGstPeriod(
+  supabase: FirmContext["supabase"],
+  firmId: string,
+  periodId: string,
+) {
   const { data, error } = await supabase
     .from("gst_periods")
     .select("*, clients(business_name, gstin), gst_summaries(*)")
@@ -421,14 +422,21 @@ export async function createExportAction(
     };
   }
 
-  const firm = await getActiveFirm();
-  const actorUserId = await getCurrentUserId();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return {
+      status: "error",
+      message: "Supabase is not configured yet.",
+    };
+  }
+
+  const { firm, supabase, userId: actorUserId } = context;
 
   const { data: exportRecord, error: exportError } = await supabase
     .from("exports")
     .insert({
-      firm_id: firm!.id,
+      firm_id: firm.id,
       client_id: clientId || null,
       gst_period_id: gstPeriodId || null,
       export_type: exportType,
@@ -460,7 +468,8 @@ export async function createExportAction(
 
     if (exportType === "csv_transactions") {
       const csv = await generateTransactionsCsv({
-        firmId: firm!.id,
+        supabase,
+        firmId: firm.id,
         clientId,
         periodStart,
         periodEnd,
@@ -471,7 +480,7 @@ export async function createExportAction(
         clientId,
       };
     } else {
-      const period = await loadGstPeriod(firm!.id, gstPeriodId);
+      const period = await loadGstPeriod(supabase, firm.id, gstPeriodId);
       const isPdf = exportType === "pdf_summary";
 
       generated = {
@@ -488,7 +497,7 @@ export async function createExportAction(
       };
     }
 
-    const storagePath = `${firm!.id}/${exportRecord.id}/${generated.fileName}`;
+    const storagePath = `${firm.id}/${exportRecord.id}/${generated.fileName}`;
     const { error: uploadError } = await admin.storage
       .from("exports")
       .upload(storagePath, generated.body, {
@@ -510,7 +519,7 @@ export async function createExportAction(
         metadata: generated.metadata,
       })
       .eq("id", exportRecord.id)
-      .eq("firm_id", firm!.id)
+      .eq("firm_id", firm.id)
       .select("*")
       .single();
 
@@ -519,7 +528,8 @@ export async function createExportAction(
     }
 
     await writeExportAuditLog({
-      firmId: firm!.id,
+      supabase,
+      firmId: firm.id,
       clientId: generated.clientId,
       actorUserId,
       exportId: exportRecord.id,
@@ -547,7 +557,7 @@ export async function createExportAction(
         },
       })
       .eq("id", exportRecord.id)
-      .eq("firm_id", firm!.id);
+      .eq("firm_id", firm.id);
 
     revalidatePath("/dashboard/exports");
     revalidatePath("/dashboard/reports");

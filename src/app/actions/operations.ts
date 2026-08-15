@@ -4,9 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
+import { getFirmContext } from "@/lib/firms";
 import { runAiExtractionJobNow } from "@/lib/ai/extraction-worker";
-import { createClient } from "@/lib/supabase/server";
 
 function readString(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -28,13 +27,13 @@ export async function runExtractionJobNowAction(formData: FormData) {
     redirect("/dashboard/operations?status=failed");
   }
 
-  const firm = await getActiveFirm();
+  const context = await getFirmContext();
 
-  if (!firm || !canRunJobs(firm.role)) {
+  if (!context || !canRunJobs(context.firm.role)) {
     redirect("/dashboard/operations?status=failed");
   }
 
-  const supabase = await createClient();
+  const { firm, supabase, userId: actorUserId } = context;
   const { data: job } = await supabase
     .from("processing_jobs")
     .select("id, firm_id, client_id, job_type, entity_type, entity_id, status")
@@ -47,8 +46,6 @@ export async function runExtractionJobNowAction(formData: FormData) {
   if (!job || !["queued", "failed"].includes(job.status)) {
     redirect("/dashboard/operations");
   }
-
-  const actorUserId = await getCurrentUserId();
 
   await supabase.from("audit_logs").insert({
     firm_id: firm.id,

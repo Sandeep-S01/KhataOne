@@ -3,8 +3,7 @@ import { ArrowRight, FileText } from "lucide-react";
 
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -43,31 +42,67 @@ export default async function ReportsPage() {
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: periods, error } = await supabase
-    .from("gst_periods")
-    .select(
-      "id, period_start, period_end, filing_type, status, clients(business_name, gstin), gst_summaries(net_tax_payable, mismatch_count, missing_document_count, generated_at)",
-    )
-    .eq("firm_id", firm!.id)
-    .order("period_start", { ascending: false })
-    .limit(50);
-  const { count: approvedCount } = await supabase
-    .from("transactions")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
-    .eq("status", "approved");
-  const { count: reviewCount } = await supabase
-    .from("transactions")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
-    .in("status", ["draft", "needs_review"]);
-  const { count: exportCount } = await supabase
-    .from("exports")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
-    .eq("status", "completed");
+  const context = await getFirmContext();
+
+  if (!context) {
+    return (
+      <div className="p-5">
+        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
+          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
+            Reports need Supabase environment variables and migrations.
+          </p>
+        </section>
+      </div>
+    );
+  }
+
+  const { firm, supabase } = context;
+  const periodsPromise = (async () =>
+    await supabase
+      .from("gst_periods")
+      .select(
+        "id, period_start, period_end, filing_type, status, clients(business_name, gstin), gst_summaries(net_tax_payable, mismatch_count, missing_document_count, generated_at)",
+      )
+      .eq("firm_id", firm.id)
+      .order("period_start", { ascending: false })
+      .limit(50))();
+  const approvedCountPromise = (async () => {
+    const { count } = await supabase
+      .from("transactions")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .eq("status", "approved");
+
+    return count;
+  })().catch(() => null);
+  const reviewCountPromise = (async () => {
+    const { count } = await supabase
+      .from("transactions")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .in("status", ["draft", "needs_review"]);
+
+    return count;
+  })().catch(() => null);
+  const exportCountPromise = (async () => {
+    const { count } = await supabase
+      .from("exports")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .eq("status", "completed");
+
+    return count;
+  })().catch(() => null);
+
+  const [periodsResult, approvedCount, reviewCount, exportCount] =
+    await Promise.all([
+      periodsPromise,
+      approvedCountPromise,
+      reviewCountPromise,
+      exportCountPromise,
+    ]);
+  const { data: periods, error } = periodsResult;
 
   return (
     <div className="p-5">

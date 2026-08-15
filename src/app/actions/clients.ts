@@ -4,8 +4,7 @@ import type { Route } from "next";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
 
 export type ClientActionState = {
   status: "idle" | "success" | "error";
@@ -102,23 +101,24 @@ function validateClientInput(input: ReturnType<typeof collectClientInput>) {
 }
 
 async function writeAuditLog({
+  supabase,
   firmId,
   clientId,
+  actorUserId,
   action,
   entityId,
   beforeData,
   afterData,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId?: string | null;
+  actorUserId: string | null;
   action: string;
   entityId?: string | null;
   beforeData?: unknown;
   afterData?: unknown;
 }) {
-  const supabase = await createClient();
-  const actorUserId = await getCurrentUserId();
-
   await supabase.from("audit_logs").insert({
     firm_id: firmId,
     client_id: clientId ?? null,
@@ -155,16 +155,16 @@ export async function createClientAction(
     };
   }
 
-  const firm = await getActiveFirm();
+  const context = await getFirmContext();
 
-  if (!firm) {
+  if (!context) {
     return {
       status: "error",
       message: "Create a firm workspace before adding clients.",
     };
   }
 
-  const supabase = await createClient();
+  const { firm, supabase, userId: actorUserId } = context;
   const { data: client, error } = await supabase
     .from("clients")
     .insert({
@@ -190,8 +190,10 @@ export async function createClientAction(
   }
 
   await writeAuditLog({
+    supabase,
     firmId: firm.id,
     clientId: client.id,
+    actorUserId,
     action: "client.created",
     entityId: client.id,
     afterData: client,
@@ -228,16 +230,16 @@ export async function updateClientAction(
     };
   }
 
-  const firm = await getActiveFirm();
+  const context = await getFirmContext();
 
-  if (!firm) {
+  if (!context) {
     return {
       status: "error",
       message: "Create a firm workspace before updating clients.",
     };
   }
 
-  const supabase = await createClient();
+  const { firm, supabase, userId: actorUserId } = context;
   const { data: beforeData } = await supabase
     .from("clients")
     .select("*")
@@ -271,8 +273,10 @@ export async function updateClientAction(
   }
 
   await writeAuditLog({
+    supabase,
     firmId: firm.id,
     clientId: client.id,
+    actorUserId,
     action: "client.updated",
     entityId: client.id,
     beforeData,
@@ -289,13 +293,13 @@ export async function archiveClientAction(formData: FormData) {
     redirect("/dashboard/clients");
   }
 
-  const firm = await getActiveFirm();
+  const context = await getFirmContext();
 
-  if (!firm) {
+  if (!context) {
     redirect("/dashboard/clients");
   }
 
-  const supabase = await createClient();
+  const { firm, supabase, userId: actorUserId } = context;
   const { data: beforeData } = await supabase
     .from("clients")
     .select("*")
@@ -313,8 +317,10 @@ export async function archiveClientAction(formData: FormData) {
 
   if (client) {
     await writeAuditLog({
+      supabase,
       firmId: firm.id,
       clientId: client.id,
+      actorUserId,
       action: "client.archived",
       entityId: client.id,
       beforeData,

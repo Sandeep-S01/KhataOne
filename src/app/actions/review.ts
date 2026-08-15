@@ -5,9 +5,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
 import { captureOperationalError } from "@/lib/observability";
-import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { sendWhatsAppText } from "@/lib/whatsapp/client";
 
 export type ReviewActionState = {
@@ -72,13 +72,18 @@ async function requireReviewContext(transactionId: string) {
     return { error: "Supabase is not configured yet." as const };
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return { error: "Supabase is not configured yet." as const };
+  }
+
+  const { firm, supabase, userId } = context;
   const { data: transaction, error } = await supabase
     .from("transactions")
     .select("*")
     .eq("id", transactionId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (error || !transaction) {
@@ -86,13 +91,15 @@ async function requireReviewContext(transactionId: string) {
   }
 
   return {
-    firm: firm!,
+    firm,
     supabase,
+    userId,
     transaction: transaction as TransactionRecord,
   };
 }
 
 async function writeAuditLog({
+  supabase,
   firmId,
   clientId,
   actorUserId,
@@ -102,6 +109,7 @@ async function writeAuditLog({
   afterData,
   metadata,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId: string;
   actorUserId: string | null;
@@ -111,8 +119,6 @@ async function writeAuditLog({
   afterData?: unknown;
   metadata?: unknown;
 }) {
-  const supabase = await createClient();
-
   await supabase.from("audit_logs").insert({
     firm_id: firmId,
     client_id: clientId,
@@ -140,8 +146,8 @@ function canReview(role: string) {
   return ["owner", "admin", "staff"].includes(role);
 }
 
-async function createMutationClient() {
-  return createAdminClient() ?? (await createClient());
+function createMutationClient(fallbackClient: FirmContext["supabase"]) {
+  return createAdminClient() ?? fallbackClient;
 }
 
 function redirectWithReviewError(transactionId: string, message: string) {
@@ -156,8 +162,10 @@ function redirectWithReviewError(transactionId: string, message: string) {
   );
 }
 
-async function createLedgerHandoff(transaction: TransactionRecord) {
-  const supabase = await createMutationClient();
+async function createLedgerHandoff(
+  transaction: TransactionRecord,
+  supabase: FirmContext["supabase"],
+) {
   const { data: existing, error: existingError } = await supabase
     .from("ledger_entries")
     .select("id")
@@ -261,7 +269,7 @@ export async function updateTransactionAction(
     };
   }
 
-  const actorUserId = await getCurrentUserId();
+  const actorUserId = context.userId;
   const beforeData = context.transaction;
   const { data: updated, error } = await context.supabase
     .from("transactions")
@@ -301,6 +309,7 @@ export async function updateTransactionAction(
   }
 
   await writeAuditLog({
+    supabase: context.supabase,
     firmId: context.firm.id,
     clientId: context.transaction.client_id,
     actorUserId,
@@ -328,10 +337,10 @@ export async function approveTransactionAction(formData: FormData) {
     );
   }
 
-  const actorUserId = await getCurrentUserId();
+  const actorUserId = context.userId;
   const beforeData = context.transaction;
   const approvedAt = new Date().toISOString();
-  const mutationClient = await createMutationClient();
+  const mutationClient = createMutationClient(context.supabase);
   const { data: updated, error: updateError } = await mutationClient
     .from("transactions")
     .update({
@@ -360,9 +369,13 @@ export async function approveTransactionAction(formData: FormData) {
   }
 
   try {
-    const ledgerEntryId = await createLedgerHandoff(updated as TransactionRecord);
+    const ledgerEntryId = await createLedgerHandoff(
+      updated as TransactionRecord,
+      mutationClient,
+    );
 
     await writeAuditLog({
+      supabase: context.supabase,
       firmId: context.firm.id,
       clientId: context.transaction.client_id,
       actorUserId,
@@ -438,7 +451,7 @@ async function markTransactionDecision({
     redirect("/dashboard/review-queue");
   }
 
-  const actorUserId = await getCurrentUserId();
+  const actorUserId = context.userId;
   const beforeData = context.transaction;
   const { data: updated } = await context.supabase
     .from("transactions")
@@ -450,6 +463,7 @@ async function markTransactionDecision({
 
   if (updated) {
     await writeAuditLog({
+      supabase: context.supabase,
       firmId: context.firm.id,
       clientId: context.transaction.client_id,
       actorUserId,
@@ -474,7 +488,7 @@ export async function requestClarificationAction(formData: FormData) {
     redirect("/dashboard/review-queue");
   }
 
-  const actorUserId = await getCurrentUserId();
+  const actorUserId = context.userId;
   const { data: client } = await context.supabase
     .from("clients")
     .select("whatsapp_phone, phone, business_name")
@@ -498,6 +512,7 @@ export async function requestClarificationAction(formData: FormData) {
     .eq("firm_id", context.firm.id);
 
   await writeAuditLog({
+    supabase: context.supabase,
     firmId: context.firm.id,
     clientId: context.transaction.client_id,
     actorUserId,

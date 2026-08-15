@@ -13,6 +13,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Phase 4 client management against a live Supabase project.
 - Continue Phase 3 dashboard shell with filters, modals, and real data wiring.
 - Verify Phase 5 WhatsApp webhook with Meta after environment variables and public URL are configured.
+- Verify KO-PERF-04 Stage 1 WhatsApp webhook event worker against a staging Supabase project before fast-ack cutover.
 - Verify Phase 6 AI extraction against real OpenAI and Supabase credentials.
 - Verify Phase 7 review actions and ledger handoff against live Supabase data.
 - Verify Phase 8 ledger filters and correction workflow against live Supabase data.
@@ -62,6 +63,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Next Tasks
 
+- Deploy and visually verify the new conversion-focused landing page redesign against the production URL on desktop, tablet, and mobile widths.
 - Deploy and verify the safe WhatsApp greeting/help menu responder from `docs/WhatsApp-Help-Menu-Plan.md` with matched and unmatched sender tests.
 - Apply `supabase/migrations/20260812090000_normalize_transactions_nullable_fields.sql` in Supabase if Operations "Run now" reports any not-null violation on draft transaction fields such as `date`, `amount`, or `category`.
 - Apply `supabase/migrations/20260812103000_normalize_transaction_lifecycle_constraints.sql` in Supabase if approving a transaction reports `transactions_status_check`.
@@ -78,6 +80,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Meta webhook challenge and signed POST delivery.
 - Verify media download/upload to private Supabase storage.
 - Verify matched and unmatched sender behavior.
+- Apply `supabase/migrations/20260815120000_create_whatsapp_webhook_events.sql`, verify `/api/jobs/whatsapp-ingestion/run-queued`, and run KO-PERF-04 replay/failure tests before switching the webhook to fast acknowledgment.
 - Configure `OPENAI_API_KEY`, `OPENAI_EXTRACTION_MODEL`, and optional `JOB_RUNNER_SECRET`.
 - Verify AI extraction with text-note documents.
 - Add OCR/PDF/audio text extraction before relying on media-only documents.
@@ -128,3 +131,9 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-08-12 | Added project-level CRD for landing page and CA dashboard creation, including positioning, screen requirements, copy, status language, data mapping, and acceptance criteria. |
 | 2026-08-13 | Added safe WhatsApp help menu implementation plan for KhataOne-branded greeting/help responses with website URL, matched/unmatched sender copy, and no unbuilt command promises. |
 | 2026-08-13 | Implemented the safe WhatsApp greeting/help menu responder so simple help commands are stored, marked ignored, answered with KhataOne-branded guidance, and kept out of document/job extraction. |
+| 2026-08-13 | Added landing page design improvement plan based on design audit priorities: safer claims, clearer hero, WhatsApp visual, trust section, workflow polish, and responsive checks. |
+| 2026-08-13 | Implemented landing page design improvements with safer claims, sharper hero messaging, a WhatsApp intake visual, realistic review queue details, numbered workflow, trust/control section, and demo-step context. |
+| 2026-08-14 | Added standalone `khataone-ui-prototype` frontend-only interactive UI prototype with mock data, local state, route coverage, role simulations, review/ledger/GST/export/audit/operations flows, and local typecheck/build verification. |
+| 2026-08-15 | Redesigned the public landing page into the reference-inspired B2B SaaS layout with logo badge header, grid hero, review console preview, proof strip, platform grid, dark workflow band, demo form polish, explicit responsive viewport metadata, and local lint/typecheck/build verification. |
+| 2026-08-15 | Applied landing-page-only production polish with compact SaaS navigation, WhatsApp/GST-specific hero copy, stronger workflow order, human-control review mockup, business-value section, final dark CTA, responsive hero safeguards, and local lint/typecheck/build verification. |
+| 2026-08-15 | Implemented KO-PERF-04 Stage 1 infrastructure with durable WhatsApp webhook event schema, claim function, idempotent ingestion worker, protected worker route, conservative acknowledgment state handling, and local lint/typecheck/build verification while leaving the live webhook on synchronous processing. |

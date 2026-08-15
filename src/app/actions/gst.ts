@@ -5,8 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
 
 export type GstActionState = {
   status: "idle" | "success" | "error";
@@ -136,20 +135,20 @@ function periodStatus({
 }
 
 async function writeGstAuditLog({
+  supabase,
   firmId,
   clientId,
   actorUserId,
   periodId,
   summary,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId: string;
   actorUserId: string | null;
   periodId: string;
   summary: unknown;
 }) {
-  const supabase = await createClient();
-
   await supabase.from("audit_logs").insert({
     firm_id: firmId,
     client_id: clientId,
@@ -214,14 +213,21 @@ export async function generateGstSummaryAction(
     };
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const actorUserId = await getCurrentUserId();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return {
+      status: "error",
+      message: "Supabase is not configured yet.",
+    };
+  }
+
+  const { firm, supabase, userId: actorUserId } = context;
   const { data: client } = await supabase
     .from("clients")
     .select("id")
     .eq("id", clientId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!client) {
@@ -236,7 +242,7 @@ export async function generateGstSummaryAction(
     .select(
       "id, transaction_type, status, transaction_date, taxable_amount, cgst_amount, sgst_amount, igst_amount, total_amount, party_gstin, document_id",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("client_id", clientId)
     .eq("status", "approved")
     .gte("transaction_date", periodStart)
@@ -252,7 +258,7 @@ export async function generateGstSummaryAction(
   const { count: unresolvedCount } = await supabase
     .from("transactions")
     .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("client_id", clientId)
     .in("status", ["draft", "needs_review", "duplicate"])
     .gte("transaction_date", periodStart)
@@ -272,7 +278,7 @@ export async function generateGstSummaryAction(
     .from("gst_periods")
     .upsert(
       {
-        firm_id: firm!.id,
+        firm_id: firm.id,
         client_id: clientId,
         period_start: periodStart,
         period_end: periodEnd,
@@ -297,7 +303,7 @@ export async function generateGstSummaryAction(
     .from("gst_summaries")
     .upsert(
       {
-        firm_id: firm!.id,
+        firm_id: firm.id,
         client_id: clientId,
         gst_period_id: period.id,
         ...summary,
@@ -318,7 +324,8 @@ export async function generateGstSummaryAction(
   }
 
   await writeGstAuditLog({
-    firmId: firm!.id,
+    supabase,
+    firmId: firm.id,
     clientId,
     actorUserId,
     periodId: period.id,

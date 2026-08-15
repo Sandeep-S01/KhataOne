@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
@@ -9,9 +9,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "KhataOne | WhatsApp-first AI accounting for CA firms",
+  title: "KhataOne | WhatsApp-first GST workflow for CA firms",
   description:
-    "KhataOne helps CA firms turn WhatsApp receipts, invoices, PDFs, and voice notes into reviewable accounting and GST-ready workflows.",
+    "KhataOne helps Indian CA firms turn WhatsApp invoices, receipts, PDFs, and client messages into draft entries, CA review queues, GST summaries, and exports.",
+  openGraph: {
+    title: "KhataOne | WhatsApp-first GST workflow for CA firms",
+    description:
+      "AI-assisted bookkeeping intake with draft extraction, human review, GST summaries, and exports for Indian CA firms.",
+    siteName: "KhataOne",
+    type: "website",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

@@ -2,11 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import {
-  createAdminClient,
-  createClient,
-} from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
+import { createAdminClient } from "@/lib/supabase/server";
 
 function contentType(path: string) {
   if (path.endsWith(".pdf")) {
@@ -38,13 +35,21 @@ export async function GET(
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return NextResponse.json(
+      { error: "Supabase is not configured yet." },
+      { status: 503 },
+    );
+  }
+
+  const { firm, supabase } = context;
   const { data: exportRecord, error } = await supabase
     .from("exports")
     .select("id, firm_id, status, storage_path")
     .eq("id", exportId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (error || !exportRecord) {

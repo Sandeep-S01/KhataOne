@@ -5,8 +5,7 @@ import { AlertTriangle, RefreshCw } from "lucide-react";
 import { StatusChip } from "@/components/status-chip";
 import { runExtractionJobNowAction } from "@/app/actions/operations";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -54,13 +53,27 @@ export default async function OperationsPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const canRunExtractionJobs = firm ? canRunJobs(firm.role) : false;
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return (
+      <div className="p-5">
+        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
+          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
+            Operations views need Supabase environment variables and migrations.
+          </p>
+        </section>
+      </div>
+    );
+  }
+
+  const { firm, supabase } = context;
+  const canRunExtractionJobs = canRunJobs(firm.role);
   let query = supabase
     .from("processing_jobs")
     .select("id, client_id, job_type, entity_type, entity_id, status, attempt_count, last_error, scheduled_at, completed_at, created_at, clients(business_name)")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: false })
     .limit(100);
 
@@ -72,24 +85,48 @@ export default async function OperationsPage({
     query = query.eq("job_type", jobType);
   }
 
-  const { data: jobs, error } = await query;
-  const { count: failedCount } = await supabase
-    .from("processing_jobs")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
-    .eq("status", "failed");
-  const { count: queuedCount } = await supabase
-    .from("processing_jobs")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id)
-    .in("status", ["queued", "processing"]);
-  const { data: jobTypes } = await supabase
-    .from("processing_jobs")
-    .select("job_type")
-    .eq("firm_id", firm!.id)
-    .order("job_type");
+  const jobsPromise = (async () => await query)();
+  const failedCountPromise = (async () => {
+    const { count } = await supabase
+      .from("processing_jobs")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .eq("status", "failed");
+
+    return count;
+  })().catch(() => null);
+  const queuedCountPromise = (async () => {
+    const { count } = await supabase
+      .from("processing_jobs")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .in("status", ["queued", "processing"]);
+
+    return count;
+  })().catch(() => null);
+  const jobTypesPromise = (async () => {
+    const { data } = await supabase
+      .from("processing_jobs")
+      .select("job_type")
+      .eq("firm_id", firm.id)
+      .order("job_type");
+
+    return (data ?? []) as Array<{ job_type: string | null }>;
+  })().catch(() => [] as Array<{ job_type: string | null }>);
+
+  const [jobsResult, failedCount, queuedCount, jobTypes] = await Promise.all([
+    jobsPromise,
+    failedCountPromise,
+    queuedCountPromise,
+    jobTypesPromise,
+  ]);
+  const { data: jobs, error } = jobsResult;
   const uniqueJobTypes = Array.from(
-    new Set((jobTypes ?? []).map((row) => row.job_type).filter(Boolean)),
+    new Set(
+      jobTypes
+        .map((row) => row.job_type)
+        .filter((type): type is string => Boolean(type)),
+    ),
   );
 
   return (

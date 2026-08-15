@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
 
 import { hasSupabaseConfig } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
@@ -9,7 +10,14 @@ export type ActiveFirm = {
   name?: string;
 };
 
-export async function getActiveFirm(): Promise<ActiveFirm | null> {
+export type FirmContext = {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  user: User;
+  userId: string;
+  firm: ActiveFirm;
+};
+
+export async function getFirmContext(): Promise<FirmContext | null> {
   if (!hasSupabaseConfig()) {
     return null;
   }
@@ -40,10 +48,20 @@ export async function getActiveFirm(): Promise<ActiveFirm | null> {
     : membership.firms;
 
   return {
-    id: membership.firm_id,
-    role: membership.role,
-    name: firm?.name,
+    supabase,
+    user,
+    userId: user.id,
+    firm: {
+      id: membership.firm_id,
+      role: membership.role,
+      name: firm?.name,
+    },
   };
+}
+
+export async function getActiveFirm(): Promise<ActiveFirm | null> {
+  const context = await getFirmContext();
+  return context?.firm ?? null;
 }
 
 export async function getCurrentUserId() {

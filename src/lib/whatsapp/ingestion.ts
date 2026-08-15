@@ -5,6 +5,7 @@ import {
   sendWhatsAppText,
 } from "@/lib/whatsapp/client";
 import type {
+  WhatsAppChangeValue,
   WhatsAppInboundMessage,
   WhatsAppMediaType,
   WhatsAppWebhookPayload,
@@ -16,19 +17,62 @@ type ClientMatch = {
   business_name: string;
 };
 
-type MessageResult = {
+export type WhatsAppInboundItem = {
+  message: WhatsAppInboundMessage;
+  value: WhatsAppChangeValue;
+};
+
+export type MessageResult = {
   messageId: string;
   status: "stored" | "duplicate" | "failed";
+  terminalStatus?: "completed" | "failed" | "ignored" | "unmatched";
+  firmId?: string | null;
+  clientId?: string | null;
+  whatsappMessageId?: string;
+  documentId?: string;
+  processingJobId?: string;
   error?: string;
 };
+
+type ProcessMessageOptions = {
+  eventId?: string;
+  continueExistingMessage?: boolean;
+};
+
+type AcknowledgmentResult =
+  | { ok: true; skipped?: boolean }
+  | { ok: false; error: string };
 
 const mediaTypes = new Set(["image", "document", "audio", "video", "sticker"]);
 const helpMenuCommands = new Set(["hi", "hello", "hey", "help", "menu", "start"]);
 const khataOneWebsiteUrl = "https://khataone.vercel.app/";
 
+export function extractWhatsAppInboundItems(
+  payload: WhatsAppWebhookPayload,
+): WhatsAppInboundItem[] {
+  const changes = payload.entry?.flatMap((entry) => entry.changes ?? []) ?? [];
+
+  return changes.flatMap((change) => {
+    if (!change.value) {
+      return [];
+    }
+
+    return (change.value.messages ?? []).map((message) => ({
+      message,
+      value: change.value as WhatsAppChangeValue,
+    }));
+  });
+}
+
 function phoneCandidates(phone: string) {
   const digits = phone.replace(/[^\d]/g, "");
   return Array.from(new Set([phone, digits, `+${digits}`].filter(Boolean)));
+}
+
+function receivedAtFor(message: WhatsAppInboundMessage) {
+  return message.timestamp
+    ? new Date(Number(message.timestamp) * 1000).toISOString()
+    : new Date().toISOString();
 }
 
 function documentTypeFor(message: WhatsAppInboundMessage) {
@@ -117,6 +161,23 @@ function filenameFor(message: WhatsAppInboundMessage, contentType?: string | nul
   return `${message.type}-${message.id}.${extension}`;
 }
 
+async function updateWebhookEvent(
+  eventId: string | undefined,
+  values: Record<string, unknown>,
+) {
+  if (!eventId) {
+    return;
+  }
+
+  const supabase = createAdminClient();
+
+  if (!supabase) {
+    return;
+  }
+
+  await supabase.from("whatsapp_webhook_events").update(values).eq("id", eventId);
+}
+
 async function findClientBySender(senderPhone: string) {
   const supabase = createAdminClient();
 
@@ -153,17 +214,51 @@ async function createProcessingJob({
   const supabase = createAdminClient();
 
   if (!supabase) {
-    return;
+    return undefined;
   }
 
-  await supabase.from("processing_jobs").insert({
-    firm_id: firmId,
-    client_id: clientId,
-    job_type: "ai_extraction",
-    entity_type: "document",
-    entity_id: documentId,
-    status: "queued",
-  });
+  const { data: existingJob } = await supabase
+    .from("processing_jobs")
+    .select("id")
+    .eq("job_type", "ai_extraction")
+    .eq("entity_type", "document")
+    .eq("entity_id", documentId)
+    .maybeSingle();
+
+  if (existingJob?.id) {
+    return existingJob.id as string;
+  }
+
+  const { data: insertedJob, error } = await supabase
+    .from("processing_jobs")
+    .insert({
+      firm_id: firmId,
+      client_id: clientId,
+      job_type: "ai_extraction",
+      entity_type: "document",
+      entity_id: documentId,
+      status: "queued",
+    })
+    .select("id")
+    .single();
+
+  if (insertedJob?.id) {
+    return insertedJob.id as string;
+  }
+
+  if (!error) {
+    return undefined;
+  }
+
+  const { data: jobAfterConflict } = await supabase
+    .from("processing_jobs")
+    .select("id")
+    .eq("job_type", "ai_extraction")
+    .eq("entity_type", "document")
+    .eq("entity_id", documentId)
+    .maybeSingle();
+
+  return jobAfterConflict?.id as string | undefined;
 }
 
 async function storeMedia({
@@ -242,9 +337,135 @@ async function storeMedia({
   };
 }
 
-async function processMessage(
+async function prepareAcknowledgment(eventId: string | undefined) {
+  if (!eventId) {
+    return { ok: true, shouldSend: true };
+  }
+
+  const supabase = createAdminClient();
+
+  if (!supabase) {
+    return {
+      ok: false,
+      shouldSend: false,
+      error: "Supabase service role is not configured.",
+    };
+  }
+
+  const { data: event } = await supabase
+    .from("whatsapp_webhook_events")
+    .select("ack_status, ack_attempt_count, ack_last_attempt_at")
+    .eq("id", eventId)
+    .maybeSingle();
+
+  if (!event) {
+    return { ok: false, shouldSend: false, error: "Webhook event was not found." };
+  }
+
+  if (event.ack_status === "sent") {
+    return { ok: true, shouldSend: false };
+  }
+
+  if ((event.ack_attempt_count ?? 0) >= 3) {
+    return {
+      ok: false,
+      shouldSend: false,
+      error: "Acknowledgment attempt limit reached.",
+    };
+  }
+
+  if (event.ack_status === "sending" && event.ack_last_attempt_at) {
+    const lastAttemptAt = new Date(event.ack_last_attempt_at).getTime();
+    const staleAt = Date.now() - 10 * 60 * 1000;
+
+    if (Number.isFinite(lastAttemptAt) && lastAttemptAt > staleAt) {
+      return { ok: true, shouldSend: false };
+    }
+  }
+
+  // A stale "sending" acknowledgment is ambiguous: WhatsApp may have accepted
+  // the outbound message before this worker crashed. Retry conservatively.
+  const { error } = await supabase
+    .from("whatsapp_webhook_events")
+    .update({
+      ack_status: "sending",
+      ack_attempt_count: (event.ack_attempt_count ?? 0) + 1,
+      ack_last_attempt_at: new Date().toISOString(),
+      ack_last_error: null,
+    })
+    .eq("id", eventId)
+    .neq("ack_status", "sent");
+
+  if (error) {
+    return { ok: false, shouldSend: false, error: error.message };
+  }
+
+  return { ok: true, shouldSend: true };
+}
+
+async function completeAcknowledgment(
+  eventId: string | undefined,
+  result: Awaited<ReturnType<typeof sendWhatsAppText>>,
+) {
+  if (!eventId) {
+    return;
+  }
+
+  const supabase = createAdminClient();
+
+  if (!supabase) {
+    return;
+  }
+
+  await supabase
+    .from("whatsapp_webhook_events")
+    .update(
+      result.ok
+        ? {
+            ack_status: "sent",
+            ack_sent_at: new Date().toISOString(),
+            ack_last_error: null,
+          }
+        : {
+            ack_status: "failed",
+            ack_last_error: result.error,
+          },
+    )
+    .eq("id", eventId);
+}
+
+async function sendTrackedAcknowledgment({
+  eventId,
+  to,
+  body,
+}: {
+  eventId?: string;
+  to: string;
+  body: string;
+}): Promise<AcknowledgmentResult> {
+  const prepared = await prepareAcknowledgment(eventId);
+
+  if (!prepared.ok || !prepared.shouldSend) {
+    return prepared.ok
+      ? { ok: true, skipped: true }
+      : {
+          ok: false,
+          error: prepared.error ?? "Acknowledgment could not be prepared.",
+        };
+  }
+
+  const result = await sendWhatsAppText({ to, body });
+  await completeAcknowledgment(eventId, result);
+
+  return result.ok
+    ? { ok: true }
+    : { ok: false, error: result.error ?? "WhatsApp acknowledgment failed." };
+}
+
+export async function processWhatsAppInboundMessage(
   message: WhatsAppInboundMessage,
-  value: unknown,
+  value: WhatsAppChangeValue,
+  options: ProcessMessageOptions = {},
 ): Promise<MessageResult> {
   const supabase = createAdminClient();
 
@@ -252,6 +473,7 @@ async function processMessage(
     return {
       messageId: message.id,
       status: "failed",
+      terminalStatus: "failed",
       error: "Supabase service role is not configured.",
     };
   }
@@ -261,6 +483,12 @@ async function processMessage(
     message,
     value,
   };
+  const receivedAt = receivedAtFor(message);
+
+  await updateWebhookEvent(options.eventId, {
+    firm_id: client?.firm_id ?? null,
+    client_id: client?.id ?? null,
+  });
 
   const { data: storedMessage, error: messageError } = await supabase
     .from("whatsapp_messages")
@@ -272,9 +500,7 @@ async function processMessage(
         sender_phone: message.from,
         message_type: message.type,
         raw_payload: rawPayload,
-        received_at: message.timestamp
-          ? new Date(Number(message.timestamp) * 1000).toISOString()
-          : new Date().toISOString(),
+        received_at: receivedAt,
         processing_status: client ? "matched" : "unmatched",
       },
       {
@@ -286,27 +512,63 @@ async function processMessage(
     .maybeSingle();
 
   if (messageError) {
+    await updateWebhookEvent(options.eventId, {
+      status: "failed",
+      last_error: messageError.message,
+    });
+
     return {
       messageId: message.id,
       status: "failed",
+      terminalStatus: "failed",
       error: messageError.message,
     };
   }
 
-  if (!storedMessage) {
+  let messageRecord = storedMessage as { id: string } | null;
+
+  if (!messageRecord && options.continueExistingMessage) {
+    const { data: existingMessage } = await supabase
+      .from("whatsapp_messages")
+      .select("id")
+      .eq("provider_message_id", message.id)
+      .maybeSingle();
+
+    messageRecord = existingMessage as { id: string } | null;
+  }
+
+  if (!messageRecord) {
+    await updateWebhookEvent(options.eventId, {
+      status: "completed",
+      processed_at: new Date().toISOString(),
+    });
+
     return {
       messageId: message.id,
       status: "duplicate",
+      terminalStatus: "completed",
     };
   }
 
+  await updateWebhookEvent(options.eventId, {
+    whatsapp_message_id: messageRecord.id,
+  });
+
   if (isHelpMenuCommand(message)) {
-    const helpMenu = await sendWhatsAppText({
-      to: message.from,
-      body: client
-        ? buildMatchedHelpMenu(client.business_name)
-        : buildUnmatchedHelpMenu(),
-    });
+    const helpMenu = options.eventId
+      ? await sendTrackedAcknowledgment({
+          eventId: options.eventId,
+          to: message.from,
+          body: client
+            ? buildMatchedHelpMenu(client.business_name)
+            : buildUnmatchedHelpMenu(),
+        })
+      : await sendWhatsAppText({
+          to: message.from,
+          body: client
+            ? buildMatchedHelpMenu(client.business_name)
+            : buildUnmatchedHelpMenu(),
+        });
 
     await supabase
       .from("whatsapp_messages")
@@ -324,19 +586,38 @@ async function processMessage(
               },
         },
       })
-      .eq("id", storedMessage.id);
+      .eq("id", messageRecord.id);
+
+    await updateWebhookEvent(options.eventId, {
+      status: "ignored",
+      processed_at: new Date().toISOString(),
+      last_error: helpMenu.ok ? null : helpMenu.error,
+    });
 
     return {
       messageId: message.id,
       status: "stored",
+      terminalStatus: "ignored",
+      firmId: client?.firm_id ?? null,
+      clientId: client?.id ?? null,
+      whatsappMessageId: messageRecord.id,
       error: helpMenu.ok ? undefined : helpMenu.error,
     };
   }
 
   if (!client) {
+    await updateWebhookEvent(options.eventId, {
+      status: "unmatched",
+      processed_at: new Date().toISOString(),
+    });
+
     return {
       messageId: message.id,
       status: "stored",
+      terminalStatus: "unmatched",
+      firmId: null,
+      clientId: null,
+      whatsappMessageId: messageRecord.id,
     };
   }
 
@@ -348,32 +629,91 @@ async function processMessage(
 
   const isText = message.type === "text";
   const sourceText = isText ? message.text?.body ?? null : null;
-  const { data: document } = await supabase
+  const { data: existingDocument } = await supabase
     .from("documents")
-    .insert({
-      firm_id: client.firm_id,
-      client_id: client.id,
-      whatsapp_message_id: storedMessage.id,
-      document_type: documentTypeFor(message),
-      file_name: mediaResult.fileName,
-      file_mime_type: mediaResult.mimeType,
-      storage_path: mediaResult.storagePath,
-      source_text: sourceText,
-      status: mediaResult.status === "media_failed" ? "media_failed" : "queued",
-      received_at: message.timestamp
-        ? new Date(Number(message.timestamp) * 1000).toISOString()
-        : new Date().toISOString(),
-    })
     .select("id")
-    .single();
+    .eq("whatsapp_message_id", messageRecord.id)
+    .maybeSingle();
+
+  let document = existingDocument as { id: string } | null;
+
+  if (!document) {
+    const { data: insertedDocument, error: documentError } = await supabase
+      .from("documents")
+      .insert({
+        firm_id: client.firm_id,
+        client_id: client.id,
+        whatsapp_message_id: messageRecord.id,
+        document_type: documentTypeFor(message),
+        file_name: mediaResult.fileName,
+        file_mime_type: mediaResult.mimeType,
+        storage_path: mediaResult.storagePath,
+        source_text: sourceText,
+        status: mediaResult.status === "media_failed" ? "media_failed" : "queued",
+        received_at: receivedAt,
+      })
+      .select("id")
+      .single();
+
+    if (documentError) {
+      const { data: documentAfterConflict } = await supabase
+        .from("documents")
+        .select("id")
+        .eq("whatsapp_message_id", messageRecord.id)
+        .maybeSingle();
+
+      if (documentAfterConflict?.id) {
+        document = documentAfterConflict as { id: string };
+      } else {
+        await updateWebhookEvent(options.eventId, {
+          status: "failed",
+          last_error: documentError.message,
+        });
+
+        return {
+          messageId: message.id,
+          status: "failed",
+          terminalStatus: "failed",
+          firmId: client.firm_id,
+          clientId: client.id,
+          whatsappMessageId: messageRecord.id,
+          error: documentError.message,
+        };
+      }
+    }
+
+    if (insertedDocument) {
+      document = insertedDocument as { id: string };
+    }
+  } else if (mediaResult.status === "media_downloaded") {
+    await supabase
+      .from("documents")
+      .update({
+        file_name: mediaResult.fileName,
+        file_mime_type: mediaResult.mimeType,
+        storage_path: mediaResult.storagePath,
+        status: "queued",
+      })
+      .eq("id", document.id);
+  }
+
+  await updateWebhookEvent(options.eventId, {
+    document_id: document?.id ?? null,
+  });
+
+  let processingJobId: string | undefined;
 
   if (document) {
-    await createProcessingJob({
+    processingJobId = await createProcessingJob({
       firmId: client.firm_id,
       clientId: client.id,
       documentId: document.id,
     });
   }
+
+  await updateWebhookEvent(options.eventId, {
+    processing_job_id: processingJobId ?? null,
+  });
 
   await supabase
     .from("whatsapp_messages")
@@ -381,13 +721,20 @@ async function processMessage(
       processing_status:
         mediaResult.status === "media_failed" ? "media_failed" : "queued",
     })
-    .eq("id", storedMessage.id);
+    .eq("id", messageRecord.id);
 
-  const acknowledgment = await sendWhatsAppText({
-    to: message.from,
-    body:
-      "KhataOne received your document. Your CA team will review it before it affects your books.",
-  });
+  const acknowledgment = options.eventId
+    ? await sendTrackedAcknowledgment({
+        eventId: options.eventId,
+        to: message.from,
+        body:
+          "KhataOne received your document. Your CA team will review it before it affects your books.",
+      })
+    : await sendWhatsAppText({
+        to: message.from,
+        body:
+          "KhataOne received your document. Your CA team will review it before it affects your books.",
+      });
 
   await supabase
     .from("whatsapp_messages")
@@ -404,30 +751,37 @@ async function processMessage(
             },
       },
     })
-    .eq("id", storedMessage.id);
+    .eq("id", messageRecord.id);
+
+  const terminalStatus =
+    mediaResult.error || !acknowledgment.ok ? "failed" : "completed";
+
+  await updateWebhookEvent(options.eventId, {
+    status: terminalStatus,
+    processed_at: terminalStatus === "completed" ? new Date().toISOString() : null,
+    last_error:
+      mediaResult.error ?? (!acknowledgment.ok ? acknowledgment.error : null),
+  });
 
   return {
     messageId: message.id,
     status: "stored",
+    terminalStatus,
+    firmId: client.firm_id,
+    clientId: client.id,
+    whatsappMessageId: messageRecord.id,
+    documentId: document?.id,
+    processingJobId,
     error: mediaResult.error ?? (!acknowledgment.ok ? acknowledgment.error : undefined),
   };
 }
 
 export async function processWhatsAppWebhook(payload: WhatsAppWebhookPayload) {
-  const values =
-    payload.entry
-      ?.flatMap((entry) => entry.changes ?? [])
-      .map((change) => change.value)
-      .filter(Boolean) ?? [];
-
-  const messages = values.flatMap((value) =>
-    (value?.messages ?? []).map((message) => ({ message, value })),
-  );
-
+  const messages = extractWhatsAppInboundItems(payload);
   const results: MessageResult[] = [];
 
   for (const item of messages) {
-    results.push(await processMessage(item.message, item.value));
+    results.push(await processWhatsAppInboundMessage(item.message, item.value));
   }
 
   return {

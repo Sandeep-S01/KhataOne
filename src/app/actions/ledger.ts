@@ -5,8 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm, getCurrentUserId } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
 
 export type LedgerActionState = {
   status: "idle" | "success" | "error";
@@ -58,13 +57,18 @@ async function requireLedgerContext(entryId: string) {
     return { error: "Supabase is not configured yet." as const };
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return { error: "Supabase is not configured yet." as const };
+  }
+
+  const { firm, supabase, userId } = context;
   const { data: entry, error } = await supabase
     .from("ledger_entries")
     .select("*")
     .eq("id", entryId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (error || !entry) {
@@ -72,13 +76,15 @@ async function requireLedgerContext(entryId: string) {
   }
 
   return {
-    firm: firm!,
+    firm,
     supabase,
+    userId,
     entry: entry as LedgerEntryRecord,
   };
 }
 
 async function writeLedgerAuditLog({
+  supabase,
   firmId,
   clientId,
   actorUserId,
@@ -88,6 +94,7 @@ async function writeLedgerAuditLog({
   afterData,
   metadata,
 }: {
+  supabase: FirmContext["supabase"];
   firmId: string;
   clientId: string;
   actorUserId: string | null;
@@ -97,8 +104,6 @@ async function writeLedgerAuditLog({
   afterData?: unknown;
   metadata?: unknown;
 }) {
-  const supabase = await createClient();
-
   await supabase.from("audit_logs").insert({
     firm_id: firmId,
     client_id: clientId,
@@ -168,7 +173,7 @@ export async function updateLedgerEntryAction(
     };
   }
 
-  const actorUserId = await getCurrentUserId();
+  const actorUserId = context.userId;
   const beforeData = context.entry;
   const { data: updated, error } = await context.supabase
     .from("ledger_entries")
@@ -192,6 +197,7 @@ export async function updateLedgerEntryAction(
   }
 
   await writeLedgerAuditLog({
+    supabase: context.supabase,
     firmId: context.firm.id,
     clientId: context.entry.client_id,
     actorUserId,

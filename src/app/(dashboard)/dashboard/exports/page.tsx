@@ -9,8 +9,7 @@ import {
 } from "@/components/export-form";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -58,28 +57,59 @@ export default async function ExportsPage() {
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: clients } = await supabase
-    .from("clients")
-    .select("id, business_name")
-    .eq("firm_id", firm!.id)
-    .neq("status", "archived")
-    .order("business_name");
-  const { data: periods } = await supabase
-    .from("gst_periods")
-    .select("id, period_start, period_end, filing_type, status, clients(business_name)")
-    .eq("firm_id", firm!.id)
-    .order("period_start", { ascending: false })
-    .limit(80);
-  const { data: exports, error } = await supabase
-    .from("exports")
-    .select(
-      "id, export_type, status, storage_path, completed_at, created_at, metadata, clients(business_name), gst_periods(period_start, period_end)",
-    )
-    .eq("firm_id", firm!.id)
-    .order("created_at", { ascending: false })
-    .limit(80);
+  const context = await getFirmContext();
+
+  if (!context) {
+    return (
+      <div className="p-5">
+        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
+          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
+            Exports need Supabase environment variables, migrations, and private
+            storage buckets.
+          </p>
+        </section>
+      </div>
+    );
+  }
+
+  const { firm, supabase } = context;
+  const clientsPromise = (async () => {
+    const { data } = await supabase
+      .from("clients")
+      .select("id, business_name")
+      .eq("firm_id", firm.id)
+      .neq("status", "archived")
+      .order("business_name");
+
+    return (data ?? []) as ExportClientOption[];
+  })().catch(() => [] as ExportClientOption[]);
+  const periodsPromise = (async () => {
+    const { data } = await supabase
+      .from("gst_periods")
+      .select("id, period_start, period_end, filing_type, status, clients(business_name)")
+      .eq("firm_id", firm.id)
+      .order("period_start", { ascending: false })
+      .limit(80);
+
+    return (data ?? []) as ExportPeriodOption[];
+  })().catch(() => [] as ExportPeriodOption[]);
+  const exportsPromise = (async () =>
+    await supabase
+      .from("exports")
+      .select(
+        "id, export_type, status, storage_path, completed_at, created_at, metadata, clients(business_name), gst_periods(period_start, period_end)",
+      )
+      .eq("firm_id", firm.id)
+      .order("created_at", { ascending: false })
+      .limit(80))();
+
+  const [clients, periods, exportsResult] = await Promise.all([
+    clientsPromise,
+    periodsPromise,
+    exportsPromise,
+  ]);
+  const { data: exports, error } = exportsResult;
 
   return (
     <div className="p-5">
