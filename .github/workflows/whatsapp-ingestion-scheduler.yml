@@ -1,0 +1,36 @@
+name: WhatsApp ingestion scheduler
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: whatsapp-ingestion-scheduler
+  cancel-in-progress: false
+
+jobs:
+  run-queued-whatsapp-ingestion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify scheduler secret
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "CRON_SECRET repository secret is missing."
+            exit 1
+          fi
+
+      - name: Run queued WhatsApp ingestion worker
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          WORKER_URL: https://khataone.vercel.app/api/jobs/whatsapp-ingestion/run-queued?batch_size=10
+        run: |
+          curl --fail --show-error --silent \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "$WORKER_URL"
