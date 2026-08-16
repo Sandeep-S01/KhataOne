@@ -13,7 +13,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Phase 4 client management against a live Supabase project.
 - Continue Phase 3 dashboard shell with filters, modals, and real data wiring.
 - Verify Phase 5 WhatsApp webhook with Meta after environment variables and public URL are configured.
-- Verify KO-PERF-04 Stage 1 WhatsApp webhook event worker against a staging Supabase project before fast-ack cutover.
+- Verify KO-PERF-04 Stage 1 WhatsApp webhook event worker against a staging Supabase project before fast-ack cutover; Vercel Cron wiring is added at the current Hobby-compatible daily cadence, while low-latency WhatsApp queue processing still requires a faster supported scheduler.
 - Verify Phase 6 AI extraction against real OpenAI and Supabase credentials.
 - Verify Phase 7 review actions and ledger handoff against live Supabase data.
 - Verify Phase 8 ledger filters and correction workflow against live Supabase data.
@@ -80,7 +80,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Meta webhook challenge and signed POST delivery.
 - Verify media download/upload to private Supabase storage.
 - Verify matched and unmatched sender behavior.
-- Apply `supabase/migrations/20260815120000_create_whatsapp_webhook_events.sql`, verify `/api/jobs/whatsapp-ingestion/run-queued`, and run KO-PERF-04 replay/failure tests before switching the webhook to fast acknowledgment.
+- Apply `supabase/migrations/20260815120000_create_whatsapp_webhook_events.sql`, verify `/api/jobs/whatsapp-ingestion/run-queued`, confirm automatic scheduler invocation, and run KO-PERF-04 replay/failure tests before switching the webhook to fast acknowledgment. The repo now includes a Hobby-compatible daily Vercel Cron entry for this worker; use a supported faster Vercel cadence or external scheduler before fast-ack cutover if the product requires minute-level processing.
 - Configure `OPENAI_API_KEY`, `OPENAI_EXTRACTION_MODEL`, and optional `JOB_RUNNER_SECRET`.
 - Verify AI extraction with text-note documents.
 - Add OCR/PDF/audio text extraction before relying on media-only documents.
@@ -137,3 +137,4 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-08-15 | Redesigned the public landing page into the reference-inspired B2B SaaS layout with logo badge header, grid hero, review console preview, proof strip, platform grid, dark workflow band, demo form polish, explicit responsive viewport metadata, and local lint/typecheck/build verification. |
 | 2026-08-15 | Applied landing-page-only production polish with compact SaaS navigation, WhatsApp/GST-specific hero copy, stronger workflow order, human-control review mockup, business-value section, final dark CTA, responsive hero safeguards, and local lint/typecheck/build verification. |
 | 2026-08-15 | Implemented KO-PERF-04 Stage 1 infrastructure with durable WhatsApp webhook event schema, claim function, idempotent ingestion worker, protected worker route, conservative acknowledgment state handling, and local lint/typecheck/build verification while leaving the live webhook on synchronous processing. |
+| 2026-08-16 | Added Vercel Cron wiring for the KO-PERF-04 WhatsApp ingestion worker at the current Hobby-compatible daily cadence; Stage 2 remains gated on verifying automatic invocation and choosing a faster scheduler if minute-level queue age is required. |

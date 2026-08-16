@@ -3,6 +3,10 @@
     {
       "path": "/api/jobs/ai-extraction/run-queued",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/jobs/whatsapp-ingestion/run-queued",
+      "schedule": "0 0 * * *"
     }
   ]
 }
