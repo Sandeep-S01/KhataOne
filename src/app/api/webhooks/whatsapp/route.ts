@@ -7,7 +7,7 @@ import {
   clientRateLimitKey,
   retryAfterSeconds,
 } from "@/lib/rate-limit";
-import { processWhatsAppWebhook } from "@/lib/whatsapp/ingestion";
+import { enqueueWhatsAppWebhookEvents } from "@/lib/whatsapp/ingestion-worker";
 import type { WhatsAppWebhookPayload } from "@/lib/whatsapp/types";
 import { verifyMetaSignature } from "@/lib/whatsapp/verify";
 
@@ -90,17 +90,33 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const result = await processWhatsAppWebhook(payload).catch((error: unknown) => {
+  const result = await enqueueWhatsAppWebhookEvents(payload).catch(
+    (error: unknown) => {
+      captureOperationalError({
+        area: "whatsapp-webhook-enqueue",
+        error,
+      });
+
+      throw error;
+    },
+  );
+
+  if (!result.ok) {
     captureOperationalError({
-      area: "whatsapp-webhook",
-      error,
+      area: "whatsapp-webhook-enqueue",
+      error: result.error ?? "WhatsApp webhook event enqueue failed.",
     });
 
-    throw error;
-  });
+    return NextResponse.json(
+      {
+        ok: false,
+        error: result.error ?? "WhatsApp webhook event enqueue failed.",
+        accepted: result.accepted,
+        duplicateOrExisting: result.duplicateOrExisting,
+      },
+      { status: 500 },
+    );
+  }
 
-  return NextResponse.json({
-    ok: true,
-    ...result,
-  });
+  return NextResponse.json(result);
 }
