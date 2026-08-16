@@ -13,7 +13,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Phase 4 client management against a live Supabase project.
 - Continue Phase 3 dashboard shell with filters, modals, and real data wiring.
 - Verify Phase 5 WhatsApp webhook with Meta after environment variables and public URL are configured.
-- Verify KO-PERF-04 Stage 2 fast-ack webhook cutover in staging and production: the webhook now verifies Meta signature, durably queues inbound events, and returns before worker-side matching/media/document/job/ack processing.
+- Verify KO-PERF-04 Stage 2 fast-ack webhook cutover in staging and production: the webhook now verifies Meta signature, durably queues inbound events, and returns before worker-side matching/media/document/job/ack processing; signed production probe and protected worker processing passed, while scheduler cadence still needs continued monitoring because no new GitHub scheduled run appeared during the short post-cutover wait window.
 - Verify Phase 6 AI extraction against real OpenAI and Supabase credentials.
 - Verify Phase 7 review actions and ledger handoff against live Supabase data.
 - Verify Phase 8 ledger filters and correction workflow against live Supabase data.
@@ -80,7 +80,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify Meta webhook challenge and signed POST delivery.
 - Verify media download/upload to private Supabase storage.
 - Verify matched and unmatched sender behavior.
-- KO-PERF-04 Stage 2 fast-ack webhook cutover is implemented; verify signed webhook acceptance, durable queue insert, scheduler processing, acknowledgment delivery, media handling, and duplicate behavior after deployment.
+- KO-PERF-04 Stage 2 fast-ack webhook cutover is implemented and production-probed: signed webhook acceptance, durable queue insert, duplicate handling, invalid-signature rejection, and protected worker processing passed. Continue monitoring the five-minute GitHub scheduler cadence with real inbound events.
 - Configure `OPENAI_API_KEY`, `OPENAI_EXTRACTION_MODEL`, and optional `JOB_RUNNER_SECRET`.
 - Verify AI extraction with text-note documents.
 - Add OCR/PDF/audio text extraction before relying on media-only documents.
@@ -141,3 +141,4 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-08-16 | Verified the GitHub Actions WhatsApp ingestion scheduler is firing on schedule, but runs fail at `Verify scheduler secret`; Stage 2 remains blocked until the repository `CRON_SECRET` secret is configured and a scheduled run processes a controlled queue probe. |
 | 2026-08-16 | Verified the GitHub Actions WhatsApp ingestion scheduler now succeeds with `CRON_SECRET` and processed the controlled queue probe automatically; KO-PERF-04 Stage 1 runtime gate is ready for the separate Stage 2 cutover decision. |
 | 2026-08-16 | Implemented KO-PERF-04 Stage 2 webhook cutover so signed WhatsApp POST requests enqueue durable inbound events and return before heavy ingestion work; worker/scheduler continue processing asynchronously. |
+| 2026-08-16 | Verified Stage 2 on production with a signed synthetic webhook: initial response created only a queued durable event, duplicate replay was idempotent, invalid signature returned 401, and the protected worker processed the event asynchronously as unmatched; continue monitoring scheduler cadence because no new scheduled run appeared during the short verification window. |
