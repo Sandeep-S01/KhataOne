@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
 const toneClasses = {
-  neutral: "bg-khata-paper text-khata-ink",
-  success: "bg-green-50 text-khata-green",
-  warning: "bg-amber-50 text-amber-700",
-  danger: "bg-red-50 text-khata-danger",
-  info: "bg-blue-50 text-khata-blue",
+  neutral: "border-khata-border bg-khata-paperMuted text-khata-muted",
+  success: "border-success/30 bg-success/10 text-success",
+  warning: "border-warning/35 bg-warning/10 text-warning",
+  danger: "border-destructive/30 bg-destructive/10 text-destructive",
+  info: "border-info/30 bg-info/10 text-info",
 };
 
 export function StatusChip({
@@ -18,7 +18,7 @@ export function StatusChip({
   return (
     <span
       className={cn(
-        "inline-flex min-h-6 items-center rounded-md px-2 py-1 text-xs font-medium",
+        "inline-flex min-h-6 max-w-full items-center truncate rounded-md border px-2 py-0.5 text-xs font-medium capitalize",
         toneClasses[tone],
       )}
     >

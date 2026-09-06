@@ -1,5 +1,23 @@
 import { Blocks, CircleDollarSign, Landmark, Send, ShieldCheck } from "lucide-react";
 
+import {
+  DataTable,
+  DetailList,
+  IconPanel,
+  PageBody,
+  PageHeader,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
@@ -64,15 +82,7 @@ export default async function PlatformPage() {
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Platform extension status needs Supabase environment variables and
-            migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing platform extension records." />
     );
   }
 
@@ -94,84 +104,60 @@ export default async function PlatformPage() {
     .eq("firm_id", firm!.id);
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Platform
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Long-term extensions</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Future platform capabilities are tracked behind explicit provider,
-          compliance, audit, and review gates. Production v1 remains GST
-          summary and export preparation only.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Platform"
+        title="Long-term extensions"
+        description="Future platform capabilities are tracked behind explicit provider, compliance, audit, and review gates. Production v1 remains GST summary and export preparation only."
+      />
 
-      <div className="mb-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+      <PageBody>
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
         {roadmap.map((item) => {
           const Icon = item.icon;
 
           return (
-            <section
+            <IconPanel
               key={item.title}
-              className="rounded-lg border border-khata-border bg-white p-4 shadow-sm"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <Icon className="size-5 text-khata-green" />
-                <StatusChip tone="warning">{item.status}</StatusChip>
-              </div>
-              <h2 className="mt-4 text-sm font-semibold">{item.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-khata-muted">
-                {item.description}
-              </p>
-            </section>
+              icon={Icon}
+              title={item.title}
+              description={item.description}
+              tone="brand"
+              action={<StatusChip tone="warning">{item.status}</StatusChip>}
+              className="k-card-hover"
+            />
           );
         })}
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-2">
-        <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-          <div className="border-b border-khata-border px-4 py-3">
-            <p className="text-sm font-semibold">GST provider boundary</p>
-          </div>
-          <div className="p-4 text-sm">
-            <dl className="grid gap-3">
-              <div className="grid grid-cols-[140px_1fr] gap-3">
-                <dt className="text-khata-muted">Provider</dt>
-                <dd className="font-mono">{provider.provider}</dd>
-              </div>
-              <div className="grid grid-cols-[140px_1fr] gap-3">
-                <dt className="text-khata-muted">Filing status</dt>
-                <dd>
-                  <StatusChip tone="warning">Not implemented</StatusChip>
-                </dd>
-              </div>
-              <div className="grid grid-cols-[140px_1fr] gap-3">
-                <dt className="text-khata-muted">Guardrail</dt>
-                <dd className="text-khata-muted">
-                  Filing and portal submission remain blocked until an approved
-                  provider is implemented, tested, and compliance-verified.
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </section>
+      <div className="grid gap-4 xl:grid-cols-2">
+        <SectionCard title="GST provider boundary">
+          <DetailList
+            labelWidth="140px"
+            items={[
+              { label: "Provider", value: provider.provider, mono: true },
+              { label: "Filing status", value: <StatusChip tone="warning">Not implemented</StatusChip> },
+              {
+                label: "Guardrail",
+                value:
+                  "Filing and portal submission remain blocked until an approved provider is implemented, tested, and compliance-verified.",
+              },
+            ]}
+          />
+        </SectionCard>
 
-        <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-          <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-            <p className="text-sm font-semibold">Integration records</p>
-            <span className="font-mono text-xs text-khata-muted">
-              {integrationEventCount ?? 0} events
-            </span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[680px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+        <SectionCard
+          title="Integration records"
+          actions={<RecordCount value={integrationEventCount ?? 0} label="events" />}
+          bodyClassName="p-0"
+        >
+          <DataTable minWidth={680}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Type</th>
-                  <th className="px-4 py-3 font-medium">Provider</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">Created</th>
+                  <th className={tableHeadCellClass}>Type</th>
+                  <th className={tableHeadCellClass}>Provider</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableNumericHeadCellClass}>Created</th>
                 </tr>
               </thead>
               <tbody>
@@ -180,7 +166,7 @@ export default async function PlatformPage() {
                   <tr>
                     <td
                       colSpan={4}
-                      className="border-t border-khata-border px-4 py-5 text-khata-muted"
+                      className={`${tableCellClass} border-t border-khata-border text-khata-muted`}
                     >
                       No integration records have been configured yet.
                     </td>
@@ -202,27 +188,27 @@ export default async function PlatformPage() {
                       created_at: item.created_at,
                     })),
                   ].map((item) => (
-                    <tr key={item.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3 font-medium">{item.type}</td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                    <tr key={item.id} className={tableRowClass}>
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{item.type}</td>
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {item.provider}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(item.status)}>
                           {item.status}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-xs">
+                      <td className={`${tableNumericCellClass} text-xs`}>
                         {new Date(item.created_at).toLocaleString("en-IN")}
                       </td>
                     </tr>
                   ))
                 )}
               </tbody>
-            </table>
-          </div>
-        </section>
+          </DataTable>
+        </SectionCard>
       </div>
+      </PageBody>
     </div>
   );
 }

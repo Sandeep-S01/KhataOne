@@ -1,8 +1,30 @@
 import { StatusChip } from "@/components/status-chip";
+import {
+  DataTable,
+  EmptyState,
+  InlineAlert,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -41,15 +63,7 @@ function extractionSource(model?: string | null) {
 export default async function ReviewQueuePage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Review queue screens are ready, but extracted transactions need
-            Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before reviewing extracted transactions." />
     );
   }
 
@@ -66,55 +80,45 @@ export default async function ReviewQueuePage() {
     .limit(50);
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Review Queue
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">AI extraction review</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          AI-created transactions stay draft or needs-review until a CA approves
-          them in the next workflow phase.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Review Queue"
+        title="AI extraction review"
+        description="AI-created transactions stay draft or needs-review until a CA approves them in the next workflow phase."
+      />
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Extracted transactions</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {transactions?.length ?? 0} records
-          </span>
-        </div>
+      <PageBody>
+        <SectionCard
+          title="Extracted transactions"
+          actions={<RecordCount value={transactions?.length ?? 0} />}
+          bodyClassName="p-0"
+        >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!transactions || transactions.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No review items yet</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              WhatsApp documents will appear here after text extraction and the
-              AI extraction job create draft transaction records.
-            </p>
-          </div>
+          <EmptyState
+            title="No review items yet"
+            message="WhatsApp documents will appear here after text extraction and the AI extraction job creates draft transaction records."
+          />
         )}
 
         {!error && transactions && transactions.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[920px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={920}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Party</th>
-                  <th className="px-4 py-3 font-medium">Invoice</th>
-                  <th className="px-4 py-3 font-medium">Type</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Party</th>
+                  <th className={tableHeadCellClass}>Invoice</th>
+                  <th className={tableHeadCellClass}>Type</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableNumericHeadCellClass}>
                     Confidence
                   </th>
-                  <th className="px-4 py-3 text-right font-medium">Amount</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableNumericHeadCellClass}>Amount</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,55 +134,56 @@ export default async function ReviewQueuePage() {
                   return (
                     <tr
                       key={transaction.id}
-                      className="border-t border-khata-border"
+                      className={tableRowClass}
                     >
-                      <td className="px-4 py-3 font-medium">
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         {transaction.party_name ?? "Pending"}
                         {riskCount > 0 && (
-                          <p className="mt-1 text-xs text-khata-danger">
-                            {riskCount} risk flag{riskCount === 1 ? "" : "s"}
+                          <p className="mt-1">
+                            <InlineAlert tone="warning">
+                              {riskCount} risk flag{riskCount === 1 ? "" : "s"}
+                            </InlineAlert>
                           </p>
                         )}
-                        <p className="mt-1 text-xs text-khata-muted">
+                        <p className={`mt-1 ${tableSecondaryTextClass}`}>
                           {extractionSource(extraction?.model)}
                         </p>
                       </td>
-                      <td className="px-4 py-3 font-mono">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {transaction.invoice_number ?? "Pending"}
                       </td>
-                      <td className="px-4 py-3 capitalize">
+                      <td className={`${tableCellClass} capitalize`}>
                         {transaction.transaction_type}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(transaction.status)}>
                           {transaction.status.replaceAll("_", " ")}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {Math.round(transaction.confidence_score * 100)}%
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {formatCurrency(transaction.total_amount)}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <Link
+                      <td className={tableActionCellClass}>
+                        <TextLink
                           href={`/dashboard/review-queue/${transaction.id}`}
-                          className="font-semibold text-khata-green"
                         >
                           Review
-                        </Link>
+                        </TextLink>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+        </SectionCard>
+      </PageBody>
     </div>
   );
 }

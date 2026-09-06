@@ -1,5 +1,32 @@
-import Link from "next/link";
-
+import {
+  ActionLink,
+  Button,
+  DataTable,
+  EmptyState,
+  FieldLabel,
+  FilterBar,
+  Input,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  Select,
+  SetupRequired,
+  StatTile,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
@@ -30,14 +57,7 @@ export default async function LedgerPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Ledger handoff needs Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing approved ledger handoff records." />
     );
   }
 
@@ -85,27 +105,23 @@ export default async function LedgerPage({
     0;
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Ledger
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Approved ledger handoff</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Filter approved handoff entries, inspect source transactions, and
-          correct ledger mapping without silently rewriting extraction history.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Ledger"
+        title="Approved ledger handoff"
+        description="Filter approved handoff entries, inspect source transactions, and correct ledger mapping without silently rewriting extraction history."
+      />
 
-      <form className="mb-5 grid gap-3 rounded-lg border border-khata-border bg-white p-4 shadow-sm md:grid-cols-5">
+      <PageBody>
+      <FilterBar className="md:grid-cols-5">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Client
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="client"
             defaultValue={filters.client ?? ""}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           >
             <option value="">All clients</option>
             {clients?.map((client) => (
@@ -113,110 +129,96 @@ export default async function LedgerPage({
                 {client.business_name}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             From
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="from"
             type="date"
             defaultValue={filters.from ?? ""}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             To
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="to"
             type="date"
             defaultValue={filters.to ?? ""}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Account
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="account"
             type="search"
             defaultValue={filters.account ?? ""}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
         </label>
 
         <div className="flex items-end gap-2">
-          <button className="h-10 rounded-md bg-khata-green px-4 text-sm font-semibold text-white">
+          <Button type="submit" size="sm">
             Apply
-          </button>
-          <Link
-            href="/dashboard/ledger"
-            className="inline-flex h-10 items-center rounded-md border border-khata-border bg-white px-4 text-sm font-semibold"
-          >
-            Clear
-          </Link>
+          </Button>
+          <ActionLink href="/dashboard/ledger">Clear</ActionLink>
         </div>
-      </form>
+      </FilterBar>
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-3">
         {[
-          ["Entries", String(entries?.length ?? 0)],
-          ["Debit", formatCurrency(totalDebit)],
-          ["Credit", formatCurrency(totalCredit)],
-        ].map(([label, value]) => (
-          <div
+          ["Entries", String(entries?.length ?? 0), "neutral"],
+          ["Debit", formatCurrency(totalDebit), "brand"],
+          ["Credit", formatCurrency(totalCredit), "success"],
+        ].map(([label, value, tone]) => (
+          <StatTile
             key={label}
-            className="rounded-md border border-khata-border bg-white p-4 shadow-sm"
-          >
-            <p className="text-xs font-semibold uppercase text-khata-muted">
-              {label}
-            </p>
-            <p className="mt-2 font-mono text-2xl font-semibold">{value}</p>
-          </div>
+            label={label}
+            value={value}
+            tone={tone as "neutral" | "brand" | "success"}
+          />
         ))}
       </div>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Ledger entries</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {entries?.length ?? 0} records
-          </span>
-        </div>
+      <SectionCard
+        title="Ledger entries"
+        actions={<RecordCount value={entries?.length ?? 0} />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!entries || entries.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No ledger entries found</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Approve a review queue transaction or adjust filters to view
-              ledger handoff records.
-            </p>
-          </div>
+          <EmptyState
+            title="No ledger entries found"
+            message="Approve a review queue transaction or adjust filters to view ledger handoff records."
+          />
         )}
 
         {!error && entries && entries.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={980}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Date</th>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Account</th>
-                  <th className="px-4 py-3 font-medium">Source</th>
-                  <th className="px-4 py-3 text-right font-medium">Debit</th>
-                  <th className="px-4 py-3 text-right font-medium">Credit</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableHeadCellClass}>Date</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Account</th>
+                  <th className={tableHeadCellClass}>Source</th>
+                  <th className={tableNumericHeadCellClass}>Debit</th>
+                  <th className={tableNumericHeadCellClass}>Credit</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -229,46 +231,45 @@ export default async function LedgerPage({
                     : entry.transactions;
 
                   return (
-                    <tr key={entry.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3 font-mono text-xs">
+                    <tr key={entry.id} className={tableRowClass}>
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {entry.entry_date ?? "Pending"}
                       </td>
-                      <td className="px-4 py-3 font-medium">
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className="px-4 py-3">{entry.account_name}</td>
-                      <td className="px-4 py-3">
-                        <p className="font-mono text-xs">
+                      <td className={tableCellClass}>{entry.account_name}</td>
+                      <td className={tableCellClass}>
+                        <p className={tableMonoTextClass}>
                           {transaction?.invoice_number ?? "Pending invoice"}
                         </p>
-                        <p className="text-xs text-khata-muted">
+                        <p className={tableSecondaryTextClass}>
                           {transaction?.party_name ??
                             transaction?.transaction_type ??
                             "Source transaction"}
                         </p>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {formatCurrency(entry.debit_amount)}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {formatCurrency(entry.credit_amount)}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <Link
+                      <td className={tableActionCellClass}>
+                        <TextLink
                           href={`/dashboard/ledger/${entry.id}`}
-                          className="font-semibold text-khata-green"
                         >
                           Open
-                        </Link>
+                        </TextLink>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }

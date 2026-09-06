@@ -6,6 +6,16 @@ import {
   updateTransactionAction,
   type ReviewActionState,
 } from "@/app/actions/review";
+import {
+  Button,
+  FieldError,
+  FieldLabel,
+  FormActions,
+  FormMessage,
+  Input,
+  Select,
+  Textarea,
+} from "@/components/design-system";
 
 export type TransactionReviewValues = {
   id: string;
@@ -31,14 +41,6 @@ const initialState: ReviewActionState = {
   message: "",
 };
 
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
-    return null;
-  }
-
-  return <p className="mt-1 text-xs font-medium text-khata-danger">{message}</p>;
-}
-
 function numberValue(value: number | null) {
   return value === null || value === undefined ? "" : String(value);
 }
@@ -54,21 +56,18 @@ export function TransactionReviewForm({
   );
 
   return (
-    <form
-      action={formAction}
-      className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger"
-    >
+    <form action={formAction} className="k-card p-5">
       <input type="hidden" name="transaction_id" value={transaction.id} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Type
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="transaction_type"
             defaultValue={transaction.transaction_type}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           >
             <option value="purchase">Purchase</option>
             <option value="sales">Sales</option>
@@ -76,91 +75,91 @@ export function TransactionReviewForm({
             <option value="payment">Payment</option>
             <option value="receipt">Receipt</option>
             <option value="unclear">Unclear</option>
-          </select>
+          </Select>
           <FieldError message={state.fieldErrors?.transaction_type} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Date
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="transaction_date"
             type="date"
             defaultValue={transaction.transaction_date ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Party
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="party_name"
             type="text"
             defaultValue={transaction.party_name ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Party GSTIN
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="party_gstin"
             type="text"
             defaultValue={transaction.party_gstin ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 font-mono text-sm uppercase outline-none transition focus:border-khata-green focus:bg-white"
+            className="num mt-1 uppercase"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Invoice number
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="invoice_number"
             type="text"
             defaultValue={transaction.invoice_number ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 font-mono text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="num mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Category
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="category"
             type="text"
             defaultValue={transaction.category ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Place of supply
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="place_of_supply"
             type="text"
             defaultValue={transaction.place_of_supply ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Payment mode
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="payment_mode"
             type="text"
             defaultValue={transaction.payment_mode ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
       </div>
@@ -175,10 +174,10 @@ export function TransactionReviewForm({
           ["total_amount", "Total"],
         ].map(([name, label]) => (
           <label key={name} className="block">
-            <span className="text-xs font-semibold uppercase text-khata-muted">
+            <FieldLabel>
               {label}
-            </span>
-            <input
+            </FieldLabel>
+            <Input
               name={name}
               type="number"
               step="0.01"
@@ -187,7 +186,7 @@ export function TransactionReviewForm({
                   | number
                   | null,
               )}
-              className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-right font-mono text-sm outline-none transition focus:border-khata-green focus:bg-white"
+              className="num mt-1 text-right"
             />
             <FieldError message={state.fieldErrors?.[name]} />
           </label>
@@ -195,32 +194,27 @@ export function TransactionReviewForm({
       </div>
 
       <label className="mt-4 block">
-        <span className="text-xs font-semibold uppercase text-khata-muted">
+        <FieldLabel>
           Description
-        </span>
-        <textarea
+        </FieldLabel>
+        <Textarea
           name="description"
           rows={3}
           defaultValue={transaction.description ?? ""}
-          className="mt-1 w-full resize-none rounded-md border border-khata-border bg-khata-paper px-3 py-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+          className="mt-1"
         />
       </label>
 
-      {state.message && (
-        <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-khata-danger">
-          {state.message}
-        </div>
-      )}
+      <FormMessage message={state.message} className="mt-4" />
 
-      <div className="mt-5 flex justify-end">
-        <button
+      <FormActions>
+        <Button
           type="submit"
           disabled={pending}
-          className="inline-flex h-11 items-center justify-center rounded-md bg-khata-green px-5 text-sm font-semibold text-white shadow-ledger transition hover:bg-khata-greenDark disabled:cursor-not-allowed disabled:opacity-70"
         >
           {pending ? "Saving..." : "Save review edits"}
-        </button>
-      </div>
+        </Button>
+      </FormActions>
     </form>
   );
 }

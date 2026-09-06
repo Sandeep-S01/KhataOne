@@ -1,5 +1,24 @@
-import Link from "next/link";
-
+import {
+  ActionLink,
+  DataTable,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
@@ -25,15 +44,7 @@ function statusTone(status: string) {
 export default async function ClientsPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Client management screens are ready, but the client list needs
-            Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before managing client workspaces." />
     );
   }
 
@@ -48,99 +59,88 @@ export default async function ClientsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase text-khata-green">
-            Clients
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">Client workspaces</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-            Manage GSTIN details, WhatsApp sender mapping, filing cadence,
-            assignment readiness, and client status for {firm?.name ?? "this firm"}.
-          </p>
-        </div>
-        <Link
+    <div>
+      <PageHeader
+        eyebrow="Clients"
+        title="Client workspaces"
+        description={`Manage GSTIN details, WhatsApp sender mapping, filing cadence, assignment readiness, and client status for ${firm?.name ?? "this firm"}.`}
+        actions={
+        <ActionLink
           href="/dashboard/clients/new"
-          className="inline-flex h-10 items-center justify-center rounded-md bg-khata-green px-4 text-sm font-semibold text-white shadow-ledger"
+          variant="primary"
         >
           Add client
-        </Link>
-      </div>
+        </ActionLink>
+        }
+      />
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Client list</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {clients?.length ?? 0} records
-          </span>
-        </div>
+      <PageBody>
+        <SectionCard
+          title="Client list"
+          actions={<RecordCount value={clients?.length ?? 0} />}
+          bodyClassName="p-0"
+        >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!clients || clients.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No clients yet</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Add the first business client before wiring WhatsApp ingestion,
-              AI extraction, ledger review, and GST summaries.
-            </p>
-          </div>
+          <EmptyState
+            title="No clients yet"
+            message="Add the first business client before wiring WhatsApp ingestion, AI extraction, ledger review, and GST summaries."
+          />
         )}
 
         {!error && clients && clients.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[860px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={860}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Business</th>
-                  <th className="px-4 py-3 font-medium">WhatsApp</th>
-                  <th className="px-4 py-3 font-medium">GSTIN</th>
-                  <th className="px-4 py-3 font-medium">Filing</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableHeadCellClass}>Business</th>
+                  <th className={tableHeadCellClass}>WhatsApp</th>
+                  <th className={tableHeadCellClass}>GSTIN</th>
+                  <th className={tableHeadCellClass}>Filing</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {clients.map((client) => (
-                  <tr key={client.id} className="border-t border-khata-border">
-                    <td className="px-4 py-3">
-                      <p className="font-medium">{client.business_name}</p>
-                      <p className="text-xs text-khata-muted">
+                  <tr key={client.id} className={tableRowClass}>
+                    <td className={tableCellClass}>
+                      <p className={tablePrimaryTextClass}>{client.business_name}</p>
+                      <p className={tableSecondaryTextClass}>
                         {client.contact_name || client.phone || "Contact pending"}
                       </p>
                     </td>
-                    <td className="px-4 py-3 font-mono">
+                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {client.whatsapp_phone || "Not linked"}
                     </td>
-                    <td className="px-4 py-3 font-mono">
+                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {client.gstin || "Pending"}
                     </td>
-                    <td className="px-4 py-3 capitalize">
+                    <td className={`${tableCellClass} capitalize`}>
                       {client.filing_frequency}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className={tableCellClass}>
                       <StatusChip tone={statusTone(client.status)}>
                         {client.status.replaceAll("_", " ")}
                       </StatusChip>
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <Link
+                    <td className={tableActionCellClass}>
+                      <TextLink
                         href={`/dashboard/clients/${client.id}`}
-                        className="font-semibold text-khata-green"
                       >
                         Open
-                      </Link>
+                      </TextLink>
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+        </SectionCard>
+      </PageBody>
     </div>
   );
 }

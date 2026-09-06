@@ -1,5 +1,3 @@
-import Link from "next/link";
-import type { Route } from "next";
 import { Download } from "lucide-react";
 
 import {
@@ -7,6 +5,26 @@ import {
   type ExportClientOption,
   type ExportPeriodOption,
 } from "@/components/export-form";
+import {
+  DataTable,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
@@ -45,15 +63,7 @@ function exportLabel(type: string) {
 export default async function ExportsPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Exports need Supabase environment variables, migrations, and private
-            storage buckets.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables, migrations, and private storage buckets before generating exports." />
     );
   }
 
@@ -61,15 +71,7 @@ export default async function ExportsPage() {
 
   if (!context) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Exports need Supabase environment variables, migrations, and private
-            storage buckets.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables, migrations, and private storage buckets before generating exports." />
     );
   }
 
@@ -112,58 +114,46 @@ export default async function ExportsPage() {
   const { data: exports, error } = exportsResult;
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Exports
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Export jobs</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Generate traceable CSV and PDF files from approved transactions and
-          GST summaries. Exports are stored privately and logged for audit.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Exports"
+        title="Export jobs"
+        description="Generate traceable CSV and PDF files from approved transactions and GST summaries. Exports are stored privately and logged for audit."
+      />
 
-      <div className="mb-5">
+      <PageBody>
         <ExportForm
           clients={(clients ?? []) as ExportClientOption[]}
           periods={(periods ?? []) as ExportPeriodOption[]}
         />
-      </div>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Export history</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {exports?.length ?? 0} records
-          </span>
-        </div>
+      <SectionCard
+        title="Export history"
+        actions={<RecordCount value={exports?.length ?? 0} />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!exports || exports.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No exports generated yet</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Create a transactions CSV or GST summary export after clients,
-              transactions, and GST periods exist.
-            </p>
-          </div>
+          <EmptyState
+            title="No exports generated yet"
+            message="Create a transactions CSV or GST summary export after clients, transactions, and GST periods exist."
+          />
         )}
 
         {!error && exports && exports.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={980}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Export</th>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Period</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 font-medium">Created</th>
-                  <th className="px-4 py-3 text-right font-medium">File</th>
+                  <th className={tableHeadCellClass}>Export</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Period</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableHeadCellClass}>Created</th>
+                  <th className={tableActionHeadCellClass}>File</th>
                 </tr>
               </thead>
               <tbody>
@@ -186,51 +176,48 @@ export default async function ExportsPage() {
                   return (
                     <tr
                       key={exportRecord.id}
-                      className="border-t border-khata-border"
+                      className={tableRowClass}
                     >
-                      <td className="px-4 py-3 font-medium">
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {exportLabel(exportRecord.export_type)}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         {client?.business_name ?? "Not linked"}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {periodText}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(exportRecord.status)}>
                           {exportRecord.status}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {new Date(exportRecord.created_at).toLocaleString(
                           "en-IN",
                         )}
                       </td>
-                      <td className="px-4 py-3 text-right">
+                      <td className={tableActionCellClass}>
                         {exportRecord.status === "completed" &&
                         exportRecord.storage_path ? (
-                          <Link
-                            href={
-                              `/api/exports/${exportRecord.id}/download` as Route
-                            }
-                            className="inline-flex items-center justify-end gap-2 font-semibold text-khata-green"
+                          <TextLink
+                            href={`/api/exports/${exportRecord.id}/download`}
                           >
                             <Download className="size-4" />
                             Download
-                          </Link>
+                          </TextLink>
                         ) : (
-                          <span className="text-khata-muted">Unavailable</span>
+                          <span className={tableSecondaryTextClass}>Unavailable</span>
                         )}
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }

@@ -1,7 +1,34 @@
-import Link from "next/link";
 import type { Route } from "next";
-import { AlertTriangle, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
+import {
+  ActionLink,
+  Button,
+  DataTable,
+  EmptyState,
+  FieldLabel,
+  FilterBar,
+  InlineAlert,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  Select,
+  SetupRequired,
+  StatTile,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { runExtractionJobNowAction } from "@/app/actions/operations";
 import { hasSupabaseConfig } from "@/lib/env";
@@ -42,14 +69,7 @@ export default async function OperationsPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Operations views need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before monitoring background jobs." />
     );
   }
 
@@ -57,14 +77,7 @@ export default async function OperationsPage({
 
   if (!context) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Operations views need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before monitoring background jobs." />
     );
   }
 
@@ -130,71 +143,52 @@ export default async function OperationsPage({
   );
 
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase text-khata-green">
-            Operations
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">Job health</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-            Monitor WhatsApp ingestion, AI extraction, and future background
-            workflows that need follow-up.
-          </p>
-        </div>
-        <Link
+    <div>
+      <PageHeader
+        eyebrow="Operations"
+        title="Job health"
+        description="Monitor WhatsApp ingestion, AI extraction, and future background workflows that need follow-up."
+        actions={
+        <ActionLink
           href={"/dashboard/operations" as Route}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-khata-border bg-white px-4 text-sm font-semibold"
         >
           <RefreshCw className="size-4" />
           Refresh
-        </Link>
+        </ActionLink>
+        }
+      />
+
+      <PageBody>
+      <div className="grid gap-3 md:grid-cols-2">
+        <StatTile label="Queued or processing" value={queuedCount ?? 0} tone="warning" />
+        <StatTile label="Failed jobs" value={failedCount ?? 0} tone="danger" />
       </div>
 
-      <div className="mb-5 grid gap-3 md:grid-cols-2">
-        <section className="rounded-lg border border-khata-border bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase text-khata-muted">
-            Queued or processing
-          </p>
-          <p className="mt-2 font-mono text-2xl font-semibold">
-            {queuedCount ?? 0}
-          </p>
-        </section>
-        <section className="rounded-lg border border-khata-border bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase text-khata-muted">
-            Failed jobs
-          </p>
-          <p className="mt-2 font-mono text-2xl font-semibold">
-            {failedCount ?? 0}
-          </p>
-        </section>
-      </div>
-
-      <form className="mb-5 grid gap-3 rounded-lg border border-khata-border bg-white p-4 shadow-sm md:grid-cols-[1fr_1fr_auto]">
+      <FilterBar className="md:grid-cols-[1fr_1fr_auto]">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Status
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="status"
             defaultValue={status}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           >
             <option value="">All statuses</option>
             <option value="queued">Queued</option>
             <option value="processing">Processing</option>
             <option value="completed">Completed</option>
             <option value="failed">Failed</option>
-          </select>
+          </Select>
         </label>
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Job type
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="job_type"
             defaultValue={jobType}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           >
             <option value="">All jobs</option>
             {uniqueJobTypes.map((type) => (
@@ -202,55 +196,48 @@ export default async function OperationsPage({
                 {type}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         <div className="flex items-end gap-2">
-          <button className="h-10 rounded-md bg-khata-green px-4 text-sm font-semibold text-white">
+          <Button type="submit" size="sm">
             Filter
-          </button>
-          <Link
+          </Button>
+          <ActionLink
             href={"/dashboard/operations" as Route}
-            className="inline-flex h-10 items-center rounded-md border border-khata-border bg-khata-paper px-4 text-sm font-semibold"
           >
             Reset
-          </Link>
+          </ActionLink>
         </div>
-      </form>
+      </FilterBar>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Processing jobs</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {jobs?.length ?? 0} records
-          </span>
-        </div>
+      <SectionCard
+        title="Processing jobs"
+        actions={<RecordCount value={jobs?.length ?? 0} />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!jobs || jobs.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No jobs found</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Processing jobs will appear after WhatsApp media is queued or AI
-              extraction is requested.
-            </p>
-          </div>
+          <EmptyState
+            title="No jobs found"
+            message="Processing jobs will appear after WhatsApp media is queued or AI extraction is requested."
+          />
         )}
 
         {!error && jobs && jobs.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1080px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={1080}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Job</th>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">Attempts</th>
-                  <th className="px-4 py-3 font-medium">Last error</th>
-                  <th className="px-4 py-3 text-right font-medium">Created</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableHeadCellClass}>Job</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableNumericHeadCellClass}>Attempts</th>
+                  <th className={tableHeadCellClass}>Last error</th>
+                  <th className={tableNumericHeadCellClass}>Created</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -260,59 +247,58 @@ export default async function OperationsPage({
                     : job.clients;
 
                   return (
-                    <tr key={job.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3">
-                        <span className="font-medium">{job.job_type}</span>
-                        <p className="mt-1 font-mono text-xs text-khata-muted">
+                    <tr key={job.id} className={tableRowClass}>
+                      <td className={tableCellClass}>
+                        <span className={tablePrimaryTextClass}>{job.job_type}</span>
+                        <p className={`mt-1 ${tableMonoTextClass} text-khata-muted`}>
                           {job.entity_type}:{job.entity_id}
                         </p>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         {client?.business_name ?? "Not linked"}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(job.status)}>
                           {job.status}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {job.attempt_count ?? 0}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         {job.last_error ? (
-                          <span className="inline-flex max-w-md items-center gap-2 text-khata-danger">
-                            <AlertTriangle className="size-4 shrink-0" />
-                            <span className="truncate">{job.last_error}</span>
-                          </span>
+                          <InlineAlert className="max-w-md">
+                            {job.last_error}
+                          </InlineAlert>
                         ) : (
-                          <span className="text-khata-muted">None</span>
+                          <span className={tableSecondaryTextClass}>None</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-xs">
+                      <td className={`${tableNumericCellClass} text-xs`}>
                         {new Date(job.created_at).toLocaleString("en-IN")}
                       </td>
-                      <td className="px-4 py-3 text-right">
+                      <td className={tableActionCellClass}>
                         {canRunExtractionJobs &&
                         job.job_type === "ai_extraction" &&
                         ["queued", "failed"].includes(job.status) ? (
                           <form action={runExtractionJobNowAction}>
                             <input type="hidden" name="job_id" value={job.id} />
-                            <button className="inline-flex h-9 items-center justify-center rounded-md border border-khata-border bg-white px-3 text-xs font-semibold hover:bg-khata-paperMuted">
+                            <Button type="submit" variant="outline" size="sm">
                               Run now
-                            </button>
+                            </Button>
                           </form>
                         ) : (
-                          <span className="text-xs text-khata-muted">-</span>
+                          <span className={tableSecondaryTextClass}>-</span>
                         )}
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }

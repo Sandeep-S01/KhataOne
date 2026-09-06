@@ -1,9 +1,28 @@
-import Link from "next/link";
-
 import {
   GstSummaryForm,
   type GstClientOption,
 } from "@/components/gst-summary-form";
+import {
+  DataTable,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
@@ -35,14 +54,7 @@ function formatCurrency(value: number | null) {
 export default async function GstSummaryPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            GST summaries need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before generating GST readiness summaries." />
     );
   }
 
@@ -64,56 +76,44 @@ export default async function GstSummaryPage() {
     .limit(60);
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          GST Summary
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">GST readiness</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Generate CA-reviewed GST summaries from approved transactions. This
-          prepares review and export data; it does not submit GST filings.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="GST Summary"
+        title="GST readiness"
+        description="Generate CA-reviewed GST summaries from approved transactions. This prepares review and export data; it does not submit GST filings."
+      />
 
-      <div className="mb-5">
+      <PageBody>
         <GstSummaryForm clients={(clients ?? []) as GstClientOption[]} />
-      </div>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Generated periods</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {periods?.length ?? 0} records
-          </span>
-        </div>
+      <SectionCard
+        title="Generated periods"
+        actions={<RecordCount value={periods?.length ?? 0} />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!periods || periods.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No GST summaries yet</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Generate a period after client transactions have been approved in
-              the review queue.
-            </p>
-          </div>
+          <EmptyState
+            title="No GST summaries yet"
+            message="Generate a period after client transactions have been approved in the review queue."
+          />
         )}
 
         {!error && periods && periods.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[920px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={920}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Period</th>
-                  <th className="px-4 py-3 font-medium">Filing</th>
-                  <th className="px-4 py-3 font-medium">Readiness</th>
-                  <th className="px-4 py-3 text-right font-medium">Issues</th>
-                  <th className="px-4 py-3 text-right font-medium">Net tax</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Period</th>
+                  <th className={tableHeadCellClass}>Filing</th>
+                  <th className={tableHeadCellClass}>Readiness</th>
+                  <th className={tableNumericHeadCellClass}>Issues</th>
+                  <th className={tableNumericHeadCellClass}>Net tax</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,43 +129,42 @@ export default async function GstSummaryPage() {
                     Number(summary?.missing_document_count ?? 0);
 
                   return (
-                    <tr key={period.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3 font-medium">
+                    <tr key={period.id} className={tableRowClass}>
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {period.period_start} to {period.period_end}
                       </td>
-                      <td className="px-4 py-3 capitalize">
+                      <td className={`${tableCellClass} capitalize`}>
                         {period.filing_type}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(period.status)}>
                           {period.status.replaceAll("_", " ")}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {issueCount}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {formatCurrency(summary?.net_tax_payable ?? 0)}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <Link
+                      <td className={tableActionCellClass}>
+                        <TextLink
                           href={`/dashboard/gst-summary/${period.id}`}
-                          className="font-semibold text-khata-green"
                         >
                           Open
-                        </Link>
+                        </TextLink>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }

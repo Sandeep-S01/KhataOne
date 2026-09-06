@@ -1,10 +1,15 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import {
   LedgerEntryForm,
   type LedgerEntryValues,
 } from "@/components/ledger-entry-form";
+import {
+  ActionLink,
+  PageBody,
+  PageHeader,
+  SetupRequired,
+} from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
@@ -20,15 +25,7 @@ export default async function EditLedgerEntryPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 text-sm leading-6 text-khata-muted">
-            Ledger correction needs Supabase environment variables and
-            migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before correcting ledger entries." />
     );
   }
 
@@ -46,24 +43,20 @@ export default async function EditLedgerEntryPage({
   }
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <Link
-          href={`/dashboard/ledger/${entry.id}`}
-          className="text-sm font-semibold text-khata-green"
-        >
-          Back to ledger entry
-        </Link>
-        <p className="mt-4 text-sm font-semibold uppercase text-khata-green">
-          Ledger correction
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Correct handoff entry</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Corrections update the ledger handoff entry only. The source
-          transaction and AI extraction history remain traceable.
-        </p>
-      </div>
-      <LedgerEntryForm entry={entry as LedgerEntryValues} />
+    <div>
+      <PageHeader
+        eyebrow="Ledger correction"
+        title="Correct handoff entry"
+        description="Corrections update the ledger handoff entry only. The source transaction and AI extraction history remain traceable."
+        actions={
+          <ActionLink href={`/dashboard/ledger/${entry.id}`}>
+            Back to ledger entry
+          </ActionLink>
+        }
+      />
+      <PageBody>
+        <LedgerEntryForm entry={entry as LedgerEntryValues} />
+      </PageBody>
     </div>
   );
 }
