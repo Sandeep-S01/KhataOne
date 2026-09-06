@@ -7,6 +7,15 @@ import {
   createExportAction,
   type ExportActionState,
 } from "@/app/actions/exports";
+import {
+  Button,
+  FieldError,
+  FieldLabel,
+  FilterBar,
+  FormMessage,
+  Input,
+  Select,
+} from "@/components/design-system";
 
 export type ExportClientOption = {
   id: string;
@@ -33,14 +42,6 @@ const initialState: ExportActionState = {
   status: "idle",
   message: "",
 };
-
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
-    return null;
-  }
-
-  return <p className="mt-1 text-xs font-medium text-khata-danger">{message}</p>;
-}
 
 function monthStart() {
   const now = new Date();
@@ -77,34 +78,33 @@ export function ExportForm({
   );
 
   return (
-    <form
+    <FilterBar
       action={formAction}
-      className="rounded-lg border border-khata-border bg-white p-4 shadow-sm"
     >
       <div className="grid gap-3 lg:grid-cols-[1fr_1fr_0.8fr_0.8fr_auto]">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Type
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="export_type"
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
             defaultValue="csv_transactions"
           >
             <option value="csv_transactions">Transactions CSV</option>
             <option value="gst_summary">GST summary CSV</option>
             <option value="pdf_summary">GST summary PDF</option>
-          </select>
+          </Select>
           <FieldError message={state.fieldErrors?.export_type} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Client for transactions
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="client_id"
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
             defaultValue=""
           >
             <option value="">Select client</option>
@@ -113,41 +113,41 @@ export function ExportForm({
                 {client.business_name}
               </option>
             ))}
-          </select>
+          </Select>
           <FieldError message={state.fieldErrors?.client_id} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Start
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="period_start"
             type="date"
             defaultValue={monthStart()}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
           <FieldError message={state.fieldErrors?.period_start} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             End
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="period_end"
             type="date"
             defaultValue={monthEnd()}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
           <FieldError message={state.fieldErrors?.period_end} />
         </label>
 
         <div className="flex items-end">
-          <button
+          <Button
             type="submit"
             disabled={pending}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-khata-green px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full"
           >
             {pending ? (
               <>
@@ -160,17 +160,17 @@ export function ExportForm({
                 Export
               </>
             )}
-          </button>
+          </Button>
         </div>
       </div>
 
       <label className="mt-3 block">
-        <span className="text-xs font-semibold uppercase text-khata-muted">
+        <FieldLabel>
           GST period for summary exports
-        </span>
-        <select
+        </FieldLabel>
+        <Select
           name="gst_period_id"
-          className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+          className="mt-1"
           defaultValue=""
         >
           <option value="">Select generated GST period</option>
@@ -180,7 +180,7 @@ export function ExportForm({
               {period.period_end} | {period.status.replaceAll("_", " ")}
             </option>
           ))}
-        </select>
+        </Select>
         <FieldError message={state.fieldErrors?.gst_period_id} />
       </label>
 
@@ -196,16 +196,12 @@ export function ExportForm({
       </div>
 
       {state.message && (
-        <div
-          className={`mt-3 rounded-md border px-3 py-2 text-sm ${
-            state.status === "success"
-              ? "border-green-200 bg-green-50 text-khata-green"
-              : "border-red-200 bg-red-50 text-khata-danger"
-          }`}
-        >
-          {state.message}
-        </div>
+        <FormMessage
+          message={state.message}
+          tone={state.status === "success" ? "success" : "danger"}
+          className="mt-3"
+        />
       )}
-    </form>
+    </FilterBar>
   );
 }

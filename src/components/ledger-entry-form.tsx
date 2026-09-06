@@ -6,6 +6,15 @@ import {
   updateLedgerEntryAction,
   type LedgerActionState,
 } from "@/app/actions/ledger";
+import {
+  Button,
+  FieldError,
+  FieldLabel,
+  FormActions,
+  FormMessage,
+  Input,
+  Textarea,
+} from "@/components/design-system";
 
 export type LedgerEntryValues = {
   id: string;
@@ -21,14 +30,6 @@ const initialState: LedgerActionState = {
   message: "",
 };
 
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
-    return null;
-  }
-
-  return <p className="mt-1 text-xs font-medium text-khata-danger">{message}</p>;
-}
-
 export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
   const [state, formAction, pending] = useActionState(
     updateLedgerEntryAction,
@@ -36,105 +37,97 @@ export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
   );
 
   return (
-    <form
-      action={formAction}
-      className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger"
-    >
+    <form action={formAction} className="k-card p-5">
       <input type="hidden" name="entry_id" value={entry.id} />
       <div className="grid gap-4 lg:grid-cols-2">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Entry date
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="entry_date"
             type="date"
             defaultValue={entry.entry_date ?? ""}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Account name
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="account_name"
             type="text"
             defaultValue={entry.account_name}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="mt-1"
           />
           <FieldError message={state.fieldErrors?.account_name} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Debit
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="debit_amount"
             type="number"
             step="0.01"
             defaultValue={entry.debit_amount}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-right font-mono text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="num mt-1 text-right"
           />
           <FieldError message={state.fieldErrors?.debit_amount} />
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Credit
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="credit_amount"
             type="number"
             step="0.01"
             defaultValue={entry.credit_amount}
-            className="mt-1 h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-right font-mono text-sm outline-none transition focus:border-khata-green focus:bg-white"
+            className="num mt-1 text-right"
           />
           <FieldError message={state.fieldErrors?.credit_amount} />
         </label>
       </div>
 
       <label className="mt-4 block">
-        <span className="text-xs font-semibold uppercase text-khata-muted">
+        <FieldLabel>
           Narration
-        </span>
-        <textarea
+        </FieldLabel>
+        <Textarea
           name="narration"
           rows={3}
           defaultValue={entry.narration ?? ""}
-          className="mt-1 w-full resize-none rounded-md border border-khata-border bg-khata-paper px-3 py-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+          className="mt-1"
         />
       </label>
 
       <label className="mt-4 block">
-        <span className="text-xs font-semibold uppercase text-khata-muted">
+        <FieldLabel>
           Correction note
-        </span>
-        <textarea
+        </FieldLabel>
+        <Textarea
           name="correction_note"
           rows={3}
-          className="mt-1 w-full resize-none rounded-md border border-khata-border bg-khata-paper px-3 py-3 text-sm outline-none transition focus:border-khata-green focus:bg-white"
+          className="mt-1"
           placeholder="Reason for correcting this ledger handoff."
         />
       </label>
 
-      {state.message && (
-        <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-khata-danger">
-          {state.message}
-        </div>
-      )}
+      <FormMessage message={state.message} className="mt-4" />
 
-      <div className="mt-5 flex justify-end">
-        <button
+      <FormActions>
+        <Button
           type="submit"
           disabled={pending}
-          className="inline-flex h-11 items-center justify-center rounded-md bg-khata-green px-5 text-sm font-semibold text-white shadow-ledger transition hover:bg-khata-greenDark disabled:cursor-not-allowed disabled:opacity-70"
         >
           {pending ? "Saving..." : "Save ledger correction"}
-        </button>
-      </div>
+        </Button>
+      </FormActions>
     </form>
   );
 }

@@ -1,6 +1,24 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  ActionLink,
+  DataTable,
+  DetailList,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  SectionCard,
+  SetupRequired,
+  StatTile,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
@@ -38,15 +56,7 @@ export default async function GstPeriodPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 text-sm leading-6 text-khata-muted">
-            GST period detail needs Supabase environment variables and
-            migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing GST period details." />
     );
   }
 
@@ -91,75 +101,56 @@ export default async function GstPeriodPage({
     .limit(8);
 
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <Link
-            href="/dashboard/gst-summary"
-            className="text-sm font-semibold text-khata-green"
-          >
+    <div>
+      <PageHeader
+        eyebrow="GST Summary"
+        title="GST period summary"
+        description="Review-ready GST summary generated from approved KhataOne transactions. Filing/submission remains outside this v1 workflow."
+        meta={
+          <StatusChip tone={statusTone(period.status)}>
+            {period.status.replaceAll("_", " ")}
+          </StatusChip>
+        }
+        actions={
+          <ActionLink href="/dashboard/gst-summary">
             Back to GST summaries
-          </Link>
-          <h1 className="mt-4 text-3xl font-semibold">GST period summary</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-            Review-ready GST summary generated from approved KhataOne
-            transactions. Filing/submission remains outside this v1 workflow.
-          </p>
-        </div>
-        <StatusChip tone={statusTone(period.status)}>
-          {period.status.replaceAll("_", " ")}
-        </StatusChip>
-      </div>
+          </ActionLink>
+        }
+      />
 
-      <div className="grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <p className="text-sm font-semibold">Period details</p>
-          <dl className="mt-4 grid gap-4 text-sm">
-            {[
-              ["Client", client?.business_name ?? "Unknown client"],
-              ["GSTIN", client?.gstin ?? "Pending"],
-              ["Period", `${period.period_start} to ${period.period_end}`],
-              ["Filing", period.filing_type],
-              ["Generated", summary?.generated_at ? new Date(summary.generated_at).toLocaleString("en-IN") : "Pending"],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="grid grid-cols-[120px_1fr] gap-3 border-b border-khata-border pb-3 last:border-b-0 last:pb-0"
-              >
-                <dt className="text-khata-muted">{label}</dt>
-                <dd className={label === "GSTIN" ? "font-mono" : "font-medium"}>
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+      <PageBody className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
+        <SectionCard title="Period details">
+          <DetailList
+            items={[
+              { label: "Client", value: client?.business_name ?? "Unknown client" },
+              { label: "GSTIN", value: client?.gstin ?? "Pending", mono: true },
+              { label: "Period", value: `${period.period_start} to ${period.period_end}`, mono: true },
+              { label: "Filing", value: period.filing_type },
+              { label: "Generated", value: summary?.generated_at ? new Date(summary.generated_at).toLocaleString("en-IN") : "Pending", mono: true },
+            ]}
+          />
+        </SectionCard>
 
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <p className="text-sm font-semibold">Tax summary</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionCard title="Tax summary">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              ["Sales taxable", summary?.sales_taxable_amount],
-              ["Purchase taxable", summary?.purchase_taxable_amount],
-              ["Output CGST", summary?.output_cgst],
-              ["Output SGST", summary?.output_sgst],
-              ["Output IGST", summary?.output_igst],
-              ["Input CGST", summary?.input_cgst],
-              ["Input SGST", summary?.input_sgst],
-              ["Input IGST", summary?.input_igst],
-              ["Net payable", summary?.net_tax_payable],
-            ].map(([label, value]) => (
-              <div
+              ["Sales taxable", summary?.sales_taxable_amount, "neutral"],
+              ["Purchase taxable", summary?.purchase_taxable_amount, "neutral"],
+              ["Output CGST", summary?.output_cgst, "brand"],
+              ["Output SGST", summary?.output_sgst, "brand"],
+              ["Output IGST", summary?.output_igst, "brand"],
+              ["Input CGST", summary?.input_cgst, "success"],
+              ["Input SGST", summary?.input_sgst, "success"],
+              ["Input IGST", summary?.input_igst, "success"],
+              ["Net payable", summary?.net_tax_payable, "warning"],
+            ].map(([label, value, tone]) => (
+              <StatTile
                 key={label}
-                className="rounded-md border border-khata-border bg-khata-paper p-3"
-              >
-                <p className="text-xs font-semibold uppercase text-khata-muted">
-                  {label}
-                </p>
-                <p className="mt-2 font-mono text-lg font-semibold">
-                  {formatCurrency(Number(value ?? 0))}
-                </p>
-              </div>
+                label={label as string}
+                value={formatCurrency(Number(value ?? 0))}
+                tone={tone as "neutral" | "brand" | "success" | "warning"}
+                className="bg-khata-paper"
+              />
             ))}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -170,106 +161,102 @@ export default async function GstPeriodPage({
               {summary?.missing_document_count ?? 0} missing docs
             </StatusChip>
           </div>
-        </section>
-      </div>
+        </SectionCard>
 
-      <section className="mt-5 rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Source transactions</p>
-        </div>
+      <div className="xl:col-span-2">
+      <SectionCard title="Source transactions" bodyClassName="p-0">
         {!sourceTransactions || sourceTransactions.length === 0 ? (
-          <div className="p-5 text-sm text-khata-muted">
-            No source transactions in this period.
-          </div>
+          <EmptyState
+            title="No source transactions in this period"
+            message="Approved transactions within the period range will appear here."
+          />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={980}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Date</th>
-                  <th className="px-4 py-3 font-medium">Party</th>
-                  <th className="px-4 py-3 font-medium">Invoice</th>
-                  <th className="px-4 py-3 font-medium">Type</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">Taxable</th>
-                  <th className="px-4 py-3 text-right font-medium">Tax</th>
-                  <th className="px-4 py-3 text-right font-medium">Total</th>
+                  <th className={tableHeadCellClass}>Date</th>
+                  <th className={tableHeadCellClass}>Party</th>
+                  <th className={tableHeadCellClass}>Invoice</th>
+                  <th className={tableHeadCellClass}>Type</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableNumericHeadCellClass}>Taxable</th>
+                  <th className={tableNumericHeadCellClass}>Tax</th>
+                  <th className={tableNumericHeadCellClass}>Total</th>
                 </tr>
               </thead>
               <tbody>
                 {sourceTransactions.map((transaction) => (
-                  <tr key={transaction.id} className="border-t border-khata-border">
-                    <td className="px-4 py-3 font-mono text-xs">
+                  <tr key={transaction.id} className={tableRowClass}>
+                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {transaction.transaction_date ?? "Pending"}
                     </td>
-                    <td className="px-4 py-3 font-medium">
+                    <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                       {transaction.party_name ?? "Pending"}
                     </td>
-                    <td className="px-4 py-3 font-mono">
+                    <td className={`${tableCellClass} num`}>
                       {transaction.invoice_number ?? "Pending"}
                     </td>
-                    <td className="px-4 py-3 capitalize">
+                    <td className={`${tableCellClass} capitalize`}>
                       {transaction.transaction_type}
                     </td>
-                    <td className="px-4 py-3 capitalize">
+                    <td className={`${tableCellClass} capitalize`}>
                       {transaction.status.replaceAll("_", " ")}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono">
+                    <td className={tableNumericCellClass}>
                       {formatCurrency(transaction.taxable_amount)}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono">
+                    <td className={tableNumericCellClass}>
                       {formatCurrency(
                         Number(transaction.cgst_amount ?? 0) +
                           Number(transaction.sgst_amount ?? 0) +
                           Number(transaction.igst_amount ?? 0),
                       )}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono">
+                    <td className={tableNumericCellClass}>
                       {formatCurrency(transaction.total_amount)}
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </div>
 
-      <section className="mt-5 rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Generation audit</p>
-        </div>
+      <div className="xl:col-span-2">
+      <SectionCard title="Generation audit" bodyClassName="p-0">
         {!audits || audits.length === 0 ? (
-          <div className="p-5 text-sm text-khata-muted">
-            No GST summary audit entries yet.
-          </div>
+          <EmptyState
+            title="No GST summary audit entries yet"
+            message="Generation and export activity for this period will appear here."
+          />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={640}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Action</th>
-                  <th className="px-4 py-3 font-medium">Actor</th>
-                  <th className="px-4 py-3 text-right font-medium">Time</th>
+                  <th className={tableHeadCellClass}>Action</th>
+                  <th className={tableHeadCellClass}>Actor</th>
+                  <th className={tableNumericHeadCellClass}>Time</th>
                 </tr>
               </thead>
               <tbody>
                 {audits.map((audit) => (
-                  <tr key={audit.id} className="border-t border-khata-border">
-                    <td className="px-4 py-3 font-medium">{audit.action}</td>
-                    <td className="px-4 py-3 font-mono text-xs">
+                  <tr key={audit.id} className={tableRowClass}>
+                    <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
+                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {audit.actor_user_id ?? "system"}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono text-xs">
+                    <td className={`${tableNumericCellClass} text-xs`}>
                       {new Date(audit.created_at).toLocaleString("en-IN")}
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </div>
+      </PageBody>
     </div>
   );
 }

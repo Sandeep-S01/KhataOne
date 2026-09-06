@@ -1,4 +1,19 @@
 import { StatusChip } from "@/components/status-chip";
+import {
+  Button,
+  DataTable,
+  PageBody,
+  PageHeader,
+  SectionCard,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tableRowClass,
+} from "@/components/design-system";
 
 export type ModuleRow = {
   primary: string;
@@ -20,60 +35,49 @@ export function ModulePage({
   rows: ModuleRow[];
 }) {
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase text-khata-green">
-            {eyebrow}
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">{title}</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-            {description}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button className="h-10 rounded-md border border-khata-border bg-white px-3 text-sm font-medium">
-            Filter
-          </button>
-          <button className="h-10 rounded-md bg-khata-green px-3 text-sm font-semibold text-white">
-            New
-          </button>
-        </div>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        actions={
+          <>
+            <Button variant="outline" size="sm">Filter</Button>
+            <Button size="sm">New</Button>
+          </>
+        }
+      />
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Work queue</p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-            <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+      <PageBody>
+        <SectionCard title="Work queue" bodyClassName="p-0">
+          <DataTable minWidth={720}>
+            <thead className={tableHeaderClass}>
               <tr>
-                <th className="px-4 py-3 font-medium">Record</th>
-                <th className="px-4 py-3 font-medium">Detail</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 text-right font-medium">Value</th>
+                <th className={tableHeadCellClass}>Record</th>
+                <th className={tableHeadCellClass}>Detail</th>
+                <th className={tableHeadCellClass}>Status</th>
+                <th className={tableNumericHeadCellClass}>Value</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr key={row.primary} className="border-t border-khata-border">
-                  <td className="px-4 py-3 font-medium">{row.primary}</td>
-                  <td className="px-4 py-3 text-khata-muted">
+                <tr key={row.primary} className={tableRowClass}>
+                  <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{row.primary}</td>
+                  <td className={`${tableCellClass} ${tableSecondaryTextClass}`}>
                     {row.secondary}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className={tableCellClass}>
                     <StatusChip tone={row.statusTone}>{row.status}</StatusChip>
                   </td>
-                  <td className="px-4 py-3 text-right font-mono">
+                  <td className={tableNumericCellClass}>
                     {row.value}
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
-      </section>
+          </DataTable>
+        </SectionCard>
+      </PageBody>
     </div>
   );
 }

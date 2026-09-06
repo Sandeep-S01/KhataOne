@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const rgbVar = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,26 +11,55 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: rgbVar("--background-rgb"),
+        foreground: rgbVar("--foreground-rgb"),
+        surface: rgbVar("--surface-rgb"),
+        "surface-muted": rgbVar("--surface-muted-rgb"),
+        primary: rgbVar("--primary-rgb"),
+        "primary-dark": rgbVar("--primary-dark-rgb"),
+        saffron: rgbVar("--saffron-rgb"),
+        ink: rgbVar("--ink-rgb"),
+        success: rgbVar("--success-rgb"),
+        warning: rgbVar("--warning-rgb"),
+        info: rgbVar("--info-rgb"),
+        destructive: rgbVar("--destructive-rgb"),
+        border: rgbVar("--border-rgb"),
+        input: rgbVar("--input-rgb"),
+        ring: rgbVar("--ring-rgb"),
         khata: {
-          paper: "#F7F5EF",
-          paperMuted: "#F1EEE6",
-          surface: "#FFFFFF",
-          ink: "#1F2A24",
-          muted: "#5F6B63",
-          border: "#D8D2C4",
-          green: "#146B43",
-          greenDark: "#0D4B31",
-          saffron: "#D98A1F",
-          blue: "#2563A8",
-          danger: "#B42318",
+          paper: rgbVar("--background-rgb"),
+          paperMuted: rgbVar("--surface-muted-rgb"),
+          surface: rgbVar("--surface-rgb"),
+          ink: rgbVar("--foreground-rgb"),
+          muted: rgbVar("--muted-foreground-rgb"),
+          border: rgbVar("--border-rgb"),
+          green: rgbVar("--primary-rgb"),
+          greenDark: rgbVar("--primary-dark-rgb"),
+          saffron: rgbVar("--saffron-rgb"),
+          blue: rgbVar("--info-rgb"),
+          danger: rgbVar("--destructive-rgb"),
         },
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Sora", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
       },
+      borderRadius: {
+        sm: "0.25rem",
+        md: "var(--radius)",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.25rem",
+        "4xl": "1.5rem",
+      },
       boxShadow: {
-        ledger: "0 12px 32px rgba(31, 42, 36, 0.08)",
+        xs: "var(--elev-1)",
+        sm: "var(--elev-1)",
+        md: "var(--elev-2)",
+        lg: "var(--elev-3)",
+        ledger: "var(--elev-2)",
       },
     },
   },

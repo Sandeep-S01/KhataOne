@@ -63,11 +63,17 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 
 ## Typography
 
-- Primary font: Inter or similar modern sans-serif.
-- Numeric/ledger font: JetBrains Mono, IBM Plex Mono, or system monospace for amounts, GSTINs, invoice numbers, and tabular values.
+- Implemented app typography: Sora for display/headings, Manrope for UI/body copy, and JetBrains Mono for amounts, GSTINs, invoice numbers, and tabular values.
 - Dashboard headings should be compact and functional.
 - Landing page headings may be larger but should remain direct.
 - Letter spacing should remain normal.
+
+## Implemented Design Tokens
+
+- Global CSS tokens live in `src/app/globals.css` and are mapped into Tailwind in `tailwind.config.ts`.
+- Existing `khata-*` Tailwind color aliases remain supported and now resolve to the shared token system.
+- Shared app utilities include `k-card`, `k-card-hover`, `k-elevated`, `k-hero`, `k-brand-gradient`, `k-eyebrow`, `k-row`, and `num`.
+- Shared UI primitives for dashboard migration live in `src/components/design-system.tsx`.
 
 ## Component Guidelines
 

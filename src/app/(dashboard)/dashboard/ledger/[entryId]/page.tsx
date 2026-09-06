@@ -1,6 +1,25 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  ActionLink,
+  DataTable,
+  DetailList,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  SectionCard,
+  SetupRequired,
+  TextLink,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableSecondaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
@@ -24,15 +43,7 @@ export default async function LedgerEntryPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 text-sm leading-6 text-khata-muted">
-            Ledger entry detail needs Supabase environment variables and
-            migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing ledger entry details." />
     );
   }
 
@@ -65,100 +76,77 @@ export default async function LedgerEntryPage({
     .limit(10);
 
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <Link
+    <div>
+      <PageHeader
+        eyebrow="Ledger"
+        title="Ledger entry"
+        description="Inspect the approved handoff and its correction history."
+        actions={
+          <>
+          <ActionLink
             href="/dashboard/ledger"
-            className="text-sm font-semibold text-khata-green"
           >
             Back to ledger
-          </Link>
-          <h1 className="mt-4 text-3xl font-semibold">Ledger entry</h1>
-          <p className="mt-2 text-sm leading-6 text-khata-muted">
-            Inspect the approved handoff and its correction history.
-          </p>
-        </div>
-        <Link
+          </ActionLink>
+        <ActionLink
           href={`/dashboard/ledger/${entry.id}/edit`}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-khata-green px-4 text-sm font-semibold text-white shadow-ledger"
+          variant="primary"
         >
           Correct entry
-        </Link>
-      </div>
+        </ActionLink>
+          </>
+        }
+      />
 
-      <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <p className="text-sm font-semibold">Entry details</p>
-          <dl className="mt-4 grid gap-4 text-sm">
-            {[
-              ["Client", client?.business_name ?? "Unknown client"],
-              ["Date", entry.entry_date ?? "Pending"],
-              ["Account", entry.account_name],
-              ["Debit", formatCurrency(entry.debit_amount)],
-              ["Credit", formatCurrency(entry.credit_amount)],
-              ["Narration", entry.narration ?? "No narration"],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="grid grid-cols-[120px_1fr] gap-3 border-b border-khata-border pb-3 last:border-b-0 last:pb-0"
-              >
-                <dt className="text-khata-muted">{label}</dt>
-                <dd className={label === "Debit" || label === "Credit" ? "font-mono" : "font-medium"}>
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+      <PageBody className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
+        <SectionCard title="Entry details">
+          <DetailList
+            items={[
+              { label: "Client", value: client?.business_name ?? "Unknown client" },
+              { label: "Date", value: entry.entry_date ?? "Pending", mono: true },
+              { label: "Account", value: entry.account_name },
+              { label: "Debit", value: formatCurrency(entry.debit_amount), mono: true },
+              { label: "Credit", value: formatCurrency(entry.credit_amount), mono: true },
+              { label: "Narration", value: entry.narration ?? "No narration" },
+            ]}
+          />
+        </SectionCard>
 
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <p className="text-sm font-semibold">Source transaction</p>
-          <dl className="mt-4 grid gap-4 text-sm">
-            {[
-              ["Invoice", transaction?.invoice_number ?? "Pending"],
-              ["Party", transaction?.party_name ?? "Pending"],
-              ["Type", transaction?.transaction_type ?? "Unknown"],
-              ["Status", transaction?.status ?? "Unknown"],
-              ["Amount", formatCurrency(transaction?.total_amount ?? null)],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="grid grid-cols-[120px_1fr] gap-3 border-b border-khata-border pb-3 last:border-b-0 last:pb-0"
-              >
-                <dt className="text-khata-muted">{label}</dt>
-                <dd className="font-medium">{value}</dd>
-              </div>
-            ))}
-          </dl>
+        <SectionCard title="Source transaction">
+          <DetailList
+            items={[
+              { label: "Invoice", value: transaction?.invoice_number ?? "Pending", mono: true },
+              { label: "Party", value: transaction?.party_name ?? "Pending" },
+              { label: "Type", value: transaction?.transaction_type ?? "Unknown" },
+              { label: "Status", value: transaction?.status ?? "Unknown" },
+              { label: "Amount", value: formatCurrency(transaction?.total_amount ?? null), mono: true },
+            ]}
+          />
           {transaction?.id && (
-            <Link
+            <TextLink
               href={`/dashboard/review-queue/${transaction.id}`}
-              className="mt-5 inline-flex text-sm font-semibold text-khata-green"
+              className="mt-5"
             >
               Open review source
-            </Link>
+            </TextLink>
           )}
-        </section>
-      </div>
+        </SectionCard>
 
-      <section className="mt-5 rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Correction audit</p>
-        </div>
+      <div className="xl:col-span-2">
+      <SectionCard title="Correction audit" bodyClassName="p-0">
         {!audits || audits.length === 0 ? (
-          <div className="p-5 text-sm text-khata-muted">
-            No corrections recorded.
-          </div>
+          <EmptyState
+            title="No corrections recorded"
+            message="Correction notes and ledger-entry audit activity will appear here."
+          />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={720}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Action</th>
-                  <th className="px-4 py-3 font-medium">Actor</th>
-                  <th className="px-4 py-3 font-medium">Note</th>
-                  <th className="px-4 py-3 text-right font-medium">Time</th>
+                  <th className={tableHeadCellClass}>Action</th>
+                  <th className={tableHeadCellClass}>Actor</th>
+                  <th className={tableHeadCellClass}>Note</th>
+                  <th className={tableNumericHeadCellClass}>Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,25 +159,26 @@ export default async function LedgerEntryPage({
                       : null;
 
                   return (
-                    <tr key={audit.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3 font-medium">{audit.action}</td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                    <tr key={audit.id} className={tableRowClass}>
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {audit.actor_user_id ?? "system"}
                       </td>
-                      <td className="px-4 py-3 text-khata-muted">
+                      <td className={`${tableCellClass} ${tableSecondaryTextClass}`}>
                         {metadata?.correction_note || "No note"}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-xs">
+                      <td className={`${tableNumericCellClass} text-xs`}>
                         {new Date(audit.created_at).toLocaleString("en-IN")}
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </div>
+      </PageBody>
     </div>
   );
 }

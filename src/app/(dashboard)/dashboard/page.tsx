@@ -1,129 +1,245 @@
-import { redirect } from "next/navigation";
-
+import {
+  ActionLink,
+  DataTable,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  StatTile,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
+import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
-const stats = [
-  ["Pending review", "0"],
-  ["Clients active", "0"],
-  ["GST ready", "0"],
-  ["Exports this month", "0"],
-];
+function formatCurrency(value: number | null) {
+  if (value === null || value === undefined) {
+    return "Pending";
+  }
+
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+function statusTone(status: string) {
+  switch (status) {
+    case "draft":
+      return "info";
+    case "needs_review":
+    case "duplicate":
+      return "warning";
+    case "approved":
+    case "ready":
+      return "success";
+    case "failed":
+    case "rejected":
+      return "danger";
+    default:
+      return "neutral";
+  }
+}
 
 export default async function DashboardPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Phase 2 routes are in place, but authentication needs
-            `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables before opening the protected CA operations workspace." />
     );
   }
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const context = await getFirmContext();
 
-  if (!user) {
-    redirect("/login");
+  if (!context) {
+    return null;
   }
 
-  const { data: memberships } = await supabase
-    .from("firm_users")
-    .select("firm_id, role, firms(name)")
-    .eq("user_id", user.id)
-    .eq("status", "active")
-    .limit(1);
+  const { firm, supabase } = context;
+  const monthStart = new Date();
+  monthStart.setDate(1);
+  monthStart.setHours(0, 0, 0, 0);
 
-  if (!memberships || memberships.length === 0) {
-    redirect("/onboarding");
-  }
+  const pendingReviewPromise = supabase
+    .from("transactions")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("status", ["draft", "needs_review", "duplicate"]);
+  const activeClientsPromise = supabase
+    .from("clients")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .neq("status", "archived");
+  const gstReadyPromise = supabase
+    .from("gst_periods")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .eq("status", "ready");
+  const exportsThisMonthPromise = supabase
+    .from("exports")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .eq("status", "completed")
+    .gte("created_at", monthStart.toISOString());
+  const reviewItemsPromise = supabase
+    .from("transactions")
+    .select(
+      "id, transaction_type, status, party_name, invoice_number, total_amount, confidence_score, created_at, clients(business_name)",
+    )
+    .eq("firm_id", firm.id)
+    .in("status", ["draft", "needs_review", "duplicate"])
+    .order("created_at", { ascending: false })
+    .limit(8);
+
+  const [
+    pendingReview,
+    activeClients,
+    gstReady,
+    exportsThisMonth,
+    reviewItemsResult,
+  ] = await Promise.all([
+    pendingReviewPromise,
+    activeClientsPromise,
+    gstReadyPromise,
+    exportsThisMonthPromise,
+    reviewItemsPromise,
+  ]);
+  const { data: reviewItems, error: reviewItemsError } = reviewItemsResult;
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Overview
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">CA operations console</h1>
-        <p className="mt-2 text-sm text-khata-muted">
-          Client, WhatsApp, review, ledger, GST, export, and audit modules will
-          land here as the next build phases are completed.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Overview"
+        title="CA operations console"
+        description={`Track intake, review work, ledger handoff, GST readiness, exports, and audit activity for ${firm.name ?? "this firm"}.`}
+        actions={
+          <>
+            <ActionLink href="/dashboard/review-queue" variant="primary">
+              Review queue
+            </ActionLink>
+            <ActionLink href="/dashboard/clients">
+              Clients
+            </ActionLink>
+          </>
+        }
+      />
 
+      <PageBody>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map(([label, value]) => (
-          <div
-            key={label}
-            className="rounded-md border border-khata-border bg-white p-4 shadow-sm"
-          >
-            <p className="text-xs font-medium uppercase text-khata-muted">
-              {label}
-            </p>
-            <p className="mt-2 font-mono text-3xl font-semibold">{value}</p>
-          </div>
-        ))}
+        <StatTile
+          label="Pending review"
+          value={pendingReview.count ?? 0}
+          tone={(pendingReview.count ?? 0) > 0 ? "warning" : "success"}
+          hint="Draft, needs-review, and duplicate-risk transactions."
+        />
+        <StatTile
+          label="Client workspaces"
+          value={activeClients.count ?? 0}
+          tone="brand"
+          hint="Active or onboarding clients in this firm."
+        />
+        <StatTile
+          label="GST ready periods"
+          value={gstReady.count ?? 0}
+          tone="success"
+          hint="Generated periods marked ready for review/export."
+        />
+        <StatTile
+          label="Exports this month"
+          value={exportsThisMonth.count ?? 0}
+          tone="neutral"
+          hint="Completed files created from approved records."
+        />
       </div>
 
-      <section className="mt-5 rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Next implementation slice</p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-            <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+        <SectionCard
+          title="Review queue snapshot"
+          description="Newest AI-created records waiting for a CA decision."
+          actions={
+            <RecordCount value={reviewItems?.length ?? 0} label="latest" />
+          }
+          bodyClassName="p-0"
+        >
+          {reviewItemsError && (
+            <QueryError message={reviewItemsError.message} />
+          )}
+
+          {!reviewItemsError && (!reviewItems || reviewItems.length === 0) && (
+            <EmptyState
+              title="No review items pending"
+              message="New WhatsApp documents and draft extractions will appear here when they need a reviewer decision."
+              action={
+                <ActionLink href="/dashboard/inbox">
+                  Open inbox
+                </ActionLink>
+              }
+            />
+          )}
+
+          {!reviewItemsError && reviewItems && reviewItems.length > 0 && (
+          <DataTable minWidth={860}>
+            <thead className={tableHeaderClass}>
               <tr>
-                <th className="px-4 py-3 font-medium">Phase</th>
-                <th className="px-4 py-3 font-medium">Module</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Guardrail</th>
+                <th className={tableHeadCellClass}>Client</th>
+                <th className={tableHeadCellClass}>Party</th>
+                <th className={tableHeadCellClass}>Invoice</th>
+                <th className={tableHeadCellClass}>Type</th>
+                <th className={tableHeadCellClass}>Status</th>
+                <th className={tableNumericHeadCellClass}>Confidence</th>
+                <th className={tableNumericHeadCellClass}>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {[
-                [
-                  "3",
-                  "Dashboard shell",
-                  "Next",
-                  "Keep dense, table-first console patterns.",
-                ],
-                [
-                  "4",
-                  "Client management",
-                  "Planned",
-                  "Every client belongs to a firm.",
-                ],
-                [
-                  "5",
-                  "WhatsApp ingestion",
-                  "Planned",
-                  "Store raw events before processing.",
-                ],
-              ].map(([phase, module, status, guardrail]) => (
-                <tr key={phase} className="border-t border-khata-border">
-                  <td className="px-4 py-3 font-mono">{phase}</td>
-                  <td className="px-4 py-3 font-medium">{module}</td>
-                  <td className="px-4 py-3">
-                    <span className="rounded-md bg-khata-paper px-2 py-1 text-xs font-medium">
-                      {status}
-                    </span>
+              {reviewItems.map((item) => {
+                const client = Array.isArray(item.clients)
+                  ? item.clients[0]
+                  : item.clients;
+
+                return (
+                <tr key={item.id} className={tableRowClass}>
+                  <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
+                    {client?.business_name ?? "Unknown client"}
                   </td>
-                  <td className="px-4 py-3 text-khata-muted">{guardrail}</td>
+                  <td className={tableCellClass}>
+                    {item.party_name ?? "Pending"}
+                  </td>
+                  <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    {item.invoice_number ?? "Pending"}
+                  </td>
+                  <td className={`${tableCellClass} capitalize`}>
+                    {item.transaction_type}
+                  </td>
+                  <td className={tableCellClass}>
+                    <StatusChip tone={statusTone(item.status)}>
+                      {item.status.replaceAll("_", " ")}
+                    </StatusChip>
+                  </td>
+                  <td className={tableNumericCellClass}>
+                    {Math.round((item.confidence_score ?? 0) * 100)}%
+                  </td>
+                  <td className={tableNumericCellClass}>
+                    {formatCurrency(item.total_amount)}
+                  </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
-          </table>
-        </div>
-      </section>
+          </DataTable>
+          )}
+        </SectionCard>
+      </PageBody>
     </div>
   );
 }

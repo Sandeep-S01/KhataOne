@@ -12,6 +12,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Apply Supabase migrations for lead requests, firms, and memberships.
 - Verify Phase 4 client management against a live Supabase project.
 - Continue Phase 3 dashboard shell with filters, modals, and real data wiring.
+- Continue dashboard design-system migration across protected work areas, prioritizing shared primitives, dense tables, compact forms, and Lovable-aligned spacing while preserving existing Supabase flows.
 - Verify Phase 5 WhatsApp webhook with Meta after environment variables and public URL are configured.
 - Verify KO-PERF-04 Stage 2 fast-ack webhook cutover in staging and production: the webhook now verifies Meta signature, durably queues inbound events, and returns before worker-side matching/media/document/job/ack processing; signed production probe and protected worker processing passed, while scheduler cadence still needs continued monitoring because no new GitHub scheduled run appeared during the short post-cutover wait window.
 - Verify Phase 6 AI extraction against real OpenAI and Supabase credentials.
@@ -32,7 +33,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | Project setup | Complete | Next.js App Router, TypeScript, Tailwind, Supabase helpers, env template, CI |
 | Landing page | Complete | Public page and demo/signup/waitlist CTA capture flow implemented |
 | Auth and firm workspace | In progress | Login/signup, middleware, onboarding, firm tables, and RLS migration implemented; needs live Supabase verification |
-| Dashboard shell | In progress | Sidebar/topbar, protected overview, module routes, shared status/table primitives implemented; filters/modals still needed |
+| Dashboard shell | In progress | Lovable-aligned sidebar/topbar, protected overview, module routes, shared status/table primitives, and first core list-page migration implemented; filters/modals and remaining detail pages still need polish |
 | Client management | In progress | Client table, RLS, list/detail/create/edit/archive flows, WhatsApp mapping fields, and audit logging implemented; needs live Supabase verification |
 | WhatsApp ingestion | In progress | Webhook verification, signature validation, raw message storage, client matching, media download, document creation, processing jobs, and inbox view implemented; needs live Meta/Supabase verification |
 | AI extraction | In progress | Structured output schema, OpenAI Responses processor, AI extraction table, draft transaction creation, job endpoint, and review queue data view implemented; text-first and needs live verification |
@@ -76,6 +77,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify signup, login, firm onboarding, protected dashboard, and signout against Supabase.
 - Verify client create, edit, archive, RLS isolation, and audit logs against Supabase.
 - Add shared dashboard filter/modal primitives.
+- Continue migrating dashboard detail pages, operational forms, and secondary modules to shared primitives.
 - Configure WhatsApp environment variables and public webhook URL.
 - Verify Meta webhook challenge and signed POST delivery.
 - Verify media download/upload to private Supabase storage.
@@ -142,3 +144,33 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-08-16 | Verified the GitHub Actions WhatsApp ingestion scheduler now succeeds with `CRON_SECRET` and processed the controlled queue probe automatically; KO-PERF-04 Stage 1 runtime gate is ready for the separate Stage 2 cutover decision. |
 | 2026-08-16 | Implemented KO-PERF-04 Stage 2 webhook cutover so signed WhatsApp POST requests enqueue durable inbound events and return before heavy ingestion work; worker/scheduler continue processing asynchronously. |
 | 2026-08-16 | Verified Stage 2 on production with a signed synthetic webhook: initial response created only a queued durable event, duplicate replay was idempotent, invalid signature returned 401, and the protected worker processed the event asynchronously as unmatched; continue monitoring scheduler cadence because no new scheduled run appeared during the short verification window. |
+| 2026-09-05 | Started application-wide design-system migration with Sora/Manrope/JetBrains Mono fonts, opacity-safe Tailwind token mapping, shared UI utilities/primitives, refreshed landing/auth/demo form styling, and first dashboard shell/component token pass. |
+| 2026-09-05 | Rebuilt the public landing page into a calmer professional SaaS layout inspired by the Lovable direction while preserving the real demo request flow and deferring logo redesign. |
+| 2026-09-05 | Tightened the Lovable-inspired landing implementation with safer mobile review-card layout, cleaner typography spacing, lead form polish, removal of prototype/date/fake metric copy, and local lint/typecheck/build plus Playwright viewport verification. |
+| 2026-09-05 | Replaced the landing-page header/footer PNG badge with a crisp compact KhataOne lockup matching the green icon-tile reference and generated transparent logo variants from the source image. |
+| 2026-09-05 | Compared the landing page against the Lovable GitHub implementation and widened the desktop frame, scaled hero typography, enlarged product-preview/card rhythm, improved form spacing, and verified desktop/tablet/mobile screenshots. |
+| 2026-09-05 | Corrected the landing page over-scaling from the previous polish pass by restoring Lovable-source container widths, hero type scale, card density, button sizing, and compact form controls while keeping the cleaner logo lockup. |
+| 2026-09-05 | Restored Lovable-matched hero proof numbers and made the quote card orange left rule explicit so it renders reliably with the shared card utility. |
+| 2026-09-05 | Extracted the KhataOne K mark from the source logo and placed it inside the landing-page logo tile, replacing the temporary clipboard icon while preserving compact header sizing. |
+| 2026-09-05 | Removed the dark backing from the visible landing logo mark, created a no-black light-header K mark variant, and wired matching favicon/app icon assets through Next metadata. |
+| 2026-09-05 | Extended the Lovable-inspired public design language to login and signup with the shared KhataOne logo/header/footer, compact auth forms, responsive two-column desktop composition, and local lint/typecheck/build plus viewport screenshot verification. |
+| 2026-09-05 | Reworked login and signup into the standalone Lovable-style split-screen auth layout with no header/footer, no prototype/demo-user content, real auth actions preserved, and final lint/typecheck/build plus viewport screenshot verification. |
+| 2026-09-05 | Compared the auth pages directly against the Lovable GitHub `login.tsx` source and corrected the oversized auth UI by restoring the prototype's compact `max-w-sm`, `text-2xl`, `text-sm`, `h-9` form controls, hidden mobile side panel, and source-matched split-screen proportions. |
+| 2026-09-06 | Started dashboard-area design-system migration with a Lovable-aligned protected shell, grouped icon sidebar, shared button/input/card/stat/table primitives, compact overview, and migrated Clients, Inbox, Review Queue, Ledger, and generic module list surfaces without changing backend flows. |
+| 2026-09-06 | Continued dashboard UI migration across review detail, client detail/edit/new, ledger detail/edit, GST summary list/detail, exports, reports, operations, audit logs, settings, and shared operational forms using reusable primitives while preserving existing Supabase queries and server actions. |
+| 2026-09-06 | Polished the firm onboarding workspace setup UI with the shared KhataOne logo, compact split setup layout, shared form controls, and design-system card treatment while keeping the existing create-firm server action unchanged. |
+| 2026-09-06 | Added shared dashboard action-link and filter-bar primitives, migrated repeated dashboard action/filter surfaces to them, and verified public auth rendering plus protected-route redirects without bypassing authentication. |
+| 2026-09-06 | Centralized remaining dashboard text-action links and form validation/message treatments into shared design-system primitives, then reran lint, typecheck, and production build successfully. |
+| 2026-09-06 | Replaced dashboard overview scaffolding with firm-scoped live counts, a real review queue snapshot, and active firm context in the protected shell while preserving existing auth, RLS, and Supabase query boundaries. |
+| 2026-09-06 | Replaced repeated dashboard and onboarding configuration fallback markup with a shared setup-required design-system surface and removed user-visible implementation-phase wording from protected app screens. |
+| 2026-09-06 | Consolidated dashboard page gutters, record counters, and query-error presentation into shared design-system primitives across overview, clients, inbox, review queue, ledger, GST, exports, reports, operations, audit logs, settings, and platform pages. |
+| 2026-09-06 | Normalized dashboard detail and edit page content gutters with the shared page body primitive across client, review, ledger, and GST detail workflows while preserving existing route guards and data access. |
+| 2026-09-06 | Tightened dashboard header action alignment and centralized operational form footer alignment with a shared form-actions primitive across client, review, and ledger edit forms. |
+| 2026-09-06 | Centralized dashboard, onboarding, and demo-request field-label typography into a shared design-system field-label primitive while preserving existing form actions, validation, and Supabase-backed flows. |
+| 2026-09-06 | Added a shared inline alert primitive for compact dashboard risk/error signals and applied it to review queue risk flags and operations job failures without changing underlying data or actions. |
+| 2026-09-06 | Centralized dashboard table numeric and action cell alignment into shared design-system table classes across overview, queue, ledger, GST, reports, exports, inbox, audit, settings, platform, and detail history tables. |
+| 2026-09-06 | Polished shared dashboard empty and setup-required states with consistent icon treatment, action spacing, and setup messaging layout from the design-system layer. |
+| 2026-09-06 | Tightened shared dashboard detail-list and key-value metadata primitives with consistent label typography, mobile-safe stacking, and desktop label/value alignment for client, ledger, GST, settings, review, and platform panels. |
+| 2026-09-06 | Added a shared icon-panel primitive and migrated settings assurance cards, platform roadmap cards, and the legacy module page wrapper to shared dashboard presentation patterns. |
+| 2026-09-06 | Centralized dashboard table numeric and action header alignment into shared design-system table header classes across operational list, overview, detail, history, and legacy module tables. |
+| 2026-09-06 | Centralized common dashboard table row typography into shared primary, secondary, and monospace text classes across client, inbox, review, ledger, GST, reports, exports, audit, operations, platform, and legacy module rows. |

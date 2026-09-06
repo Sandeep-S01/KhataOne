@@ -1,5 +1,23 @@
 import { CheckCircle2, CircleAlert } from "lucide-react";
 
+import {
+  DataTable,
+  DetailList,
+  EmptyState,
+  IconPanel,
+  PageBody,
+  PageHeader,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
@@ -28,14 +46,7 @@ function ConfigStatus({
 export default async function SettingsPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Firm settings need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing firm configuration." />
     );
   }
 
@@ -68,61 +79,40 @@ export default async function SettingsPage() {
     .length;
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Settings
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Firm configuration</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Review workspace identity, role boundaries, integration readiness, and
-          security setup for this firm.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Settings"
+        title="Firm configuration"
+        description="Review workspace identity, role boundaries, integration readiness, and security setup for this firm."
+      />
 
-      <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-semibold">Firm profile</p>
+      <PageBody>
+      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
+        <SectionCard
+          title="Firm profile"
+          actions={
             <StatusChip tone={firmRecord?.status === "active" ? "success" : "warning"}>
               {firmRecord?.status ?? "pending"}
             </StatusChip>
-          </div>
-          <dl className="mt-4 grid gap-4 text-sm">
-            {[
-              ["Name", firmRecord?.name ?? firm?.name ?? "Pending"],
-              ["Slug", firmRecord?.slug ?? "Pending"],
-              ["GSTIN", firmRecord?.gstin ?? "Pending"],
-              ["Phone", firmRecord?.phone ?? "Pending"],
-              ["Email", firmRecord?.email ?? "Pending"],
-              ["Address", firmRecord?.address ?? "Pending"],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="grid grid-cols-[100px_1fr] gap-3 border-b border-khata-border pb-3 last:border-b-0 last:pb-0"
-              >
-                <dt className="text-khata-muted">{label}</dt>
-                <dd
-                  className={
-                    label === "GSTIN" || label === "Slug"
-                      ? "font-mono"
-                      : "font-medium"
-                  }
-                >
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+          }
+        >
+          <DetailList
+            labelWidth="100px"
+            items={[
+              { label: "Name", value: firmRecord?.name ?? firm?.name ?? "Pending" },
+              { label: "Slug", value: firmRecord?.slug ?? "Pending", mono: true },
+              { label: "GSTIN", value: firmRecord?.gstin ?? "Pending", mono: true },
+              { label: "Phone", value: firmRecord?.phone ?? "Pending", mono: true },
+              { label: "Email", value: firmRecord?.email ?? "Pending" },
+              { label: "Address", value: firmRecord?.address ?? "Pending" },
+            ]}
+          />
+        </SectionCard>
 
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-semibold">Integration readiness</p>
-            <span className="font-mono text-xs text-khata-muted">
-              {configuredCount}/{integrationRows.length}
-            </span>
-          </div>
+        <SectionCard
+          title="Integration readiness"
+          actions={<RecordCount value={configuredCount} label={`of ${integrationRows.length}`} />}
+        >
           <p className="mt-2 font-mono text-xs text-khata-muted">
             AI order: {getExtractionProviderOrder().join(", ")}
           </p>
@@ -135,82 +125,68 @@ export default async function SettingsPage() {
               />
             ))}
           </div>
-        </section>
+        </SectionCard>
       </div>
 
-      <section className="mt-5 rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Workspace members</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {members?.length ?? 0} users
-          </span>
-        </div>
+      <SectionCard
+        title="Workspace members"
+        actions={<RecordCount value={members?.length ?? 0} label="users" />}
+        bodyClassName="p-0"
+      >
         {!members || members.length === 0 ? (
-          <div className="p-5 text-sm text-khata-muted">
-            No active memberships found.
-          </div>
+          <EmptyState
+            title="No active memberships found"
+            message="Active firm users and role boundaries will appear here."
+          />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={760}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">User</th>
-                  <th className="px-4 py-3 font-medium">Role</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right font-medium">Joined</th>
+                  <th className={tableHeadCellClass}>User</th>
+                  <th className={tableHeadCellClass}>Role</th>
+                  <th className={tableHeadCellClass}>Status</th>
+                  <th className={tableNumericHeadCellClass}>Joined</th>
                 </tr>
               </thead>
               <tbody>
                 {members.map((member) => (
-                  <tr key={member.id} className="border-t border-khata-border">
-                    <td className="px-4 py-3 font-mono text-xs">
+                  <tr key={member.id} className={tableRowClass}>
+                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {member.user_id}
                     </td>
-                    <td className="px-4 py-3 capitalize">{member.role}</td>
-                    <td className="px-4 py-3">
+                    <td className={`${tableCellClass} capitalize`}>{member.role}</td>
+                    <td className={tableCellClass}>
                       <StatusChip
                         tone={member.status === "active" ? "success" : "warning"}
                       >
                         {member.status}
                       </StatusChip>
                     </td>
-                    <td className="px-4 py-3 text-right font-mono text-xs">
+                    <td className={`${tableNumericCellClass} text-xs`}>
                       {new Date(member.created_at).toLocaleString("en-IN")}
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
 
-      <section className="mt-5 grid gap-3 md:grid-cols-2">
-        <div className="rounded-lg border border-khata-border bg-white p-4 shadow-sm">
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="mt-0.5 size-5 text-khata-green" />
-            <div>
-              <p className="text-sm font-semibold">Security boundaries</p>
-              <p className="mt-1 text-sm leading-6 text-khata-muted">
-                Firm data uses RLS and server-side firm checks. Sensitive files
-                use private storage plus authenticated downloads.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-lg border border-khata-border bg-white p-4 shadow-sm">
-          <div className="flex items-start gap-3">
-            <CircleAlert className="mt-0.5 size-5 text-amber-600" />
-            <div>
-              <p className="text-sm font-semibold">Production checks pending</p>
-              <p className="mt-1 text-sm leading-6 text-khata-muted">
-                Live RLS isolation, webhook retries, extraction accuracy,
-                export formats, backups, and monitoring still need verification.
-              </p>
-            </div>
-          </div>
-        </div>
+      <section className="grid gap-3 md:grid-cols-2">
+        <IconPanel
+          icon={CheckCircle2}
+          title="Security boundaries"
+          description="Firm data uses RLS and server-side firm checks. Sensitive files use private storage plus authenticated downloads."
+          tone="success"
+        />
+        <IconPanel
+          icon={CircleAlert}
+          title="Production checks pending"
+          description="Live RLS isolation, webhook retries, extraction accuracy, export formats, backups, and monitoring still need verification."
+          tone="warning"
+        />
       </section>
+      </PageBody>
     </div>
   );
 }

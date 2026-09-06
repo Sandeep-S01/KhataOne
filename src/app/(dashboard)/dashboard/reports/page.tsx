@@ -1,6 +1,28 @@
-import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
 
+import {
+  ActionLink,
+  DataTable,
+  EmptyState,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  SetupRequired,
+  StatTile,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
@@ -31,14 +53,7 @@ function statusTone(status: string) {
 export default async function ReportsPage() {
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Reports need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing CA reports." />
     );
   }
 
@@ -46,14 +61,7 @@ export default async function ReportsPage() {
 
   if (!context) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Reports need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing CA reports." />
     );
   }
 
@@ -105,79 +113,66 @@ export default async function ReportsPage() {
   const { data: periods, error } = periodsResult;
 
   return (
-    <div className="p-5">
-      <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase text-khata-green">
-            Reports
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">CA reports</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-            Review client GST readiness, unresolved work, and export activity
-            before sharing files with clients.
-          </p>
-        </div>
-        <Link
+    <div>
+      <PageHeader
+        eyebrow="Reports"
+        title="CA reports"
+        description="Review client GST readiness, unresolved work, and export activity before sharing files with clients."
+        actions={
+        <ActionLink
           href="/dashboard/exports"
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-khata-green px-4 text-sm font-semibold text-white"
+          variant="primary"
         >
           <FileText className="size-4" />
           Create export
-        </Link>
-      </div>
+        </ActionLink>
+        }
+      />
 
-      <div className="mb-5 grid gap-3 md:grid-cols-3">
+      <PageBody>
+      <div className="grid gap-3 md:grid-cols-3">
         {[
-          ["Approved transactions", approvedCount ?? 0],
-          ["Draft/review items", reviewCount ?? 0],
-          ["Completed exports", exportCount ?? 0],
-        ].map(([label, value]) => (
-          <section
+          ["Approved transactions", approvedCount ?? 0, "success"],
+          ["Draft/review items", reviewCount ?? 0, "warning"],
+          ["Completed exports", exportCount ?? 0, "brand"],
+        ].map(([label, value, tone]) => (
+          <StatTile
             key={label}
-            className="rounded-lg border border-khata-border bg-white p-4 shadow-sm"
-          >
-            <p className="text-xs font-semibold uppercase text-khata-muted">
-              {label}
-            </p>
-            <p className="mt-2 font-mono text-2xl font-semibold">{value}</p>
-          </section>
+            label={label as string}
+            value={value as number}
+            tone={tone as "success" | "warning" | "brand"}
+          />
         ))}
       </div>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">GST readiness report</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {periods?.length ?? 0} periods
-          </span>
-        </div>
+      <SectionCard
+        title="GST readiness report"
+        actions={<RecordCount value={periods?.length ?? 0} label="periods" />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!periods || periods.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No report data yet</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Generate GST summaries after approving transactions to populate
-              this report.
-            </p>
-          </div>
+          <EmptyState
+            title="No report data yet"
+            message="Generate GST summaries after approving transactions to populate this report."
+          />
         )}
 
         {!error && periods && periods.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={980}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">GSTIN</th>
-                  <th className="px-4 py-3 font-medium">Period</th>
-                  <th className="px-4 py-3 font-medium">Readiness</th>
-                  <th className="px-4 py-3 text-right font-medium">Issues</th>
-                  <th className="px-4 py-3 text-right font-medium">Net tax</th>
-                  <th className="px-4 py-3 text-right font-medium">Action</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>GSTIN</th>
+                  <th className={tableHeadCellClass}>Period</th>
+                  <th className={tableHeadCellClass}>Readiness</th>
+                  <th className={tableNumericHeadCellClass}>Issues</th>
+                  <th className={tableNumericHeadCellClass}>Net tax</th>
+                  <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -193,44 +188,43 @@ export default async function ReportsPage() {
                     Number(summary?.missing_document_count ?? 0);
 
                   return (
-                    <tr key={period.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3 font-medium">
+                    <tr key={period.id} className={tableRowClass}>
+                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {client?.gstin ?? "Pending"}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {period.period_start} to {period.period_end}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         <StatusChip tone={statusTone(period.status)}>
                           {period.status.replaceAll("_", " ")}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {issueCount}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono">
+                      <td className={tableNumericCellClass}>
                         {formatCurrency(summary?.net_tax_payable ?? 0)}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <Link
+                      <td className={tableActionCellClass}>
+                        <TextLink
                           href={`/dashboard/gst-summary/${period.id}`}
-                          className="inline-flex items-center justify-end gap-2 font-semibold text-khata-green"
                         >
                           Open
                           <ArrowRight className="size-4" />
-                        </Link>
+                        </TextLink>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }

@@ -1,5 +1,27 @@
-import Link from "next/link";
-
+import {
+  ActionLink,
+  Button,
+  DataTable,
+  EmptyState,
+  FieldLabel,
+  FilterBar,
+  Input,
+  PageBody,
+  PageHeader,
+  QueryError,
+  RecordCount,
+  SectionCard,
+  Select,
+  SetupRequired,
+  tableCellClass,
+  tableHeadCellClass,
+  tableHeaderClass,
+  tableMonoTextClass,
+  tableNumericCellClass,
+  tableNumericHeadCellClass,
+  tablePrimaryTextClass,
+  tableRowClass,
+} from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getActiveFirm } from "@/lib/firms";
@@ -40,14 +62,7 @@ export default async function AuditLogsPage({
 
   if (!hasSupabaseConfig()) {
     return (
-      <div className="p-5">
-        <section className="rounded-lg border border-khata-border bg-white p-5 shadow-ledger">
-          <h1 className="text-2xl font-semibold">Supabase setup required</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-khata-muted">
-            Audit logs need Supabase environment variables and migrations.
-          </p>
-        </section>
-      </div>
+      <SetupRequired message="Connect Supabase environment variables and migrations before viewing audit activity." />
     );
   }
 
@@ -80,38 +95,34 @@ export default async function AuditLogsPage({
   );
 
   return (
-    <div className="p-5">
-      <div className="mb-5">
-        <p className="text-sm font-semibold uppercase text-khata-green">
-          Audit Logs
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold">Traceability</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
-          Review firm actions across client setup, AI extraction, approvals,
-          ledger corrections, GST summaries, and exports.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Audit Logs"
+        title="Traceability"
+        description="Review firm actions across client setup, AI extraction, approvals, ledger corrections, GST summaries, and exports."
+      />
 
-      <form className="mb-5 grid gap-3 rounded-lg border border-khata-border bg-white p-4 shadow-sm md:grid-cols-[1fr_1fr_auto]">
+      <PageBody>
+      <FilterBar className="md:grid-cols-[1fr_1fr_auto]">
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Action contains
-          </span>
-          <input
+          </FieldLabel>
+          <Input
             name="action"
             defaultValue={action}
             placeholder="approved, generated, corrected"
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           />
         </label>
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-khata-muted">
+          <FieldLabel>
             Entity
-          </span>
-          <select
+          </FieldLabel>
+          <Select
             name="entity_type"
             defaultValue={entityType}
-            className="mt-1 h-10 w-full rounded-md border border-khata-border bg-khata-paper px-3 text-sm outline-none focus:border-khata-green"
+            className="mt-1"
           >
             <option value="">All entities</option>
             {uniqueEntityTypes.map((type) => (
@@ -119,54 +130,42 @@ export default async function AuditLogsPage({
                 {type}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         <div className="flex items-end gap-2">
-          <button className="h-10 rounded-md bg-khata-green px-4 text-sm font-semibold text-white">
+          <Button type="submit" size="sm">
             Filter
-          </button>
-          <Link
-            href="/dashboard/audit-logs"
-            className="inline-flex h-10 items-center rounded-md border border-khata-border bg-khata-paper px-4 text-sm font-semibold"
-          >
-            Reset
-          </Link>
+          </Button>
+          <ActionLink href="/dashboard/audit-logs">Reset</ActionLink>
         </div>
-      </form>
+      </FilterBar>
 
-      <section className="rounded-lg border border-khata-border bg-white shadow-ledger">
-        <div className="flex items-center justify-between border-b border-khata-border px-4 py-3">
-          <p className="text-sm font-semibold">Recent audit events</p>
-          <span className="font-mono text-xs text-khata-muted">
-            {logs?.length ?? 0} records
-          </span>
-        </div>
+      <SectionCard
+        title="Recent audit events"
+        actions={<RecordCount value={logs?.length ?? 0} />}
+        bodyClassName="p-0"
+      >
 
         {error && (
-          <div className="p-4 text-sm text-khata-danger">{error.message}</div>
+          <QueryError message={error.message} />
         )}
 
         {!error && (!logs || logs.length === 0) && (
-          <div className="p-6">
-            <p className="text-sm font-semibold">No audit logs found</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
-              Actions will appear here as users create clients, review
-              transactions, correct ledgers, generate GST summaries, and create
-              exports.
-            </p>
-          </div>
+          <EmptyState
+            title="No audit logs found"
+            message="Actions will appear here as users create clients, review transactions, correct ledgers, generate GST summaries, and create exports."
+          />
         )}
 
         {!error && logs && logs.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1040px] border-collapse text-left text-sm">
-              <thead className="bg-khata-paperMuted text-xs text-khata-muted">
+          <DataTable minWidth={1040}>
+              <thead className={tableHeaderClass}>
                 <tr>
-                  <th className="px-4 py-3 font-medium">Action</th>
-                  <th className="px-4 py-3 font-medium">Client</th>
-                  <th className="px-4 py-3 font-medium">Entity</th>
-                  <th className="px-4 py-3 font-medium">Actor</th>
-                  <th className="px-4 py-3 text-right font-medium">Time</th>
+                  <th className={tableHeadCellClass}>Action</th>
+                  <th className={tableHeadCellClass}>Client</th>
+                  <th className={tableHeadCellClass}>Entity</th>
+                  <th className={tableHeadCellClass}>Actor</th>
+                  <th className={tableNumericHeadCellClass}>Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,35 +175,35 @@ export default async function AuditLogsPage({
                     : log.clients;
 
                   return (
-                    <tr key={log.id} className="border-t border-khata-border">
-                      <td className="px-4 py-3">
+                    <tr key={log.id} className={tableRowClass}>
+                      <td className={tableCellClass}>
                         <StatusChip tone={actionTone(log.action)}>
                           {log.action}
                         </StatusChip>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={tableCellClass}>
                         {client?.business_name ?? "Not linked"}
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="font-medium">{log.entity_type}</span>
-                        <p className="mt-1 font-mono text-xs text-khata-muted">
+                      <td className={tableCellClass}>
+                        <span className={tablePrimaryTextClass}>{log.entity_type}</span>
+                        <p className={`mt-1 ${tableMonoTextClass} text-khata-muted`}>
                           {log.entity_id ?? "No entity id"}
                         </p>
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">
+                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {log.actor_user_id ?? "system"}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-xs">
+                      <td className={`${tableNumericCellClass} text-xs`}>
                         {new Date(log.created_at).toLocaleString("en-IN")}
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+          </DataTable>
         )}
-      </section>
+      </SectionCard>
+      </PageBody>
     </div>
   );
 }
