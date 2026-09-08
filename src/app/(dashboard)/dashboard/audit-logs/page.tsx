@@ -59,6 +59,9 @@ export default async function AuditLogsPage({
   const params = await searchParams;
   const action = readParam(params.action)?.trim() ?? "";
   const entityType = readParam(params.entity_type)?.trim() ?? "";
+  const actor = readParam(params.actor)?.trim() ?? "";
+  const from = readParam(params.from)?.trim() ?? "";
+  const to = readParam(params.to)?.trim() ?? "";
 
   if (!hasSupabaseConfig()) {
     return (
@@ -83,6 +86,18 @@ export default async function AuditLogsPage({
     query = query.eq("entity_type", entityType);
   }
 
+  if (actor) {
+    query = query.eq("actor_user_id", actor);
+  }
+
+  if (from) {
+    query = query.gte("created_at", `${from}T00:00:00.000Z`);
+  }
+
+  if (to) {
+    query = query.lte("created_at", `${to}T23:59:59.999Z`);
+  }
+
   const { data: logs, error } = await query;
   const { data: entityTypes } = await supabase
     .from("audit_logs")
@@ -103,7 +118,7 @@ export default async function AuditLogsPage({
       />
 
       <PageBody>
-      <FilterBar className="md:grid-cols-[1fr_1fr_auto]">
+      <FilterBar action="/dashboard/audit-logs" className="md:grid-cols-5">
         <label className="block">
           <FieldLabel>
             Action contains
@@ -132,11 +147,46 @@ export default async function AuditLogsPage({
             ))}
           </Select>
         </label>
+        <label className="block">
+          <FieldLabel>
+            Actor
+          </FieldLabel>
+          <Input
+            name="actor"
+            defaultValue={actor}
+            placeholder="User id"
+            className="mt-1"
+          />
+        </label>
+        <label className="block">
+          <FieldLabel>
+            From
+          </FieldLabel>
+          <Input
+            name="from"
+            type="date"
+            defaultValue={from}
+            className="mt-1"
+          />
+        </label>
+        <label className="block">
+          <FieldLabel>
+            To
+          </FieldLabel>
+          <Input
+            name="to"
+            type="date"
+            defaultValue={to}
+            className="mt-1"
+          />
+        </label>
         <div className="flex items-end gap-2">
           <Button type="submit" size="sm">
             Filter
           </Button>
-          <ActionLink href="/dashboard/audit-logs">Reset</ActionLink>
+          <ActionLink href="/dashboard/audit-logs" size="sm">
+            Reset
+          </ActionLink>
         </div>
       </FilterBar>
 
@@ -158,7 +208,7 @@ export default async function AuditLogsPage({
         )}
 
         {!error && logs && logs.length > 0 && (
-          <DataTable minWidth={1040}>
+          <DataTable minWidth={1040} ariaLabel="Audit log events">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Action</th>

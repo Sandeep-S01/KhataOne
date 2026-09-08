@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
 
 import {
   submitLeadRequest,
@@ -27,6 +27,9 @@ function SubmitButton() {
       disabled={pending}
       className="inline-flex h-10 w-full items-center justify-center rounded-md bg-khata-green px-4 text-sm font-medium text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green disabled:cursor-not-allowed disabled:opacity-70"
     >
+      {pending && (
+        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+      )}
       {pending ? "Sending request..." : "Request demo"}
       {!pending && <ArrowRight className="ml-2 h-4 w-4" />}
     </button>
@@ -67,10 +70,12 @@ export function LeadCaptureForm() {
             name="full_name"
             type="text"
             autoComplete="name"
+            required
             aria-invalid={Boolean(state.fieldErrors?.full_name)}
+            aria-describedby={state.fieldErrors?.full_name ? "full-name-error" : undefined}
             className={fieldClass}
           />
-          <FieldError message={state.fieldErrors?.full_name} />
+          <FieldError id="full-name-error" message={state.fieldErrors?.full_name} />
         </label>
 
         <label className="block">
@@ -79,10 +84,12 @@ export function LeadCaptureForm() {
             name="firm_name"
             type="text"
             autoComplete="organization"
+            required
             aria-invalid={Boolean(state.fieldErrors?.firm_name)}
+            aria-describedby={state.fieldErrors?.firm_name ? "firm-name-error" : undefined}
             className={fieldClass}
           />
-          <FieldError message={state.fieldErrors?.firm_name} />
+          <FieldError id="firm-name-error" message={state.fieldErrors?.firm_name} />
         </label>
 
         <label className="block">
@@ -91,10 +98,12 @@ export function LeadCaptureForm() {
             name="email"
             type="email"
             autoComplete="email"
+            required
             aria-invalid={Boolean(state.fieldErrors?.email)}
+            aria-describedby={state.fieldErrors?.email ? "lead-email-error" : undefined}
             className={fieldClass}
           />
-          <FieldError message={state.fieldErrors?.email} />
+          <FieldError id="lead-email-error" message={state.fieldErrors?.email} />
         </label>
 
         <label className="block">
@@ -103,10 +112,12 @@ export function LeadCaptureForm() {
             name="phone"
             type="tel"
             autoComplete="tel"
+            required
             aria-invalid={Boolean(state.fieldErrors?.phone)}
+            aria-describedby={state.fieldErrors?.phone ? "lead-phone-error" : undefined}
             className={fieldClass}
           />
-          <FieldError message={state.fieldErrors?.phone} />
+          <FieldError id="lead-phone-error" message={state.fieldErrors?.phone} />
         </label>
 
         <label className="block">
@@ -129,14 +140,16 @@ export function LeadCaptureForm() {
           <select
             name="intent"
             aria-invalid={Boolean(state.fieldErrors?.intent)}
+            aria-describedby={state.fieldErrors?.intent ? "lead-intent-error" : undefined}
             className={fieldClass}
             defaultValue="demo"
+            required
           >
             <option value="demo">Book demo</option>
             <option value="waitlist">Join waitlist</option>
             <option value="signup">Start signup</option>
           </select>
-          <FieldError message={state.fieldErrors?.intent} />
+          <FieldError id="lead-intent-error" message={state.fieldErrors?.intent} />
         </label>
       </div>
 
@@ -145,13 +158,14 @@ export function LeadCaptureForm() {
         <textarea
           name="message"
           rows={4}
-          className={`${fieldClass} h-auto resize-none py-3`}
+          className={`${fieldClass} h-auto resize-y py-3`}
           placeholder="Example: 80 clients, GST monthly, clients send bills on WhatsApp."
         />
       </label>
 
       {state.message && (
         <div
+          aria-live="polite"
           className={`mt-4 flex items-start gap-2 rounded-md border px-3 py-2 text-sm ${
             state.status === "success"
               ? "border-success/30 bg-success/10 text-success"

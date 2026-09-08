@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { ComponentPropsWithoutRef } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -6,7 +7,6 @@ import {
   Check,
   ChevronRight,
   FileSpreadsheet,
-  Menu,
   MessageSquareText,
   ScanLine,
   ShieldCheck,
@@ -16,13 +16,9 @@ import {
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { LandingNavigation } from "@/components/landing-navigation";
 import { LeadCaptureForm } from "@/components/lead-capture-form";
-
-const navItems = [
-  { label: "How it works", href: "#how" },
-  { label: "Features", href: "#features" },
-  { label: "FAQ", href: "#faq" },
-];
+import { getPublicAppUrl } from "@/lib/env";
 
 const reviewRows = [
   ["ABC Traders", "INV-2291", "Rs. 1,18,000", "Review recommended", "warning"],
@@ -110,6 +106,59 @@ const faqItems = [
   },
 ];
 
+const proofPoints = [
+  ["WhatsApp", "Client document intake"],
+  ["CA review", "Required before ledger"],
+  ["GST", "Summary and export prep"],
+] as const;
+
+const trustItems = [
+  "Original WhatsApp messages stay linked to document records.",
+  "AI output remains a draft with confidence and risk context.",
+  "Approvals and edits are traceable to reviewer action.",
+  "GST summaries are prepared from reviewed records, not direct filing.",
+] as const;
+
+const footerLinks = [
+  ["Privacy", "/privacy"],
+  ["Terms", "/terms"],
+  ["Contact", "/contact"],
+] as const;
+
+const siteUrl = getPublicAppUrl();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "KhataOne",
+      url: siteUrl,
+      logo: `${siteUrl}/favicon.png`,
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "KhataOne",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      description:
+        "WhatsApp-first AI-assisted bookkeeping intake, CA review, GST summary, and export workflow for Indian CA firms.",
+      url: siteUrl,
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+
 function LandingHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-khata-border bg-white/95 backdrop-blur">
@@ -121,65 +170,7 @@ function LandingHeader() {
         >
           <BrandLogo />
         </Link>
-
-        <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-khata-muted md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="font-medium hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-2 md:flex">
-          <Link
-            href="/login"
-            className="inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-medium text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
-          >
-            Sign in
-          </Link>
-          <a
-            href="#demo"
-            className="inline-flex h-9 items-center justify-center rounded-md bg-khata-green px-4 text-sm font-medium text-white shadow-sm hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
-          >
-            Book a demo
-          </a>
-        </div>
-
-        <details className="group relative md:hidden">
-          <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-khata-border bg-white text-khata-ink shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
-            <span className="sr-only">Open navigation menu</span>
-            <Menu className="h-5 w-5" />
-          </summary>
-          <div className="absolute right-0 top-14 w-[min(21rem,calc(100vw-2rem))] rounded-xl border border-khata-border bg-white p-2 shadow-lg">
-            <nav aria-label="Mobile primary" className="grid gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-lg px-3 py-3 text-sm font-medium text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink"
-                >
-                  {item.label}
-                </a>
-              ))}
-              <Link
-                href="/login"
-                className="rounded-lg px-3 py-3 text-sm font-medium text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink"
-              >
-                Sign in
-              </Link>
-              <a
-                href="#demo"
-                className="mt-1 inline-flex h-11 items-center justify-center rounded-lg bg-khata-green px-4 text-sm font-medium text-white"
-              >
-                Book a demo
-              </a>
-            </nav>
-          </div>
-        </details>
+        <LandingNavigation />
       </div>
     </header>
   );
@@ -239,7 +230,7 @@ function ReviewQueuePreview() {
   return (
     <div className="k-card k-elevated p-5">
       <div className="flex items-center justify-between border-b border-khata-border pb-3">
-        <p className="text-sm font-semibold">Review queue</p>
+        <h2 className="text-sm font-semibold">Review queue</h2>
         <Chip label="7 awaiting review" tone="warning" />
       </div>
 
@@ -332,11 +323,23 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-khata-paper text-khata-ink">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-khata-green focus:shadow-md"
+      >
+        Skip to content
+      </a>
       <LandingHeader />
 
-      <main>
+      <main id="main-content">
         <section className="k-hero border-b border-khata-border">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:py-28">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:grid-cols-2 md:items-center lg:grid-cols-[1.05fr_1fr] lg:py-28">
             <div>
               <Chip label="Built for CA firms" tone="brand" />
               <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-normal text-khata-ink sm:text-5xl lg:text-[3.4rem]">
@@ -351,7 +354,7 @@ export default function Home() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <ButtonLink href="#demo">
-                  Book a guided demo <ArrowRight className="size-4" />
+                  Book a demo <ArrowRight className="size-4" />
                 </ButtonLink>
                 <ButtonLink href="#how" variant="outline">
                   See how it works
@@ -359,14 +362,10 @@ export default function Home() {
               </div>
 
               <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-khata-border pt-6">
-                {[
-                  ["8", "Demo clients"],
-                  ["16", "Transactions in flight"],
-                  ["100%", "Human-approved postings"],
-                ].map(([value, label]) => (
+                {proofPoints.map(([value, label]) => (
                   <div key={label}>
                     <dt className="sr-only">{label}</dt>
-                    <dd className="num text-3xl font-semibold text-khata-green">
+                    <dd className="text-sm font-semibold text-khata-green sm:text-base">
                       {value}
                     </dd>
                     <p className="mt-1 text-xs leading-5 text-khata-muted">{label}</p>
@@ -381,7 +380,7 @@ export default function Home() {
 
         <section id="how" className="border-b border-khata-border bg-white">
           <div className="mx-auto max-w-6xl px-4 py-20">
-            <SectionLabel>Workflow</SectionLabel>
+            <SectionLabel>Four-step workflow</SectionLabel>
             <h2 className="mt-2 text-3xl font-semibold tracking-normal text-khata-ink">
               How KhataOne works
             </h2>
@@ -399,7 +398,7 @@ export default function Home() {
 
         <section id="features" className="border-b border-khata-border">
           <div className="mx-auto max-w-6xl px-4 py-20">
-            <SectionLabel>Platform</SectionLabel>
+            <SectionLabel>What CAs get</SectionLabel>
             <h2 className="mt-2 text-3xl font-semibold tracking-normal text-khata-ink">
               Built for how CA firms work
             </h2>
@@ -413,19 +412,38 @@ export default function Home() {
 
         <section className="border-b border-khata-border bg-white">
           <div className="mx-auto max-w-6xl px-4 py-20">
-            <div
-              className="k-card k-elevated p-8"
-              style={{ borderLeft: "4px solid rgb(var(--saffron-rgb))" }}
-            >
-              <p className="max-w-5xl text-xl leading-relaxed tracking-normal text-khata-ink">
-                &ldquo;Our clients were never going to learn new software. They
-                already send us photos of bills all day. KhataOne just made
-                that stream reviewable.&rdquo;
-              </p>
-              <p className="mt-5 text-sm text-khata-muted">
-                Illustrative quote &mdash; partner at a fictional four-partner
-                practice, Bengaluru
-              </p>
+            <SectionLabel>Trust and control</SectionLabel>
+            <div className="mt-3 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+              <div>
+                <h2 className="text-3xl font-semibold tracking-normal text-khata-ink">
+                  Built for CA-controlled financial workflows.
+                </h2>
+                <p className="mt-4 text-[15px] leading-7 text-khata-muted">
+                  KhataOne speeds intake and review without turning AI output
+                  into accounting truth. Source records, draft extraction,
+                  reviewer decisions and exports stay connected.
+                </p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {trustItems.map((item, index) => (
+                  <div
+                    key={item}
+                    className="k-card p-4"
+                    style={{
+                      borderLeft:
+                        index === 3 ? "4px solid rgb(var(--saffron-rgb))" : undefined,
+                    }}
+                  >
+                    <ShieldCheck
+                      className="size-5 text-khata-green"
+                      aria-hidden="true"
+                    />
+                    <p className="mt-3 text-sm leading-6 text-khata-muted">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -433,7 +451,7 @@ export default function Home() {
         <section id="demo" className="border-b border-khata-border">
           <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <div>
-              <SectionLabel>Workflow setup</SectionLabel>
+              <SectionLabel>Demo setup</SectionLabel>
               <h2 className="mt-2 max-w-xl text-3xl font-semibold tracking-normal text-khata-ink">
                 Map the workflow your CA firm already runs.
               </h2>
@@ -461,8 +479,8 @@ export default function Home() {
         </section>
 
         <section id="faq" className="border-b border-khata-border bg-khata-paperMuted">
-          <div className="mx-auto max-w-3xl px-4 py-20">
-            <SectionLabel>Answers</SectionLabel>
+          <div className="mx-auto max-w-4xl px-4 py-20">
+            <SectionLabel>Common questions</SectionLabel>
             <h2 className="mt-2 text-3xl font-semibold tracking-normal text-khata-ink">
               Frequently asked
             </h2>
@@ -495,7 +513,26 @@ export default function Home() {
       <footer className="border-t border-khata-border bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-khata-muted sm:flex-row sm:items-center sm:justify-between">
           <BrandLogo />
-          <p>WhatsApp-first AI bookkeeping and GST preparation workflow for CA firms.</p>
+          <div className="flex flex-col gap-3 sm:items-end">
+            <p>
+              WhatsApp-first AI bookkeeping and GST preparation workflow for CA
+              firms.
+            </p>
+            <nav
+              aria-label="Footer"
+              className="flex flex-wrap gap-4 text-xs font-medium"
+            >
+              {footerLinks.map(([label, href]) => (
+                <Link
+                  key={href}
+                  href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
+                  className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
       </footer>
     </div>

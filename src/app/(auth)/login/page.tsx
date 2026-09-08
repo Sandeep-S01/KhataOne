@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
@@ -17,6 +18,15 @@ const controlItems = [
   ["Ledger handoff", "Approved only"],
   ["GST summaries", "Reviewed data"],
 ];
+
+export const metadata: Metadata = {
+  title: "Sign in | KhataOne",
+  description:
+    "Sign in to the KhataOne CA firm workspace for document review, ledger handoff, GST summaries, and exports.",
+  alternates: {
+    canonical: "/login",
+  },
+};
 
 export default function LoginPage() {
   return (

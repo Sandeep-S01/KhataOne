@@ -64,7 +64,7 @@ const groups = [
   },
 ];
 
-export function DashboardNav() {
+export function DashboardNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const itemByHref = new Map(
     dashboardNavItems.map((item) => [item.href as string, item]),
@@ -75,7 +75,9 @@ export function DashboardNav() {
       {groups.map((group) => {
         const items = group.items
           .map((href) => itemByHref.get(href))
-          .filter(Boolean);
+          .filter((item): item is (typeof dashboardNavItems)[number] =>
+            Boolean(item),
+          );
 
         return (
           <div key={group.title} className="mb-4 last:mb-0">
@@ -84,10 +86,6 @@ export function DashboardNav() {
             </p>
             <ul className="space-y-0.5">
               {items.map((item) => {
-                if (!item) {
-                  return null;
-                }
-
                 const href = item.href as string;
                 const Icon = iconByHref[href] ?? LayoutDashboard;
                 const isActive =
@@ -98,6 +96,8 @@ export function DashboardNav() {
                   <li key={href}>
                     <Link
                       href={item.href}
+                      onClick={onNavigate}
+                      aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "relative flex min-h-9 items-center gap-2.5 rounded-md px-2 py-2 text-sm font-medium transition-colors duration-150",
                         isActive

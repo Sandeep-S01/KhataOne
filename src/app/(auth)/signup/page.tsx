@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
@@ -17,6 +18,15 @@ const setupItems = [
   ["Export path", "Reviewed records"],
   ["GST workflow", "Period ready"],
 ];
+
+export const metadata: Metadata = {
+  title: "Create account | KhataOne",
+  description:
+    "Create a KhataOne CA firm workspace for WhatsApp-first intake, draft extraction, CA review, GST summaries, and exports.",
+  alternates: {
+    canonical: "/signup",
+  },
+};
 
 export default function SignupPage() {
   return (

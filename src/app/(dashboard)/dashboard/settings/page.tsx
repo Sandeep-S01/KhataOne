@@ -139,7 +139,7 @@ export default async function SettingsPage() {
             message="Active firm users and role boundaries will appear here."
           />
         ) : (
-          <DataTable minWidth={760}>
+          <DataTable minWidth={760} ariaLabel="Workspace members">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>User</th>

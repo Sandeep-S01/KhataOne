@@ -130,7 +130,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "flex min-h-24 w-full resize-none rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "flex min-h-24 w-full resize-y rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         className,
       )}
       {...props}
@@ -179,12 +179,22 @@ export function Field({
   );
 }
 
-export function FieldError({ message }: { message?: string }) {
+export function FieldError({
+  message,
+  id,
+}: {
+  message?: string;
+  id?: string;
+}) {
   if (!message) {
     return null;
   }
 
-  return <p className="mt-1 text-xs font-medium text-destructive">{message}</p>;
+  return (
+    <p id={id} className="mt-1 text-xs font-medium text-destructive">
+      {message}
+    </p>
+  );
 }
 
 export function FormMessage({
@@ -208,6 +218,7 @@ export function FormMessage({
 
   return (
     <div
+      aria-live="polite"
       className={cn(
         "rounded-md border px-3 py-2 text-sm leading-6",
         toneClasses[tone],
@@ -650,12 +661,19 @@ export function DetailList({
 export function DataTable({
   children,
   minWidth = 760,
+  ariaLabel = "Scrollable data table",
 }: {
   children: React.ReactNode;
   minWidth?: number;
+  ariaLabel?: string;
 }) {
   return (
-    <div className="overflow-x-auto">
+    <div
+      className="overflow-x-auto"
+      role="region"
+      aria-label={ariaLabel}
+      tabIndex={0}
+    >
       <table
         className="w-full border-collapse text-left text-sm"
         style={{ minWidth }}
@@ -667,7 +685,7 @@ export function DataTable({
 }
 
 export const tableHeaderClass =
-  "bg-khata-paperMuted/80 text-xs text-khata-muted";
+  "sticky top-0 z-10 bg-khata-paperMuted/95 text-xs text-khata-muted";
 export const tableHeadCellClass = "px-4 py-3 font-medium";
 export const tableNumericHeadCellClass = `${tableHeadCellClass} text-right`;
 export const tableActionHeadCellClass = tableNumericHeadCellClass;

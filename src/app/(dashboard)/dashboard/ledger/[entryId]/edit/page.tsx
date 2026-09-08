@@ -6,8 +6,10 @@ import {
 } from "@/components/ledger-entry-form";
 import {
   ActionLink,
+  DetailList,
   PageBody,
   PageHeader,
+  SectionCard,
   SetupRequired,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
@@ -15,6 +17,14 @@ import { getActiveFirm } from "@/lib/firms";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
+
+function formatCurrency(value: number | null) {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(value ?? 0);
+}
 
 export default async function EditLedgerEntryPage({
   params,
@@ -54,7 +64,21 @@ export default async function EditLedgerEntryPage({
           </ActionLink>
         }
       />
-      <PageBody>
+      <PageBody className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr] xl:items-start">
+        <SectionCard
+          title="Current handoff values"
+          description="Use these values as the before-state while entering the correction note."
+        >
+          <DetailList
+            items={[
+              { label: "Date", value: entry.entry_date ?? "Pending", mono: true },
+              { label: "Account", value: entry.account_name },
+              { label: "Debit", value: formatCurrency(entry.debit_amount), mono: true },
+              { label: "Credit", value: formatCurrency(entry.credit_amount), mono: true },
+              { label: "Narration", value: entry.narration ?? "No narration" },
+            ]}
+          />
+        </SectionCard>
         <LedgerEntryForm entry={entry as LedgerEntryValues} />
       </PageBody>
     </div>

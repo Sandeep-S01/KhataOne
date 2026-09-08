@@ -163,14 +163,15 @@ export default async function ReportsPage() {
         )}
 
         {!error && periods && periods.length > 0 && (
-          <DataTable minWidth={980}>
+          <DataTable minWidth={1040} ariaLabel="GST readiness report">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Client</th>
                   <th className={tableHeadCellClass}>GSTIN</th>
                   <th className={tableHeadCellClass}>Period</th>
                   <th className={tableHeadCellClass}>Readiness</th>
-                  <th className={tableNumericHeadCellClass}>Issues</th>
+                  <th className={tableNumericHeadCellClass}>Mismatches</th>
+                  <th className={tableNumericHeadCellClass}>Missing docs</th>
                   <th className={tableNumericHeadCellClass}>Net tax</th>
                   <th className={tableActionHeadCellClass}>Action</th>
                 </tr>
@@ -183,9 +184,6 @@ export default async function ReportsPage() {
                   const summary = Array.isArray(period.gst_summaries)
                     ? period.gst_summaries[0]
                     : period.gst_summaries;
-                  const issueCount =
-                    Number(summary?.mismatch_count ?? 0) +
-                    Number(summary?.missing_document_count ?? 0);
 
                   return (
                     <tr key={period.id} className={tableRowClass}>
@@ -204,7 +202,10 @@ export default async function ReportsPage() {
                         </StatusChip>
                       </td>
                       <td className={tableNumericCellClass}>
-                        {issueCount}
+                        {summary?.mismatch_count ?? 0}
+                      </td>
+                      <td className={tableNumericCellClass}>
+                        {summary?.missing_document_count ?? 0}
                       </td>
                       <td className={tableNumericCellClass}>
                         {formatCurrency(summary?.net_tax_payable ?? 0)}

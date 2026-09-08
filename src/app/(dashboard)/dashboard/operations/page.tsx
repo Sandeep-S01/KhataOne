@@ -58,6 +58,10 @@ function canRunJobs(role: string) {
   return ["owner", "admin", "staff"].includes(role);
 }
 
+function safeErrorMessage(message: string) {
+  return message.length > 140 ? `${message.slice(0, 140)}...` : message;
+}
+
 export default async function OperationsPage({
   searchParams,
 }: {
@@ -164,7 +168,7 @@ export default async function OperationsPage({
         <StatTile label="Failed jobs" value={failedCount ?? 0} tone="danger" />
       </div>
 
-      <FilterBar className="md:grid-cols-[1fr_1fr_auto]">
+      <FilterBar action="/dashboard/operations" className="md:grid-cols-[1fr_1fr_auto]">
         <label className="block">
           <FieldLabel>
             Status
@@ -204,6 +208,7 @@ export default async function OperationsPage({
           </Button>
           <ActionLink
             href={"/dashboard/operations" as Route}
+            size="sm"
           >
             Reset
           </ActionLink>
@@ -228,7 +233,7 @@ export default async function OperationsPage({
         )}
 
         {!error && jobs && jobs.length > 0 && (
-          <DataTable minWidth={1080}>
+          <DataTable minWidth={1080} ariaLabel="Processing jobs">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Job</th>
@@ -268,7 +273,7 @@ export default async function OperationsPage({
                       <td className={tableCellClass}>
                         {job.last_error ? (
                           <InlineAlert className="max-w-md">
-                            {job.last_error}
+                            {safeErrorMessage(job.last_error)}
                           </InlineAlert>
                         ) : (
                           <span className={tableSecondaryTextClass}>None</span>

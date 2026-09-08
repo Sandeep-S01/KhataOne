@@ -54,7 +54,7 @@ function exportLabel(type: string) {
     case "pdf_summary":
       return "GST summary PDF";
     case "tally_ready":
-      return "Tally-ready";
+      return "Tally-ready (reserved)";
     default:
       return type.replaceAll("_", " ");
   }
@@ -145,7 +145,7 @@ export default async function ExportsPage() {
         )}
 
         {!error && exports && exports.length > 0 && (
-          <DataTable minWidth={980}>
+          <DataTable minWidth={980} ariaLabel="Export history">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Export</th>

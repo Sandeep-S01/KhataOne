@@ -48,6 +48,15 @@ type SearchParams = {
   account?: string;
 };
 
+function activeFilterSummary(filters: SearchParams) {
+  return [
+    filters.client ? "Client selected" : null,
+    filters.from ? `From ${filters.from}` : null,
+    filters.to ? `To ${filters.to}` : null,
+    filters.account ? `Account: ${filters.account}` : null,
+  ].filter(Boolean);
+}
+
 export default async function LedgerPage({
   searchParams,
 }: {
@@ -103,6 +112,7 @@ export default async function LedgerPage({
   const totalCredit =
     entries?.reduce((sum, entry) => sum + Number(entry.credit_amount ?? 0), 0) ??
     0;
+  const activeFilters = activeFilterSummary(filters);
 
   return (
     <div>
@@ -113,7 +123,7 @@ export default async function LedgerPage({
       />
 
       <PageBody>
-      <FilterBar className="md:grid-cols-5">
+      <FilterBar action="/dashboard/ledger" className="md:grid-cols-5">
         <label className="block">
           <FieldLabel>
             Client
@@ -172,8 +182,26 @@ export default async function LedgerPage({
           <Button type="submit" size="sm">
             Apply
           </Button>
-          <ActionLink href="/dashboard/ledger">Clear</ActionLink>
+          <ActionLink href="/dashboard/ledger" size="sm">
+            Clear
+          </ActionLink>
         </div>
+
+        {activeFilters.length > 0 && (
+          <div className="md:col-span-5">
+            <FieldLabel>Active filters</FieldLabel>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {activeFilters.map((filter) => (
+                <span
+                  key={filter}
+                  className="rounded-md border border-khata-border bg-khata-paperMuted px-2 py-1 text-xs font-medium text-khata-muted"
+                >
+                  {filter}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </FilterBar>
 
       <div className="grid gap-3 sm:grid-cols-3">
@@ -204,12 +232,21 @@ export default async function LedgerPage({
         {!error && (!entries || entries.length === 0) && (
           <EmptyState
             title="No ledger entries found"
-            message="Approve a review queue transaction or adjust filters to view ledger handoff records."
+            message={
+              activeFilters.length > 0
+                ? "Adjust or clear filters to view approved ledger handoff records."
+                : "Approve a review queue transaction to create ledger handoff records."
+            }
+            action={
+              activeFilters.length > 0 ? (
+                <ActionLink href="/dashboard/ledger">Clear filters</ActionLink>
+              ) : undefined
+            }
           />
         )}
 
         {!error && entries && entries.length > 0 && (
-          <DataTable minWidth={980}>
+          <DataTable minWidth={980} ariaLabel="Ledger handoff entries">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Date</th>

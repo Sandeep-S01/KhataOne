@@ -12,6 +12,7 @@ import {
   FieldLabel,
   FilterBar,
   FormMessage,
+  InfoNote,
   Input,
   Select,
 } from "@/components/design-system";
@@ -123,8 +124,17 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
         </Button>
       </div>
 
+      <InfoNote>
+        GST summaries prepare review and export data from approved transactions;
+        they do not submit filings.
+      </InfoNote>
+
       {state.message && (
-        <FormMessage message={state.message} className="md:col-span-5" />
+        <FormMessage
+          message={state.message}
+          tone={state.status === "success" ? "success" : "danger"}
+          className="md:col-span-5"
+        />
       )}
     </FilterBar>
   );
