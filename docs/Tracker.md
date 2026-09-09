@@ -110,6 +110,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 | Date | Change |
 | --- | --- |
+| 2026-09-10 | Completed a diagnosis-only performance audit package with `docs/performance/PERFORMANCE_DIAGNOSIS.md` and `docs/performance/PERFORMANCE_BASELINE.json`, covering verified architecture, measured unauthenticated local/live baselines, code-confirmed bottlenecks, blocked authenticated/index evidence, and ranked next-phase recommendations. |
 | 2026-09-10 | Added `docs/Performance-Architecture-Brief.md` as a copy-ready architecture/workflow/performance context package for independent ChatGPT diagnosis of authenticated dashboard navigation latency. |
 | 2026-09-10 | Linked the local checkout to the Vercel `khata-one` project and verified Vercel env names without exposing secret values; `SUPABASE_ACCESS_TOKEN` is not present in any listed Vercel environment, so production Supabase migration remains blocked on a Supabase CLI access token or database password. Renamed authenticated timing tooling to `perf:live-dashboard` with normal live dashboard credential env names. |
 | 2026-09-09 | Added authenticated live dashboard performance smoke coverage using Supabase SSR sign-in cookies and timed requests for dashboard, Clients, Ledger, Review Queue, Inbox, and GST Summary routes; production index application remains gated on Supabase CLI/database credentials. |
