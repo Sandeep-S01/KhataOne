@@ -26,7 +26,8 @@ function requireEnv(key) {
   const value = process.env[key];
 
   if (!value) {
-    throw new Error(`Missing required environment variable: ${key}`);
+    console.error(`FAIL setup: Missing required environment variable: ${key}`);
+    process.exit(1);
   }
 
   return value;
@@ -80,13 +81,16 @@ async function timedFetch(baseUrl, route, cookieJar) {
 
 loadLocalEnv();
 
-const baseUrl = process.env.SMOKE_BASE_URL ?? "https://khataone.vercel.app";
+const baseUrl =
+  process.env.LIVE_DASHBOARD_BASE_URL ??
+  process.env.NEXT_PUBLIC_APP_URL ??
+  "https://khataone.vercel.app";
 const supabaseUrl = requireEnv("NEXT_PUBLIC_SUPABASE_URL");
 const supabaseAnonKey = requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
-const email = requireEnv("SMOKE_CA_EMAIL");
-const password = requireEnv("SMOKE_CA_PASSWORD");
-const warnAfterMs = Number(process.env.SMOKE_WARN_AFTER_MS ?? 2000);
-const failAfterMs = Number(process.env.SMOKE_FAIL_AFTER_MS ?? 8000);
+const email = requireEnv("LIVE_DASHBOARD_EMAIL");
+const password = requireEnv("LIVE_DASHBOARD_PASSWORD");
+const warnAfterMs = Number(process.env.LIVE_DASHBOARD_WARN_AFTER_MS ?? 2000);
+const failAfterMs = Number(process.env.LIVE_DASHBOARD_FAIL_AFTER_MS ?? 8000);
 const cookieJar = new Map();
 
 const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {

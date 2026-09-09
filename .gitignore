@@ -15,7 +15,6 @@ build
 .env.test.local
 .env.production.local
 *.env
-!.env.example
 OldpplicationImpEnvCredential.env
 
 # logs
@@ -33,3 +32,5 @@ tsconfig.tsbuildinfo
 
 # vercel
 .vercel
+.env*
+!.env.example
