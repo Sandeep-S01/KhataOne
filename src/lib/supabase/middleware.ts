@@ -5,7 +5,6 @@ import { getPublicEnv, hasSupabaseConfig } from "@/lib/env";
 
 const protectedRoutes = ["/dashboard", "/onboarding"];
 const authRoutes = ["/login", "/signup"];
-const publicRoutes = ["/"];
 
 function isProtectedPath(pathname: string) {
   return protectedRoutes.some(
@@ -17,14 +16,10 @@ function isAuthPath(pathname: string) {
   return authRoutes.some((route) => pathname === route);
 }
 
-function isPublicPath(pathname: string) {
-  return publicRoutes.includes(pathname);
-}
-
 export async function updateSession(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (isPublicPath(pathname)) {
+  if (!isProtectedPath(pathname) && !isAuthPath(pathname)) {
     return NextResponse.next({
       request,
     });

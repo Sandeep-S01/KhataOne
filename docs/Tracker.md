@@ -110,6 +110,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 | Date | Change |
 | --- | --- |
+| 2026-09-09 | Implemented dashboard performance pass 3 by narrowing middleware matching to dashboard/onboarding/auth routes only, removing unnecessary Supabase auth refresh work from public pages and API endpoints while keeping protected route checks in place. |
 | 2026-09-09 | Implemented dashboard performance pass 2 with shared pagination controls and bounded page-size queries for Clients, WhatsApp Inbox, Review Queue, and Ledger so route changes fetch only the visible page plus one lookahead record while preserving active filters. Local verify passed. |
 | 2026-09-09 | Implemented first dashboard performance pass: request-cached firm context, removed duplicate page-level Supabase clients across dashboard routes, parallelized independent reads on hot pages, pushed status filters into Clients/Inbox/Review Queue queries, added dashboard loading skeleton, and added composite Supabase indexes for tenant-scoped dashboard queries. Local verify and smoke checks passed. |
 | 2026-09-09 | Completed pre-push cleanup for the latest UI changes: fixed sidebar storage state handling for hydration-safe collapse persistence, removed stale imports/comments, normalized Tailwind utilities, pinned Turbopack to the repo root, and verified with `npm.cmd run verify`, `git diff --check`, and local smoke checks against `http://localhost:3000`. |
