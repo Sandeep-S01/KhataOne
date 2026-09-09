@@ -404,3 +404,9 @@ Phase 13 note: external integrations are roadmap scaffolding only. They create a
 - `status` on documents, transactions, exports, and jobs.
 - `gst_period_id` on summaries and exports.
 - `provider_message_id` unique index on WhatsApp messages.
+
+Performance note: dashboard list screens also maintain composite indexes for
+common tenant-scoped query shapes such as `(firm_id, status, created_at desc)`,
+`(firm_id, processing_status, received_at desc)`, `(firm_id, entry_date desc,
+created_at desc)`, and related client/status/date combinations. These indexes
+support faster protected navigation without weakening RLS.

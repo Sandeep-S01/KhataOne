@@ -9,6 +9,7 @@ import {
   Input,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -28,8 +29,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +63,7 @@ function formatCurrency(value: number | null) {
 
 const reviewStatusOptions = ["all", "draft", "needs_review", "duplicate"];
 const reviewRiskOptions = ["all", "risk", "low_confidence"];
+const pageSize = 50;
 const documentTypeOptions = [
   "all",
   "purchase_invoice",
@@ -81,6 +82,11 @@ function extractionSource(model?: string | null) {
 
 function normalizeSearch(value: string | undefined) {
   return value?.trim().toLowerCase() ?? "";
+}
+
+function normalizePage(value: string | undefined) {
+  const page = Number.parseInt(value ?? "1", 10);
+  return Number.isFinite(page) && page > 0 ? page : 1;
 }
 
 function formatDate(value: string | null) {
@@ -115,6 +121,7 @@ export default async function ReviewQueuePage({
     from?: string;
     risk?: string;
     q?: string;
+    page?: string;
     status?: string;
     to?: string;
   }>;
@@ -125,8 +132,13 @@ export default async function ReviewQueuePage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const filters = await searchParams;
   const selectedStatus = reviewStatusOptions.includes(filters.status ?? "")
     ? filters.status ?? "all"
@@ -140,10 +152,13 @@ export default async function ReviewQueuePage({
     ? filters.document_type ?? "all"
     : "all";
   const search = normalizeSearch(filters.q);
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
   const clientsPromise = supabase
     .from("clients")
     .select("id, business_name")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .neq("status", "archived")
     .order("business_name");
   let query = supabase
@@ -151,13 +166,17 @@ export default async function ReviewQueuePage({
     .select(
       "id, client_id, transaction_type, status, transaction_date, party_name, invoice_number, total_amount, confidence_score, created_at, clients(business_name), documents(document_type, file_name), ai_extractions(risk_flags, model)",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .in("status", ["draft", "needs_review", "duplicate"])
     .order("created_at", { ascending: false })
-    .limit(50);
+    .range(rangeFrom, rangeTo);
 
   if (filters.client) {
     query = query.eq("client_id", filters.client);
+  }
+
+  if (selectedStatus !== "all") {
+    query = query.eq("status", selectedStatus);
   }
 
   if (filters.from) {
@@ -174,7 +193,9 @@ export default async function ReviewQueuePage({
   ]);
   const { data: transactions, error } = transactionsResult;
   const clients = clientsResult.data ?? [];
-  const filteredTransactions = (transactions ?? []).filter((transaction) => {
+  const pageTransactions = (transactions ?? []).slice(0, pageSize);
+  const hasNextPage = (transactions?.length ?? 0) > pageSize;
+  const filteredTransactions = pageTransactions.filter((transaction) => {
     const client = Array.isArray(transaction.clients)
       ? transaction.clients[0]
       : transaction.clients;
@@ -185,8 +206,6 @@ export default async function ReviewQueuePage({
       ? transaction.ai_extractions[0]
       : transaction.ai_extractions;
     const riskCount = extraction?.risk_flags?.length ?? 0;
-    const matchesStatus =
-      selectedStatus === "all" || transaction.status === selectedStatus;
     const matchesRisk =
       selectedRisk === "all" ||
       (selectedRisk === "risk" && riskCount > 0) ||
@@ -208,7 +227,7 @@ export default async function ReviewQueuePage({
         .filter(Boolean)
         .some((value) => value!.toLowerCase().includes(search));
 
-    return matchesStatus && matchesRisk && matchesDocumentType && matchesSearch;
+    return matchesRisk && matchesDocumentType && matchesSearch;
   });
 
   return (
@@ -352,7 +371,7 @@ export default async function ReviewQueuePage({
 
         <SectionCard
           title="Extracted transactions"
-          actions={<RecordCount value={filteredTransactions.length} />}
+          actions={<RecordCount value={filteredTransactions.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -383,7 +402,8 @@ export default async function ReviewQueuePage({
           )}
 
         {!error && filteredTransactions.length > 0 && (
-          <DataTable minWidth={1080} ariaLabel="Review queue transactions">
+          <>
+            <DataTable minWidth={1080} ariaLabel="Review queue transactions">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Client</th>
@@ -481,7 +501,15 @@ export default async function ReviewQueuePage({
                   );
                 })}
               </tbody>
-          </DataTable>
+            </DataTable>
+            <PaginationControls
+              basePath="/dashboard/review-queue"
+              page={page}
+              hasNext={hasNextPage}
+              searchParams={filters}
+              label="review records"
+            />
+          </>
         )}
         </SectionCard>
       </PageBody>

@@ -21,8 +21,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -47,15 +46,20 @@ export default async function LedgerEntryPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const { data: entry } = await supabase
     .from("ledger_entries")
     .select(
       "*, clients(business_name), transactions(id, invoice_number, party_name, transaction_type, status, total_amount)",
     )
     .eq("id", entryId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!entry) {
@@ -69,7 +73,7 @@ export default async function LedgerEntryPage({
   const { data: audits } = await supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, metadata, created_at")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("entity_type", "ledger_entry")
     .eq("entity_id", entry.id)
     .order("created_at", { ascending: false })

@@ -28,8 +28,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -69,13 +68,18 @@ export default async function ClientDetailPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const { data: client } = await supabase
     .from("clients")
     .select("*")
     .eq("id", clientId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!client) {
@@ -86,7 +90,7 @@ export default async function ClientDetailPage({
     .from("documents")
     .select("id, document_type, file_name, status, received_at, created_at")
     .eq("client_id", client.id)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("received_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
     .limit(6);
@@ -94,26 +98,26 @@ export default async function ClientDetailPage({
     .from("transactions")
     .select("id", { count: "exact", head: true })
     .eq("client_id", client.id)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .in("status", ["draft", "needs_review", "duplicate"]);
   const approvedCountPromise = supabase
     .from("transactions")
     .select("id", { count: "exact", head: true })
     .eq("client_id", client.id)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("status", "approved");
   const gstPeriodsPromise = supabase
     .from("gst_periods")
     .select("id, period_start, period_end, filing_type, status, gst_summaries(net_tax_payable, mismatch_count, missing_document_count)")
     .eq("client_id", client.id)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("period_start", { ascending: false })
     .limit(3);
   const auditsPromise = supabase
     .from("audit_logs")
     .select("id, action, created_at, actor_user_id")
     .eq("client_id", client.id)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: false })
     .limit(8);
 

@@ -8,6 +8,7 @@ import {
   Input,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -28,8 +29,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +46,15 @@ type SearchParams = {
   from?: string;
   to?: string;
   account?: string;
+  page?: string;
 };
+
+const pageSize = 50;
+
+function normalizePage(value: string | undefined) {
+  const page = Number.parseInt(value ?? "1", 10);
+  return Number.isFinite(page) && page > 0 ? page : 1;
+}
 
 function activeFilterSummary(filters: SearchParams) {
   return [
@@ -70,12 +78,20 @@ export default async function LedgerPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: clients } = await supabase
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  const clientsQuery = supabase
     .from("clients")
     .select("id, business_name")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .neq("status", "archived")
     .order("business_name");
 
@@ -84,10 +100,10 @@ export default async function LedgerPage({
     .select(
       "id, transaction_id, entry_date, account_name, debit_amount, credit_amount, narration, clients(business_name), transactions(invoice_number, party_name, transaction_type)",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("entry_date", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
-    .limit(100);
+    .range(rangeFrom, rangeTo);
 
   if (filters.client) {
     query = query.eq("client_id", filters.client);
@@ -105,12 +121,17 @@ export default async function LedgerPage({
     query = query.ilike("account_name", `%${filters.account}%`);
   }
 
-  const { data: entries, error } = await query;
+  const [{ data: entries, error }, { data: clients }] = await Promise.all([
+    query,
+    clientsQuery,
+  ]);
+  const pageEntries = (entries ?? []).slice(0, pageSize);
+  const hasNextPage = (entries?.length ?? 0) > pageSize;
   const totalDebit =
-    entries?.reduce((sum, entry) => sum + Number(entry.debit_amount ?? 0), 0) ??
+    pageEntries.reduce((sum, entry) => sum + Number(entry.debit_amount ?? 0), 0) ??
     0;
   const totalCredit =
-    entries?.reduce((sum, entry) => sum + Number(entry.credit_amount ?? 0), 0) ??
+    pageEntries.reduce((sum, entry) => sum + Number(entry.credit_amount ?? 0), 0) ??
     0;
   const activeFilters = activeFilterSummary(filters);
 
@@ -206,7 +227,7 @@ export default async function LedgerPage({
 
       <div className="grid gap-3 sm:grid-cols-3">
         {[
-          ["Entries", String(entries?.length ?? 0), "neutral"],
+          ["Entries", String(pageEntries.length), "neutral"],
           ["Debit", formatCurrency(totalDebit), "brand"],
           ["Credit", formatCurrency(totalCredit), "success"],
         ].map(([label, value, tone]) => (
@@ -221,7 +242,7 @@ export default async function LedgerPage({
 
       <SectionCard
         title="Ledger entries"
-        actions={<RecordCount value={entries?.length ?? 0} />}
+        actions={<RecordCount value={pageEntries.length} label="shown" />}
         bodyClassName="p-0"
       >
 
@@ -245,8 +266,9 @@ export default async function LedgerPage({
           />
         )}
 
-        {!error && entries && entries.length > 0 && (
-          <DataTable minWidth={980} ariaLabel="Ledger handoff entries">
+        {!error && pageEntries.length > 0 && (
+          <>
+            <DataTable minWidth={980} ariaLabel="Ledger handoff entries">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Date</th>
@@ -259,7 +281,7 @@ export default async function LedgerPage({
                 </tr>
               </thead>
               <tbody>
-                {entries.map((entry) => {
+                {pageEntries.map((entry) => {
                   const client = Array.isArray(entry.clients)
                     ? entry.clients[0]
                     : entry.clients;
@@ -303,7 +325,15 @@ export default async function LedgerPage({
                   );
                 })}
               </tbody>
-          </DataTable>
+            </DataTable>
+            <PaginationControls
+              basePath="/dashboard/ledger"
+              page={page}
+              hasNext={hasNextPage}
+              searchParams={filters}
+              label="ledger records"
+            />
+          </>
         )}
       </SectionCard>
       </PageBody>

@@ -13,8 +13,7 @@ import {
   SetupRequired,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -39,13 +38,18 @@ export default async function EditLedgerEntryPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const { data: entry } = await supabase
     .from("ledger_entries")
     .select("*")
     .eq("id", entryId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!entry) {

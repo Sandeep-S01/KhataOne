@@ -7,6 +7,7 @@ import {
   Input,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -25,8 +26,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -54,14 +54,21 @@ const statusOptions = [
   "archived",
 ];
 
+const pageSize = 50;
+
 function normalizeSearch(value: string | undefined) {
   return value?.trim().toLowerCase() ?? "";
+}
+
+function normalizePage(value: string | undefined) {
+  const page = Number.parseInt(value ?? "1", 10);
+  return Number.isFinite(page) && page > 0 ? page : 1;
 }
 
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; status?: string; q?: string }>;
 }) {
   if (!hasSupabaseConfig()) {
     return (
@@ -69,23 +76,38 @@ export default async function ClientsPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const filters = await searchParams;
   const selectedStatus = statusOptions.includes(filters.status ?? "")
     ? filters.status ?? "all"
     : "all";
   const search = normalizeSearch(filters.q);
-  const { data: clients, error } = await supabase
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  let query = supabase
     .from("clients")
     .select(
       "id, business_name, contact_name, phone, whatsapp_phone, gstin, state_code, filing_frequency, status, created_at",
     )
-    .eq("firm_id", firm!.id)
-    .order("created_at", { ascending: false });
-  const filteredClients = (clients ?? []).filter((client) => {
-    const matchesStatus =
-      selectedStatus === "all" || client.status === selectedStatus;
+    .eq("firm_id", firm.id)
+    .order("created_at", { ascending: false })
+    .range(rangeFrom, rangeTo);
+
+  if (selectedStatus !== "all") {
+    query = query.eq("status", selectedStatus);
+  }
+
+  const { data: clients, error } = await query;
+  const pageClients = (clients ?? []).slice(0, pageSize);
+  const hasNextPage = (clients?.length ?? 0) > pageSize;
+  const filteredClients = pageClients.filter((client) => {
     const matchesSearch =
       !search ||
       [
@@ -99,13 +121,13 @@ export default async function ClientsPage({
         .filter(Boolean)
         .some((value) => value!.toLowerCase().includes(search));
 
-    return matchesStatus && matchesSearch;
+    return matchesSearch;
   });
   const statusCounts = statusOptions
     .filter((status) => status !== "all")
     .map((status) => ({
       status,
-      count: (clients ?? []).filter((client) => client.status === status).length,
+      count: pageClients.filter((client) => client.status === status).length,
     }));
 
   return (
@@ -180,7 +202,7 @@ export default async function ClientsPage({
 
         <SectionCard
           title="Client list"
-          actions={<RecordCount value={filteredClients.length} />}
+          actions={<RecordCount value={filteredClients.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -204,7 +226,8 @@ export default async function ClientsPage({
         )}
 
         {!error && filteredClients.length > 0 && (
-          <DataTable minWidth={920} ariaLabel="Client workspaces">
+          <>
+            <DataTable minWidth={920} ariaLabel="Client workspaces">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Business</th>
@@ -248,7 +271,15 @@ export default async function ClientsPage({
                   </tr>
                 ))}
               </tbody>
-          </DataTable>
+            </DataTable>
+            <PaginationControls
+              basePath="/dashboard/clients"
+              page={page}
+              hasNext={hasNextPage}
+              searchParams={filters}
+              label="client records"
+            />
+          </>
         )}
         </SectionCard>
       </PageBody>

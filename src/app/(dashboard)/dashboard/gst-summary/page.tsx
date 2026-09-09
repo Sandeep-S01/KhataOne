@@ -25,8 +25,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -58,22 +57,32 @@ export default async function GstSummaryPage() {
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: clients } = await supabase
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
+  const clientsQuery = supabase
     .from("clients")
     .select("id, business_name, filing_frequency")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .neq("status", "archived")
     .order("business_name");
-  const { data: periods, error } = await supabase
+  const periodsQuery = supabase
     .from("gst_periods")
     .select(
       "id, period_start, period_end, filing_type, status, clients(business_name), gst_summaries(net_tax_payable, mismatch_count, missing_document_count, generated_at)",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("period_start", { ascending: false })
     .limit(60);
+
+  const [{ data: clients }, { data: periods, error }] = await Promise.all([
+    clientsQuery,
+    periodsQuery,
+  ]);
 
   return (
     <div>

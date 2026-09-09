@@ -25,8 +25,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -78,15 +77,20 @@ export default async function TransactionReviewPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const { data: transaction } = await supabase
     .from("transactions")
     .select(
       "*, clients(business_name, whatsapp_phone, phone), documents(source_text, storage_path, file_name, file_mime_type), ai_extractions(risk_flags, normalized_output, confidence_score, model, prompt_version)",
     )
     .eq("id", transactionId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!transaction) {

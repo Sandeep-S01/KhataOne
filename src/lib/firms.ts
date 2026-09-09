@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
+import { cache } from "react";
 
 import { hasSupabaseConfig } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
@@ -17,7 +18,7 @@ export type FirmContext = {
   firm: ActiveFirm;
 };
 
-export async function getFirmContext(): Promise<FirmContext | null> {
+export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
   if (!hasSupabaseConfig()) {
     return null;
   }
@@ -57,7 +58,7 @@ export async function getFirmContext(): Promise<FirmContext | null> {
       name: firm?.name,
     },
   };
-}
+});
 
 export async function getActiveFirm(): Promise<ActiveFirm | null> {
   const context = await getFirmContext();

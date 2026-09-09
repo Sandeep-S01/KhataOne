@@ -21,8 +21,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -60,15 +59,20 @@ export default async function GstPeriodPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const { data: period } = await supabase
     .from("gst_periods")
     .select(
       "*, clients(business_name, gstin, filing_frequency), gst_summaries(*)",
     )
     .eq("id", periodId)
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .single();
 
   if (!period) {
@@ -86,7 +90,7 @@ export default async function GstPeriodPage({
     .select(
       "id, transaction_type, transaction_date, party_name, invoice_number, taxable_amount, cgst_amount, sgst_amount, igst_amount, total_amount, status",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("client_id", period.client_id)
     .gte("transaction_date", period.period_start)
     .lte("transaction_date", period.period_end)
@@ -94,7 +98,7 @@ export default async function GstPeriodPage({
   const { data: audits } = await supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, created_at")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .eq("entity_type", "gst_period")
     .eq("entity_id", period.id)
     .order("created_at", { ascending: false })

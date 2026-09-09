@@ -20,9 +20,8 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
+import { getFirmContext } from "@/lib/firms";
 import { getGstIntegrationProvider } from "@/lib/integrations/gst";
-import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -86,22 +85,37 @@ export default async function PlatformPage() {
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: gstIntegrations } = await supabase
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
+  const gstIntegrationsQuery = supabase
     .from("gst_integrations")
     .select("id, provider, status, created_at")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: false });
-  const { data: externalIntegrations } = await supabase
+  const externalIntegrationsQuery = supabase
     .from("external_integrations")
     .select("id, integration_type, provider, status, created_at")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: false });
-  const { count: integrationEventCount } = await supabase
+  const integrationEventCountQuery = supabase
     .from("integration_events")
     .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm!.id);
+    .eq("firm_id", firm.id);
+
+  const [
+    { data: gstIntegrations },
+    { data: externalIntegrations },
+    { count: integrationEventCount },
+  ] = await Promise.all([
+    gstIntegrationsQuery,
+    externalIntegrationsQuery,
+    integrationEventCountQuery,
+  ]);
 
   return (
     <div>

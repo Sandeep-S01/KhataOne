@@ -21,8 +21,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -50,18 +49,28 @@ export default async function SettingsPage() {
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
-  const { data: firmRecord } = await supabase
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
+  const firmRecordQuery = supabase
     .from("firms")
     .select("id, name, slug, gstin, phone, email, address, status, created_at")
-    .eq("id", firm!.id)
+    .eq("id", firm.id)
     .single();
-  const { data: members } = await supabase
+  const membersQuery = supabase
     .from("firm_users")
     .select("id, user_id, role, status, created_at")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: true });
+
+  const [{ data: firmRecord }, { data: members }] = await Promise.all([
+    firmRecordQuery,
+    membersQuery,
+  ]);
 
   const integrationRows = [
     ["Supabase public URL", hasSupabaseConfig()],

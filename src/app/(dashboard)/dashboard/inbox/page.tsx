@@ -7,6 +7,7 @@ import {
   Input,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -25,8 +26,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +59,13 @@ const inboxStatusOptions = [
   "ignored",
 ];
 
+const pageSize = 50;
+
+function normalizePage(value: string | undefined) {
+  const page = Number.parseInt(value ?? "1", 10);
+  return Number.isFinite(page) && page > 0 ? page : 1;
+}
+
 function triageLabel(status: string) {
   switch (status) {
     case "unmatched":
@@ -87,7 +94,7 @@ function normalizeSearch(value: string | undefined) {
 export default async function InboxPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; status?: string; q?: string }>;
 }) {
   if (!hasSupabaseConfig()) {
     return (
@@ -95,34 +102,48 @@ export default async function InboxPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   const filters = await searchParams;
   const selectedStatus = inboxStatusOptions.includes(filters.status ?? "")
     ? filters.status ?? "all"
     : "all";
   const search = normalizeSearch(filters.q);
-  const { data: messages, error } = await supabase
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  let query = supabase
     .from("whatsapp_messages")
     .select(
       "id, client_id, sender_phone, message_type, processing_status, received_at, clients(business_name)",
     )
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("received_at", { ascending: false })
-    .limit(50);
-  const filteredMessages = (messages ?? []).filter((message) => {
+    .range(rangeFrom, rangeTo);
+
+  if (selectedStatus !== "all") {
+    query = query.eq("processing_status", selectedStatus);
+  }
+
+  const { data: messages, error } = await query;
+  const pageMessages = (messages ?? []).slice(0, pageSize);
+  const hasNextPage = (messages?.length ?? 0) > pageSize;
+  const filteredMessages = pageMessages.filter((message) => {
     const client = Array.isArray(message.clients)
       ? message.clients[0]
       : message.clients;
-    const matchesStatus =
-      selectedStatus === "all" || message.processing_status === selectedStatus;
     const matchesSearch =
       !search ||
       [client?.business_name, message.sender_phone, message.message_type]
         .filter(Boolean)
         .some((value) => value!.toLowerCase().includes(search));
 
-    return matchesStatus && matchesSearch;
+    return matchesSearch;
   });
 
   return (
@@ -182,7 +203,7 @@ export default async function InboxPage({
 
         <SectionCard
           title="Inbound messages"
-          actions={<RecordCount value={filteredMessages.length} label="latest" />}
+          actions={<RecordCount value={filteredMessages.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -206,7 +227,8 @@ export default async function InboxPage({
         )}
 
         {!error && filteredMessages.length > 0 && (
-          <DataTable minWidth={860} ariaLabel="WhatsApp inbox records">
+          <>
+            <DataTable minWidth={860} ariaLabel="WhatsApp inbox records">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Client</th>
@@ -251,7 +273,15 @@ export default async function InboxPage({
                   );
                 })}
               </tbody>
-          </DataTable>
+            </DataTable>
+            <PaginationControls
+              basePath="/dashboard/inbox"
+              page={page}
+              hasNext={hasNextPage}
+              searchParams={filters}
+              label="inbox records"
+            />
+          </>
         )}
         </SectionCard>
       </PageBody>

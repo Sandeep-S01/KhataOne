@@ -24,8 +24,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getActiveFirm } from "@/lib/firms";
-import { createClient } from "@/lib/supabase/server";
+import { getFirmContext } from "@/lib/firms";
 
 export const dynamic = "force-dynamic";
 
@@ -69,12 +68,17 @@ export default async function AuditLogsPage({
     );
   }
 
-  const firm = await getActiveFirm();
-  const supabase = await createClient();
+  const context = await getFirmContext();
+
+  if (!context) {
+    return null;
+  }
+
+  const { firm, supabase } = context;
   let query = supabase
     .from("audit_logs")
     .select("id, client_id, actor_user_id, action, entity_type, entity_id, metadata, created_at, clients(business_name)")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("created_at", { ascending: false })
     .limit(100);
 
@@ -98,12 +102,16 @@ export default async function AuditLogsPage({
     query = query.lte("created_at", `${to}T23:59:59.999Z`);
   }
 
-  const { data: logs, error } = await query;
-  const { data: entityTypes } = await supabase
+  const entityTypesQuery = supabase
     .from("audit_logs")
     .select("entity_type")
-    .eq("firm_id", firm!.id)
+    .eq("firm_id", firm.id)
     .order("entity_type");
+
+  const [{ data: logs, error }, { data: entityTypes }] = await Promise.all([
+    query,
+    entityTypesQuery,
+  ]);
 
   const uniqueEntityTypes = Array.from(
     new Set((entityTypes ?? []).map((row) => row.entity_type).filter(Boolean)),

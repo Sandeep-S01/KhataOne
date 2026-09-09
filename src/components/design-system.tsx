@@ -363,6 +363,71 @@ export function RecordCount({
   );
 }
 
+type PaginationControlsProps = {
+  basePath: string;
+  page: number;
+  hasNext: boolean;
+  searchParams?: Record<string, string | undefined>;
+  label?: string;
+};
+
+export function PaginationControls({
+  basePath,
+  page,
+  hasNext,
+  searchParams,
+  label = "records",
+}: PaginationControlsProps) {
+  const pageHref = (targetPage: number) => {
+    const params = new URLSearchParams();
+
+    Object.entries(searchParams ?? {}).forEach(([key, value]) => {
+      if (key !== "page" && value) {
+        params.set(key, value);
+      }
+    });
+
+    if (targetPage > 1) {
+      params.set("page", String(targetPage));
+    }
+
+    const queryString = params.toString();
+    return queryString ? `${basePath}?${queryString}` : basePath;
+  };
+
+  const disabledClassName = cn(
+    "inline-flex h-8 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted px-3 text-xs font-medium text-khata-muted opacity-60",
+  );
+
+  return (
+    <div className="flex flex-col gap-2 border-t border-khata-border bg-khata-paperMuted/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <span className="font-mono text-xs text-khata-muted">
+        Page {page} {label}
+      </span>
+      <div className="flex items-center gap-2">
+        {page > 1 ? (
+          <ActionLink href={pageHref(page - 1)} size="sm" variant="outline">
+            Previous
+          </ActionLink>
+        ) : (
+          <span aria-disabled="true" className={disabledClassName}>
+            Previous
+          </span>
+        )}
+        {hasNext ? (
+          <ActionLink href={pageHref(page + 1)} size="sm" variant="outline">
+            Next
+          </ActionLink>
+        ) : (
+          <span aria-disabled="true" className={disabledClassName}>
+            Next
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function FilterBar({
   children,
   className,
