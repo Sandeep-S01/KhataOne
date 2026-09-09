@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "smoke:local": "node scripts/smoke-local.mjs",
+    "smoke:live-auth": "node scripts/smoke-live-auth.mjs",
     "seed:demo": "node scripts/seed-demo.mjs"
   },
   "dependencies": {

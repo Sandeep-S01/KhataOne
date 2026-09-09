@@ -6,6 +6,7 @@ Run this checklist before marking a deployment production-ready.
 
 - `npm run verify` passes.
 - `SMOKE_BASE_URL=<deployment-url> npm run smoke:local` passes.
+- `SMOKE_BASE_URL=<deployment-url> npm run smoke:live-auth` passes with `SMOKE_CA_EMAIL` and `SMOKE_CA_PASSWORD` configured.
 - `/api/health` returns `ok` or an expected `degraded` status with only intentionally disabled integrations.
 
 ## Environment
