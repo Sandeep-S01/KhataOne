@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { LogOut } from "lucide-react";
-import Link from "next/link";
 
 import { signOut } from "@/app/actions/auth";
-import { BrandLogo } from "@/components/brand-logo";
 import { DashboardMobileMenu } from "@/components/dashboard-mobile-menu";
-import { DashboardNav } from "@/components/dashboard-nav";
+import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { Button } from "@/components/design-system";
 import { getFirmContext } from "@/lib/firms";
 
@@ -38,28 +36,7 @@ export default async function DashboardLayout({
         Skip to dashboard content
       </a>
       <div className="flex min-h-screen">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-khata-border bg-white lg:flex lg:flex-col">
-          <div className="flex h-14 items-center gap-2 border-b border-khata-border px-3">
-            <Link
-              href="/dashboard"
-              className="min-w-0 flex-1 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-              aria-label="KhataOne dashboard"
-            >
-              <BrandLogo />
-            </Link>
-          </div>
-          <div className="border-b border-khata-border px-3 py-3">
-            <div className="rounded-md border border-khata-border bg-khata-paper px-3 py-2">
-              <p className="truncate text-sm font-medium text-khata-ink">
-                {firmName}
-              </p>
-              <p className="mt-0.5 text-xs capitalize text-khata-muted">
-                {roleLabel}
-              </p>
-            </div>
-          </div>
-          <DashboardNav />
-        </aside>
+        <DashboardSidebar firmName={firmName} roleLabel={roleLabel} />
 
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-khata-border bg-white/85 px-3 backdrop-blur-md md:px-4">

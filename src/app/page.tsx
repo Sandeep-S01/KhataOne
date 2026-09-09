@@ -1,5 +1,4 @@
 import type { LucideIcon } from "lucide-react";
-import type { ComponentPropsWithoutRef } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -16,8 +15,10 @@ import {
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { ActionLink } from "@/components/design-system";
 import { LandingNavigation } from "@/components/landing-navigation";
 import { LeadCaptureForm } from "@/components/lead-capture-form";
+import { StatusChip } from "@/components/status-chip";
 import { getPublicAppUrl } from "@/lib/env";
 
 const reviewRows = [
@@ -119,12 +120,6 @@ const trustItems = [
   "GST summaries are prepared from reviewed records, not direct filing.",
 ] as const;
 
-const footerLinks = [
-  ["Privacy", "/privacy"],
-  ["Terms", "/terms"],
-  ["Contact", "/contact"],
-] as const;
-
 const siteUrl = getPublicAppUrl();
 
 const jsonLd = {
@@ -161,68 +156,9 @@ const jsonLd = {
 
 function LandingHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-khata-border bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link
-          href="/"
-          aria-label="KhataOne home"
-          className="rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
-        >
-          <BrandLogo />
-        </Link>
-        <LandingNavigation />
-      </div>
+    <header className="sticky top-0 z-30 border-b border-khata-border/80 bg-white/90 backdrop-blur-md shadow-[0_1px_3px_rgba(31,42,36,0.03)]">
+      <LandingNavigation />
     </header>
-  );
-}
-
-function Chip({
-  label,
-  tone = "neutral",
-}: {
-  label: string;
-  tone?: "neutral" | "success" | "warning" | "danger" | "brand";
-}) {
-  const toneClass = {
-    neutral: "border-khata-border bg-khata-paperMuted text-khata-muted",
-    success: "border-success/30 bg-success/10 text-success",
-    warning: "border-warning/35 bg-warning/10 text-warning",
-    danger: "border-destructive/30 bg-destructive/10 text-destructive",
-    brand: "border-khata-green/30 bg-khata-green/10 text-khata-green",
-  }[tone];
-
-  return (
-    <span
-      className={`inline-flex max-w-full items-center gap-1.5 whitespace-nowrap rounded-md border px-2 py-0.5 text-xs font-medium ${toneClass}`}
-    >
-      <span className="truncate">{label}</span>
-    </span>
-  );
-}
-
-function ButtonLink({
-  href,
-  children,
-  variant = "primary",
-}: {
-  href: string;
-  children: React.ReactNode;
-  variant?: "primary" | "outline" | "secondary";
-}) {
-  const variantClass =
-    variant === "primary"
-      ? "bg-khata-green text-white shadow-md hover:bg-khata-greenDark"
-      : variant === "secondary"
-        ? "bg-white text-khata-green shadow-sm hover:bg-khata-paper"
-        : "border border-khata-border bg-white text-khata-ink shadow-sm hover:bg-khata-paperMuted";
-
-  return (
-    <a
-      href={href}
-      className={`inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-md px-8 text-sm font-medium transition ${variantClass} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green`}
-    >
-      {children}
-    </a>
   );
 }
 
@@ -231,7 +167,7 @@ function ReviewQueuePreview() {
     <div className="k-card k-elevated p-5">
       <div className="flex items-center justify-between border-b border-khata-border pb-3">
         <h2 className="text-sm font-semibold">Review queue</h2>
-        <Chip label="7 awaiting review" tone="warning" />
+        <StatusChip tone="warning">7 awaiting review</StatusChip>
       </div>
 
       <ul className="divide-y divide-khata-border">
@@ -246,7 +182,7 @@ function ReviewQueuePreview() {
             </div>
             <div className="flex min-w-0 flex-wrap items-center justify-between gap-2 sm:min-w-fit sm:justify-end sm:gap-3">
               <span className="num text-sm font-medium text-khata-ink">{amount}</span>
-              <Chip label={label} tone={tone} />
+              <StatusChip tone={tone}>{label}</StatusChip>
             </div>
           </li>
         ))}
@@ -341,7 +277,7 @@ export default function Home() {
         <section className="k-hero border-b border-khata-border">
           <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:grid-cols-2 md:items-center lg:grid-cols-[1.05fr_1fr] lg:py-28">
             <div>
-              <Chip label="Built for CA firms" tone="brand" />
+              <StatusChip tone="brand">Built for CA firms</StatusChip>
               <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-normal text-khata-ink sm:text-5xl lg:text-[3.4rem]">
                 Bookkeeping that starts where your clients already are:{" "}
                 <span className="text-khata-green">WhatsApp</span>
@@ -353,12 +289,12 @@ export default function Home() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <ButtonLink href="#demo">
+                <ActionLink href="#demo" variant="primary" size="lg">
                   Book a demo <ArrowRight className="size-4" />
-                </ButtonLink>
-                <ButtonLink href="#how" variant="outline">
+                </ActionLink>
+                <ActionLink href="#how" variant="outline" size="lg">
                   See how it works
-                </ButtonLink>
+                </ActionLink>
               </div>
 
               <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-khata-border pt-6">
@@ -503,35 +439,145 @@ export default function Home() {
                 accounting records.
               </p>
             </div>
-            <ButtonLink href="#demo" variant="secondary">
+            <ActionLink href="#demo" variant="secondary" size="lg">
               Book a demo <ArrowRight className="size-4" />
-            </ButtonLink>
+            </ActionLink>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-khata-border bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-khata-muted sm:flex-row sm:items-center sm:justify-between">
-          <BrandLogo />
-          <div className="flex flex-col gap-3 sm:items-end">
-            <p>
-              WhatsApp-first AI bookkeeping and GST preparation workflow for CA
-              firms.
+      <footer className="border-t border-khata-border bg-white text-khata-muted">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+          <div className="grid gap-8 lg:grid-cols-12">
+            <div className="space-y-4 lg:col-span-5">
+              <Link
+                href="/"
+                aria-label="KhataOne home"
+                className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+              >
+                <BrandLogo />
+              </Link>
+              <p className="max-w-sm text-sm leading-relaxed text-khata-muted">
+                WhatsApp-first AI bookkeeping intake, draft extraction, and GST
+                preparation workflow built specifically for Indian CA firms.
+              </p>
+              <div className="flex items-center gap-2 pt-1 text-xs text-khata-muted">
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
+                  <span className="size-1.5 rounded-full bg-khata-green" />
+                  India GST Ready
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
+                  CA Controlled
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+              <div className="space-y-3">
+                <p className="k-eyebrow text-khata-ink">Product</p>
+                <ul className="space-y-2.5 text-sm">
+                  <li>
+                    <a
+                      href="#how"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      How it works
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#features"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Features
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#demo"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Book a demo
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#faq"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      FAQ
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-3">
+                <p className="k-eyebrow text-khata-ink">Workspace</p>
+                <ul className="space-y-2.5 text-sm">
+                  <li>
+                    <Link
+                      href="/login"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Firm Sign in
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/signup"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Create account
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/forgot-password"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Reset password
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-3 col-span-2 sm:col-span-1">
+                <p className="k-eyebrow text-khata-ink">Trust & Legal</p>
+                <ul className="space-y-2.5 text-sm">
+                  <li>
+                    <Link
+                      href="/privacy"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/terms"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Terms of Service
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                    >
+                      Contact Us
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-khata-border pt-8 text-xs text-khata-muted sm:flex-row">
+            <p>&copy; {new Date().getFullYear()} KhataOne. All rights reserved.</p>
+            <p className="text-center sm:text-right">
+              Designed for professional CA firms & accounting teams in India.
             </p>
-            <nav
-              aria-label="Footer"
-              className="flex flex-wrap gap-4 text-xs font-medium"
-            >
-              {footerLinks.map(([label, href]) => (
-                <Link
-                  key={href}
-                  href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
-                  className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
           </div>
         </div>
       </footer>
