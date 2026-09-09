@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { hasSupabaseConfig } from "@/lib/env";
+import { getPublicAppUrl, hasSupabaseConfig } from "@/lib/env";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
@@ -145,6 +145,52 @@ export async function signUp(
   }
 
   redirect("/onboarding");
+}
+
+export async function requestPasswordReset(
+  _previousState: AuthActionState,
+  formData: FormData,
+): Promise<AuthActionState> {
+  const email = readString(formData, "email");
+  const fieldErrors: Record<string, string> = {};
+
+  if (!isEmail(email)) {
+    fieldErrors.email = "Enter a valid work email.";
+  }
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return {
+      status: "error",
+      message: "Please fix the highlighted fields.",
+      fieldErrors,
+    };
+  }
+
+  if (!hasSupabaseConfig()) {
+    return {
+      status: "error",
+      message:
+        "Supabase Auth is not configured yet. Add Supabase environment variables before requesting a reset link.",
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${getPublicAppUrl()}/reset-password`,
+  });
+
+  if (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+
+  return {
+    status: "success",
+    message:
+      "If that email has a KhataOne account, Supabase will send a password reset link.",
+  };
 }
 
 export async function signOut() {

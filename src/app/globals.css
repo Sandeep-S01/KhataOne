@@ -146,6 +146,24 @@ body {
   .k-row {
     min-height: 46px;
   }
+
+  .k-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .k-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .k-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(216, 210, 196, 0.7);
+    border-radius: 9999px;
+  }
+
+  .k-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(95, 107, 99, 0.6);
+  }
 }
 
 .ledger-grid {

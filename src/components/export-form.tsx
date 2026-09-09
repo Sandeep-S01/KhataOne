@@ -13,6 +13,7 @@ import {
   FieldLabel,
   FilterBar,
   FormMessage,
+  InfoNote,
   Input,
   Select,
 } from "@/components/design-system";
@@ -194,6 +195,11 @@ export function ExportForm({
           PDF is a review summary, not GST filing proof.
         </span>
       </div>
+
+      <InfoNote>
+        Generated files are private exports for CA/client review and are recorded
+        in audit history.
+      </InfoNote>
 
       {state.message && (
         <FormMessage

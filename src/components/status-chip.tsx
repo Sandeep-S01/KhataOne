@@ -6,6 +6,7 @@ const toneClasses = {
   warning: "border-warning/35 bg-warning/10 text-warning",
   danger: "border-destructive/30 bg-destructive/10 text-destructive",
   info: "border-info/30 bg-info/10 text-info",
+  brand: "border-khata-green/30 bg-khata-green/10 text-khata-green",
 };
 
 export function StatusChip({

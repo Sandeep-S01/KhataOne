@@ -1,12 +1,19 @@
 import {
+  ActionLink,
+  Button,
   DataTable,
   EmptyState,
+  FilterBar,
+  Input,
   PageBody,
   PageHeader,
   QueryError,
   RecordCount,
   SectionCard,
+  Select,
   SetupRequired,
+  tableActionCellClass,
+  tableActionHeadCellClass,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -40,7 +47,48 @@ function statusTone(status: string) {
   }
 }
 
-export default async function InboxPage() {
+const inboxStatusOptions = [
+  "all",
+  "received",
+  "unmatched",
+  "matched",
+  "queued",
+  "media_downloaded",
+  "failed",
+  "media_failed",
+  "ignored",
+];
+
+function triageLabel(status: string) {
+  switch (status) {
+    case "unmatched":
+      return "Match sender";
+    case "failed":
+    case "media_failed":
+      return "Check failure";
+    case "received":
+      return "Await matching";
+    case "queued":
+      return "Queued";
+    case "media_downloaded":
+    case "matched":
+      return "Ready";
+    case "ignored":
+      return "Ignored";
+    default:
+      return "Inspect";
+  }
+}
+
+function normalizeSearch(value: string | undefined) {
+  return value?.trim().toLowerCase() ?? "";
+}
+
+export default async function InboxPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string; q?: string }>;
+}) {
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables and migrations before viewing WhatsApp intake records." />
@@ -49,6 +97,11 @@ export default async function InboxPage() {
 
   const firm = await getActiveFirm();
   const supabase = await createClient();
+  const filters = await searchParams;
+  const selectedStatus = inboxStatusOptions.includes(filters.status ?? "")
+    ? filters.status ?? "all"
+    : "all";
+  const search = normalizeSearch(filters.q);
   const { data: messages, error } = await supabase
     .from("whatsapp_messages")
     .select(
@@ -57,6 +110,20 @@ export default async function InboxPage() {
     .eq("firm_id", firm!.id)
     .order("received_at", { ascending: false })
     .limit(50);
+  const filteredMessages = (messages ?? []).filter((message) => {
+    const client = Array.isArray(message.clients)
+      ? message.clients[0]
+      : message.clients;
+    const matchesStatus =
+      selectedStatus === "all" || message.processing_status === selectedStatus;
+    const matchesSearch =
+      !search ||
+      [client?.business_name, message.sender_phone, message.message_type]
+        .filter(Boolean)
+        .some((value) => value!.toLowerCase().includes(search));
+
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div>
@@ -67,9 +134,55 @@ export default async function InboxPage() {
       />
 
       <PageBody>
+        <FilterBar action="/dashboard/inbox">
+          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_190px_auto] md:items-end">
+            <div className="grid gap-1.5">
+              <label
+                htmlFor="inbox-search"
+                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+              >
+                Search
+              </label>
+              <Input
+                id="inbox-search"
+                name="q"
+                defaultValue={filters.q ?? ""}
+                placeholder="Sender, client, type"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <label
+                htmlFor="inbox-status"
+                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+              >
+                Status
+              </label>
+              <Select
+                id="inbox-status"
+                name="status"
+                defaultValue={selectedStatus}
+              >
+                {inboxStatusOptions.map((status) => (
+                  <option key={status} value={status}>
+                    {status.replaceAll("_", " ")}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit" size="sm">
+                Apply
+              </Button>
+              <ActionLink href="/dashboard/inbox" size="sm">
+                Clear
+              </ActionLink>
+            </div>
+          </div>
+        </FilterBar>
+
         <SectionCard
           title="Inbound messages"
-          actions={<RecordCount value={messages?.length ?? 0} label="latest" />}
+          actions={<RecordCount value={filteredMessages.length} label="latest" />}
           bodyClassName="p-0"
         >
 
@@ -84,8 +197,16 @@ export default async function InboxPage() {
           />
         )}
 
-        {!error && messages && messages.length > 0 && (
-          <DataTable minWidth={760}>
+        {!error && messages && messages.length > 0 && filteredMessages.length === 0 && (
+          <EmptyState
+            title="No messages match these filters"
+            message="Adjust the search or status filter to return inbound WhatsApp records."
+            action={<ActionLink href="/dashboard/inbox">Clear filters</ActionLink>}
+          />
+        )}
+
+        {!error && filteredMessages.length > 0 && (
+          <DataTable minWidth={860} ariaLabel="WhatsApp inbox records">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Client</th>
@@ -93,10 +214,11 @@ export default async function InboxPage() {
                   <th className={tableHeadCellClass}>Type</th>
                   <th className={tableHeadCellClass}>Status</th>
                   <th className={tableNumericHeadCellClass}>Received</th>
+                  <th className={tableActionHeadCellClass}>Triage</th>
                 </tr>
               </thead>
               <tbody>
-                {messages.map((message) => {
+                {filteredMessages.map((message) => {
                   const client = Array.isArray(message.clients)
                     ? message.clients[0]
                     : message.clients;
@@ -119,6 +241,11 @@ export default async function InboxPage() {
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
                         {new Date(message.received_at).toLocaleString("en-IN")}
+                      </td>
+                      <td className={tableActionCellClass}>
+                        <span className="text-xs font-medium text-khata-muted">
+                          {triageLabel(message.processing_status)}
+                        </span>
                       </td>
                     </tr>
                   );

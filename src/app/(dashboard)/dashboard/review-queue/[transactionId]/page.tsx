@@ -16,6 +16,7 @@ import {
   DetailList,
   FieldLabel,
   FormMessage,
+  InfoNote,
   PageBody,
   PageHeader,
   SectionCard,
@@ -125,12 +126,12 @@ export default async function TransactionReviewPage({
         <FormMessage message={actionError} className="mx-4 mt-4 md:mx-6" />
       )}
 
-      <PageBody className="grid gap-4 xl:grid-cols-[1fr_0.85fr]">
+      <PageBody className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.82fr)] xl:items-start">
         <TransactionReviewForm
           transaction={transaction as TransactionReviewValues}
         />
 
-        <div className="grid gap-4">
+        <div className="grid gap-4 xl:sticky xl:top-20">
           <SectionCard title="Review summary">
             <DetailList
               items={[
@@ -158,8 +159,11 @@ export default async function TransactionReviewPage({
             )}
           </SectionCard>
 
-          <SectionCard title="Source text">
-            <pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-md border border-khata-border bg-khata-paper p-3 text-xs leading-5 text-khata-muted">
+          <SectionCard
+            title="Source evidence"
+            description="Use the original extracted text as the reviewer reference before saving field edits or approving."
+          >
+            <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-md border border-khata-border bg-khata-paper p-3 text-xs leading-5 text-khata-muted">
               {document?.source_text ||
                 "No source text available yet. OCR/PDF/audio text extraction is required before media-only documents can be trusted."}
             </pre>
@@ -167,6 +171,11 @@ export default async function TransactionReviewPage({
 
           <SectionCard title="Decision actions">
             <div className="grid gap-3">
+              <InfoNote>
+                Approval creates a ledger handoff entry and records the reviewer
+                decision in audit logs.
+              </InfoNote>
+
               <form action={approveTransactionAction}>
                 <input
                   type="hidden"

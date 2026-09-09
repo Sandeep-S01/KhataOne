@@ -1,12 +1,16 @@
 import {
   ActionLink,
+  Button,
   DataTable,
   EmptyState,
+  FilterBar,
+  Input,
   PageBody,
   PageHeader,
   QueryError,
   RecordCount,
   SectionCard,
+  Select,
   SetupRequired,
   TextLink,
   tableActionCellClass,
@@ -41,7 +45,24 @@ function statusTone(status: string) {
   }
 }
 
-export default async function ClientsPage() {
+const statusOptions = [
+  "all",
+  "active",
+  "pending_documents",
+  "review_needed",
+  "filing_ready",
+  "archived",
+];
+
+function normalizeSearch(value: string | undefined) {
+  return value?.trim().toLowerCase() ?? "";
+}
+
+export default async function ClientsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string; q?: string }>;
+}) {
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables and migrations before managing client workspaces." />
@@ -50,6 +71,11 @@ export default async function ClientsPage() {
 
   const firm = await getActiveFirm();
   const supabase = await createClient();
+  const filters = await searchParams;
+  const selectedStatus = statusOptions.includes(filters.status ?? "")
+    ? filters.status ?? "all"
+    : "all";
+  const search = normalizeSearch(filters.q);
   const { data: clients, error } = await supabase
     .from("clients")
     .select(
@@ -57,6 +83,30 @@ export default async function ClientsPage() {
     )
     .eq("firm_id", firm!.id)
     .order("created_at", { ascending: false });
+  const filteredClients = (clients ?? []).filter((client) => {
+    const matchesStatus =
+      selectedStatus === "all" || client.status === selectedStatus;
+    const matchesSearch =
+      !search ||
+      [
+        client.business_name,
+        client.contact_name,
+        client.phone,
+        client.whatsapp_phone,
+        client.gstin,
+        client.state_code,
+      ]
+        .filter(Boolean)
+        .some((value) => value!.toLowerCase().includes(search));
+
+    return matchesStatus && matchesSearch;
+  });
+  const statusCounts = statusOptions
+    .filter((status) => status !== "all")
+    .map((status) => ({
+      status,
+      count: (clients ?? []).filter((client) => client.status === status).length,
+    }));
 
   return (
     <div>
@@ -75,9 +125,62 @@ export default async function ClientsPage() {
       />
 
       <PageBody>
+        <FilterBar action="/dashboard/clients">
+          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_auto] md:items-end">
+            <div className="grid gap-1.5">
+              <label
+                htmlFor="client-search"
+                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+              >
+                Search
+              </label>
+              <Input
+                id="client-search"
+                name="q"
+                defaultValue={filters.q ?? ""}
+                placeholder="Business, GSTIN, phone"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <label
+                htmlFor="client-status"
+                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+              >
+                Status
+              </label>
+              <Select
+                id="client-status"
+                name="status"
+                defaultValue={selectedStatus}
+              >
+                {statusOptions.map((status) => (
+                  <option key={status} value={status}>
+                    {status.replaceAll("_", " ")}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit" size="sm">
+                Apply
+              </Button>
+              <ActionLink href="/dashboard/clients" size="sm">
+                Clear
+              </ActionLink>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {statusCounts.map((item) => (
+              <StatusChip key={item.status} tone={statusTone(item.status)}>
+                {item.status.replaceAll("_", " ")}: {item.count}
+              </StatusChip>
+            ))}
+          </div>
+        </FilterBar>
+
         <SectionCard
           title="Client list"
-          actions={<RecordCount value={clients?.length ?? 0} />}
+          actions={<RecordCount value={filteredClients.length} />}
           bodyClassName="p-0"
         >
 
@@ -92,8 +195,16 @@ export default async function ClientsPage() {
           />
         )}
 
-        {!error && clients && clients.length > 0 && (
-          <DataTable minWidth={860}>
+        {!error && clients && clients.length > 0 && filteredClients.length === 0 && (
+          <EmptyState
+            title="No clients match these filters"
+            message="Adjust the search or status filter to return client workspaces."
+            action={<ActionLink href="/dashboard/clients">Clear filters</ActionLink>}
+          />
+        )}
+
+        {!error && filteredClients.length > 0 && (
+          <DataTable minWidth={920} ariaLabel="Client workspaces">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Business</th>
@@ -105,7 +216,7 @@ export default async function ClientsPage() {
                 </tr>
               </thead>
               <tbody>
-                {clients.map((client) => (
+                {filteredClients.map((client) => (
                   <tr key={client.id} className={tableRowClass}>
                     <td className={tableCellClass}>
                       <p className={tablePrimaryTextClass}>{client.business_name}</p>

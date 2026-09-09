@@ -171,7 +171,7 @@ export default async function GstPeriodPage({
             message="Approved transactions within the period range will appear here."
           />
         ) : (
-          <DataTable minWidth={980}>
+          <DataTable minWidth={980} ariaLabel="GST period source transactions">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Date</th>
@@ -199,8 +199,10 @@ export default async function GstPeriodPage({
                     <td className={`${tableCellClass} capitalize`}>
                       {transaction.transaction_type}
                     </td>
-                    <td className={`${tableCellClass} capitalize`}>
-                      {transaction.status.replaceAll("_", " ")}
+                    <td className={tableCellClass}>
+                      <StatusChip tone={statusTone(transaction.status)}>
+                        {transaction.status.replaceAll("_", " ")}
+                      </StatusChip>
                     </td>
                     <td className={tableNumericCellClass}>
                       {formatCurrency(transaction.taxable_amount)}
@@ -231,7 +233,7 @@ export default async function GstPeriodPage({
             message="Generation and export activity for this period will appear here."
           />
         ) : (
-          <DataTable minWidth={640}>
+          <DataTable minWidth={640} ariaLabel="GST period audit entries">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Action</th>

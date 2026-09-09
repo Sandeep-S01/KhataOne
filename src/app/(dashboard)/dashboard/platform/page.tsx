@@ -151,7 +151,7 @@ export default async function PlatformPage() {
           actions={<RecordCount value={integrationEventCount ?? 0} label="events" />}
           bodyClassName="p-0"
         >
-          <DataTable minWidth={680}>
+          <DataTable minWidth={680} ariaLabel="Platform integration records">
               <thead className={tableHeaderClass}>
                 <tr>
                   <th className={tableHeadCellClass}>Type</th>

@@ -9,6 +9,9 @@ import {
   SectionCard,
   SetupRequired,
   StatTile,
+  TextLink,
+  tableActionCellClass,
+  tableActionHeadCellClass,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -54,6 +57,10 @@ function statusTone(status: string) {
   }
 }
 
+function attentionTone(count: number): "warning" | "success" {
+  return count > 0 ? "warning" : "success";
+}
+
 export default async function DashboardPage() {
   if (!hasSupabaseConfig()) {
     return (
@@ -77,16 +84,26 @@ export default async function DashboardPage() {
     .select("id", { count: "exact", head: true })
     .eq("firm_id", firm.id)
     .in("status", ["draft", "needs_review", "duplicate"]);
-  const activeClientsPromise = supabase
-    .from("clients")
-    .select("id", { count: "exact", head: true })
-    .eq("firm_id", firm.id)
-    .neq("status", "archived");
   const gstReadyPromise = supabase
     .from("gst_periods")
     .select("id", { count: "exact", head: true })
     .eq("firm_id", firm.id)
     .eq("status", "ready");
+  const gstBlockedPromise = supabase
+    .from("gst_periods")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("status", ["missing_documents", "needs_review"]);
+  const intakeAttentionPromise = supabase
+    .from("whatsapp_messages")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("processing_status", ["received", "unmatched", "failed", "media_failed"]);
+  const exportsAttentionPromise = supabase
+    .from("exports")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("status", ["queued", "processing", "failed"]);
   const exportsThisMonthPromise = supabase
     .from("exports")
     .select("id", { count: "exact", head: true })
@@ -105,18 +122,52 @@ export default async function DashboardPage() {
 
   const [
     pendingReview,
-    activeClients,
     gstReady,
+    gstBlocked,
+    intakeAttention,
+    exportsAttention,
     exportsThisMonth,
     reviewItemsResult,
   ] = await Promise.all([
     pendingReviewPromise,
-    activeClientsPromise,
     gstReadyPromise,
+    gstBlockedPromise,
+    intakeAttentionPromise,
+    exportsAttentionPromise,
     exportsThisMonthPromise,
     reviewItemsPromise,
   ]);
   const { data: reviewItems, error: reviewItemsError } = reviewItemsResult;
+  const priorityItems = [
+    {
+      label: "Review extracted transactions",
+      count: pendingReview.count ?? 0,
+      href: "/dashboard/review-queue",
+      tone: attentionTone(pendingReview.count ?? 0),
+      description: "Draft, needs-review, and duplicate-risk records waiting for CA decision.",
+    },
+    {
+      label: "Triage WhatsApp intake",
+      count: intakeAttention.count ?? 0,
+      href: "/dashboard/inbox",
+      tone: attentionTone(intakeAttention.count ?? 0),
+      description: "Unmatched, received, failed, or media-failed inbound messages.",
+    },
+    {
+      label: "Resolve GST blockers",
+      count: gstBlocked.count ?? 0,
+      href: "/dashboard/gst-summary",
+      tone: attentionTone(gstBlocked.count ?? 0),
+      description: "Periods blocked by missing documents, mismatches, or pending review.",
+    },
+    {
+      label: "Check export jobs",
+      count: exportsAttention.count ?? 0,
+      href: "/dashboard/exports",
+      tone: attentionTone(exportsAttention.count ?? 0),
+      description: "Queued, processing, or failed private export jobs.",
+    },
+  ];
 
   return (
     <div>
@@ -137,32 +188,62 @@ export default async function DashboardPage() {
       />
 
       <PageBody>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <StatTile
-          label="Pending review"
-          value={pendingReview.count ?? 0}
-          tone={(pendingReview.count ?? 0) > 0 ? "warning" : "success"}
-          hint="Draft, needs-review, and duplicate-risk transactions."
-        />
-        <StatTile
-          label="Client workspaces"
-          value={activeClients.count ?? 0}
-          tone="brand"
-          hint="Active or onboarding clients in this firm."
-        />
-        <StatTile
-          label="GST ready periods"
-          value={gstReady.count ?? 0}
-          tone="success"
-          hint="Generated periods marked ready for review/export."
-        />
-        <StatTile
-          label="Exports this month"
-          value={exportsThisMonth.count ?? 0}
-          tone="neutral"
-          hint="Completed files created from approved records."
-        />
-      </div>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <StatTile
+            label="Pending review"
+            value={pendingReview.count ?? 0}
+            tone={(pendingReview.count ?? 0) > 0 ? "warning" : "success"}
+            hint="Draft, needs-review, and duplicate-risk transactions."
+          />
+          <StatTile
+            label="Intake attention"
+            value={intakeAttention.count ?? 0}
+            tone={attentionTone(intakeAttention.count ?? 0)}
+            hint="Unmatched or failed WhatsApp intake records."
+          />
+          <StatTile
+            label="GST ready periods"
+            value={gstReady.count ?? 0}
+            tone="success"
+            hint="Generated periods marked ready for review/export."
+          />
+          <StatTile
+            label="Exports this month"
+            value={exportsThisMonth.count ?? 0}
+            tone="neutral"
+            hint="Completed files created from approved records."
+          />
+        </div>
+
+        <SectionCard
+          title="Priority worklist"
+          description="Start with the queues that can block ledger handoff, GST readiness, or private exports."
+          bodyClassName="p-0"
+        >
+          <div className="divide-y divide-khata-border">
+            {priorityItems.map((item) => (
+              <div
+                key={item.label}
+                className="grid gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+              >
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <StatusChip tone={item.tone}>
+                      {item.count} open
+                    </StatusChip>
+                    <h2 className="text-sm font-semibold text-khata-ink">
+                      {item.label}
+                    </h2>
+                  </div>
+                  <p className="mt-1 text-xs leading-5 text-khata-muted">
+                    {item.description}
+                  </p>
+                </div>
+                <TextLink href={item.href}>Open queue</TextLink>
+              </div>
+            ))}
+          </div>
+        </SectionCard>
 
         <SectionCard
           title="Review queue snapshot"
@@ -189,7 +270,7 @@ export default async function DashboardPage() {
           )}
 
           {!reviewItemsError && reviewItems && reviewItems.length > 0 && (
-          <DataTable minWidth={860}>
+          <DataTable minWidth={940} ariaLabel="Latest review queue records">
             <thead className={tableHeaderClass}>
               <tr>
                 <th className={tableHeadCellClass}>Client</th>
@@ -199,6 +280,7 @@ export default async function DashboardPage() {
                 <th className={tableHeadCellClass}>Status</th>
                 <th className={tableNumericHeadCellClass}>Confidence</th>
                 <th className={tableNumericHeadCellClass}>Amount</th>
+                <th className={tableActionHeadCellClass}>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -231,6 +313,11 @@ export default async function DashboardPage() {
                   </td>
                   <td className={tableNumericCellClass}>
                     {formatCurrency(item.total_amount)}
+                  </td>
+                  <td className={tableActionCellClass}>
+                    <TextLink href={`/dashboard/review-queue/${item.id}`}>
+                      Review
+                    </TextLink>
                   </td>
                 </tr>
                 );

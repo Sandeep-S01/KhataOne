@@ -6,6 +6,8 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- Plan and execute dashboard UI/UX audit improvements across the protected CA console, mirroring the public-site audit process while preserving dense operational workflows, RLS assumptions, and CA-controlled accounting decisions.
+- Deploy and visually verify the September 8, 2026 live website UI/UX audit polish on desktop, tablet, and mobile, including social previews and Supabase password recovery redirects.
 - Verify AI extraction fallback layer so simple WhatsApp text invoices can become Review Queue items without paid OpenAI credits.
 - Verify automatic AI extraction job processing on live Supabase/Vercel after applying the new worker migration and adding `CRON_SECRET`.
 - Verify Phase 2 against a live Supabase project.
@@ -64,6 +66,10 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Next Tasks
 
+- Manual testing by product owner: authenticated desktop/tablet/mobile visual verification for `docs/Dashboard-UI-UX-Audit-Implementation-Plan.md` using seeded or live dashboard data.
+- Deploy the live website UI/UX audit polish and validate metadata previews for Open Graph, Twitter/X, LinkedIn, and WhatsApp sharing.
+- Verify Supabase password reset email links redirect to `/reset-password` and successfully update passwords in production.
+- Visually verify the landing, login, signup, forgot-password, reset-password, privacy, terms, and contact pages at desktop, tablet, and mobile widths.
 - Deploy and visually verify the new conversion-focused landing page redesign against the production URL on desktop, tablet, and mobile widths.
 - Deploy and verify the safe WhatsApp greeting/help menu responder from `docs/WhatsApp-Help-Menu-Plan.md` with matched and unmatched sender tests.
 - Apply `supabase/migrations/20260812090000_normalize_transactions_nullable_fields.sql` in Supabase if Operations "Run now" reports any not-null violation on draft transaction fields such as `date`, `amount`, or `category`.
@@ -104,6 +110,23 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 | Date | Change |
 | --- | --- |
+| 2026-09-09 | Completed pre-push cleanup for the latest UI changes: fixed sidebar storage state handling for hydration-safe collapse persistence, removed stale imports/comments, normalized Tailwind utilities, pinned Turbopack to the repo root, and verified with `npm.cmd run verify`, `git diff --check`, and local smoke checks against `http://localhost:3000`. |
+| 2026-09-09 | Implemented collapsible DashboardSidebar with full (w-64) and icon-only (w-[68px]) modes, top-right PanelLeftClose/PanelLeft collapse toggle button, Ctrl+B / Cmd+B keyboard shortcut, workspace avatar switcher card, custom sleek scrollbar (.k-scrollbar), and tooltip cues for collapsed icon navigation. Build passed cleanly. |
+| 2026-09-09 | Redesigned landing page footer: upgraded to a 12-column structured layout with 3 categorized navigation groups (Product, Workspace, Trust & Legal), trust/compliance tags (India GST Ready, CA Controlled), full-width copyright bottom bar, and verified links. Build passed cleanly. |
+| 2026-09-09 | Implemented redesigned professional header: upgraded to a 3-column CSS Grid (`grid-cols-[1fr_auto_1fr]`) for true mathematical navigation centering, standard 64px (`h-16`) vertical height, segmented capsule navigation pill with active/hover states, action boundary divider, kinetic primary CTA (`ArrowRight`), and polished mobile drawer. Build verification passed cleanly. |
+| 2026-09-09 | Standardized UI components across public pages and auth forms: refactored `src/app/page.tsx`, `LeadCaptureForm`, and `AuthForm` to use unified primitives from `src/components/design-system.tsx` (`ActionLink`, `Input`, `Select`, `Textarea`, `Button`, `FormMessage`) and `StatusChip` with brand tone support. `npm run build` passed cleanly. |
+| 2026-09-09 | Completed a development-only dashboard UI/UX follow-up with richer client detail operations panels for recent documents, review workload, approved records, GST readiness, and audit history, plus expanded Review Queue filters for client, document type, status, risk, search, and transaction date range; local lint/typecheck/build verification passed. |
+| 2026-09-08 | Completed local dashboard audit Phase 9 verification pass: `npm.cmd run verify` passed and `SMOKE_BASE_URL=http://localhost:3000 npm.cmd run smoke:local` passed with expected unauthenticated dashboard redirects; authenticated desktop/tablet/mobile visual verification remains pending seeded/live credentials. |
+| 2026-09-08 | Implemented dashboard audit Phase 8 first pass with expanded audit filters for action/entity/actor/date, accessibility labels for admin tables, truncated operations error display, role-gated run actions preserved, and explicit platform integration boundaries; local lint/typecheck/build verification passed. |
+| 2026-09-08 | Implemented dashboard audit Phase 7 first pass with clearer GST readiness tables, separate mismatch and missing-document counts, explicit non-filing guidance in GST/export forms, private export/audit expectations, reserved Tally-ready labeling, table accessibility labels, and local lint/typecheck/build verification. |
+| 2026-09-08 | Implemented dashboard audit Phase 6 first pass with visible active ledger filters, clearer filtered empty states, ledger table accessibility labels, and a correction page before-state panel showing current handoff values beside the audited correction form; local lint/typecheck/build verification passed. |
+| 2026-09-08 | Implemented dashboard audit Phase 5 first pass with review queue search/status/risk filters, a denser review table including transaction date, risk flags, confidence, amount, age, and direct review actions, plus a sticky review-detail rail for summary, source evidence, and audited decision actions; local lint/typecheck/build verification passed. |
+| 2026-09-08 | Implemented dashboard audit Phase 4 first pass with compact filters and filtered empty states for Clients and WhatsApp Inbox, status summaries for client setup, clearer inbox triage labels for unmatched/failed/queued/ready states, table accessibility labels, and local lint/typecheck/build verification. |
+| 2026-09-08 | Implemented dashboard audit Phase 3 by turning the overview into a priority worklist for pending reviews, WhatsApp intake attention, GST blockers, and export job attention, with direct route links and an action-oriented latest-review snapshot; local lint/typecheck/build verification passed. |
+| 2026-09-08 | Implemented the first dashboard UI/UX audit slice with protected dashboard metadata, skip-to-content navigation, mobile workspace nav auto-close, active link `aria-current`, mobile-safe sign-out labeling, resizable shared textareas, keyboard-reachable table scroll regions, sticky shared table headers, and local lint/typecheck/build verification. |
+| 2026-09-08 | Added dashboard UI/UX audit implementation plan covering shell/navigation, shared operational primitives, overview prioritization, clients/inbox triage, review workflow, ledger, GST/reports/exports, audit/operations/settings, platform boundaries, responsive checks, and verification matrix. |
+| 2026-09-08 | Implemented live website UI/UX audit fixes across metadata, generated social images, sitemap/robots, landing trust copy, CTA consistency, auth recovery, password visibility, demo form accessibility, mobile navigation, scroll-spy nav, structured data, and public legal/contact pages; local lint, typecheck, build, and HTTP route checks passed. |
+| 2026-09-08 | Added live website UI/UX audit implementation plan covering public metadata, trust copy, auth recovery, demo form accessibility, navigation behavior, responsive polish, structured data, and verification order. |
 | 2026-08-10 | Created initial planning and architecture document set for KhataOne. |
 | 2026-08-10 | Added root `AGENTS.md` and KhataOne-specific Codex skills for product, design, backend, WhatsApp, AI extraction, GST, and implementation tracking. |
 | 2026-08-10 | Completed Phase 0 project foundation and started Phase 1 landing page implementation. |
