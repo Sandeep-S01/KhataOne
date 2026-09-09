@@ -25,8 +25,14 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import {
+  normalizePage,
+  normalizeSearch,
+  toPostgrestContainsPattern,
+} from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/performance";
 
 export const dynamic = "force-dynamic";
 
@@ -55,15 +61,6 @@ const statusOptions = [
 ];
 
 const pageSize = 50;
-
-function normalizeSearch(value: string | undefined) {
-  return value?.trim().toLowerCase() ?? "";
-}
-
-function normalizePage(value: string | undefined) {
-  const page = Number.parseInt(value ?? "1", 10);
-  return Number.isFinite(page) && page > 0 ? page : 1;
-}
 
 export default async function ClientsPage({
   searchParams,
@@ -96,33 +93,43 @@ export default async function ClientsPage({
     .select(
       "id, business_name, contact_name, phone, whatsapp_phone, gstin, state_code, filing_frequency, status, created_at",
     )
-    .eq("firm_id", firm.id)
-    .order("created_at", { ascending: false })
-    .range(rangeFrom, rangeTo);
+    .eq("firm_id", firm.id);
 
   if (selectedStatus !== "all") {
     query = query.eq("status", selectedStatus);
   }
 
-  const { data: clients, error } = await query;
+  const searchPattern = toPostgrestContainsPattern(search);
+
+  if (searchPattern) {
+    query = query.or(
+      [
+        `business_name.ilike.${searchPattern}`,
+        `contact_name.ilike.${searchPattern}`,
+        `phone.ilike.${searchPattern}`,
+        `whatsapp_phone.ilike.${searchPattern}`,
+        `gstin.ilike.${searchPattern}`,
+        `state_code.ilike.${searchPattern}`,
+      ].join(","),
+    );
+  }
+
+  query = query
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(rangeFrom, rangeTo);
+
+  const { data: clients, error } = await withServerTiming(
+    "dashboard.clients.query",
+    () => query,
+    {
+      page,
+      has_status_filter: selectedStatus !== "all",
+      has_search_filter: Boolean(searchPattern),
+    },
+  );
   const pageClients = (clients ?? []).slice(0, pageSize);
   const hasNextPage = (clients?.length ?? 0) > pageSize;
-  const filteredClients = pageClients.filter((client) => {
-    const matchesSearch =
-      !search ||
-      [
-        client.business_name,
-        client.contact_name,
-        client.phone,
-        client.whatsapp_phone,
-        client.gstin,
-        client.state_code,
-      ]
-        .filter(Boolean)
-        .some((value) => value!.toLowerCase().includes(search));
-
-    return matchesSearch;
-  });
   const statusCounts = statusOptions
     .filter((status) => status !== "all")
     .map((status) => ({
@@ -202,7 +209,7 @@ export default async function ClientsPage({
 
         <SectionCard
           title="Client list"
-          actions={<RecordCount value={filteredClients.length} label="shown" />}
+          actions={<RecordCount value={pageClients.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -217,7 +224,7 @@ export default async function ClientsPage({
           />
         )}
 
-        {!error && clients && clients.length > 0 && filteredClients.length === 0 && (
+        {!error && clients && clients.length > 0 && pageClients.length === 0 && (
           <EmptyState
             title="No clients match these filters"
             message="Adjust the search or status filter to return client workspaces."
@@ -225,7 +232,7 @@ export default async function ClientsPage({
           />
         )}
 
-        {!error && filteredClients.length > 0 && (
+        {!error && pageClients.length > 0 && (
           <>
             <DataTable minWidth={920} ariaLabel="Client workspaces">
               <thead className={tableHeaderClass}>
@@ -239,7 +246,7 @@ export default async function ClientsPage({
                 </tr>
               </thead>
               <tbody>
-                {filteredClients.map((client) => (
+                {pageClients.map((client) => (
                   <tr key={client.id} className={tableRowClass}>
                     <td className={tableCellClass}>
                       <p className={tablePrimaryTextClass}>{client.business_name}</p>

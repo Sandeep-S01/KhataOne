@@ -9,8 +9,10 @@
     "verify": "npm run lint && npm run typecheck && npm run build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:performance": "node scripts/test-dashboard-query-semantics.mjs",
     "smoke:local": "node scripts/smoke-local.mjs",
     "perf:live-dashboard": "node scripts/check-live-dashboard-performance.mjs",
+    "perf:browser-dashboard": "node scripts/check-dashboard-browser-performance.mjs",
     "seed:demo": "node scripts/seed-demo.mjs"
   },
   "dependencies": {

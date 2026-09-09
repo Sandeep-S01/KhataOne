@@ -28,8 +28,10 @@ import {
   tableSecondaryTextClass,
   tableRowClass,
 } from "@/components/design-system";
+import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/performance";
 
 export const dynamic = "force-dynamic";
 
@@ -50,11 +52,6 @@ type SearchParams = {
 };
 
 const pageSize = 50;
-
-function normalizePage(value: string | undefined) {
-  const page = Number.parseInt(value ?? "1", 10);
-  return Number.isFinite(page) && page > 0 ? page : 1;
-}
 
 function activeFilterSummary(filters: SearchParams) {
   return [
@@ -103,6 +100,7 @@ export default async function LedgerPage({
     .eq("firm_id", firm.id)
     .order("entry_date", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
     .range(rangeFrom, rangeTo);
 
   if (filters.client) {
@@ -122,8 +120,15 @@ export default async function LedgerPage({
   }
 
   const [{ data: entries, error }, { data: clients }] = await Promise.all([
-    query,
-    clientsQuery,
+    withServerTiming("dashboard.ledger.query", () => query, {
+      page,
+      has_client_filter: Boolean(filters.client),
+      has_date_filter: Boolean(filters.from || filters.to),
+      has_account_filter: Boolean(filters.account),
+    }),
+    withServerTiming("dashboard.ledger.clients_query", () => clientsQuery, {
+      page,
+    }),
   ]);
   const pageEntries = (entries ?? []).slice(0, pageSize);
   const hasNextPage = (entries?.length ?? 0) > pageSize;

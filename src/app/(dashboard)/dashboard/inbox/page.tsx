@@ -25,8 +25,10 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/performance";
 
 export const dynamic = "force-dynamic";
 
@@ -61,11 +63,6 @@ const inboxStatusOptions = [
 
 const pageSize = 50;
 
-function normalizePage(value: string | undefined) {
-  const page = Number.parseInt(value ?? "1", 10);
-  return Number.isFinite(page) && page > 0 ? page : 1;
-}
-
 function triageLabel(status: string) {
   switch (status) {
     case "unmatched":
@@ -87,9 +84,6 @@ function triageLabel(status: string) {
   }
 }
 
-function normalizeSearch(value: string | undefined) {
-  return value?.trim().toLowerCase() ?? "";
-}
 
 export default async function InboxPage({
   searchParams,
@@ -124,13 +118,23 @@ export default async function InboxPage({
     )
     .eq("firm_id", firm.id)
     .order("received_at", { ascending: false })
+    .order("id", { ascending: false })
     .range(rangeFrom, rangeTo);
 
   if (selectedStatus !== "all") {
     query = query.eq("processing_status", selectedStatus);
   }
 
-  const { data: messages, error } = await query;
+  const { data: messages, error } = await withServerTiming(
+    "dashboard.inbox.query",
+    () => query,
+    {
+      page,
+      has_status_filter: selectedStatus !== "all",
+      has_search_filter: Boolean(search),
+      search_applied_after_page: Boolean(search),
+    },
+  );
   const pageMessages = (messages ?? []).slice(0, pageSize);
   const hasNextPage = (messages?.length ?? 0) > pageSize;
   const filteredMessages = pageMessages.filter((message) => {

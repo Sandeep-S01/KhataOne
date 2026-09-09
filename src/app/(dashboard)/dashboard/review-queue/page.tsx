@@ -28,8 +28,10 @@ import {
   tableSecondaryTextClass,
   tableRowClass,
 } from "@/components/design-system";
+import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/performance";
 
 export const dynamic = "force-dynamic";
 
@@ -78,15 +80,6 @@ const documentTypeOptions = [
 
 function extractionSource(model?: string | null) {
   return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
-}
-
-function normalizeSearch(value: string | undefined) {
-  return value?.trim().toLowerCase() ?? "";
-}
-
-function normalizePage(value: string | undefined) {
-  const page = Number.parseInt(value ?? "1", 10);
-  return Number.isFinite(page) && page > 0 ? page : 1;
 }
 
 function formatDate(value: string | null) {
@@ -169,6 +162,7 @@ export default async function ReviewQueuePage({
     .eq("firm_id", firm.id)
     .in("status", ["draft", "needs_review", "duplicate"])
     .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
     .range(rangeFrom, rangeTo);
 
   if (filters.client) {
@@ -187,9 +181,26 @@ export default async function ReviewQueuePage({
     query = query.lte("transaction_date", filters.to);
   }
 
+  if (selectedRisk === "low_confidence") {
+    query = query.lt("confidence_score", 0.7);
+  }
+
   const [transactionsResult, clientsResult] = await Promise.all([
-    query,
-    clientsPromise,
+    withServerTiming("dashboard.review_queue.query", () => query, {
+      page,
+      has_client_filter: Boolean(filters.client),
+      has_status_filter: selectedStatus !== "all",
+      has_date_filter: Boolean(filters.from || filters.to),
+      has_search_filter: Boolean(search),
+      has_document_filter: selectedDocumentType !== "all",
+      has_low_confidence_filter: selectedRisk === "low_confidence",
+      search_applied_after_page: Boolean(search),
+      document_filter_applied_after_page: selectedDocumentType !== "all",
+      risk_flags_applied_after_page: selectedRisk === "risk",
+    }),
+    withServerTiming("dashboard.review_queue.clients_query", () => clientsPromise, {
+      page,
+    }),
   ]);
   const { data: transactions, error } = transactionsResult;
   const clients = clientsResult.data ?? [];
@@ -209,8 +220,7 @@ export default async function ReviewQueuePage({
     const matchesRisk =
       selectedRisk === "all" ||
       (selectedRisk === "risk" && riskCount > 0) ||
-      (selectedRisk === "low_confidence" &&
-        Number(transaction.confidence_score ?? 0) < 0.7);
+      selectedRisk === "low_confidence";
     const matchesDocumentType =
       selectedDocumentType === "all" ||
       document?.document_type === selectedDocumentType;

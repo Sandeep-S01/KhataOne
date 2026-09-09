@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getPublicEnv, hasSupabaseConfig } from "@/lib/env";
+import { withServerTiming } from "@/lib/performance";
 
 const protectedRoutes = ["/dashboard", "/onboarding"];
 const authRoutes = ["/login", "/signup"];
@@ -56,9 +57,14 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
+  const routeClass = isProtectedPath(pathname) ? "protected" : "auth";
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await withServerTiming(
+    "middleware.auth_get_user",
+    () => supabase.auth.getUser(),
+    { route_class: routeClass },
+  );
 
   if (!user && isProtectedPath(pathname)) {
     const url = request.nextUrl.clone();

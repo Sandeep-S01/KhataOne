@@ -6,6 +6,7 @@ import {
   hasSupabaseConfig,
 } from "@/lib/env";
 import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
+import { withServerTiming } from "@/lib/performance";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -96,17 +97,24 @@ export async function GET() {
   const admin = createAdminClient();
 
   if (admin) {
-    const { error } = await admin.from("firms").select("id", {
-      count: "exact",
-      head: true,
-    });
+    const started = performance.now();
+    const { error } = await withServerTiming(
+      "health.supabase_database",
+      () =>
+        admin.from("firms").select("id", {
+          count: "exact",
+          head: true,
+        }),
+      { route: "health" },
+    );
+    const durationMs = Math.round(performance.now() - started);
 
     checks.push({
       name: "supabase_database",
       status: error ? "error" : "ok",
       message: error
-        ? `Database check failed: ${error.message}`
-        : "Database query succeeded.",
+        ? `Database check failed in ${durationMs}ms: ${error.message}`
+        : `Database query succeeded in ${durationMs}ms.`,
     });
   }
 

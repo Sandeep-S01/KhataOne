@@ -410,3 +410,9 @@ common tenant-scoped query shapes such as `(firm_id, status, created_at desc)`,
 `(firm_id, processing_status, received_at desc)`, `(firm_id, entry_date desc,
 created_at desc)`, and related client/status/date combinations. These indexes
 support faster protected navigation without weakening RLS.
+
+Performance implementation note: dashboard pagination uses unique `id desc`
+tie-break ordering on hot list pages. Prepared search indexes use `pg_trgm` for
+client, WhatsApp message, document, and review transaction search fields, plus a
+GIN index for AI extraction risk flags. Runtime code must not depend on these
+indexes being present until the production Supabase migration state is verified.

@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "implementation_date": "2026-09-10",
+    "repository": "khataone",
+    "base_commit": "676a5bb",
+    "mode": "safe local implementation",
+    "live_deployment_changed": false,
+    "production_migrations_applied": false,
+    "notes": [
+      "This file records local validation after implementation, not production performance proof.",
+      "Authenticated browser timing remains blocked until LIVE_DASHBOARD_EMAIL and LIVE_DASHBOARD_PASSWORD are available in a safe runner.",
+      "Production Supabase index state remains unverified from this checkout."
+    ]
+  },
+  "implemented": [
+    {
+      "finding_id": "F001",
+      "status": "partial",
+      "changes": [
+        "Added opt-in sanitized server timing helper.",
+        "Instrumented middleware auth, firm context auth/membership, hot dashboard queries, and health database check.",
+        "Added optional browser navigation harness script."
+      ]
+    },
+    {
+      "finding_id": "F002",
+      "status": "prepared_not_applied",
+      "changes": [
+        "Added Supabase migration for deterministic tie-break indexes and trigram search indexes."
+      ]
+    },
+    {
+      "finding_id": "F004",
+      "status": "partial",
+      "changes": [
+        "Moved Clients search before pagination.",
+        "Moved Review Queue low-confidence filter to the database query.",
+        "Added deterministic id ordering to Clients, Inbox, Review Queue, and Ledger.",
+        "Left relationship-aware Inbox and Review Queue filters observable until database-side exact search is available."
+      ]
+    },
+    {
+      "finding_id": "F008",
+      "status": "partial",
+      "changes": [
+        "Health endpoint now reports Supabase database check duration."
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "command": "npm.cmd run test:performance",
+      "status": "passed",
+      "summary": "Dashboard query semantics checks passed."
+    },
+    {
+      "command": "npm.cmd run typecheck",
+      "status": "passed",
+      "summary": "TypeScript completed with no errors."
+    },
+    {
+      "command": "npm.cmd run lint",
+      "status": "passed",
+      "summary": "ESLint completed with no errors."
+    },
+    {
+      "command": "npm.cmd run build",
+      "status": "passed",
+      "summary": "Next.js production build completed successfully."
+    }
+  ],
+  "blocked_or_deferred": [
+    {
+      "finding_id": "F001",
+      "reason": "Authenticated live browser credentials are not available locally."
+    },
+    {
+      "finding_id": "F002",
+      "reason": "Supabase CLI is not linked to the production project from this checkout."
+    },
+    {
+      "finding_id": "F006",
+      "reason": "Export optimization can mutate storage/audit records and needs isolated integration tests."
+    },
+    {
+      "finding_id": "F007",
+      "reason": "Worker throughput changes need idempotency and retry tests before concurrency changes."
+    }
+  ]
+}
