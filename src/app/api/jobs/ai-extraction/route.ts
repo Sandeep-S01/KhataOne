@@ -6,6 +6,7 @@ import { captureOperationalError } from "@/lib/observability";
 import {
   checkRateLimit,
   clientRateLimitKey,
+  configuredRateLimitPerWindow,
   retryAfterSeconds,
 } from "@/lib/rate-limit";
 
@@ -17,7 +18,10 @@ export async function POST(request: NextRequest) {
       realIp: request.headers.get("x-real-ip"),
       fallback: "job-runner",
     }),
-    limit: 60,
+    limit: configuredRateLimitPerWindow(
+      "AI_EXTRACTION_JOB_RATE_LIMIT_PER_MINUTE",
+      60,
+    ),
     windowMs: 60_000,
   });
 

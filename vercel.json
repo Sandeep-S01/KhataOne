@@ -7,6 +7,10 @@
     {
       "path": "/api/jobs/whatsapp-ingestion/run-queued",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/jobs/exports/run-queued",
+      "schedule": "0 0 * * *"
     }
   ]
 }

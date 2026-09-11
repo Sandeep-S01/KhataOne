@@ -5,6 +5,7 @@ import { runQueuedWhatsAppIngestionEvents } from "@/lib/whatsapp/ingestion-worke
 import {
   checkRateLimit,
   clientRateLimitKey,
+  configuredRateLimitPerWindow,
   retryAfterSeconds,
 } from "@/lib/rate-limit";
 
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
       realIp: request.headers.get("x-real-ip"),
       fallback: "job-runner",
     }),
-    limit: 20,
+    limit: configuredRateLimitPerWindow("JOB_RUNNER_RATE_LIMIT_PER_MINUTE", 20),
     windowMs: 60_000,
   });
 

@@ -1,0 +1,9 @@
+finding_id,severity,area,title,implementation_status,verification_status,evidence_level,launch_gate,owner_role
+KO-LAUNCH-001,P1,AI extraction,Image PDF scanned PDF and audio extraction are not proven and media-only documents do not reach OCR/transcription,PARTIAL,FAIL,CODE_INSPECTED,before pilot,Engineering
+KO-LAUNCH-002,P1,Financial integrity,Approval to ledger handoff is sequential and lacks a database uniqueness/transaction boundary for one logical handoff,PARTIAL,NOT_TESTED,CODE_INSPECTED,before pilot,Backend
+KO-LAUNCH-003,P1,Operations,Worker cadence and recovery are not proven for document-to-draft latency or crash recovery,PARTIAL,BLOCKED,CODE_INSPECTED,before pilot,Platform
+KO-LAUNCH-004,P1,Security/Tenant isolation,Multi-tenant RLS and service-role paths have not been executed with restricted principals,PARTIAL,BLOCKED,CODE_INSPECTED,before pilot,Security
+KO-LAUNCH-005,P1,Capacity,10k and 20k DAU workloads were not load-tested on an authorized production-like target,PARTIAL,BLOCKED,CODE_INSPECTED,before target-scale launch,Performance
+KO-LAUNCH-006,P2,Exports,CSV export quotes cells but does not neutralize spreadsheet formula injection,PARTIAL,NOT_TESTED,CODE_INSPECTED,before pilot,Backend
+KO-LAUNCH-007,P2,Rate limiting,In-process rate limiting is not distributed and webhook limit is below illustrative 20k peak intake if traffic concentrates on one key,PARTIAL,NOT_TESTED,CODE_INSPECTED,before target-scale launch,Platform
+KO-LAUNCH-008,P2,Exports/Performance,Exports are generated synchronously and buffer PDFs in memory rather than queueing large jobs,PARTIAL,NOT_TESTED,CODE_INSPECTED,before unrestricted target-scale launch,Backend

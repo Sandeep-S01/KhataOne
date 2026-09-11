@@ -165,7 +165,7 @@ export default async function ExportsPage() {
                     ? exportRecord.gst_periods[0]
                     : exportRecord.gst_periods;
                   const metadata = exportRecord.metadata as
-                    | Record<string, string>
+                    | Record<string, string | number>
                     | null;
                   const periodText = period
                     ? `${period.period_start} to ${period.period_end}`
@@ -180,6 +180,16 @@ export default async function ExportsPage() {
                     >
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {exportLabel(exportRecord.export_type)}
+                        {typeof metadata?.row_count === "number" && (
+                          <p className={`mt-1 ${tableSecondaryTextClass}`}>
+                            {metadata.row_count} rows
+                          </p>
+                        )}
+                        {typeof metadata?.byte_size === "number" && (
+                          <p className={`mt-1 ${tableSecondaryTextClass}`}>
+                            {Math.ceil(metadata.byte_size / 1024)} KB
+                          </p>
+                        )}
                       </td>
                       <td className={tableCellClass}>
                         {client?.business_name ?? "Not linked"}
@@ -191,6 +201,11 @@ export default async function ExportsPage() {
                         <StatusChip tone={statusTone(exportRecord.status)}>
                           {exportRecord.status}
                         </StatusChip>
+                        {exportRecord.status === "failed" && metadata?.error && (
+                          <p className={`mt-1 max-w-xs ${tableSecondaryTextClass}`}>
+                            {String(metadata.error)}
+                          </p>
+                        )}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {new Date(exportRecord.created_at).toLocaleString(

@@ -7,7 +7,8 @@ Run this checklist before marking a deployment production-ready.
 - `npm run verify` passes.
 - `SMOKE_BASE_URL=<deployment-url> npm run smoke:local` passes.
 - `LIVE_DASHBOARD_BASE_URL=<deployment-url> npm run perf:live-dashboard` passes with `LIVE_DASHBOARD_EMAIL` and `LIVE_DASHBOARD_PASSWORD` configured for an approved live test account.
-- `/api/health` returns `ok` or an expected `degraded` status with only intentionally disabled integrations.
+- `/api/health/live` returns `ok`.
+- `/api/health` or `/api/health/ready` returns `ok` or an expected `degraded` status with only intentionally disabled integrations.
 
 ## Environment
 

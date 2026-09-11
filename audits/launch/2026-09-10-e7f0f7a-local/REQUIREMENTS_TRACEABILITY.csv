@@ -1,0 +1,13 @@
+requirement_id,source,requirement,business_outcome,ui_route,server_api_or_action,worker_or_job,db_storage_control,implementation_status,verification_status,evidence_level,finding_id
+REQ-001,BRD/PRD/CRD,Landing page explains CA-first WhatsApp workflow,Buyer understands product,/,lead-request action,None,lead_requests,IMPLEMENTED,PASS,LOCAL_EXECUTED,
+REQ-002,PRD/TRD,Auth and firm workspace with protected dashboard,Secure CA access,/login /signup /onboarding /dashboard,auth actions,None,firms firm_users RLS,PARTIAL,PASS,LOCAL_EXECUTED,KO-LAUNCH-004
+REQ-003,PRD/CRD,Client management create edit archive,Manage SMB clients,/dashboard/clients,clients actions,None,clients audit_logs RLS,IMPLEMENTED,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-004
+REQ-004,PRD/TRD,WhatsApp webhook verification and durable intake,Preserve inbound evidence,/api/webhooks/whatsapp,route handler,whatsapp ingestion worker,whatsapp_webhook_events whatsapp_messages,IMPLEMENTED,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-003
+REQ-005,BRD/PRD,Image PDF audio and text AI extraction to drafts,Turn WhatsApp documents into reviewable records,/dashboard/review-queue,/api/jobs/ai-extraction,AI extraction worker,documents ai_extractions transactions,PARTIAL,FAIL,CODE_INSPECTED,KO-LAUNCH-001
+REQ-006,CRD,CA review approve reject duplicate clarify,CA-controlled accounting decisions,/dashboard/review-queue/[transactionId],review actions,None,transactions ledger_entries audit_logs,PARTIAL,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-002
+REQ-007,CRD/Backend Schema,Ledger handoff not full ERP journal,Traceable approved handoff,/dashboard/ledger,ledger/review actions,None,ledger_entries,IMPLEMENTED,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-002
+REQ-008,PRD/CRD,GST summaries from approved transactions only,GST preparation not direct filing,/dashboard/gst-summary,gst action,None,gst_periods gst_summaries,PARTIAL,NOT_TESTED,CODE_INSPECTED,
+REQ-009,PRD/CRD,CSV/PDF private exports with audit,CA handoff/reporting,/dashboard/exports,exports action and download route,None,exports private storage audit_logs,PARTIAL,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-006
+REQ-010,TRD/Security Rules,Firm tenant isolation with RLS,Prevent cross-firm exposure,All protected routes,server actions/workers,None,RLS policies and firm_id filters,PARTIAL,BLOCKED,CODE_INSPECTED,KO-LAUNCH-004
+REQ-011,TRD,Operations visibility for jobs/errors,Recover workflow failures,/dashboard/operations,operations action,job workers,processing_jobs audit_logs,IMPLEMENTED,NOT_TESTED,CODE_INSPECTED,KO-LAUNCH-003
+REQ-012,Audit prompt,10k and 20k DAU capacity evidence,Launch scale decision,All critical routes,webhook/dashboard/export paths,workers,DB/storage/providers,OUT_OF_SCOPE,BLOCKED,DOCUMENT_ONLY,KO-LAUNCH-005

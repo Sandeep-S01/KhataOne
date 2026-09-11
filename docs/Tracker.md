@@ -54,7 +54,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Billing model and pricing.
 - Whether production v1 needs staff invite flow or owner-only workspace first.
 - Whether Tally export is required in production v1 or v1.1.
-- Whether PDF processing uses built-in extraction only or a dedicated OCR pipeline.
+- Whether PDF/image processing through OpenAI native media input is sufficient for pilot quality or needs a dedicated OCR pipeline.
 
 ## Risks
 
@@ -90,8 +90,12 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Verify matched and unmatched sender behavior.
 - KO-PERF-04 Stage 2 fast-ack webhook cutover is implemented and production-probed: signed webhook acceptance, durable queue insert, duplicate handling, invalid-signature rejection, and protected worker processing passed. Continue monitoring the five-minute GitHub scheduler cadence with real inbound events.
 - Configure `OPENAI_API_KEY`, `OPENAI_EXTRACTION_MODEL`, and optional `JOB_RUNNER_SECRET`.
-- Verify AI extraction with text-note documents.
-- Add OCR/PDF/audio text extraction before relying on media-only documents.
+- Configure `OPENAI_TRANSCRIPTION_MODEL` before relying on audio-note extraction.
+- Add OpenAI credits or use an authorized non-production provider account with credits, then rerun PDF/image/scanned-PDF media extraction staging smoke; the latest PDF diagnostic reached OpenAI but received `429 no credits remaining`, and the app now preserves that provider error when text fallback is unavailable.
+- Deploy the current export worker route to non-production; local current-code export generation passed against the authorized non-production database, but the configured deployed URL returned `404` for `/api/jobs/exports/run-queued`.
+- Review and promote the current Vercel preview only after launch blockers are accepted or cleared; preview `khata-pm7ju8lr2-sandeep-s01s-projects.vercel.app` builds and exposes the new health/export routes behind Deployment Protection, while public production `khataone.vercel.app` is still on the older deployment without those routes.
+- Complete Phase 2 cleanup after evidence review by running `cleanup:phase2-staging-fixtures` with the specific synthetic run IDs to remove only attributed test records/storage.
+- Use the Phase 3 workload manifest and fail-closed capacity harnesses after Phase 2 media/export deployment verification passes; current Phase 3 preflight is blocked by missing native `k6` and a signed-in dashboard test cookie.
 - Verify Phase 7 approve, edit, reject, duplicate, clarification, audit, and ledger handoff flows against Supabase.
 - Verify Phase 8 ledger filters, entry detail, correction flow, and correction audit logs against Supabase.
 - Verify Phase 9 GST period generation, readiness status, tax buckets, source transactions, and audit logs against Supabase.
@@ -110,6 +114,25 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 | Date | Change |
 | --- | --- |
+| 2026-09-10 | Started production hardening Phase 0/1 from the launch audit: added atomic approval/handoff RPC migration with one-handoff uniqueness, centralized CSV export sanitization, and local hardening regression checks; external RLS/staging/provider verification remains blocked until authorized targets and test users are supplied. |
+| 2026-09-10 | Added fail-closed staging verification harnesses for the production hardening next step: approval migration duplicate preflight, approval RPC retry/concurrency checks, and RLS access-matrix execution remain blocked unless an explicitly labeled non-production Supabase target and role fixtures are provided. |
+| 2026-09-11 | Started production hardening Phase 2: added media-aware OpenAI extraction preparation for private image/PDF/audio inputs, queued export generation with a protected worker route and claim migration, and local static hardening checks; live provider, migration, storage, and load verification remain blocked until an authorized non-production target is supplied. |
+| 2026-09-11 | Added fail-closed Phase 2 staging harnesses for export-generation migration preflight, queued export worker smoke, and media extraction worker smoke; scripts require explicit non-production allowlist variables and fixture IDs before touching staging resources. |
+| 2026-09-11 | Added a fail-closed Phase 2 staging fixture seeder that creates a synthetic approved export fixture and queued media extraction fixture under explicit non-production controls, printing the IDs needed by the worker smoke scripts. |
+| 2026-09-11 | Added a fail-closed Phase 2 staging fixture cleanup script that removes only attributed synthetic export/media fixtures and their private storage objects by firm ID and run ID. |
+| 2026-09-11 | Started Phase 3 capacity/release scaffolding with a versioned workload manifest, fail-closed k6 open-arrival load script, capacity preflight, post-run business reconciliation, and static local checks; staging capacity evidence remains blocked pending authorized non-production target and test credentials. |
+| 2026-09-11 | Added the Phase 3 capacity runbook and npm load entry point so authorized staging runs have a documented preflight, k6 execution, reconciliation, stop-condition, and evidence-preservation sequence. |
+| 2026-09-11 | Added Phase 3 evidence-capture scaffolding with a redacted environment template and local run-directory creator for k6 summaries, reconciliation output, and command preservation. |
+| 2026-09-11 | Ran authorized non-production verification for production hardening: approval migration/export migration preflights passed, approval RPC concurrency and RLS access matrix passed, local current-code export worker smoke passed, health/worker-secret smoke passed, PDF media extraction reached OpenAI but was blocked by `429 no credits remaining`, and Phase 3 capacity load remains blocked by missing native k6 plus authenticated dashboard cookie. |
+| 2026-09-11 | Hardened AI extraction failure reporting so media jobs preserve the actionable OpenAI provider error when rule-based text fallback cannot run because source text is missing; local Phase 2 hardening and TypeScript checks passed. |
+| 2026-09-11 | Created a Vercel preview deployment from the current workspace and verified it behind Deployment Protection with `vercel curl`: liveness passed, readiness was degraded due known warnings/failed jobs, and the export worker route exists and rejects missing runner secrets; public production remains on the older deployment. |
+| 2026-09-11 | Split health checks into fast liveness and deeper readiness endpoints while keeping `/api/health` as a compatibility readiness route; updated operations documentation for incident and smoke usage. |
+| 2026-09-11 | Added development hardening for Operations job control: export generation jobs now have a single-job claim RPC, manual worker action, dashboard Run now control, and visible oldest active job age alongside AI extraction jobs. |
+| 2026-09-11 | Added development hardening for bounded export generation: transaction CSV exports now enforce row/file byte limits, record approval snapshot metadata, surface failed export reasons, and update export copy to reflect background queueing. |
+| 2026-09-11 | Added Operations queue-health development hardening with per-job-type active/failed/completed counts and configurable stale active-job warnings. |
+| 2026-09-11 | Added processing-job aggregate readiness health so `/api/health/ready` degrades on stale active jobs or failed-job counts using configurable operations thresholds. |
+| 2026-09-11 | Added configurable endpoint rate-limit thresholds and readiness visibility for shared platform/edge/store rate-limit enforcement, while keeping process-local limiting as a local guard. |
+| 2026-09-11 | Hardened rate-limit client key derivation so forwarded IP headers are ignored unless `TRUST_FORWARDED_IP_HEADERS=true` is explicitly configured behind a trusted proxy, with readiness visibility for the setting. |
 | 2026-09-10 | Implemented the safe dashboard performance pass with opt-in sanitized server timing, browser timing harness scaffolding, Clients database-side search before pagination, Review Queue low-confidence query filtering, deterministic pagination tie-breakers, health check duration reporting, prepared Supabase search/tie-break indexes, and local validation via `test:performance`, typecheck, lint, and build. |
 | 2026-09-10 | Completed a diagnosis-only performance audit package with `docs/performance/PERFORMANCE_DIAGNOSIS.md` and `docs/performance/PERFORMANCE_BASELINE.json`, covering verified architecture, measured unauthenticated local/live baselines, code-confirmed bottlenecks, blocked authenticated/index evidence, and ranked next-phase recommendations. |
 | 2026-09-10 | Added `docs/Performance-Architecture-Brief.md` as a copy-ready architecture/workflow/performance context package for independent ChatGPT diagnosis of authenticated dashboard navigation latency. |

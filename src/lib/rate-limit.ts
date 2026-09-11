@@ -1,3 +1,5 @@
+import { getOptionalServerEnv } from "@/lib/env";
+
 type RateLimitRecord = {
   count: number;
   resetAt: number;
@@ -15,6 +17,44 @@ const store = globalThis as typeof globalThis & {
 
 const rateLimits = store.__khataoneRateLimits ?? new Map<string, RateLimitRecord>();
 store.__khataoneRateLimits = rateLimits;
+
+function positiveIntegerEnv(key: string, fallback: number) {
+  const value = Number(getOptionalServerEnv(key));
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
+}
+
+export function configuredRateLimitPerWindow(key: string, fallback: number) {
+  return positiveIntegerEnv(key, fallback);
+}
+
+export function getRateLimitPosture() {
+  const sharedEnforcement = getOptionalServerEnv("RATE_LIMIT_SHARED_ENFORCEMENT")
+    ?.trim()
+    .toLowerCase();
+  const requiresShared =
+    getOptionalServerEnv("RATE_LIMIT_REQUIRE_SHARED_ENFORCEMENT") === "true";
+  const recognizedSharedModes = new Set(["platform", "edge", "shared-store"]);
+  const hasSharedEnforcement =
+    Boolean(sharedEnforcement) && recognizedSharedModes.has(sharedEnforcement!);
+
+  if (hasSharedEnforcement) {
+    return {
+      status: "ok" as const,
+      message: `Shared rate-limit enforcement is declared as ${sharedEnforcement}. In-process limits remain a local guard.`,
+    };
+  }
+
+  return {
+    status: requiresShared ? ("error" as const) : ("warning" as const),
+    message: requiresShared
+      ? "Shared rate-limit enforcement is required but RATE_LIMIT_SHARED_ENFORCEMENT is not set to platform, edge, or shared-store."
+      : "Only in-process rate limiting is configured. Use platform, edge, or shared-store enforcement before target-scale launch.",
+  };
+}
+
+function shouldTrustForwardedIpHeaders() {
+  return getOptionalServerEnv("TRUST_FORWARDED_IP_HEADERS") === "true";
+}
 
 export function checkRateLimit({
   key,
@@ -68,11 +108,12 @@ export function clientRateLimitKey({
   realIp: string | null;
   fallback: string;
 }) {
-  const ip =
-    forwardedFor?.split(",")[0]?.trim() ||
-    realIp?.trim() ||
-    fallback ||
-    "unknown";
+  const ip = shouldTrustForwardedIpHeaders()
+    ? forwardedFor?.split(",")[0]?.trim() ||
+      realIp?.trim() ||
+      fallback ||
+      "unknown"
+    : fallback || "unknown";
 
   return `${scope}:${ip}`;
 }

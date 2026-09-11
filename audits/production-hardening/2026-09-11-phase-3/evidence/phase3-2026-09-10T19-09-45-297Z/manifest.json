@@ -1,0 +1,33 @@
+{
+  "run_id": "phase3-2026-09-10T19-09-45-297Z",
+  "created_at": "2026-09-10T19:09:45.298Z",
+  "status": "PREPARED_NOT_EXECUTED",
+  "evidence_directory": "D:\\P\\KhataOne\\audits\\production-hardening\\2026-09-11-phase-3\\evidence\\phase3-2026-09-10T19-09-45-297Z",
+  "workload_manifest": "audits/production-hardening/2026-09-11-phase-3/WORKLOAD_MANIFEST.json",
+  "k6_summary_path": "audits/production-hardening/2026-09-11-phase-3/evidence/phase3-2026-09-10T19-09-45-297Z/k6-summary.json",
+  "reconciliation_path": "audits/production-hardening/2026-09-11-phase-3/evidence/phase3-2026-09-10T19-09-45-297Z/reconciliation.json",
+  "environment": {
+    "KHATAONE_PHASE3_BASE_URL": null,
+    "KHATAONE_PHASE3_SCENARIO": null,
+    "KHATAONE_PHASE3_DURATION": null,
+    "KHATAONE_PHASE3_DASHBOARD_PREALLOCATED_VUS": null,
+    "KHATAONE_PHASE3_DASHBOARD_MAX_VUS": null,
+    "KHATAONE_PHASE3_WORKER_PREALLOCATED_VUS": null,
+    "KHATAONE_PHASE3_WORKER_MAX_VUS": null,
+    "KHATAONE_PHASE3_AUTH_COOKIE": null,
+    "JOB_RUNNER_SECRET": "<redacted>",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://zqdsxbnufkmhsopmvpmg.supabase.co",
+    "SUPABASE_SERVICE_ROLE_KEY": "<redacted>",
+    "KHATAONE_PHASE3_RECONCILE_FIRM_ID": null
+  },
+  "commands": [
+    "npm.cmd run preflight:phase3-capacity",
+    "k6 run --summary-export audits/production-hardening/2026-09-11-phase-3/evidence/phase3-2026-09-10T19-09-45-297Z/k6-summary.json audits/production-hardening/2026-09-11-phase-3/tests/k6/phase3-mixed-load.js",
+    "npm.cmd run reconcile:phase3-capacity > audits/production-hardening/2026-09-11-phase-3/evidence/phase3-2026-09-10T19-09-45-297Z/reconciliation.json"
+  ],
+  "notes": [
+    "Secrets are redacted in this manifest.",
+    "Do not run load commands without explicit non-production authorization.",
+    "Preserve failed run outputs; do not relax thresholds silently."
+  ]
+}

@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext, type FirmContext } from "@/lib/firms";
 import { captureOperationalError } from "@/lib/observability";
-import { createAdminClient } from "@/lib/supabase/server";
 import { sendWhatsAppText } from "@/lib/whatsapp/client";
 
 export type ReviewActionState = {
@@ -132,22 +131,8 @@ async function writeAuditLog({
   });
 }
 
-function ledgerSide(transaction: TransactionRecord) {
-  const amount = transaction.total_amount ?? 0;
-
-  if (["sales", "receipt"].includes(transaction.transaction_type)) {
-    return { debit_amount: 0, credit_amount: amount };
-  }
-
-  return { debit_amount: amount, credit_amount: 0 };
-}
-
 function canReview(role: string) {
   return ["owner", "admin", "staff"].includes(role);
-}
-
-function createMutationClient(fallbackClient: FirmContext["supabase"]) {
-  return createAdminClient() ?? fallbackClient;
 }
 
 function redirectWithReviewError(transactionId: string, message: string) {
@@ -160,52 +145,6 @@ function redirectWithReviewError(transactionId: string, message: string) {
       message,
     )}` as Route,
   );
-}
-
-async function createLedgerHandoff(
-  transaction: TransactionRecord,
-  supabase: FirmContext["supabase"],
-) {
-  const { data: existing, error: existingError } = await supabase
-    .from("ledger_entries")
-    .select("id")
-    .eq("transaction_id", transaction.id)
-    .limit(1);
-
-  if (existingError) {
-    throw new Error(existingError.message);
-  }
-
-  if (existing && existing.length > 0) {
-    return existing[0].id as string;
-  }
-
-  const side = ledgerSide(transaction);
-  const { data: entry, error: insertError } = await supabase
-    .from("ledger_entries")
-    .insert({
-      firm_id: transaction.firm_id,
-      client_id: transaction.client_id,
-      transaction_id: transaction.id,
-      entry_date: transaction.transaction_date,
-      account_name:
-        transaction.category ||
-        transaction.party_name ||
-        `${transaction.transaction_type} review account`,
-      debit_amount: side.debit_amount,
-      credit_amount: side.credit_amount,
-      narration:
-        transaction.description ||
-        `Approved ${transaction.transaction_type} transaction`,
-    })
-    .select("id")
-    .single();
-
-  if (insertError || !entry) {
-    throw new Error(insertError?.message ?? "Could not create ledger handoff.");
-  }
-
-  return entry.id as string;
 }
 
 export async function updateTransactionAction(
@@ -337,73 +276,19 @@ export async function approveTransactionAction(formData: FormData) {
     );
   }
 
-  const actorUserId = context.userId;
-  const beforeData = context.transaction;
-  const approvedAt = new Date().toISOString();
-  const mutationClient = createMutationClient(context.supabase);
-  const { data: updated, error: updateError } = await mutationClient
-    .from("transactions")
-    .update({
-      status: "approved",
-      approved_by: actorUserId,
-      approved_at: approvedAt,
-    })
-    .eq("id", transactionId)
-    .eq("firm_id", context.firm.id)
-    .select("*")
-    .single();
+  const { data, error } = await context.supabase.rpc(
+    "approve_transaction_with_handoff",
+    {
+      target_transaction_id: transactionId,
+    },
+  );
 
-  if (updateError || !updated) {
-    const message = updateError?.message ?? "Could not approve transaction.";
+  if (error || !data) {
+    const message = error?.message ?? "Could not approve transaction.";
 
     captureOperationalError({
       area: "review.approve_transaction",
       error: message,
-      context: {
-        transaction_id: transactionId,
-        firm_id: context.firm.id,
-      },
-    });
-
-    redirectWithReviewError(transactionId, message);
-  }
-
-  try {
-    const ledgerEntryId = await createLedgerHandoff(
-      updated as TransactionRecord,
-      mutationClient,
-    );
-
-    await writeAuditLog({
-      supabase: context.supabase,
-      firmId: context.firm.id,
-      clientId: context.transaction.client_id,
-      actorUserId,
-      action: "transaction.approved",
-      entityId: transactionId,
-      beforeData,
-      afterData: updated,
-      metadata: {
-        ledger_entry_id: ledgerEntryId,
-      },
-    });
-  } catch (error) {
-    await mutationClient
-      .from("transactions")
-      .update({
-        status: context.transaction.status,
-        approved_by: null,
-        approved_at: null,
-      })
-      .eq("id", transactionId)
-      .eq("firm_id", context.firm.id);
-
-    const message =
-      error instanceof Error ? error.message : "Could not create ledger handoff.";
-
-    captureOperationalError({
-      area: "review.create_ledger_handoff",
-      error,
       context: {
         transaction_id: transactionId,
         firm_id: context.firm.id,

@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import {
   checkRateLimit,
   clientRateLimitKey,
+  configuredRateLimitPerWindow,
 } from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabase/server";
 
@@ -58,7 +59,7 @@ export async function submitLeadRequest(
       realIp: headerStore.get("x-real-ip"),
       fallback: email || "anonymous",
     }),
-    limit: 8,
+    limit: configuredRateLimitPerWindow("LEAD_REQUEST_RATE_LIMIT_PER_HOUR", 8),
     windowMs: 60 * 60 * 1000,
   });
 

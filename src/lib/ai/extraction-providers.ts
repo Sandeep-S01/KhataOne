@@ -10,6 +10,7 @@ import {
   getExtractionModel,
   hasOpenAIExtractionConfig,
 } from "@/lib/ai/openai";
+import { prepareOpenAIInputForDocument } from "@/lib/ai/media-input";
 import { getOptionalServerEnv } from "@/lib/env";
 
 export type ExtractionDocument = {
@@ -32,6 +33,8 @@ export type ExtractionProviderSuccess = {
   promptVersion: string;
   schemaVersion: string;
   rawOutput: unknown;
+  preparedSourceText?: string;
+  inputProvenance?: Record<string, unknown>;
   extraction: AccountingExtraction;
 };
 
@@ -50,22 +53,6 @@ const supportedProviders = new Set<ExtractionProviderName>([
   "openai",
   "rule_based_text",
 ]);
-
-function documentInput(document: ExtractionDocument) {
-  if (document.source_text?.trim()) {
-    return document.source_text.trim();
-  }
-
-  return [
-    "No extracted text is available for this document yet.",
-    `Document type hint: ${document.document_type}.`,
-    document.file_name ? `File name: ${document.file_name}.` : null,
-    document.file_mime_type ? `MIME type: ${document.file_mime_type}.` : null,
-    "Return null for unknown accounting fields and add risk flag OCR_REQUIRED.",
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
 
 function errorMessage(error: unknown) {
   if (error instanceof Error) {
@@ -133,6 +120,20 @@ export async function extractWithOpenAI(
   }
 
   try {
+    const preparedInput = await prepareOpenAIInputForDocument({
+      document,
+      openai,
+    });
+
+    if (!preparedInput.ok) {
+      return {
+        ok: false,
+        provider: "openai",
+        message: preparedInput.message,
+        fallbackAllowed: Boolean(document.source_text?.trim()),
+      };
+    }
+
     const response = await openai.responses.create({
       model,
       input: [
@@ -143,9 +144,7 @@ export async function extractWithOpenAI(
         },
         {
           role: "user",
-          content: `Extract one accounting transaction from this KhataOne document.\n\n${documentInput(
-            document,
-          )}`,
+          content: preparedInput.content,
         },
       ],
       text: {
@@ -169,6 +168,8 @@ export async function extractWithOpenAI(
       promptVersion: EXTRACTION_PROMPT_VERSION,
       schemaVersion: EXTRACTION_SCHEMA_VERSION,
       rawOutput: response,
+      preparedSourceText: preparedInput.sourceText,
+      inputProvenance: preparedInput.provenance,
       extraction: parsed,
     };
   } catch (error) {

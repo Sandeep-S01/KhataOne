@@ -160,6 +160,23 @@ async function extractWithConfiguredProviders(document: DocumentRecord) {
   };
 }
 
+function failedExtractionMessage(failures: ExtractionProviderFailure[]) {
+  const lastFailure = failures.at(-1);
+  const providerFailure = failures.find(
+    (failure) => failure.provider !== "rule_based_text",
+  );
+
+  if (
+    lastFailure?.provider === "rule_based_text" &&
+    lastFailure.message === "Rule-based text extraction requires document source text." &&
+    providerFailure
+  ) {
+    return `${providerFailure.message}; fallback unavailable because document source text is missing.`;
+  }
+
+  return lastFailure?.message ?? "No extraction provider could process this document.";
+}
+
 export async function processDocumentExtraction(
   documentId: string,
   options: { jobId?: string } = {},
@@ -238,9 +255,7 @@ export async function processDocumentExtraction(
   const providerResult = extractionAttempt.result as ExtractionProviderSuccess | null;
 
   if (!providerResult) {
-    const message =
-      extractionAttempt.failures.at(-1)?.message ??
-      "No extraction provider could process this document.";
+    const message = failedExtractionMessage(extractionAttempt.failures);
 
     await supabase.from("documents").update({ status: "failed" }).eq("id", document.id);
     await markJob({
@@ -272,6 +287,7 @@ export async function processDocumentExtraction(
         schema_version: providerResult.schemaVersion,
         raw_output: {
           provider: providerResult.provider,
+          input_provenance: providerResult.inputProvenance,
           provider_failures: extractionAttempt.failures.map((failure) => ({
             provider: failure.provider,
             message: failure.message,
@@ -322,10 +338,15 @@ export async function processDocumentExtraction(
       throw new Error(transactionError?.message ?? "Could not store transaction.");
     }
 
-    await supabase
-      .from("documents")
-      .update({ status: status === "extracted" ? "extracted" : "needs_review" })
-      .eq("id", document.id);
+    const documentUpdate: Record<string, string> = {
+      status: status === "extracted" ? "extracted" : "needs_review",
+    };
+
+    if (providerResult.preparedSourceText && !document.source_text?.trim()) {
+      documentUpdate.source_text = providerResult.preparedSourceText;
+    }
+
+    await supabase.from("documents").update(documentUpdate).eq("id", document.id);
     await markJob({ jobId: options.jobId, documentId, status: "completed" });
     await writeAuditLog({
       firmId: document.firm_id,

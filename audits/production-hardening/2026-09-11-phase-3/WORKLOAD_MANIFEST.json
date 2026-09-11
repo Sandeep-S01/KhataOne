@@ -1,0 +1,110 @@
+{
+  "manifest_version": "phase3-capacity-v1",
+  "created_at": "2026-09-11",
+  "source": "KhataOne launch audit illustrative workload model",
+  "status": "NOT_EXECUTED",
+  "provider_mode": "simulated_by_default_live_provider_requires_explicit_authorization",
+  "global_assumptions": {
+    "active_window_hours": 10,
+    "sender_document_messages_per_day": 2,
+    "intake_peak_multiplier": 10,
+    "dashboard_active_seconds_per_user_per_day": 3600,
+    "dashboard_session_peak_multiplier": 3,
+    "dashboard_dynamic_request_interval_seconds": 10
+  },
+  "scenarios": [
+    {
+      "id": "mixed_10k_dau",
+      "description": "Illustrative mixed workload with 90% WhatsApp senders and 10% dashboard users.",
+      "dashboard_dau": 1000,
+      "whatsapp_senders_per_day": 9000,
+      "document_messages_per_day": 18000,
+      "peak_document_messages_per_second": 5,
+      "peak_dashboard_sessions": 300,
+      "dynamic_dashboard_requests_per_second": 30,
+      "minimum_steady_state_minutes": 60,
+      "burst_multiplier": 2
+    },
+    {
+      "id": "mixed_20k_dau",
+      "description": "Illustrative mixed workload with 90% WhatsApp senders and 10% dashboard users.",
+      "dashboard_dau": 2000,
+      "whatsapp_senders_per_day": 18000,
+      "document_messages_per_day": 36000,
+      "peak_document_messages_per_second": 10,
+      "peak_dashboard_sessions": 600,
+      "dynamic_dashboard_requests_per_second": 60,
+      "minimum_steady_state_minutes": 60,
+      "burst_multiplier": 2
+    },
+    {
+      "id": "ca_heavy_10k_dashboard_dau",
+      "description": "Sensitivity case where DAU refers to dashboard users only.",
+      "dashboard_dau": 10000,
+      "whatsapp_senders_per_day": null,
+      "document_messages_per_day": null,
+      "peak_document_messages_per_second": null,
+      "peak_dashboard_sessions": 3000,
+      "dynamic_dashboard_requests_per_second": 300,
+      "minimum_steady_state_minutes": 60,
+      "burst_multiplier": 2
+    },
+    {
+      "id": "ca_heavy_20k_dashboard_dau",
+      "description": "Sensitivity case where DAU refers to dashboard users only.",
+      "dashboard_dau": 20000,
+      "whatsapp_senders_per_day": null,
+      "document_messages_per_day": null,
+      "peak_document_messages_per_second": null,
+      "peak_dashboard_sessions": 6000,
+      "dynamic_dashboard_requests_per_second": 600,
+      "minimum_steady_state_minutes": 60,
+      "burst_multiplier": 2
+    }
+  ],
+  "traffic_mix": {
+    "dashboard_routes": [
+      "/dashboard",
+      "/dashboard/clients",
+      "/dashboard/review-queue",
+      "/dashboard/ledger",
+      "/dashboard/gst-summary",
+      "/dashboard/exports",
+      "/dashboard/operations"
+    ],
+    "worker_routes": [
+      "/api/jobs/ai-extraction/run-queued?batch_size=10",
+      "/api/jobs/exports/run-queued?batch_size=10",
+      "/api/jobs/whatsapp-ingestion/run-queued?batch_size=10"
+    ],
+    "business_state_reconciliation": [
+      "processing_jobs by status/job_type",
+      "documents by status",
+      "ai_extractions by status",
+      "transactions by status",
+      "ledger_entries count by transaction_id uniqueness",
+      "exports by status",
+      "audit_logs for approval/export actions"
+    ]
+  },
+  "gates": {
+    "webhook_durable_ack_p95_ms": 200,
+    "webhook_durable_ack_p99_ms": 500,
+    "authenticated_read_p95_ms": 500,
+    "authenticated_read_p99_ms": 1000,
+    "approval_p95_ms": 1000,
+    "approval_p99_ms": 2000,
+    "document_to_reviewable_draft_p95_seconds": 60,
+    "large_export_request_accept_p95_ms": 1000,
+    "lost_accepted_messages": 0,
+    "duplicate_logical_handoffs": 0,
+    "cross_tenant_access_observed": 0
+  },
+  "execution_requirements": {
+    "target_label": "non-production",
+    "requires_authenticated_test_accounts": true,
+    "requires_staging_supabase_service_role": true,
+    "requires_provider_cost_authorization_for_live_media": true,
+    "requires_post_run_business_reconciliation": true
+  }
+}

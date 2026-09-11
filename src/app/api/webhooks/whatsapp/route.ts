@@ -5,6 +5,7 @@ import { captureOperationalError } from "@/lib/observability";
 import {
   checkRateLimit,
   clientRateLimitKey,
+  configuredRateLimitPerWindow,
   retryAfterSeconds,
 } from "@/lib/rate-limit";
 import { enqueueWhatsAppWebhookEvents } from "@/lib/whatsapp/ingestion-worker";
@@ -44,7 +45,10 @@ export async function POST(request: NextRequest) {
       realIp: request.headers.get("x-real-ip"),
       fallback: "meta-webhook",
     }),
-    limit: 240,
+    limit: configuredRateLimitPerWindow(
+      "WHATSAPP_WEBHOOK_RATE_LIMIT_PER_MINUTE",
+      240,
+    ),
     windowMs: 60_000,
   });
 

@@ -142,7 +142,7 @@ Extraction statuses:
 - `needs_review`
 - `failed`
 
-Phase 6 note: extraction is structured and schema-validated. If a document has no `source_text` yet, the extraction processor must not invent values from unread media; it should use null fields and risk flags such as `OCR_REQUIRED` until OCR/audio/PDF text extraction is implemented.
+Phase 6 note: extraction is structured and schema-validated. OpenAI-backed extraction prepares bounded inputs from private `whatsapp-media-raw` storage for supported image and PDF media, and can transcribe supported audio when `OPENAI_TRANSCRIPTION_MODEL` is configured. Failed or unsupported media remains reviewable through failed extraction records and risk flags instead of silently becoming approved accounting data.
 
 Fallback note: `ai_extractions.model = rule_based_text_v1` identifies no-cost deterministic text parsing. These rows should carry risk flags such as `RULE_BASED_EXTRACTION` and remain reviewable before approval.
 
@@ -201,6 +201,8 @@ Transaction statuses:
 - `updated_at`
 
 Phase 7 note: approving a transaction creates a ledger handoff entry if one does not already exist for the transaction. The current handoff is intentionally simple and traceable; formal accounting export mapping is handled in later ledger/export phases.
+
+Production hardening note: `ledger_entries.transaction_id` is unique in the hardened handoff model. The `approve_transaction_with_handoff` database function revalidates active firm role membership and performs transaction approval, single handoff upsert, and approval audit logging inside one PostgreSQL transaction boundary.
 
 Phase 8 note: ledger entries can be filtered and corrected. Corrections update the ledger handoff record only and create `audit_logs` entries with `entity_type = ledger_entry`; source transactions and AI extraction records remain intact.
 
@@ -269,7 +271,9 @@ Export types:
 - `tally_ready`
 - `gst_summary`
 
-Phase 10 note: production v1 supports approved transaction CSV exports, GST summary CSV exports, and GST summary PDF exports. Export files are stored in the private `exports` storage bucket and downloaded through an authenticated route after firm membership is verified. Tally-ready export remains a reserved future export type.
+Phase 10 note: production v1 supports approved transaction CSV exports, GST summary CSV exports, and GST summary PDF exports. Export requests create queued records and `processing_jobs.job_type = export_generation`; the protected worker creates the private `exports` storage artifact and records `export.generated` audit logs. Download remains authenticated after firm membership is verified. Tally-ready export remains a reserved future export type.
+
+Export hardening note: worker-generated transaction exports use the export request creation time as an approval snapshot boundary (`approved_at <= export.created_at`), enforce `EXPORT_MAX_TRANSACTION_ROWS` and `EXPORT_MAX_FILE_BYTES`, and store generated row/file metadata on the export record.
 
 ### audit_logs
 
@@ -305,16 +309,20 @@ Phase 10 note: production v1 supports approved transaction CSV exports, GST summ
 
 Phase 11 note: processing jobs are visible from the Operations dashboard for queue health, failed AI extraction work, and future background workflows. Sensitive API routes use lightweight in-process rate limiting as a first guard; production deployments should pair this with platform or edge rate limiting.
 
-Post-phase worker note: AI extraction jobs are claimed through database functions before processing. Claiming sets `status = processing`, increments `attempt_count`, and stores `locked_at`/`locked_by` so cron/manual runs do not process the same queued document twice. The extraction processor remains idempotent and skips documents that already have a transaction.
+Post-phase worker note: AI extraction and export generation jobs are claimed through database functions before processing. Claiming sets `status = processing`, increments `attempt_count`, and stores `locked_at`/`locked_by` so cron/manual runs do not process the same queued document or export twice. The extraction processor remains idempotent and skips documents that already have a transaction.
+
+Operations note: authorized owner/admin/staff users can manually run retryable queued or failed AI extraction and export generation jobs from the Operations dashboard. Manual runs still claim jobs through service-role-only database functions before processing.
+
+Operations health note: the Operations dashboard groups queue health by `job_type`, shows active/failed/completed counts, and flags active jobs older than `OPERATIONS_ACTIVE_JOB_WARNING_MINUTES`. Readiness health also reports aggregate processing-job status and degrades when active-job age or failed-job count crosses `OPERATIONS_ACTIVE_JOB_WARNING_MINUTES` / `OPERATIONS_FAILED_JOB_WARNING_COUNT`.
 
 ## Operations And Security Notes
 
 - Audit logs are available in the dashboard with action and entity filters.
 - Operations view exposes processing job status, attempts, errors, and client links.
 - Settings view exposes firm profile, workspace members, and integration readiness.
-- WhatsApp webhook POST, AI extraction job POST, and landing lead requests include basic rate limiting.
+- WhatsApp webhook POST, worker routes, AI extraction job POST, and landing lead requests include configurable in-process rate limiting. Readiness health reports whether shared platform/edge/store enforcement is declared through `RATE_LIMIT_SHARED_ENFORCEMENT`; target-scale launch should not rely on process-local limits alone. Forwarded IP headers are used for rate-limit keys only when `TRUST_FORWARDED_IP_HEADERS=true` is explicitly configured behind a trusted proxy.
 - `captureOperationalError` writes structured server logs; production should forward these logs to Sentry or another monitoring system before launch.
-- `/api/health` exposes liveness/readiness checks for app, Supabase, OpenAI, and WhatsApp configuration.
+- `/api/health/live` exposes cheap app liveness. `/api/health/ready` and the compatibility `/api/health` endpoint expose readiness checks for app, Supabase, OpenAI, WhatsApp configuration, and database reachability.
 
 ## Future Integration Tables
 

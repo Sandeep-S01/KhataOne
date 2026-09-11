@@ -153,7 +153,7 @@ export function ExportForm({
             {pending ? (
               <>
                 <Download className="size-4" />
-                Generating
+                Queueing
               </>
             ) : (
               <>
@@ -197,8 +197,8 @@ export function ExportForm({
       </div>
 
       <InfoNote>
-        Generated files are private exports for CA/client review and are recorded
-        in audit history.
+        Export requests are queued, generated in the background, stored
+        privately, and recorded in audit history.
       </InfoNote>
 
       {state.message && (

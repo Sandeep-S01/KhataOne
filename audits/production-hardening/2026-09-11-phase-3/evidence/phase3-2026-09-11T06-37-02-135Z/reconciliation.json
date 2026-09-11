@@ -1,0 +1,21 @@
+{
+  "firm_id": "e5fc7ea3-548c-475b-baf8-7e485b24adfe",
+  "captured_at": "2026-09-11T06:37:45.387Z",
+  "documents_by_status": {
+    "failed": 4,
+    "extracted": 5
+  },
+  "ai_extractions_by_status": {},
+  "transactions_by_status": {
+    "needs_review": 1,
+    "approved": 5
+  },
+  "processing_jobs_by_status": {
+    "failed": 4,
+    "completed": 4
+  },
+  "exports_by_status": {
+    "completed": 4
+  },
+  "duplicate_logical_handoffs": 0
+}

@@ -3,6 +3,8 @@ const baseUrl = process.env.SMOKE_BASE_URL ?? "http://localhost:3001";
 const checks = [
   { path: "/", expected: [200] },
   { path: "/api/health", expected: [200, 503] },
+  { path: "/api/health/live", expected: [200] },
+  { path: "/api/health/ready", expected: [200, 503] },
   { path: "/dashboard", expected: [200, 307, 308] },
   { path: "/dashboard/clients", expected: [200, 307, 308] },
   { path: "/dashboard/review-queue", expected: [200, 307, 308] },
