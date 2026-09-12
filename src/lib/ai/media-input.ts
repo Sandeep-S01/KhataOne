@@ -2,6 +2,7 @@ import type OpenAI from "openai";
 import type { ResponseInputMessageContentList } from "openai/resources/responses/responses";
 
 import { readStreamWithByteLimit } from "@/lib/ai/bounded-stream";
+import { classifyOpenAIError } from "@/lib/ai/provider-error";
 import { getOptionalServerEnv } from "@/lib/env";
 import { createAdminClient } from "@/lib/supabase/server";
 
@@ -16,6 +17,8 @@ export type MediaPreparedInput =
       ok: false;
       message: string;
       riskFlag: string;
+      retryable: boolean;
+      retryAfterMs?: number;
       provenance: Record<string, unknown>;
     };
 
@@ -83,6 +86,7 @@ async function downloadDocumentMedia(
       ok: false as const,
       message: "Document media is missing from private storage.",
       riskFlag: "MEDIA_DOWNLOAD_FAILED",
+      retryable: false,
     };
   }
 
@@ -93,6 +97,7 @@ async function downloadDocumentMedia(
       ok: false as const,
       message: "Supabase service role is not configured for media preparation.",
       riskFlag: "MEDIA_DOWNLOAD_FAILED",
+      retryable: false,
     };
   }
 
@@ -112,6 +117,7 @@ async function downloadDocumentMedia(
         ok: false as const,
         message: "Could not download document media.",
         riskFlag: "MEDIA_DOWNLOAD_FAILED",
+        retryable: true,
       };
     }
 
@@ -122,6 +128,7 @@ async function downloadDocumentMedia(
         ok: false as const,
         message: "Document exceeds its configured extraction byte limit.",
         riskFlag: "MEDIA_TOO_LARGE",
+        retryable: false,
         byteSize: bounded.byteSize,
       };
     }
@@ -136,6 +143,7 @@ async function downloadDocumentMedia(
         ? "Document media download timed out."
         : "Could not download document media.",
       riskFlag: timedOut ? "MEDIA_DOWNLOAD_TIMEOUT" : "MEDIA_DOWNLOAD_FAILED",
+      retryable: true,
     };
   } finally {
     clearTimeout(timeout);
@@ -215,6 +223,7 @@ export async function prepareOpenAIInputForDocument({
       ok: false,
       message: "Document media MIME type is missing.",
       riskFlag: "UNSUPPORTED_MEDIA_TYPE",
+      retryable: false,
       provenance: {
         input_method: "media_metadata",
       },
@@ -239,6 +248,7 @@ export async function prepareOpenAIInputForDocument({
       ok: false,
       message: `Unsupported media type for extraction: ${mimeType}.`,
       riskFlag: "UNSUPPORTED_MEDIA_TYPE",
+      retryable: false,
       provenance: {
         input_method: "media_metadata",
         mime_type: mimeType,
@@ -254,6 +264,7 @@ export async function prepareOpenAIInputForDocument({
       ok: false,
       message: download.message,
       riskFlag: download.riskFlag,
+      retryable: download.retryable,
       provenance: {
         input_method: "storage_download",
         storage_path_present: Boolean(document.storage_path),
@@ -323,6 +334,7 @@ export async function prepareOpenAIInputForDocument({
           ok: false,
           message: transcription.message,
           riskFlag: "TRANSCRIPTION_REQUIRED",
+          retryable: false,
           provenance: {
             input_method: "openai_audio_transcription",
             mime_type: mimeType,
@@ -349,11 +361,13 @@ export async function prepareOpenAIInputForDocument({
         },
       };
     } catch (error) {
+      const classification = classifyOpenAIError(error);
       return {
         ok: false,
-        message:
-          error instanceof Error ? error.message : "Audio transcription failed.",
+        message: classification.message,
         riskFlag: "TRANSCRIPTION_FAILED",
+        retryable: classification.retryable,
+        retryAfterMs: classification.retryAfterMs,
         provenance: {
           input_method: "openai_audio_transcription",
           mime_type: mimeType,

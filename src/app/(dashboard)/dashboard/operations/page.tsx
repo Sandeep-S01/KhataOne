@@ -36,6 +36,11 @@ import {
 } from "@/app/actions/operations";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import {
+  evaluatePipelineAlerts,
+  getPipelineHealthSnapshot,
+  type PipelineHealthRow,
+} from "@/lib/jobs/worker-observability";
 
 export const dynamic = "force-dynamic";
 
@@ -112,6 +117,18 @@ function ageMinutes(value: string | null) {
   }
 
   return Math.max(0, Math.floor((Date.now() - createdAt) / 60_000));
+}
+
+function durationLabel(value: number | null) {
+  if (value === null || !Number.isFinite(value)) {
+    return "-";
+  }
+
+  return value < 1000 ? `${Math.round(value)} ms` : `${(value / 1000).toFixed(1)} s`;
+}
+
+function queueLabel(queueName: PipelineHealthRow["queue_name"]) {
+  return queueName === "whatsapp_ingestion" ? "WhatsApp ingestion" : "AI extraction";
 }
 
 function runJobActionFor(job: { job_type: string; status: string }) {
@@ -279,8 +296,11 @@ export default async function OperationsPage({
 
     return (data ?? []) as JobHealthRow[];
   })().catch(() => [] as JobHealthRow[]);
+  const pipelineHealthPromise = canRunExtractionJobs
+    ? getPipelineHealthSnapshot()
+    : Promise.resolve({ rows: [] as PipelineHealthRow[], error: undefined });
 
-  const [jobsResult, failedCount, queuedCount, oldestQueued, jobTypes, jobHealthRows] =
+  const [jobsResult, failedCount, queuedCount, oldestQueued, jobTypes, jobHealthRows, pipelineHealth] =
     await Promise.all([
     jobsPromise,
     failedCountPromise,
@@ -288,6 +308,7 @@ export default async function OperationsPage({
     oldestQueuedPromise,
     jobTypesPromise,
     jobHealthPromise,
+    pipelineHealthPromise,
   ]);
   const { data: jobs, error } = jobsResult;
   const staleJobWarningMinutes = configuredPositiveInteger(
@@ -295,6 +316,14 @@ export default async function OperationsPage({
     15,
   );
   const jobHealth = summarizeJobHealth(jobHealthRows);
+  const pipelineAlerts = evaluatePipelineAlerts({ rows: pipelineHealth.rows });
+  const inboundHealth = pipelineHealth.rows.find(
+    (row) => row.queue_name === "whatsapp_ingestion",
+  );
+  const stalePipelineLeases = pipelineHealth.rows.reduce(
+    (total, row) => total + row.stale_lease_count,
+    0,
+  );
   const uniqueJobTypes = Array.from(
     new Set(
       jobTypes
@@ -320,7 +349,7 @@ export default async function OperationsPage({
       />
 
       <PageBody>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         <StatTile label="Queued or processing" value={queuedCount ?? 0} tone="warning" />
         <StatTile label="Failed jobs" value={failedCount ?? 0} tone="danger" />
         <StatTile
@@ -330,6 +359,102 @@ export default async function OperationsPage({
           hint="Queued or processing age"
         />
       </div>
+
+      {canRunExtractionJobs && (
+        <SectionCard
+          title="WhatsApp pipeline recovery"
+          description="Aggregate delivery health for the event-driven path and its scheduled recovery sweep."
+          bodyClassName="p-0"
+        >
+          {pipelineHealth.error ? (
+            <QueryError message={pipelineHealth.error} />
+          ) : (
+            <>
+              <div className="grid gap-3 border-b border-khata-border p-4 md:grid-cols-2 xl:grid-cols-4">
+                <div className="min-w-0">
+                  <p className={tableSecondaryTextClass}>Oldest due inbound</p>
+                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                    {ageLabel(inboundHealth?.oldest_queued_at ?? null)}
+                  </p>
+                </div>
+                <div className="min-w-0">
+                  <p className={tableSecondaryTextClass}>Inbound claim p95</p>
+                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                    {durationLabel(inboundHealth?.p95_claim_delay_ms ?? null)}
+                  </p>
+                  <p className="mt-1 text-xs text-khata-muted">Last 24 hours</p>
+                </div>
+                <div className="min-w-0">
+                  <p className={tableSecondaryTextClass}>Acknowledgment p95</p>
+                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                    {durationLabel(inboundHealth?.p95_ack_delay_ms ?? null)}
+                  </p>
+                  <p className="mt-1 text-xs text-khata-muted">Last 24 hours</p>
+                </div>
+                <div className="min-w-0">
+                  <p className={tableSecondaryTextClass}>Stale ordering leases</p>
+                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                    {stalePipelineLeases}
+                  </p>
+                </div>
+              </div>
+              <DataTable minWidth={1080} ariaLabel="WhatsApp pipeline recovery health">
+                <thead className={tableHeaderClass}>
+                  <tr>
+                    <th className={tableHeadCellClass}>Queue</th>
+                    <th className={tableNumericHeadCellClass}>Due</th>
+                    <th className={tableNumericHeadCellClass}>Retries</th>
+                    <th className={tableNumericHeadCellClass}>Terminal</th>
+                    <th className={tableHeadCellClass}>Claim p95</th>
+                    <th className={tableHeadCellClass}>Ack p95</th>
+                    <th className={tableHeadCellClass}>Last complete</th>
+                    <th className={tableHeadCellClass}>Last success</th>
+                    <th className={tableHeadCellClass}>Health</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pipelineHealth.rows.map((row) => {
+                    const rowAlerts = pipelineAlerts.filter(
+                      (alert) => alert.queueName === row.queue_name,
+                    );
+                    return (
+                      <tr key={row.queue_name} className={tableRowClass}>
+                        <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
+                          {queueLabel(row.queue_name)}
+                        </td>
+                        <td className={tableNumericCellClass}>{row.queued_count}</td>
+                        <td className={tableNumericCellClass}>{row.retrying_count}</td>
+                        <td className={tableNumericCellClass}>{row.terminal_failure_count}</td>
+                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                          {durationLabel(row.p95_claim_delay_ms)}
+                        </td>
+                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                          {durationLabel(row.p95_ack_delay_ms)}
+                        </td>
+                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                          {ageLabel(row.last_worker_completed_at)}
+                        </td>
+                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                          {ageLabel(row.last_worker_success_at)}
+                        </td>
+                        <td className={tableCellClass}>
+                          {rowAlerts.length > 0 ? (
+                            <InlineAlert tone="warning">
+                              {rowAlerts.map((alert) => alert.message).join(" ")}
+                            </InlineAlert>
+                          ) : (
+                            <StatusChip tone="success">clear</StatusChip>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </DataTable>
+            </>
+          )}
+        </SectionCard>
+      )}
 
       {jobHealth.length > 0 && (
         <SectionCard

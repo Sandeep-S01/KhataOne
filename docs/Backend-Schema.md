@@ -93,6 +93,34 @@ Processing statuses:
 - `ignored`
 - `failed`
 
+### whatsapp_webhook_events
+
+Durable raw-event queue and acknowledgment correlation record. Retryable failures are
+explicitly returned to `queued` with a future `scheduled_at`; `failed` is terminal until an
+operator deliberately requeues it. The service-role claim function selects only due queued
+events or stale processing leases, preserving `attempt_count` and skip-locked ownership.
+`ack_provider_message_id` stores Meta's outbound ID without adding message content.
+
+### worker_ordering_leases
+
+Service-owned operational leases keyed by queue and normalized sender or firm/client.
+Browser roles have no access. WhatsApp and AI claim functions acquire one lease per ordering
+key while retaining skip-locked row claims; status triggers remove the lease when its owner
+leaves `processing`. A stale lease is replaceable after ten minutes so crashes do not block
+a sender or client permanently. This table contains queue coordination state, not accounting
+truth or source-document content.
+
+### background_worker_runs
+
+Service-owned recovery-worker execution metadata. Each protected scheduled invocation
+records its worker name, trigger source, start/completion timestamps, outcome, and aggregate
+claimed/processed/failed/retrying counts. Browser roles have no table or function access,
+error text is capped, and bounded cleanup removes only run metadata older than 30 days.
+`get_whatsapp_pipeline_health()` returns aggregate queue ages, 24-hour p95 claim/ack delays,
+stale ordering leases, retries, terminal/recent failures, and latest completion/success
+timestamps to server-side readiness and Operations callers. It never returns sender IDs,
+payloads, document content, or provider responses.
+
 ### documents
 
 - `id`
@@ -337,7 +365,7 @@ Post-phase worker note: AI extraction and export generation jobs are claimed thr
 
 Operations note: authorized owner/admin/staff users can manually run retryable queued or failed AI extraction and export generation jobs from the Operations dashboard. Manual runs still claim jobs through service-role-only database functions before processing.
 
-Operations health note: the Operations dashboard groups queue health by `job_type`, shows active/failed/completed counts, and flags active jobs older than `OPERATIONS_ACTIVE_JOB_WARNING_MINUTES`. Readiness health also reports aggregate processing-job status and degrades when active-job age or failed-job count crosses `OPERATIONS_ACTIVE_JOB_WARNING_MINUTES` / `OPERATIONS_FAILED_JOB_WARNING_COUNT`.
+Operations health note: the Operations dashboard groups queue health by `job_type`, shows active/failed/completed counts, and flags active jobs older than `OPERATIONS_ACTIVE_JOB_WARNING_MINUTES`. It also renders the service-only WhatsApp pipeline aggregate after firm authorization. Readiness reports the same pipeline metrics and degrades for overdue inbound work, stale leases, recent terminal failures, or missing/stale recovery completions. Thresholds are controlled by `WHATSAPP_OLDEST_QUEUED_WARNING_SECONDS` and `WORKER_COMPLETION_WARNING_SECONDS`.
 
 ## Operations And Security Notes
 

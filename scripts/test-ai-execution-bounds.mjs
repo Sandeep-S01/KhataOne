@@ -70,13 +70,21 @@ const schedulerSource = readFileSync(
   ".github/workflows/ai-extraction-scheduler.yml",
   "utf8",
 );
-assert.match(schedulerSource, /cron: "\*\/5 \* \* \* \*"/);
+assert.match(schedulerSource, /cron: "2-57\/5 \* \* \* \*"/);
 assert.match(schedulerSource, /secrets\.CRON_SECRET/);
 assert.match(
   schedulerSource,
   /api\/jobs\/ai-extraction\/run-queued\?batch_size=10/,
 );
 assert.match(schedulerSource, /Authorization: Bearer \$\{CRON_SECRET\}/);
+assert.match(schedulerSource, /jq -e '\.ok == true'/);
+
+const whatsappSchedulerSource = readFileSync(
+  ".github/workflows/whatsapp-ingestion-scheduler.yml",
+  "utf8",
+);
+assert.match(whatsappSchedulerSource, /cron: "2-57\/5 \* \* \* \*"/);
+assert.match(whatsappSchedulerSource, /jq -e '\.ok == true'/);
 
 console.log(
   "OK AI media streaming cap, cancellation, pre-download validation and provider request bounds",

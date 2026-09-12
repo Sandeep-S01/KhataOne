@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getOptionalServerEnv } from "@/lib/env";
+import {
+  recoveryTriggerSource,
+  runObservedRecoveryWorker,
+} from "@/lib/jobs/worker-observability";
 import { runQueuedWhatsAppIngestionEvents } from "@/lib/whatsapp/ingestion-worker";
 import {
   checkRateLimit,
@@ -78,9 +82,14 @@ export async function GET(request: NextRequest) {
 
   const batchSizeParam = request.nextUrl.searchParams.get("batch_size");
   const batchSize = batchSizeParam ? Number(batchSizeParam) : undefined;
-  const result = await runQueuedWhatsAppIngestionEvents({
-    batchSize,
-    workerId: `whatsapp-scheduler-${Date.now()}`,
+  const result = await runObservedRecoveryWorker({
+    workerName: "whatsapp_ingestion",
+    triggerSource: recoveryTriggerSource(request),
+    run: () =>
+      runQueuedWhatsAppIngestionEvents({
+        batchSize,
+        workerId: `whatsapp-scheduler-${Date.now()}`,
+      }),
   });
 
   return NextResponse.json(result, {

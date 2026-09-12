@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getOptionalServerEnv } from "@/lib/env";
+import {
+  recoveryTriggerSource,
+  runObservedRecoveryWorker,
+} from "@/lib/jobs/worker-observability";
 import { runQueuedAiExtractionJobs } from "@/lib/ai/extraction-worker";
 import {
   checkRateLimit,
@@ -78,9 +82,14 @@ export async function GET(request: NextRequest) {
 
   const batchSizeParam = request.nextUrl.searchParams.get("batch_size");
   const batchSize = batchSizeParam ? Number(batchSizeParam) : undefined;
-  const result = await runQueuedAiExtractionJobs({
-    batchSize,
-    workerId: `vercel-cron-${Date.now()}`,
+  const result = await runObservedRecoveryWorker({
+    workerName: "ai_extraction",
+    triggerSource: recoveryTriggerSource(request),
+    run: () =>
+      runQueuedAiExtractionJobs({
+        batchSize,
+        workerId: `ai-extraction-scheduler-${Date.now()}`,
+      }),
   });
 
   return NextResponse.json(result, {

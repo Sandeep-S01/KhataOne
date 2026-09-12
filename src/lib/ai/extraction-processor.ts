@@ -8,14 +8,16 @@ import {
   type ExtractionProviderFailure,
   type ExtractionProviderSuccess,
 } from "@/lib/ai/extraction-providers";
+import { retryAtIso } from "@/lib/jobs/retry";
 import { createAdminClient } from "@/lib/supabase/server";
 
 type ExtractionResult = {
   ok: boolean;
-  status: "extracted" | "needs_review" | "failed" | "skipped";
+  status: "extracted" | "needs_review" | "failed" | "skipped" | "retrying";
   message: string;
   extractionId?: string;
   transactionId?: string;
+  retryAt?: string;
 };
 
 type DocumentRecord = {
@@ -52,16 +54,18 @@ async function markJob({
   documentId,
   status,
   error,
+  scheduledAt,
 }: {
   jobId?: string;
   documentId: string;
-  status: "processing" | "completed" | "failed";
+  status: "queued" | "processing" | "completed" | "failed";
   error?: string;
+  scheduledAt?: string;
 }) {
   const supabase = createAdminClient();
 
   if (!supabase) {
-    return;
+    return "Supabase service role is not configured.";
   }
 
   let query = supabase
@@ -72,6 +76,7 @@ async function markJob({
       completed_at: status === "completed" || status === "failed" ? new Date().toISOString() : null,
       locked_at: status === "processing" ? new Date().toISOString() : null,
       locked_by: status === "processing" ? "khataone-extraction-processor" : null,
+      ...(scheduledAt ? { scheduled_at: scheduledAt } : {}),
     })
     .eq("entity_type", "document")
     .eq("entity_id", documentId)
@@ -81,7 +86,8 @@ async function markJob({
     query = query.eq("id", jobId);
   }
 
-  await query;
+  const { error: updateError } = await query;
+  return updateError?.message;
 }
 
 async function writeAuditLog({
@@ -179,7 +185,11 @@ function failedExtractionMessage(failures: ExtractionProviderFailure[]) {
 
 export async function processDocumentExtraction(
   documentId: string,
-  options: { jobId?: string; expectedOwner?: { firmId: string; clientId: string | null } } = {},
+  options: {
+    jobId?: string;
+    attemptCount?: number;
+    expectedOwner?: { firmId: string; clientId: string | null };
+  } = {},
 ): Promise<ExtractionResult> {
   const supabase = createAdminClient();
 
@@ -267,6 +277,53 @@ export async function processDocumentExtraction(
 
   if (!providerResult) {
     const message = failedExtractionMessage(extractionAttempt.failures);
+    const retryableFailure = extractionAttempt.failures.find(
+      (failure) => failure.retryable,
+    );
+    const attemptCount = Math.max(options.attemptCount ?? 1, 1);
+
+    if (retryableFailure && attemptCount < 3) {
+      const retryAt = retryAtIso({
+        attemptCount,
+        retryAfterMs: retryableFailure.retryAfterMs,
+      });
+
+      const { error: documentRetryError } = await supabase
+        .from("documents")
+        .update({ status: "queued" })
+        .eq("id", document.id);
+      const jobRetryError = documentRetryError
+        ? "Document retry could not be scheduled."
+        : await markJob({
+            jobId: options.jobId,
+            documentId,
+            status: "queued",
+            error: message,
+            scheduledAt: retryAt,
+          });
+
+      if (jobRetryError) {
+        const retryScheduleMessage = "AI extraction retry could not be scheduled.";
+        await supabase
+          .from("documents")
+          .update({ status: "failed" })
+          .eq("id", document.id);
+        await markJob({
+          jobId: options.jobId,
+          documentId,
+          status: "failed",
+          error: retryScheduleMessage,
+        });
+        return { ok: false, status: "failed", message: retryScheduleMessage };
+      }
+
+      return {
+        ok: false,
+        status: "retrying",
+        message,
+        retryAt,
+      };
+    }
 
     await supabase.from("documents").update({ status: "failed" }).eq("id", document.id);
     await markJob({

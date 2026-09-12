@@ -2,7 +2,7 @@ name: WhatsApp ingestion scheduler
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "2-57/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -31,6 +31,11 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           WORKER_URL: https://khataone.vercel.app/api/jobs/whatsapp-ingestion/run-queued?batch_size=10
         run: |
-          curl --fail --show-error --silent \
+          response_file="$(mktemp)"
+          status="$(curl --show-error --silent --output "$response_file" --write-out "%{http_code}" \
             --header "Authorization: Bearer ${CRON_SECRET}" \
-            "$WORKER_URL"
+            "$WORKER_URL")"
+          if [ "$status" != "200" ] || ! jq -e '.ok == true' "$response_file" >/dev/null; then
+            echo "WhatsApp ingestion recovery failed with HTTP ${status}."
+            exit 1
+          fi

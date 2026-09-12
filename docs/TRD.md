@@ -163,6 +163,56 @@ must be staged together; external platform/edge declarations require independent
 - Webhook response should be fast and defer long processing.
 - Exports and PDF generation should run as jobs for large datasets.
 
+WhatsApp latency decision (2026-09-12): preserve the existing durable
+`whatsapp_webhook_events` and `processing_jobs` claim boundaries, but use event-driven
+worker wake-up as the primary delivery path. The signed webhook must commit raw inbound
+events and return quickly; Next.js post-response work may wake the existing skip-locked
+ingestion claimant. Acknowledgment follows durable message persistence and precedes
+media download/storage. AI remains a separate durable job and must be woken only after
+job commit. Scheduled workers remain recovery sweeps, not the expected interactive path.
+Provider calls require bounded deadlines and classified retries before scheduler
+dependence is removed. See Phase 12A in `docs/Implementation-Plan.md`.
+
+WA-LAT-3 implementation note (2026-09-12, local): the webhook post-response callback
+propagates a new-job marker from the existing WhatsApp job insertion boundary and claims
+that exact job through the existing service-role worker. A separate default-off flag
+controls activation. Duplicate/existing jobs and historical failures are excluded;
+scheduled and manual claim paths remain recovery and operations controls.
+
+WA-LAT-4 implementation note (2026-09-12, local): Meta send, media metadata, response-body,
+and media download work uses one abortable deadline (`WHATSAPP_GRAPH_TIMEOUT_MS`, 10 seconds
+by default). Meta/OpenAI error output is reduced to bounded status/code metadata rather than
+provider bodies. Connection, timeout, 429, and 5xx failures are deliberately rescheduled
+with capped exponential backoff, jitter, and `Retry-After`; permanent failures remain
+failed and visible. Retryable events/jobs are explicitly requeued with `scheduled_at`, and
+the WhatsApp claim function no longer automatically replays every failed event. Existing
+three-attempt bounds, skip-locked claims, media limits, review-first output, and manual
+failed-job handling remain intact. Hosted migration and live provider behavior are not yet
+verified.
+
+WA-LAT-5 implementation note (2026-09-12, local): claimed work is dispatched through a
+keyed bounded pool: three WhatsApp sender streams and two AI firm-client streams. Items for
+one key remain sequential and output order remains deterministic. Service-only durable
+ordering leases supplement the existing row-level `FOR UPDATE SKIP LOCKED` claims so
+overlapping serverless invocations cannot process two events for one normalized sender or
+two extraction jobs for one firm/client simultaneously. Leaving `processing` releases the
+lease transactionally; a crashed owner's lease follows the existing ten-minute stale
+recovery boundary. This changes dispatch and claim coordination only, not matching,
+provider, extraction, accounting, or review behavior. Hosted migrations and real workload
+behavior remain unverified.
+
+WA-LAT-6 implementation note (2026-09-12, local): the existing protected GitHub recovery
+sweeps remain external because the current Vercel Hobby schedule cannot run more than once
+per day. Their five-minute expressions are offset from the start of the hour, responses now
+fail the workflow unless both HTTP and worker outcome are successful, and every protected
+recovery invocation records service-only start/completion metadata. A database snapshot
+supplies aggregate oldest-due age, p95 claim/ack delays, stale ordering leases, retries,
+terminal/recent failures, and last completion/success to protected readiness and Operations.
+Threshold crossings emit privacy-safe structured errors for the configured log/error
+forwarder. GitHub documents that scheduled jobs may still be delayed or dropped, so hosted
+cadence evidence and an independent readiness monitor remain production gates; recovery is
+not the normal delivery path.
+
 ## Deployment Requirements
 
 Dashboard latency decision (2026-09-12): deploy Vercel functions in `hnd1` near the confirmed Supabase primary in Tokyo (`ap-northeast-1`). The controlled preview reduced review-queue median click-to-rows from 1905 ms to 913 ms; p95 remains above target, so this does not establish complete performance readiness. Keep selective prefetch suppression disabled by default. `vercel.json` preserves existing cron jobs. Region-only commit `c62e3ef` was built and promoted as deployment `dpl_CUpLfdbKjMnDntcXEuShjQQdsVtH`; public-domain authenticated Clients, Ledger and Review Queue smoke verified populated rows and hnd1 responses. Original Edge middleware remains unchanged. The release commit is now integrated into main and pushed to GitHub. The subsequent Git-triggered deployment `dpl_jkyuKGWc8XiDEyELvAcdefJzsMF9` is READY and serves khataone.vercel.app; its API metadata confirms the exact commit and hnd1. Other diagnostic/recovery changes are not included. See `docs/performance/dashboard-latency-results.md` for deployment evidence, limitations and rollback.

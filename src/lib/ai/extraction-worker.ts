@@ -1,9 +1,12 @@
 import { processDocumentExtraction } from "@/lib/ai/extraction-processor";
+import { runKeyedWorkerPool } from "@/lib/jobs/keyed-worker-pool";
 import { captureOperationalError } from "@/lib/observability";
+import { withServerTiming } from "@/lib/performance";
 import { createAdminClient } from "@/lib/supabase/server";
 
 const DEFAULT_BATCH_SIZE = 5;
 const MAX_BATCH_SIZE = 20;
+const AI_EXTRACTION_CONCURRENCY = 2;
 
 type ClaimedJob = {
   id: string;
@@ -19,10 +22,11 @@ type ClaimedJob = {
 type JobRunResult = {
   jobId: string;
   documentId: string;
-  status: "completed" | "failed" | "skipped";
+  status: "completed" | "failed" | "skipped" | "retrying";
   message: string;
   extractionId?: string;
   transactionId?: string;
+  retryAt?: string;
 };
 
 export type QueuedExtractionRunResult = {
@@ -33,6 +37,7 @@ export type QueuedExtractionRunResult = {
   completed: number;
   failed: number;
   skipped: number;
+  retrying: number;
   results: JobRunResult[];
   error?: string;
 };
@@ -43,6 +48,12 @@ function normalizeBatchSize(batchSize?: number) {
   }
 
   return Math.max(1, Math.min(Math.floor(batchSize), MAX_BATCH_SIZE));
+}
+
+function jobOrderingKey(job: ClaimedJob) {
+  return job.client_id
+    ? `client:${job.firm_id}:${job.client_id}`
+    : `document:${job.firm_id}:${job.entity_id}`;
 }
 
 async function markUnexpectedFailure({
@@ -90,10 +101,22 @@ async function processClaimedJob(job: ClaimedJob): Promise<JobRunResult> {
   }
 
   try {
-    const result = await processDocumentExtraction(job.entity_id, {
-      jobId: job.id,
-      expectedOwner: { firmId: job.firm_id, clientId: job.client_id },
-    });
+    const createdAt = Date.parse(job.created_at);
+    const result = await withServerTiming(
+      "ai.extraction.job",
+      () =>
+        processDocumentExtraction(job.entity_id, {
+          jobId: job.id,
+          attemptCount: job.attempt_count,
+          expectedOwner: { firmId: job.firm_id, clientId: job.client_id },
+        }),
+      {
+        attempt_count: job.attempt_count,
+        queue_wait_ms: Number.isFinite(createdAt)
+          ? Math.max(Date.now() - createdAt, 0)
+          : null,
+      },
+    );
 
     if (result.status === "skipped") {
       return {
@@ -103,6 +126,16 @@ async function processClaimedJob(job: ClaimedJob): Promise<JobRunResult> {
         message: result.message,
         extractionId: result.extractionId,
         transactionId: result.transactionId,
+      };
+    }
+
+    if (result.status === "retrying") {
+      return {
+        jobId: job.id,
+        documentId: job.entity_id,
+        status: "retrying",
+        message: result.message,
+        retryAt: result.retryAt,
       };
     }
 
@@ -156,6 +189,7 @@ export async function runQueuedAiExtractionJobs({
       completed: 0,
       failed: 0,
       skipped: 0,
+      retrying: 0,
       results: [],
       error: "Supabase service role is not configured.",
     };
@@ -180,21 +214,24 @@ export async function runQueuedAiExtractionJobs({
       completed: 0,
       failed: 0,
       skipped: 0,
+      retrying: 0,
       results: [],
       error: error.message,
     };
   }
 
   const jobs = (data ?? []) as ClaimedJob[];
-  const results: JobRunResult[] = [];
-
-  for (const job of jobs) {
-    results.push(await processClaimedJob(job));
-  }
+  const results = await runKeyedWorkerPool({
+    items: jobs,
+    concurrency: AI_EXTRACTION_CONCURRENCY,
+    keyFor: jobOrderingKey,
+    worker: processClaimedJob,
+  });
 
   const completed = results.filter((result) => result.status === "completed").length;
   const failed = results.filter((result) => result.status === "failed").length;
   const skipped = results.filter((result) => result.status === "skipped").length;
+  const retrying = results.filter((result) => result.status === "retrying").length;
 
   return {
     ok: failed === 0,
@@ -204,6 +241,7 @@ export async function runQueuedAiExtractionJobs({
     completed,
     failed,
     skipped,
+    retrying,
     results,
   };
 }
@@ -226,6 +264,7 @@ export async function runAiExtractionJobNow({
       completed: 0,
       failed: 0,
       skipped: 0,
+      retrying: 0,
       results: [],
       error: "Supabase service role is not configured.",
     };
@@ -253,6 +292,7 @@ export async function runAiExtractionJobNow({
       completed: 0,
       failed: 0,
       skipped: 0,
+      retrying: 0,
       results: [],
       error: error.message,
     };
@@ -269,6 +309,7 @@ export async function runAiExtractionJobNow({
       completed: 0,
       failed: 0,
       skipped: 0,
+      retrying: 0,
       results: [],
       error: "Job is not queued, failed, retryable, or available to claim.",
     };
@@ -284,6 +325,7 @@ export async function runAiExtractionJobNow({
     completed: result.status === "completed" ? 1 : 0,
     failed: result.status === "failed" ? 1 : 0,
     skipped: result.status === "skipped" ? 1 : 0,
+    retrying: result.status === "retrying" ? 1 : 0,
     results: [result],
     error: result.status === "failed" ? result.message : undefined,
   };

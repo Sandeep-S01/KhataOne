@@ -43,6 +43,9 @@ const orderedMigrations = [
   "20260912170000_control_dashboard_audit_writers.sql",
   "20260912180000_recover_ai_extraction_jobs.sql",
   "20260912190000_add_shared_rate_limits.sql",
+  "20260912200000_classify_whatsapp_retries.sql",
+  "20260912210000_bound_worker_concurrency_ordering.sql",
+  "20260912220000_observe_whatsapp_recovery.sql",
 ];
 
 for (const migration of orderedMigrations) {
@@ -98,6 +101,11 @@ for (const script of [
   "test:security-boundaries",
   "test:protection-readiness",
   "test:shared-rate-limits",
+  "test:provider-resilience",
+  "test:whatsapp-job-recovery",
+  "test:keyed-worker-pool",
+  "test:worker-ordering-leases",
+  "test:worker-observability",
 ]) {
   if (!packageJson.scripts?.[script]) {
     fail(`package.json is missing ${script}`);

@@ -4,6 +4,12 @@
   "private": true,
   "scripts": {
     "test:security-boundaries": "node scripts/test-security-boundaries.mjs",
+    "test:whatsapp-latency-baseline": "node scripts/test-whatsapp-latency-baseline.mjs",
+    "test:provider-resilience": "node scripts/test-provider-resilience.mjs",
+    "test:whatsapp-job-recovery": "node scripts/test-whatsapp-job-recovery.mjs",
+    "test:keyed-worker-pool": "node scripts/test-keyed-worker-pool.mjs",
+    "test:worker-ordering-leases": "node scripts/test-worker-ordering-leases.mjs",
+    "test:worker-observability": "node scripts/test-worker-observability.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

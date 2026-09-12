@@ -47,7 +47,15 @@ Required for full workflow:
 - `WHATSAPP_VERIFY_TOKEN`
 - `WHATSAPP_ACCESS_TOKEN`
 - `WHATSAPP_PHONE_NUMBER_ID`
+- `WHATSAPP_IMMEDIATE_INGESTION_ENABLED` (keep `false` until the controlled canary;
+  set exactly `true` to enable post-response ingestion wake-up)
+- `WHATSAPP_IMMEDIATE_AI_ENABLED` (keep `false` until WA-LAT-3 is deployed and a
+  controlled matched text-invoice canary is ready; set exactly `true` to wake only newly
+  created extraction jobs after durable ingestion)
 - `WHATSAPP_GRAPH_API_VERSION`
+- `WHATSAPP_GRAPH_TIMEOUT_MS` (defaults to `10000`; bounded to 1-60 seconds)
+- `WHATSAPP_OLDEST_QUEUED_WARNING_SECONDS` (defaults to `60`)
+- `WORKER_COMPLETION_WARNING_SECONDS` (defaults to `300`)
 
 Recommended for production:
 
@@ -56,6 +64,28 @@ Recommended for production:
 - `RATE_LIMIT_REQUIRE_SHARED_ENFORCEMENT=true` after shared enforcement is verified.
 - Use independent random values of at least 32 characters for `READINESS_CHECK_SECRET` and `RATE_LIMIT_KEY_SECRET`.
 - `TRUST_FORWARDED_IP_HEADERS=true` only when the app is behind a trusted proxy that sets those headers correctly.
+- Apply migration `20260912200000_classify_whatsapp_retries.sql` before deploying the
+  WA-LAT-4 worker code so terminal failed webhook events are not automatically replayed.
+- Apply migration `20260912210000_bound_worker_concurrency_ordering.sql` after `200000`
+  and before deploying WA-LAT-5 so overlapping workers honor global sender/client ordering.
+- Apply migration `20260912220000_observe_whatsapp_recovery.sql` after `210000` and before
+  deploying WA-LAT-6 recovery-route observability.
+
+## WhatsApp Recovery Cadence
+
+- Immediate ingestion and exact-job AI wake-up are the normal path. GitHub Actions invokes
+  each protected recovery route at minutes 2, 7, 12, and so on as a safety net.
+- After deployment, run `scripts/preflight-whatsapp-recovery-observability.sql`. Expect up
+  to 12 completed rows per worker over a healthy one-hour window and investigate missing
+  runs or any observed completion gap over five minutes.
+- Configure an independent monitor to call protected `/api/health/ready`. Route-side
+  structured errors are alert signals only after log/error forwarding is configured; they
+  cannot detect a period in which every scheduler invocation is absent.
+- Prove recovery with one owner-controlled message while immediate wake-up is deliberately
+  disabled, then restore the flag. The event must remain singular and reach terminal status
+  within the five-minute schedule plus measured scheduler and worker runtime variance.
+- The daily Vercel cron remains a last-resort sweep on Hobby. Move recovery to per-minute
+  Vercel cron only after a plan upgrade and a separate deployment/cadence verification.
 
 For no-credit AI testing, set:
 
@@ -99,6 +129,9 @@ ledger entry, GST period, GST summary, processing job, and audit entry.
 - Treat `rate_limit_enforcement` readiness warnings as a production-hardening blocker for unrestricted target-scale launch.
 - Treat `forwarded_ip_trust` readiness warnings as an environment review item before tuning per-IP limits.
 - Treat `processing_jobs` readiness warnings as an operations follow-up: inspect queue age, failed jobs, provider credentials, and worker scheduler status.
+- Treat `whatsapp_pipeline` readiness warnings as urgent when inbound age exceeds one minute,
+  a recovery worker has not completed for five minutes, leases are stale, or terminal
+  failures increased recently.
 - Check `/dashboard/operations` for failed jobs.
 - Check `/dashboard/audit-logs` for recent user/system actions.
 - Check Supabase logs and storage bucket access.

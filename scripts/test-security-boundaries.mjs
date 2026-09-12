@@ -131,7 +131,8 @@ for (const kind of ["document", "export"]) {
   const dependencies = { "@/lib/supabase/server": { createAdminClient: () => db } };
   const processor = kind === "document"
     ? load("src/lib/ai/extraction-processor.ts", { ...dependencies,
-      "@/lib/ai/extraction-schema": {}, "@/lib/ai/extraction-providers": {} }).processDocumentExtraction
+      "@/lib/ai/extraction-schema": {}, "@/lib/ai/extraction-providers": {},
+      "@/lib/jobs/retry": { retryAtIso: () => new Date().toISOString() } }).processDocumentExtraction
     : load("src/lib/exports/generator.ts", { ...dependencies, pdfkit: {},
       "@/lib/export/csv": {}, "@/lib/env": {} }).processExportGeneration;
   const owner = { firmId: "firm-a", clientId: "client-a" };
@@ -153,7 +154,9 @@ for (const kind of ["document", "export"]) {
     return q;
   } };
   const common = { "@/lib/supabase/server": { createAdminClient: () => db },
-    "@/lib/observability": { captureOperationalError() {} } };
+    "@/lib/jobs/keyed-worker-pool": { runKeyedWorkerPool: async ({ items, worker }) => Promise.all(items.map(worker)) },
+    "@/lib/observability": { captureOperationalError() {} },
+    "@/lib/performance": { withServerTiming: async (_name, operation) => operation() } };
   const worker = kind === "document"
     ? load("src/lib/ai/extraction-worker.ts", { ...common, "@/lib/ai/extraction-processor": {
       processDocumentExtraction: async (...args) => { calls.push(args); return { ok: true, status: "extracted" }; },

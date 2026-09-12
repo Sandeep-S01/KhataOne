@@ -10,6 +10,10 @@ import {
   usesSharedRateLimitStore,
 } from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabase/server";
+import {
+  evaluatePipelineAlerts,
+  getPipelineHealthSnapshot,
+} from "@/lib/jobs/worker-observability";
 
 export type HealthCheck = {
   name: string;
@@ -156,6 +160,14 @@ function oldestAgeMinutes(rows: Array<{ created_at: string | null }>) {
   );
 }
 
+function compactDuration(value: number | null) {
+  return value === null ? "n/a" : `${value}ms`;
+}
+
+function compactTimestamp(value: string | null) {
+  return value ?? "never";
+}
+
 export function buildLivenessHealth(): HealthPayload {
   const checks: HealthCheck[] = [
     {
@@ -265,6 +277,39 @@ export async function buildReadinessHealth(): Promise<HealthPayload> {
           `Active jobs: ${activeRows.length}; failed jobs: ${failedCount}; ` +
           `oldest active age: ${oldestActiveMinutes ?? 0} min; ` +
           `warning thresholds: ${staleJobWarningMinutes} min active age, ${failedJobWarningCount} failed job(s).`,
+      });
+    }
+
+    const pipelineHealth = await withServerTiming(
+      "health.whatsapp_pipeline",
+      () => getPipelineHealthSnapshot(),
+      { route: "health.ready" },
+    );
+
+    if (pipelineHealth.error) {
+      checks.push({
+        name: "whatsapp_pipeline",
+        status: "warning",
+        message: `WhatsApp pipeline health is unavailable: ${pipelineHealth.error}`,
+      });
+    } else {
+      const alerts = evaluatePipelineAlerts({ rows: pipelineHealth.rows });
+      const details = pipelineHealth.rows.map((row) =>
+        `${row.queue_name}: due ${row.queued_count}, oldest ${row.oldest_queued_at ?? "none"}, ` +
+        `p95 claim ${compactDuration(row.p95_claim_delay_ms)}, ` +
+        `p95 ack ${compactDuration(row.p95_ack_delay_ms)}, stale leases ${row.stale_lease_count}, ` +
+        `retrying ${row.retrying_count}, terminal ${row.terminal_failure_count}, ` +
+        `recent failures ${row.recent_failure_count}, last complete ` +
+        `${compactTimestamp(row.last_worker_completed_at)}, last success ` +
+        `${compactTimestamp(row.last_worker_success_at)}`,
+      );
+
+      checks.push({
+        name: "whatsapp_pipeline",
+        status: alerts.length > 0 ? "warning" : "ok",
+        message: `${details.join("; ")}. Alerts: ${alerts.length > 0
+          ? alerts.map((alert) => `${alert.queueName}/${alert.code}`).join(", ")
+          : "none"}.`,
       });
     }
   } else if (usesSharedRateLimitStore()) {

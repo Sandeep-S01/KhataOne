@@ -1,4 +1,7 @@
 import { captureOperationalError } from "@/lib/observability";
+import { runKeyedWorkerPool } from "@/lib/jobs/keyed-worker-pool";
+import { retryAtIso } from "@/lib/jobs/retry";
+import { withServerTiming } from "@/lib/performance";
 import { createAdminClient } from "@/lib/supabase/server";
 import {
   extractWhatsAppInboundItems,
@@ -14,6 +17,7 @@ const DEFAULT_BATCH_SIZE = 10;
 const MAX_BATCH_SIZE = 50;
 const MAX_ATTEMPTS = 3;
 const STALE_AFTER = "10 minutes";
+const INGESTION_CONCURRENCY = 3;
 
 type ClaimedWebhookEvent = {
   id: string;
@@ -36,10 +40,14 @@ type InboundMessagePayload = {
 type EventRunResult = {
   eventId: string;
   providerMessageId: string;
-  status: "completed" | "failed" | "ignored" | "unmatched";
+  status: "completed" | "failed" | "ignored" | "unmatched" | "retrying";
   message: string;
   documentId?: string;
   processingJobId?: string;
+  processingJobCreated?: boolean;
+  firmId?: string | null;
+  clientId?: string | null;
+  retryAt?: string;
 };
 
 export type QueuedWhatsAppIngestionRunResult = {
@@ -51,6 +59,7 @@ export type QueuedWhatsAppIngestionRunResult = {
   failed: number;
   ignored: number;
   unmatched: number;
+  retrying: number;
   results: EventRunResult[];
   error?: string;
 };
@@ -93,6 +102,12 @@ function parseInboundMessagePayload(payload: unknown): InboundMessagePayload | n
     message: candidate.message,
     value: candidate.value,
   };
+}
+
+function eventOrderingKey(event: ClaimedWebhookEvent) {
+  const sender = parseInboundMessagePayload(event.message_payload)?.message.from;
+  const normalized = sender?.replace(/[^\d]/g, "");
+  return normalized ? `sender:${normalized}` : `event:${event.id}`;
 }
 
 async function markEventFailure({
@@ -196,14 +211,67 @@ async function processClaimedEvent(
   }
 
   try {
-    const result = await processWhatsAppInboundMessage(
-      payload.message,
-      payload.value,
+    const createdAt = Date.parse(event.created_at);
+    const queueWaitMs = Number.isFinite(createdAt)
+      ? Math.max(Date.now() - createdAt, 0)
+      : null;
+    const result = await withServerTiming(
+      "whatsapp.ingestion.event",
+      () =>
+        processWhatsAppInboundMessage(payload.message, payload.value, {
+          eventId: event.id,
+          continueExistingMessage: true,
+        }),
       {
-        eventId: event.id,
-        continueExistingMessage: true,
+        attempt_count: event.attempt_count,
+        message_type: payload.message.type,
+        queue_wait_ms: queueWaitMs,
       },
     );
+
+    if (
+      result.terminalStatus === "failed" &&
+      result.retryable &&
+      event.attempt_count < MAX_ATTEMPTS
+    ) {
+      const retryAt = retryAtIso({
+        attemptCount: event.attempt_count,
+        retryAfterMs: result.retryAfterMs,
+      });
+      const supabase = createAdminClient();
+
+      if (supabase) {
+        const { error: rescheduleError } = await supabase
+          .from("whatsapp_webhook_events")
+          .update({
+            status: "queued",
+            scheduled_at: retryAt,
+            locked_at: null,
+            locked_by: null,
+            processed_at: null,
+          })
+          .eq("id", event.id);
+
+        if (rescheduleError) {
+          throw new Error("WhatsApp ingestion retry could not be scheduled.");
+        }
+      } else {
+        throw new Error("WhatsApp ingestion retry could not be scheduled.");
+      }
+
+      return {
+        eventId: event.id,
+        providerMessageId: event.provider_message_id,
+        status: "retrying",
+        message: result.error ?? "WhatsApp ingestion retry scheduled.",
+        documentId: result.documentId,
+        processingJobId: result.processingJobId,
+        processingJobCreated: result.processingJobCreated,
+        firmId: result.firmId,
+        clientId: result.clientId,
+        retryAt,
+      };
+    }
 
     return {
       eventId: event.id,
@@ -212,6 +280,9 @@ async function processClaimedEvent(
       message: result.error ?? result.status,
       documentId: result.documentId,
       processingJobId: result.processingJobId,
+      processingJobCreated: result.processingJobCreated,
+      firmId: result.firmId,
+      clientId: result.clientId,
     };
   } catch (error) {
     const message =
@@ -256,6 +327,7 @@ export async function runQueuedWhatsAppIngestionEvents({
       failed: 0,
       ignored: 0,
       unmatched: 0,
+      retrying: 0,
       results: [],
       error: "Supabase service role is not configured.",
     };
@@ -283,22 +355,25 @@ export async function runQueuedWhatsAppIngestionEvents({
       failed: 0,
       ignored: 0,
       unmatched: 0,
+      retrying: 0,
       results: [],
       error: error.message,
     };
   }
 
   const events = (data ?? []) as ClaimedWebhookEvent[];
-  const results: EventRunResult[] = [];
-
-  for (const event of events) {
-    results.push(await processClaimedEvent(event));
-  }
+  const results = await runKeyedWorkerPool({
+    items: events,
+    concurrency: INGESTION_CONCURRENCY,
+    keyFor: eventOrderingKey,
+    worker: processClaimedEvent,
+  });
 
   const completed = results.filter((result) => result.status === "completed").length;
   const failed = results.filter((result) => result.status === "failed").length;
   const ignored = results.filter((result) => result.status === "ignored").length;
   const unmatched = results.filter((result) => result.status === "unmatched").length;
+  const retrying = results.filter((result) => result.status === "retrying").length;
 
   return {
     ok: failed === 0,
@@ -309,6 +384,7 @@ export async function runQueuedWhatsAppIngestionEvents({
     failed,
     ignored,
     unmatched,
+    retrying,
     results,
   };
 }

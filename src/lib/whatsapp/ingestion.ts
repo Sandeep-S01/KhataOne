@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/server";
+import { withServerTiming } from "@/lib/performance";
 import {
   downloadWhatsAppMedia,
   getWhatsAppMediaUrl,
@@ -31,6 +32,9 @@ export type MessageResult = {
   whatsappMessageId?: string;
   documentId?: string;
   processingJobId?: string;
+  processingJobCreated?: boolean;
+  retryable?: boolean;
+  retryAfterMs?: number;
   error?: string;
 };
 
@@ -40,8 +44,18 @@ type ProcessMessageOptions = {
 };
 
 type AcknowledgmentResult =
-  | { ok: true; skipped?: boolean }
-  | { ok: false; error: string };
+  | { ok: true; skipped?: boolean; providerMessageId?: string }
+  | { ok: false; error: string; retryable: boolean; retryAfterMs?: number };
+
+type MediaStoreResult = {
+  storagePath: string | null;
+  fileName: string | null;
+  mimeType: string | null;
+  status: string;
+  error: string | null;
+  retryable?: boolean;
+  retryAfterMs?: number;
+};
 
 const mediaTypes = new Set(["image", "document", "audio", "video", "sticker"]);
 const helpMenuCommands = new Set(["hi", "hello", "hey", "help", "menu", "start"]);
@@ -166,7 +180,7 @@ async function updateWebhookEvent(
   values: Record<string, unknown>,
 ) {
   if (!eventId) {
-    return;
+    return true;
   }
 
   const supabase = createAdminClient();
@@ -226,7 +240,7 @@ async function createProcessingJob({
     .maybeSingle();
 
   if (existingJob?.id) {
-    return existingJob.id as string;
+    return { id: existingJob.id as string, created: false };
   }
 
   const { data: insertedJob, error } = await supabase
@@ -243,7 +257,7 @@ async function createProcessingJob({
     .single();
 
   if (insertedJob?.id) {
-    return insertedJob.id as string;
+    return { id: insertedJob.id as string, created: true };
   }
 
   if (!error) {
@@ -258,7 +272,9 @@ async function createProcessingJob({
     .eq("entity_id", documentId)
     .maybeSingle();
 
-  return jobAfterConflict?.id as string | undefined;
+  return jobAfterConflict?.id
+    ? { id: jobAfterConflict.id as string, created: false }
+    : undefined;
 }
 
 async function storeMedia({
@@ -269,7 +285,7 @@ async function storeMedia({
   firmId: string;
   clientId: string;
   message: WhatsAppInboundMessage;
-}) {
+}): Promise<MediaStoreResult> {
   const supabase = createAdminClient();
   const media = getMedia(message);
 
@@ -292,6 +308,8 @@ async function storeMedia({
       mimeType: media.mime_type ?? null,
       status: "media_failed",
       error: mediaUrl.ok ? "Media URL was missing." : mediaUrl.error,
+      retryable: mediaUrl.ok ? false : mediaUrl.retryable,
+      retryAfterMs: mediaUrl.ok ? undefined : mediaUrl.retryAfterMs,
     };
   }
 
@@ -304,6 +322,8 @@ async function storeMedia({
       mimeType: media.mime_type ?? mediaUrl.media.mime_type ?? null,
       status: "media_failed",
       error: downloaded.error,
+      retryable: downloaded.retryable,
+      retryAfterMs: downloaded.retryAfterMs,
     };
   }
 
@@ -325,6 +345,7 @@ async function storeMedia({
       mimeType,
       status: "media_failed",
       error: error.message,
+      retryable: true,
     };
   }
 
@@ -334,6 +355,7 @@ async function storeMedia({
     mimeType,
     status: "media_downloaded",
     error: null,
+    retryable: false,
   };
 }
 
@@ -414,10 +436,10 @@ async function completeAcknowledgment(
   const supabase = createAdminClient();
 
   if (!supabase) {
-    return;
+    return false;
   }
 
-  await supabase
+  const { error } = await supabase
     .from("whatsapp_webhook_events")
     .update(
       result.ok
@@ -425,6 +447,7 @@ async function completeAcknowledgment(
             ack_status: "sent",
             ack_sent_at: new Date().toISOString(),
             ack_last_error: null,
+            ack_provider_message_id: result.providerMessageId ?? null,
           }
         : {
             ack_status: "failed",
@@ -432,6 +455,8 @@ async function completeAcknowledgment(
           },
     )
     .eq("id", eventId);
+
+  return !error;
 }
 
 async function sendTrackedAcknowledgment({
@@ -448,18 +473,32 @@ async function sendTrackedAcknowledgment({
   if (!prepared.ok || !prepared.shouldSend) {
     return prepared.ok
       ? { ok: true, skipped: true }
-      : {
+        : {
           ok: false,
           error: prepared.error ?? "Acknowledgment could not be prepared.",
+          retryable: false,
         };
   }
 
   const result = await sendWhatsAppText({ to, body });
-  await completeAcknowledgment(eventId, result);
+  const recorded = await completeAcknowledgment(eventId, result);
+
+  if (!recorded) {
+    return {
+      ok: false,
+      error: "Acknowledgment delivery could not be recorded.",
+      retryable: false,
+    };
+  }
 
   return result.ok
-    ? { ok: true }
-    : { ok: false, error: result.error ?? "WhatsApp acknowledgment failed." };
+    ? { ok: true, providerMessageId: result.providerMessageId }
+    : {
+        ok: false,
+        error: result.error ?? "WhatsApp acknowledgment failed.",
+        retryable: result.retryable,
+        retryAfterMs: result.retryAfterMs,
+      };
 }
 
 export async function processWhatsAppInboundMessage(
@@ -478,7 +517,11 @@ export async function processWhatsAppInboundMessage(
     };
   }
 
-  const client = await findClientBySender(message.from);
+  const client = await withServerTiming(
+    "whatsapp.ingestion.client_match",
+    () => findClientBySender(message.from),
+    { message_type: message.type },
+  );
   const rawPayload = {
     message,
     value,
@@ -555,20 +598,25 @@ export async function processWhatsAppInboundMessage(
   });
 
   if (isHelpMenuCommand(message)) {
-    const helpMenu = options.eventId
-      ? await sendTrackedAcknowledgment({
-          eventId: options.eventId,
-          to: message.from,
-          body: client
-            ? buildMatchedHelpMenu(client.business_name)
-            : buildUnmatchedHelpMenu(),
-        })
-      : await sendWhatsAppText({
-          to: message.from,
-          body: client
-            ? buildMatchedHelpMenu(client.business_name)
-            : buildUnmatchedHelpMenu(),
-        });
+    const helpMenu = await withServerTiming(
+      "whatsapp.ingestion.acknowledgment",
+      () =>
+        options.eventId
+          ? sendTrackedAcknowledgment({
+              eventId: options.eventId,
+              to: message.from,
+              body: client
+                ? buildMatchedHelpMenu(client.business_name)
+                : buildUnmatchedHelpMenu(),
+            })
+          : sendWhatsAppText({
+              to: message.from,
+              body: client
+                ? buildMatchedHelpMenu(client.business_name)
+                : buildUnmatchedHelpMenu(),
+            }),
+      { message_type: message.type, response_kind: "help" },
+    );
 
     await supabase
       .from("whatsapp_messages")
@@ -588,19 +636,22 @@ export async function processWhatsAppInboundMessage(
       })
       .eq("id", messageRecord.id);
 
+    const helpTerminalStatus = helpMenu.ok ? "ignored" : "failed";
     await updateWebhookEvent(options.eventId, {
-      status: "ignored",
-      processed_at: new Date().toISOString(),
+      status: helpTerminalStatus,
+      processed_at: helpMenu.ok ? new Date().toISOString() : null,
       last_error: helpMenu.ok ? null : helpMenu.error,
     });
 
     return {
       messageId: message.id,
       status: "stored",
-      terminalStatus: "ignored",
+      terminalStatus: helpTerminalStatus,
       firmId: client?.firm_id ?? null,
       clientId: client?.id ?? null,
       whatsappMessageId: messageRecord.id,
+      retryable: helpMenu.ok ? false : helpMenu.retryable,
+      retryAfterMs: helpMenu.ok ? undefined : helpMenu.retryAfterMs,
       error: helpMenu.ok ? undefined : helpMenu.error,
     };
   }
@@ -621,11 +672,51 @@ export async function processWhatsAppInboundMessage(
     };
   }
 
-  const mediaResult = await storeMedia({
-    firmId: client.firm_id,
-    clientId: client.id,
-    message,
-  });
+  const acknowledgment = await withServerTiming(
+    "whatsapp.ingestion.acknowledgment",
+    () =>
+      options.eventId
+        ? sendTrackedAcknowledgment({
+            eventId: options.eventId,
+            to: message.from,
+            body:
+              "KhataOne received your message and started processing it. Your CA team will review it before it affects your books.",
+          })
+        : sendWhatsAppText({
+            to: message.from,
+            body:
+              "KhataOne received your message and started processing it. Your CA team will review it before it affects your books.",
+          }),
+    { message_type: message.type },
+  );
+
+  await supabase
+    .from("whatsapp_messages")
+    .update({
+      raw_payload: {
+        ...rawPayload,
+        acknowledgment: acknowledgment.ok
+          ? {
+              status: "sent",
+            }
+          : {
+              status: "failed",
+              error: acknowledgment.error,
+            },
+      },
+    })
+    .eq("id", messageRecord.id);
+
+  const mediaResult = await withServerTiming(
+    "whatsapp.ingestion.media",
+    () =>
+      storeMedia({
+        firmId: client.firm_id,
+        clientId: client.id,
+        message,
+      }),
+    { message_type: message.type },
+  );
 
   const isText = message.type === "text";
   const sourceText = isText ? message.text?.body ?? null : null;
@@ -701,18 +792,25 @@ export async function processWhatsAppInboundMessage(
     document_id: document?.id ?? null,
   });
 
-  let processingJobId: string | undefined;
+  let processingJob:
+    | { id: string; created: boolean }
+    | undefined;
 
-  if (document) {
-    processingJobId = await createProcessingJob({
-      firmId: client.firm_id,
-      clientId: client.id,
-      documentId: document.id,
-    });
+  if (document && (!mediaResult.error || !mediaResult.retryable)) {
+    processingJob = await withServerTiming(
+      "whatsapp.ingestion.queue_extraction",
+      () =>
+        createProcessingJob({
+          firmId: client.firm_id,
+          clientId: client.id,
+          documentId: document.id,
+        }),
+      { message_type: message.type },
+    );
   }
 
   await updateWebhookEvent(options.eventId, {
-    processing_job_id: processingJobId ?? null,
+    processing_job_id: processingJob?.id ?? null,
   });
 
   await supabase
@@ -723,38 +821,16 @@ export async function processWhatsAppInboundMessage(
     })
     .eq("id", messageRecord.id);
 
-  const acknowledgment = options.eventId
-    ? await sendTrackedAcknowledgment({
-        eventId: options.eventId,
-        to: message.from,
-        body:
-          "KhataOne received your document. Your CA team will review it before it affects your books.",
-      })
-    : await sendWhatsAppText({
-        to: message.from,
-        body:
-          "KhataOne received your document. Your CA team will review it before it affects your books.",
-      });
-
-  await supabase
-    .from("whatsapp_messages")
-    .update({
-      raw_payload: {
-        ...rawPayload,
-        acknowledgment: acknowledgment.ok
-          ? {
-              status: "sent",
-            }
-          : {
-              status: "failed",
-              error: acknowledgment.error,
-            },
-      },
-    })
-    .eq("id", messageRecord.id);
-
   const terminalStatus =
     mediaResult.error || !acknowledgment.ok ? "failed" : "completed";
+  const failures: Array<{ retryable?: boolean; retryAfterMs?: number }> = [];
+  if (mediaResult.error) failures.push(mediaResult);
+  if (!acknowledgment.ok) failures.push(acknowledgment);
+  const retryable = failures.some((failure) => failure.retryable);
+  const retryAfterMs = Math.max(
+    0,
+    ...failures.map((failure) => failure.retryAfterMs ?? 0),
+  );
 
   await updateWebhookEvent(options.eventId, {
     status: terminalStatus,
@@ -771,7 +847,10 @@ export async function processWhatsAppInboundMessage(
     clientId: client.id,
     whatsappMessageId: messageRecord.id,
     documentId: document?.id,
-    processingJobId,
+    processingJobId: processingJob?.id,
+    processingJobCreated: processingJob?.created,
+    retryable,
+    retryAfterMs: retryAfterMs || undefined,
     error: mediaResult.error ?? (!acknowledgment.ok ? acknowledgment.error : undefined),
   };
 }

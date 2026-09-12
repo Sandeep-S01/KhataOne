@@ -10,6 +10,7 @@ import {
   getExtractionModel,
   hasOpenAIExtractionConfig,
 } from "@/lib/ai/openai";
+import { classifyOpenAIError } from "@/lib/ai/provider-error";
 import { prepareOpenAIInputForDocument } from "@/lib/ai/media-input";
 import { getOptionalServerEnv } from "@/lib/env";
 
@@ -43,6 +44,8 @@ export type ExtractionProviderFailure = {
   provider: ExtractionProviderName;
   message: string;
   fallbackAllowed: boolean;
+  retryable: boolean;
+  retryAfterMs?: number;
 };
 
 export type ExtractionProviderResult =
@@ -53,29 +56,6 @@ const supportedProviders = new Set<ExtractionProviderName>([
   "openai",
   "rule_based_text",
 ]);
-
-function errorMessage(error: unknown) {
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  return typeof error === "string" ? error : "Extraction provider failed.";
-}
-
-function isProviderFallbackAllowed(message: string) {
-  const normalized = message.toLowerCase();
-
-  return (
-    normalized.includes("no credits") ||
-    normalized.includes("insufficient_quota") ||
-    normalized.includes("billing") ||
-    normalized.includes("rate limit") ||
-    normalized.includes("429") ||
-    normalized.includes("temporarily") ||
-    normalized.includes("timeout") ||
-    normalized.includes("network")
-  );
-}
 
 export function getExtractionProviderOrder(): ExtractionProviderName[] {
   const configured = getOptionalServerEnv("AI_EXTRACTION_PROVIDER_ORDER");
@@ -104,6 +84,7 @@ export async function extractWithOpenAI(
       message:
         "OpenAI extraction config is missing. Set OPENAI_API_KEY and OPENAI_EXTRACTION_MODEL.",
       fallbackAllowed: true,
+      retryable: false,
     };
   }
 
@@ -116,6 +97,7 @@ export async function extractWithOpenAI(
       provider: "openai",
       message: "OpenAI client could not be created.",
       fallbackAllowed: true,
+      retryable: false,
     };
   }
 
@@ -131,6 +113,8 @@ export async function extractWithOpenAI(
         provider: "openai",
         message: preparedInput.message,
         fallbackAllowed: Boolean(document.source_text?.trim()),
+        retryable: preparedInput.retryable,
+        retryAfterMs: preparedInput.retryAfterMs,
       };
     }
 
@@ -173,13 +157,12 @@ export async function extractWithOpenAI(
       extraction: parsed,
     };
   } catch (error) {
-    const message = errorMessage(error);
+    const classification = classifyOpenAIError(error);
 
     return {
       ok: false,
       provider: "openai",
-      message,
-      fallbackAllowed: isProviderFallbackAllowed(message),
+      ...classification,
     };
   }
 }
@@ -291,6 +274,7 @@ export async function extractWithRuleBasedText(
       provider: "rule_based_text",
       message: "Rule-based text extraction requires document source text.",
       fallbackAllowed: false,
+      retryable: false,
     };
   }
 
