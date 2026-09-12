@@ -28,9 +28,10 @@ from public.exports e left join public.processing_jobs j
   on j.job_type='export_generation' and j.entity_type='export' and j.entity_id=e.id
 where e.status='queued' and j.id is null;
 
-select count(*) as dashboard_audits_with_actor_firm_mismatch
+-- Disabled memberships remain valid evidence for historical audit records.
+select count(*) as dashboard_audits_without_firm_membership
 from public.audit_logs a left join public.firm_users fu
-  on fu.firm_id=a.firm_id and fu.user_id=a.actor_user_id and fu.status='active'
+  on fu.firm_id=a.firm_id and fu.user_id=a.actor_user_id
 where a.actor_user_id is not null and fu.user_id is null
   and a.action in ('client.created','client.updated','client.archived','export.queued',
     'processing_job.manual_run_requested');
