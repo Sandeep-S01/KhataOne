@@ -5,7 +5,10 @@ import {
 } from "@/lib/env";
 import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { withServerTiming } from "@/lib/performance";
-import { getRateLimitPosture } from "@/lib/rate-limit";
+import {
+  getRateLimitPosture,
+  usesSharedRateLimitStore,
+} from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export type HealthCheck = {
@@ -195,6 +198,26 @@ export async function buildReadinessHealth(): Promise<HealthPayload> {
         : `Database query succeeded in ${durationMs}ms.`,
     });
 
+    if (usesSharedRateLimitStore()) {
+      const { error: rateLimitStoreError } = await withServerTiming(
+        "health.rate_limit_store",
+        () =>
+          admin.from("rate_limit_buckets").select("key_hash", {
+            count: "exact",
+            head: true,
+          }),
+        { route: "health.ready" },
+      );
+
+      checks.push({
+        name: "rate_limit_store",
+        status: rateLimitStoreError ? "error" : "ok",
+        message: rateLimitStoreError
+          ? "Shared rate-limit store is selected but unavailable."
+          : "Shared rate-limit store is reachable.",
+      });
+    }
+
     const staleJobWarningMinutes = configuredPositiveInteger(
       "OPERATIONS_ACTIVE_JOB_WARNING_MINUTES",
       15,
@@ -244,6 +267,12 @@ export async function buildReadinessHealth(): Promise<HealthPayload> {
           `warning thresholds: ${staleJobWarningMinutes} min active age, ${failedJobWarningCount} failed job(s).`,
       });
     }
+  } else if (usesSharedRateLimitStore()) {
+    checks.push({
+      name: "rate_limit_store",
+      status: "error",
+      message: "Shared rate-limit store requires Supabase service-role access.",
+    });
   }
 
   return {

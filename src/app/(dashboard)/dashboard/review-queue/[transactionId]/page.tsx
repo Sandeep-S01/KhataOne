@@ -107,6 +107,7 @@ export default async function TransactionReviewPage({
     ? transaction.ai_extractions[0]
     : transaction.ai_extractions;
   const riskFlags = extraction?.risk_flags ?? [];
+  const isPosted = ["approved", "exported"].includes(transaction.status);
 
   return (
     <div>
@@ -131,9 +132,18 @@ export default async function TransactionReviewPage({
       )}
 
       <PageBody className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.82fr)] xl:items-start">
-        <TransactionReviewForm
-          transaction={transaction as TransactionReviewValues}
-        />
+        {isPosted ? (
+          <SectionCard title="Posted transaction">
+            <InfoNote>
+              This approved record is read-only. Use its ledger handoff for mapping
+              corrections; changing the source requires an audited reversal workflow.
+            </InfoNote>
+          </SectionCard>
+        ) : (
+          <TransactionReviewForm
+            transaction={transaction as TransactionReviewValues}
+          />
+        )}
 
         <div className="grid gap-4 xl:sticky xl:top-20">
           <SectionCard title="Review summary">
@@ -173,7 +183,7 @@ export default async function TransactionReviewPage({
             </pre>
           </SectionCard>
 
-          <SectionCard title="Decision actions">
+          {!isPosted && <SectionCard title="Decision actions">
             <div className="grid gap-3">
               <InfoNote>
                 Approval creates a ledger handoff entry and records the reviewer
@@ -240,7 +250,7 @@ export default async function TransactionReviewPage({
                 </Button>
               </form>
             </div>
-          </SectionCard>
+          </SectionCard>}
         </div>
       </PageBody>
     </div>

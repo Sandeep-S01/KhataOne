@@ -1,4 +1,7 @@
+import { createHmac } from "node:crypto";
+
 import { getOptionalServerEnv } from "@/lib/env";
+import { createAdminClient } from "@/lib/supabase/server";
 
 type RateLimitRecord = {
   count: number;
@@ -7,8 +10,10 @@ type RateLimitRecord = {
 
 type RateLimitResult = {
   ok: boolean;
+  available: boolean;
   remaining: number;
   resetAt: number;
+  source: "local" | "shared-store";
 };
 
 const store = globalThis as typeof globalThis & {
@@ -20,7 +25,9 @@ store.__khataoneRateLimits = rateLimits;
 
 function positiveIntegerEnv(key: string, fallback: number) {
   const value = Number(getOptionalServerEnv(key));
-  return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
+  return Number.isFinite(value) && value > 0
+    ? Math.min(Math.floor(value), 10_000)
+    : fallback;
 }
 
 export function configuredRateLimitPerWindow(key: string, fallback: number) {
@@ -37,6 +44,16 @@ export function getRateLimitPosture() {
   const hasSharedEnforcement =
     Boolean(sharedEnforcement) && recognizedSharedModes.has(sharedEnforcement!);
 
+  if (
+    sharedEnforcement === "shared-store" &&
+    (getOptionalServerEnv("RATE_LIMIT_KEY_SECRET")?.length ?? 0) < 32
+  ) {
+    return {
+      status: "error" as const,
+      message: "Shared rate-limit storage requires RATE_LIMIT_KEY_SECRET with at least 32 characters.",
+    };
+  }
+
   if (hasSharedEnforcement) {
     return {
       status: "ok" as const,
@@ -52,11 +69,31 @@ export function getRateLimitPosture() {
   };
 }
 
+export function usesSharedRateLimitStore() {
+  return (
+    getOptionalServerEnv("RATE_LIMIT_SHARED_ENFORCEMENT")
+      ?.trim()
+      .toLowerCase() === "shared-store"
+  );
+}
+
+function requiresSharedRateLimitEnforcement() {
+  return getOptionalServerEnv("RATE_LIMIT_REQUIRE_SHARED_ENFORCEMENT") === "true";
+}
+
+function hasDeclaredExternalRateLimitEnforcement() {
+  const mode = getOptionalServerEnv("RATE_LIMIT_SHARED_ENFORCEMENT")
+    ?.trim()
+    .toLowerCase();
+
+  return mode === "platform" || mode === "edge";
+}
+
 function shouldTrustForwardedIpHeaders() {
   return getOptionalServerEnv("TRUST_FORWARDED_IP_HEADERS") === "true";
 }
 
-export function checkRateLimit({
+function checkLocalRateLimit({
   key,
   limit,
   windowMs,
@@ -74,16 +111,20 @@ export function checkRateLimit({
 
     return {
       ok: true,
+      available: true,
       remaining: Math.max(limit - 1, 0),
       resetAt,
+      source: "local",
     };
   }
 
   if (existing.count >= limit) {
     return {
       ok: false,
+      available: true,
       remaining: 0,
       resetAt: existing.resetAt,
+      source: "local",
     };
   }
 
@@ -92,8 +133,84 @@ export function checkRateLimit({
 
   return {
     ok: true,
+    available: true,
     remaining: Math.max(limit - existing.count, 0),
     resetAt: existing.resetAt,
+    source: "local",
+  };
+}
+
+export async function checkRateLimit({
+  key,
+  limit,
+  windowMs,
+}: {
+  key: string;
+  limit: number;
+  windowMs: number;
+}): Promise<RateLimitResult> {
+  const localResult = checkLocalRateLimit({ key, limit, windowMs });
+
+  if (!localResult.ok) {
+    return localResult;
+  }
+
+  if (!usesSharedRateLimitStore()) {
+    if (
+      requiresSharedRateLimitEnforcement() &&
+      !hasDeclaredExternalRateLimitEnforcement()
+    ) {
+      return {
+        ok: false,
+        available: false,
+        remaining: 0,
+        resetAt: Date.now() + 1_000,
+        source: "local",
+      };
+    }
+
+    return localResult;
+  }
+
+  const admin = createAdminClient();
+  const keySecret = getOptionalServerEnv("RATE_LIMIT_KEY_SECRET");
+
+  if (!admin || !keySecret || keySecret.length < 32) {
+    return {
+      ok: false,
+      available: false,
+      remaining: 0,
+      resetAt: Date.now() + 1_000,
+      source: "shared-store",
+    };
+  }
+
+  const keyHash = createHmac("sha256", keySecret).update(key).digest("hex");
+  const windowSeconds = Math.max(1, Math.ceil(windowMs / 1_000));
+  const { data, error } = await admin.rpc("consume_rate_limit", {
+    target_key_hash: keyHash,
+    target_limit: limit,
+    target_window_seconds: windowSeconds,
+  });
+  const row = Array.isArray(data) ? data[0] : data;
+  const resetAt = row?.reset_at ? new Date(row.reset_at).getTime() : NaN;
+
+  if (error || !row || !Number.isFinite(resetAt)) {
+    return {
+      ok: false,
+      available: false,
+      remaining: 0,
+      resetAt: Date.now() + 1_000,
+      source: "shared-store",
+    };
+  }
+
+  return {
+    ok: Boolean(row.allowed),
+    available: true,
+    remaining: Number(row.remaining ?? 0),
+    resetAt,
+    source: "shared-store",
   };
 }
 

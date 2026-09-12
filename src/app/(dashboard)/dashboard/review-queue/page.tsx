@@ -31,7 +31,7 @@ import {
 import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
-import { withServerTiming } from "@/lib/performance";
+import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
 
@@ -249,6 +249,7 @@ export default async function ReviewQueuePage({
       />
 
       <PageBody>
+        {clientsResult.error && <QueryError message="Client filters could not be loaded. Please retry." />}
         <FilterBar action="/dashboard/review-queue">
           <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_190px_170px_170px] xl:grid-cols-[minmax(0,1fr)_190px_160px_160px_150px_150px_auto] xl:items-end">
             <div className="grid gap-1.5">

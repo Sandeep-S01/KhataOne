@@ -1,0 +1,36 @@
+name: AI extraction scheduler
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-extraction-scheduler
+  cancel-in-progress: false
+
+jobs:
+  run-queued-ai-extraction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify scheduler secret
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "CRON_SECRET repository secret is missing."
+            exit 1
+          fi
+
+      - name: Run queued AI extraction worker
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          WORKER_URL: https://khataone.vercel.app/api/jobs/ai-extraction/run-queued?batch_size=10
+        run: |
+          curl --fail --show-error --silent \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "$WORKER_URL"

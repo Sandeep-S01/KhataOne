@@ -26,8 +26,36 @@ if (
 }
 
 const supabaseUrl = requireEnv("NEXT_PUBLIC_SUPABASE_URL");
+const expectedSupabaseHost = requireEnv(
+  "KHATAONE_PHASE3_RECONCILE_EXPECTED_HOST",
+).trim().toLowerCase();
 const serviceRoleKey = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
 const firmId = requireEnv("KHATAONE_PHASE3_RECONCILE_FIRM_ID");
+
+let parsedSupabaseUrl;
+
+try {
+  parsedSupabaseUrl = new URL(supabaseUrl);
+} catch {
+  console.error("FAIL NEXT_PUBLIC_SUPABASE_URL must be a valid URL");
+  process.exit(2);
+}
+
+if (parsedSupabaseUrl.hostname !== expectedSupabaseHost) {
+  console.error(
+    "FAIL Supabase URL hostname must exactly match KHATAONE_PHASE3_RECONCILE_EXPECTED_HOST",
+  );
+  process.exit(2);
+}
+
+const pageSize = 1000;
+const configuredMaximumRows = Number(
+  process.env.KHATAONE_PHASE3_RECONCILE_MAX_ROWS ?? 100000,
+);
+const maximumRows =
+  Number.isSafeInteger(configuredMaximumRows) && configuredMaximumRows >= pageSize
+    ? Math.min(configuredMaximumRows, 1000000)
+    : 100000;
 
 const supabase = createClient(supabaseUrl, serviceRoleKey, {
   auth: {
@@ -36,22 +64,57 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
   },
 });
 
+async function readRows(table, columns, filters = {}) {
+  const rows = [];
+
+  for (let from = 0; from < maximumRows; from += pageSize) {
+    let query = supabase
+      .from(table)
+      .select(columns)
+      .eq("firm_id", firmId)
+      .order("id", { ascending: true })
+      .range(from, from + pageSize - 1);
+
+    for (const [key, value] of Object.entries(filters)) {
+      query = query.eq(key, value);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      throw new Error(`${table}: ${error.message}`);
+    }
+
+    rows.push(...(data ?? []));
+
+    if ((data ?? []).length < pageSize) {
+      return rows;
+    }
+  }
+
+  throw new Error(
+    `${table}: reconciliation exceeded KHATAONE_PHASE3_RECONCILE_MAX_ROWS=${maximumRows}`,
+  );
+}
+
 async function groupedCounts(table, groupColumn, filters = {}) {
-  let query = supabase.from(table).select(groupColumn).eq("firm_id", firmId);
-
-  for (const [key, value] of Object.entries(filters)) {
-    query = query.eq(key, value);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    throw new Error(`${table}: ${error.message}`);
-  }
+  const data = await readRows(table, groupColumn, filters);
 
   const counts = {};
-  for (const row of data ?? []) {
+  for (const row of data) {
     const key = row[groupColumn] ?? "NULL";
+    counts[key] = (counts[key] ?? 0) + 1;
+  }
+
+  return counts;
+}
+
+async function groupedPairCounts(table, firstColumn, secondColumn) {
+  const data = await readRows(table, `${firstColumn},${secondColumn}`);
+  const counts = {};
+
+  for (const row of data) {
+    const key = `${row[firstColumn] ?? "NULL"}:${row[secondColumn] ?? "NULL"}`;
     counts[key] = (counts[key] ?? 0) + 1;
   }
 
@@ -65,27 +128,31 @@ const result = {
   ai_extractions_by_status: await groupedCounts("ai_extractions", "status"),
   transactions_by_status: await groupedCounts("transactions", "status"),
   processing_jobs_by_status: await groupedCounts("processing_jobs", "status"),
+  processing_jobs_by_type_and_status: await groupedPairCounts(
+    "processing_jobs",
+    "job_type",
+    "status",
+  ),
   exports_by_status: await groupedCounts("exports", "status"),
+  audit_logs_by_action: await groupedCounts("audit_logs", "action"),
 };
 
-const { data: ledgerRows, error: ledgerError } = await supabase
-  .from("ledger_entries")
-  .select("transaction_id")
-  .eq("firm_id", firmId)
-  .not("transaction_id", "is", null);
-
-if (ledgerError) {
-  throw new Error(`ledger_entries: ${ledgerError.message}`);
-}
+const ledgerRows = await readRows("ledger_entries", "transaction_id");
 
 const ledgerCounts = new Map();
 for (const row of ledgerRows ?? []) {
+  if (!row.transaction_id) {
+    continue;
+  }
+
   ledgerCounts.set(row.transaction_id, (ledgerCounts.get(row.transaction_id) ?? 0) + 1);
 }
 
 result.duplicate_logical_handoffs = Array.from(ledgerCounts.values()).filter(
   (count) => count > 1,
 ).length;
+result.row_counts_complete = true;
+result.reconcile_max_rows_per_table = maximumRows;
 
 console.log(JSON.stringify(result, null, 2));
 

@@ -5,24 +5,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getFirmContext, type FirmContext } from "@/lib/firms";
+import { getFirmContext } from "@/lib/firms";
 
 export type LedgerActionState = {
   status: "idle" | "success" | "error";
   message: string;
   fieldErrors?: Record<string, string>;
-};
-
-type LedgerEntryRecord = {
-  id: string;
-  firm_id: string;
-  client_id: string;
-  transaction_id: string;
-  entry_date: string | null;
-  account_name: string;
-  debit_amount: number;
-  credit_amount: number;
-  narration: string | null;
 };
 
 function readString(formData: FormData, key: string) {
@@ -52,7 +40,7 @@ function normalizeDate(value: string) {
   return Number.isNaN(date.getTime()) ? null : date.toISOString().slice(0, 10);
 }
 
-async function requireLedgerContext(entryId: string) {
+async function requireLedgerContext() {
   if (!hasSupabaseConfig()) {
     return { error: "Supabase is not configured yet." as const };
   }
@@ -63,58 +51,10 @@ async function requireLedgerContext(entryId: string) {
     return { error: "Supabase is not configured yet." as const };
   }
 
-  const { firm, supabase, userId } = context;
-  const { data: entry, error } = await supabase
-    .from("ledger_entries")
-    .select("*")
-    .eq("id", entryId)
-    .eq("firm_id", firm.id)
-    .single();
-
-  if (error || !entry) {
-    return { error: error?.message ?? "Ledger entry not found." };
+  if (!["owner", "admin", "staff"].includes(context.firm.role)) {
+    return { error: "Your workspace role cannot correct ledger entries." };
   }
-
-  return {
-    firm,
-    supabase,
-    userId,
-    entry: entry as LedgerEntryRecord,
-  };
-}
-
-async function writeLedgerAuditLog({
-  supabase,
-  firmId,
-  clientId,
-  actorUserId,
-  action,
-  entityId,
-  beforeData,
-  afterData,
-  metadata,
-}: {
-  supabase: FirmContext["supabase"];
-  firmId: string;
-  clientId: string;
-  actorUserId: string | null;
-  action: string;
-  entityId: string;
-  beforeData?: unknown;
-  afterData?: unknown;
-  metadata?: unknown;
-}) {
-  await supabase.from("audit_logs").insert({
-    firm_id: firmId,
-    client_id: clientId,
-    actor_user_id: actorUserId,
-    action,
-    entity_type: "ledger_entry",
-    entity_id: entityId,
-    before_data: beforeData ?? null,
-    after_data: afterData ?? null,
-    metadata: metadata ?? null,
-  });
+  return context;
 }
 
 export async function updateLedgerEntryAction(
@@ -164,7 +104,7 @@ export async function updateLedgerEntryAction(
     };
   }
 
-  const context = await requireLedgerContext(entryId);
+  const context = await requireLedgerContext();
 
   if ("error" in context) {
     return {
@@ -173,43 +113,23 @@ export async function updateLedgerEntryAction(
     };
   }
 
-  const actorUserId = context.userId;
-  const beforeData = context.entry;
-  const { data: updated, error } = await context.supabase
-    .from("ledger_entries")
-    .update({
-      entry_date: entryDate,
-      account_name: accountName,
-      debit_amount: debitAmount,
-      credit_amount: creditAmount,
-      narration: optional(narration),
-    })
-    .eq("id", entryId)
-    .eq("firm_id", context.firm.id)
-    .select("*")
-    .single();
+  const { data: updated, error } = await context.supabase.rpc("correct_ledger_entry", {
+    target_firm_id: context.firm.id,
+    target_entry_id: entryId,
+    corrected_entry_date: entryDate,
+    corrected_account_name: accountName,
+    corrected_debit_amount: debitAmount,
+    corrected_credit_amount: creditAmount,
+    corrected_narration: optional(narration),
+    correction_note: optional(correctionNote),
+  });
 
   if (error || !updated) {
     return {
       status: "error",
-      message: error?.message ?? "Could not update ledger entry.",
+      message: "Could not update ledger entry. Please retry or contact your workspace administrator.",
     };
   }
-
-  await writeLedgerAuditLog({
-    supabase: context.supabase,
-    firmId: context.firm.id,
-    clientId: context.entry.client_id,
-    actorUserId,
-    action: "ledger_entry.corrected",
-    entityId: entryId,
-    beforeData,
-    afterData: updated,
-    metadata: {
-      correction_note: optional(correctionNote),
-      source_transaction_id: context.entry.transaction_id,
-    },
-  });
 
   revalidatePath("/dashboard/ledger");
   redirect(`/dashboard/ledger/${entryId}` as Route);

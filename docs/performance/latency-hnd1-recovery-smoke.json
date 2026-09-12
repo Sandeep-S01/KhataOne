@@ -1,0 +1,3368 @@
+{
+  "base_url": "https://khata-b2jy7mopi-sandeep-s01s-projects.vercel.app",
+  "sample_count": 3,
+  "measured_at": "2026-09-12T02:05:50.338Z",
+  "browser_version": "153.0.8010.12",
+  "browser_location": "unverified",
+  "network_conditions": "runner network; no emulation",
+  "population": "requires at least one row on overview and each measured route",
+  "warm_state": "destination warmed; function cold state unverified",
+  "percentile_status": "preliminary estimates, not release or capacity certification",
+  "cpu_trace": null,
+  "requests": [
+    {
+      "sequence": 1,
+      "observed_unix_ms": 1789178703217,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7ac7b023-6874-4343-9164-d7ba68015f22",
+        "vercel_id": "bom1::hnd1::dr2fl-1789178703232-1c1a87b16444",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178703224.3328,
+        "request_start_ms": 1.158,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 778.871,
+        "response_end_ms": 780.498
+      }
+    },
+    {
+      "sequence": 2,
+      "observed_unix_ms": 1789178703697,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "a0c86305-ca01-48a3-a538-9e38fcdcc3a3",
+        "vercel_id": "bom1::hnd1::khz5p-1789178703717-fb740500d604",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178703704.7478,
+        "request_start_ms": 1.947,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 453.273,
+        "response_end_ms": 458.856
+      }
+    },
+    {
+      "sequence": 3,
+      "observed_unix_ms": 1789178703708,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "51d40fdd-303f-4a8d-8824-35b89ec66ddf",
+        "vercel_id": "bom1::hnd1::84ktv-1789178703729-561b18ecd281",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178703715.199,
+        "request_start_ms": 1.522,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 568.52,
+        "response_end_ms": 575.089
+      }
+    },
+    {
+      "sequence": 4,
+      "observed_unix_ms": 1789178703841,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7246b596-5f01-452a-968e-2c10af3be034",
+        "vercel_id": "bom1::hnd1::svhdt-1789178703867-400d67378608",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178703849.105,
+        "request_start_ms": 1.401,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 774.342,
+        "response_end_ms": 914.6
+      }
+    },
+    {
+      "sequence": 5,
+      "observed_unix_ms": 1789178703913,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "d5b83358-c5ce-403d-9880-ec898c33be62",
+        "vercel_id": "bom1::hnd1::dr2fl-1789178703977-2d176e7ba6f1",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178703920.2722,
+        "request_start_ms": 1.26,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 609.64,
+        "response_end_ms": 621.844
+      }
+    },
+    {
+      "sequence": 6,
+      "observed_unix_ms": 1789178704004,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "3e675545-d6c9-435e-9a9b-e744de1540a7",
+        "vercel_id": "bom1::hnd1::qtppv-1789178704038-d076b2ec56ea",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178704008.631,
+        "request_start_ms": 1.256,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 506.423,
+        "response_end_ms": 508.079
+      }
+    },
+    {
+      "sequence": 7,
+      "observed_unix_ms": 1789178704827,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "a0011efa-16fc-46ca-a521-696dbaf9c120",
+        "vercel_id": "bom1::hnd1::qtppv-1789178704852-fa9bce5cf476",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178704835.644,
+        "request_start_ms": 1.003,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 653.154,
+        "response_end_ms": 671.826
+      }
+    },
+    {
+      "sequence": 8,
+      "observed_unix_ms": 1789178704835,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 9,
+      "observed_unix_ms": 1789178704835,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "baafab50-b3d7-49ab-a05c-f0b0be67c5c5",
+        "vercel_id": "bom1::hnd1::svhdt-1789178704857-09d082ad1743",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178704842.146,
+        "request_start_ms": 1.202,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 494.451,
+        "response_end_ms": 496.373
+      }
+    },
+    {
+      "sequence": 10,
+      "observed_unix_ms": 1789178704835,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 11,
+      "observed_unix_ms": 1789178704835,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "4ebe3680-8e34-4a3f-badb-4ca0a21560a0",
+        "vercel_id": "bom1::hnd1::ln24s-1789178704870-904ccaedd44a",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178704842.6729,
+        "request_start_ms": 1.532,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 576.909,
+        "response_end_ms": 578.49
+      }
+    },
+    {
+      "sequence": 12,
+      "observed_unix_ms": 1789178705556,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c09e6a3e-434e-4861-bd8d-98804be15ac4",
+        "vercel_id": "bom1::hnd1::svhdt-1789178705597-422ee0e14e50",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178705561.547,
+        "request_start_ms": 1.743,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 583.018,
+        "response_end_ms": 591.309
+      }
+    },
+    {
+      "sequence": 13,
+      "observed_unix_ms": 1789178705556,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e00b8361-c1ab-40fb-a4e8-c3cd1e44e0fb",
+        "vercel_id": "bom1::hnd1::qtppv-1789178705597-2e8ba8c83934",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178705561.9822,
+        "request_start_ms": 1.505,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 719.948,
+        "response_end_ms": 724.658
+      }
+    },
+    {
+      "sequence": 14,
+      "observed_unix_ms": 1789178705556,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "178819fc-e818-4190-a158-8d0025859b4f",
+        "vercel_id": "bom1::hnd1::qtppv-1789178705597-c823d0f8ab35",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178705562.309,
+        "request_start_ms": 1.411,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 588.822,
+        "response_end_ms": 589.911
+      }
+    },
+    {
+      "sequence": 15,
+      "observed_unix_ms": 1789178705556,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8820d1ce-fba7-4032-bed1-20391b86720d",
+        "vercel_id": "bom1::hnd1::8wj7b-1789178705597-a830d929e488",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178705562.748,
+        "request_start_ms": 2.001,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 578.159,
+        "response_end_ms": 579.587
+      }
+    },
+    {
+      "sequence": 16,
+      "observed_unix_ms": 1789178707386,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e1d16cf0-4b5e-430f-8aea-905f203561a3",
+        "vercel_id": "bom1::hnd1::qtppv-1789178707563-f7a2bbcd88eb",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178707393.7832,
+        "request_start_ms": 2.047,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 851.605,
+        "response_end_ms": 858.334
+      }
+    },
+    {
+      "sequence": 17,
+      "observed_unix_ms": 1789178707388,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "0fc72942-50f3-4219-8c6c-d3a7710b6739",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178707563-6ec77dbdb686",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178707395.4028,
+        "request_start_ms": 1.12,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 734.401,
+        "response_end_ms": 738.535
+      }
+    },
+    {
+      "sequence": 18,
+      "observed_unix_ms": 1789178707615,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "f92c032d-bb22-48fa-b6ae-9721c2ba3846",
+        "vercel_id": "bom1::hnd1::4l5kh-1789178707637-0929f1b24591",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178707623.2988,
+        "request_start_ms": 0.874,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 478.428,
+        "response_end_ms": 479.555
+      }
+    },
+    {
+      "sequence": 19,
+      "observed_unix_ms": 1789178707707,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "2095467e-87a1-4163-a8e8-a3f63c96b4c6",
+        "vercel_id": "bom1::hnd1::qtppv-1789178707732-c5e3ca7cf017",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178707713.4758,
+        "request_start_ms": 1.049,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 703.584,
+        "response_end_ms": 716.137
+      }
+    },
+    {
+      "sequence": 20,
+      "observed_unix_ms": 1789178707712,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "31f9f1c2-1de0-4ef9-a85b-a6094a64b4f8",
+        "vercel_id": "bom1::hnd1::d5xw6-1789178707737-ce1760c517f7",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178707719.0579,
+        "request_start_ms": 0.982,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 591.506,
+        "response_end_ms": 853.936
+      }
+    },
+    {
+      "sequence": 21,
+      "observed_unix_ms": 1789178708101,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "a9132748-bf08-43f2-847c-f0a8e7a7c7c8",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178708117-17cf9cefdccb",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178708108.305,
+        "request_start_ms": 1.369,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 411.851,
+        "response_end_ms": 413.931
+      }
+    },
+    {
+      "sequence": 22,
+      "observed_unix_ms": 1789178710597,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "afec8e12-51cd-4a11-a301-bf08ea01365a",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178710637-5b077234c5fc",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178710605.333,
+        "request_start_ms": 2.65,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 873.988,
+        "response_end_ms": 876.319
+      }
+    },
+    {
+      "sequence": 23,
+      "observed_unix_ms": 1789178711593,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7de76a79-fa41-4195-9562-206e54e017d8",
+        "vercel_id": "bom1::hnd1::4l5kh-1789178711622-34d629732225",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178711600.201,
+        "request_start_ms": 2.113,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 493.942,
+        "response_end_ms": 495.137
+      }
+    },
+    {
+      "sequence": 24,
+      "observed_unix_ms": 1789178711593,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ef0bdea2-b13b-47b2-a30f-a2d26c8591aa",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178711622-fdd385757abe",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178711600.563,
+        "request_start_ms": 1.856,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 586.892,
+        "response_end_ms": 595.264
+      }
+    },
+    {
+      "sequence": 25,
+      "observed_unix_ms": 1789178711593,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 26,
+      "observed_unix_ms": 1789178711594,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c6ba4fd0-82d9-4fe8-b92e-76d03b95b924",
+        "vercel_id": "bom1::hnd1::qtppv-1789178711622-a81ce04421aa",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178711601.202,
+        "request_start_ms": 1.359,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 569.245,
+        "response_end_ms": 571.018
+      }
+    },
+    {
+      "sequence": 27,
+      "observed_unix_ms": 1789178711609,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "2455c6ff-c59a-41ca-b0a2-1c3c2c351ef1",
+        "vercel_id": "bom1::hnd1::qtppv-1789178711684-e5c7a49eec6a",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178711617.9302,
+        "request_start_ms": 1.148,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 667.541,
+        "response_end_ms": 844.383
+      }
+    },
+    {
+      "sequence": 28,
+      "observed_unix_ms": 1789178712516,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "933c574f-8f30-4208-85e9-6e775ebaa3f1",
+        "vercel_id": "bom1::hnd1::svhdt-1789178712532-8bb62d3882b7",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178712523.4182,
+        "request_start_ms": 1.43,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 803.9,
+        "response_end_ms": 804.805
+      }
+    },
+    {
+      "sequence": 29,
+      "observed_unix_ms": 1789178712516,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "0b8217f4-12df-4fad-b95a-a94d33277dee",
+        "vercel_id": "bom1::hnd1::qtppv-1789178712533-77e57f59317d",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178712523.762,
+        "request_start_ms": 1.269,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 802.227,
+        "response_end_ms": 803.709
+      }
+    },
+    {
+      "sequence": 30,
+      "observed_unix_ms": 1789178712517,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "4f54b665-e5f6-4174-b39c-b6511a4c9a35",
+        "vercel_id": "bom1::hnd1::n8qs2-1789178712533-8a69f964f883",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178712523.986,
+        "request_start_ms": 1.156,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 551.106,
+        "response_end_ms": 558.997
+      }
+    },
+    {
+      "sequence": 31,
+      "observed_unix_ms": 1789178712517,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "55828517-f8e0-4bc8-a06c-f96010032b88",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178712533-845f857c45cc",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178712524.215,
+        "request_start_ms": 1.733,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 491.213,
+        "response_end_ms": 492.66
+      }
+    },
+    {
+      "sequence": 32,
+      "observed_unix_ms": 1789178714451,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7f080bb0-cef1-4eac-8ab1-c2b9392f0250",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178714468-de73551471bf",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178714458.891,
+        "request_start_ms": 1.34,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 715.132,
+        "response_end_ms": 720.945
+      }
+    },
+    {
+      "sequence": 33,
+      "observed_unix_ms": 1789178714453,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ba53ce94-78df-4806-90ca-4167b9e8ece6",
+        "vercel_id": "bom1::hnd1::svhdt-1789178714472-cee699dab9bb",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178714460.6587,
+        "request_start_ms": 1.512,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 500.036,
+        "response_end_ms": 502.036
+      }
+    },
+    {
+      "sequence": 34,
+      "observed_unix_ms": 1789178714479,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e668242f-7291-4cc5-aefd-b90b0aca0af8",
+        "vercel_id": "bom1::hnd1::84ktv-1789178714497-3a39b9b46733",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178714486.5142,
+        "request_start_ms": 1.381,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 541.372,
+        "response_end_ms": 555.868
+      }
+    },
+    {
+      "sequence": 35,
+      "observed_unix_ms": 1789178714636,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "58aec026-cb90-4a5d-b65a-5a4e2cb6922d",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178714662-c7ef38002754",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178714644.051,
+        "request_start_ms": 0.83,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 702.796,
+        "response_end_ms": 709.009
+      }
+    },
+    {
+      "sequence": 36,
+      "observed_unix_ms": 1789178714640,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "0c722bea-95db-42d3-9874-3d5bf8e797ac",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178714662-858fb4500585",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178714647.656,
+        "request_start_ms": 0.903,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 557.183,
+        "response_end_ms": 682.288
+      }
+    },
+    {
+      "sequence": 37,
+      "observed_unix_ms": 1789178715007,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "700ad758-671f-474f-80ec-ea126fd55161",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178715027-9d553baf9af0",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178715015.211,
+        "request_start_ms": 1.18,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 664.294,
+        "response_end_ms": 666.992
+      }
+    },
+    {
+      "sequence": 38,
+      "observed_unix_ms": 1789178717499,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "717eea5c-97a8-4fc4-b158-af2b2893f6c1",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178717522-60f6a7f91f89",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178717507.206,
+        "request_start_ms": 2.649,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 789.017,
+        "response_end_ms": 934.344
+      }
+    },
+    {
+      "sequence": 39,
+      "observed_unix_ms": 1789178718500,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8481089e-803e-4cca-831c-7be44c281ec4",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178718522-61b7efac698d",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178718508.1848,
+        "request_start_ms": 0.82,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 763.948,
+        "response_end_ms": 911.793
+      }
+    },
+    {
+      "sequence": 40,
+      "observed_unix_ms": 1789178718519,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "4ac34e16-66d7-4719-a42c-d17343e8cfa0",
+        "vercel_id": "bom1::hnd1::8wj7b-1789178718537-4cba6fa7e830",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178718525.917,
+        "request_start_ms": 1.727,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 699.088,
+        "response_end_ms": 707.615
+      }
+    },
+    {
+      "sequence": 41,
+      "observed_unix_ms": 1789178718519,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7fa8a853-a724-4975-8b9c-894b16f2fca9",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178718537-89ffb6480282",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178718526.314,
+        "request_start_ms": 1.424,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 634.228,
+        "response_end_ms": 635.315
+      }
+    },
+    {
+      "sequence": 42,
+      "observed_unix_ms": 1789178718519,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "3eb5fc40-a968-4b26-8dd7-fc749a07c4c8",
+        "vercel_id": "bom1::hnd1::n8qs2-1789178718538-17fc535ba8a3",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178718526.6099,
+        "request_start_ms": 1.189,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 632.767,
+        "response_end_ms": 634.308
+      }
+    },
+    {
+      "sequence": 43,
+      "observed_unix_ms": 1789178718519,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7a687734-2e28-422c-b8c3-62d82e0c986b",
+        "vercel_id": "bom1::hnd1::d5xw6-1789178718540-54e3aa32cd4d",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178718526.857,
+        "request_start_ms": 1.066,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 634.363,
+        "response_end_ms": 635.478
+      }
+    },
+    {
+      "sequence": 44,
+      "observed_unix_ms": 1789178719477,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789178719484.976,
+        "request_start_ms": 1.765,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 425.666,
+        "response_end_ms": 426.988
+      },
+      "response": {
+        "status": 200,
+        "request_id": "5bd0dc91-7fe9-4019-85cd-b5cce8f17221",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178719498-70539c8439c9",
+        "private_no_store": true
+      }
+    },
+    {
+      "sequence": 45,
+      "observed_unix_ms": 1789178719478,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "5b5a65d7-92b1-44bc-be9a-7b844aa10afe",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178719498-515828083a7e",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178719485.4272,
+        "request_start_ms": 1.43,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 416.445,
+        "response_end_ms": 418.185
+      }
+    },
+    {
+      "sequence": 46,
+      "observed_unix_ms": 1789178719478,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c09613d9-bbb0-4789-ac51-15920bbc9d6f",
+        "vercel_id": "bom1::hnd1::4l5kh-1789178719498-430294e6e179",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178719485.801,
+        "request_start_ms": 1.173,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 550.581,
+        "response_end_ms": 552.447
+      }
+    },
+    {
+      "sequence": 47,
+      "observed_unix_ms": 1789178719478,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "92adbe4f-7e32-4600-aa79-cf916cb9589f",
+        "vercel_id": "bom1::hnd1::8jnwb-1789178719498-bab3255dde62",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178719486.095,
+        "request_start_ms": 1.331,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 558.789,
+        "response_end_ms": 560.586
+      }
+    },
+    {
+      "sequence": 48,
+      "observed_unix_ms": 1789178721587,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "2fb3ddff-5055-4101-9b37-f9e493ab7dcf",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178725313-3834ef788afa",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178721594.989,
+        "request_start_ms": 2.464,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 4380.944,
+        "response_end_ms": 4388.727
+      }
+    },
+    {
+      "sequence": 49,
+      "observed_unix_ms": 1789178721595,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+        "vercel_id": "bom1::hnd1::84ktv-1789178725367-df33d9997f1c",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178721601.774,
+        "request_start_ms": 1.45,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 4341.144,
+        "response_end_ms": 4468.851
+      }
+    },
+    {
+      "sequence": 50,
+      "observed_unix_ms": 1789178725956,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7979cf28-2a96-471e-bbbf-826316b3b91d",
+        "vercel_id": "bom1::hnd1::d5xw6-1789178725982-09263ae8bfe8",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178725963.4868,
+        "request_start_ms": 1.437,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 551.965,
+        "response_end_ms": 557.121
+      }
+    },
+    {
+      "sequence": 51,
+      "observed_unix_ms": 1789178725964,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "f54a2edb-62e4-4487-9ad0-d56791c113a1",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178725982-6e86076e5cd8",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178725972.193,
+        "request_start_ms": 1.014,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 564.724,
+        "response_end_ms": 572.38
+      }
+    },
+    {
+      "sequence": 52,
+      "observed_unix_ms": 1789178725976,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ac89fb48-af1f-4343-ad9c-05250d1e9e62",
+        "vercel_id": "bom1::hnd1::gjz2f-1789178726042-7830d5488459",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178725984.46,
+        "request_start_ms": 1.084,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 602.66,
+        "response_end_ms": 604.103
+      }
+    },
+    {
+      "sequence": 53,
+      "observed_unix_ms": 1789178726514,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ce1d660d-fa88-4885-a474-33433c4ab0cb",
+        "vercel_id": "bom1::hnd1::gjz2f-1789178726532-19e120fe0984",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178726521.262,
+        "request_start_ms": 1.319,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 420.998,
+        "response_end_ms": 423.562
+      }
+    },
+    {
+      "sequence": 54,
+      "observed_unix_ms": 1789178728420,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "594d5a0c-1026-46d5-a576-05a1db742116",
+        "vercel_id": "bom1::hnd1::84ktv-1789178728440-f66661390024",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178728427.472,
+        "request_start_ms": 1.293,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 695.806,
+        "response_end_ms": 705.002
+      }
+    },
+    {
+      "sequence": 55,
+      "observed_unix_ms": 1789178728677,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "31f76fa8-de52-40ff-9880-004bbeb835b6",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178728702-8fd4037101ac",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178728684.8381,
+        "request_start_ms": 1.393,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 427.903,
+        "response_end_ms": 429.401
+      }
+    },
+    {
+      "sequence": 56,
+      "observed_unix_ms": 1789178728743,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "cd122494-4b8b-4050-b190-237d0b8593f5",
+        "vercel_id": "bom1::hnd1::gjz2f-1789178728767-433c76ab4098",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178728750.6301,
+        "request_start_ms": 1.187,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 705.698,
+        "response_end_ms": 707.442
+      }
+    },
+    {
+      "sequence": 57,
+      "observed_unix_ms": 1789178728765,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "182b8cd7-dd4d-4fe0-b144-507eada4a227",
+        "vercel_id": "bom1::hnd1::qtppv-1789178728787-96b52cd4a387",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178728773.33,
+        "request_start_ms": 1.267,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 558.71,
+        "response_end_ms": 568.082
+      }
+    },
+    {
+      "sequence": 58,
+      "observed_unix_ms": 1789178729110,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "563d0b8f-7e0f-4384-a247-a9047f2244e6",
+        "vercel_id": "bom1::hnd1::84ktv-1789178729127-5eb817a5f6b2",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178729117.906,
+        "request_start_ms": 1.513,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 573.04,
+        "response_end_ms": 580.366
+      }
+    },
+    {
+      "sequence": 59,
+      "observed_unix_ms": 1789178729751,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "50ad0c9b-eb27-4ab2-ad07-97979e59854c",
+        "vercel_id": "bom1::hnd1::gjz2f-1789178729782-b544b63cd105",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178729759.1018,
+        "request_start_ms": 1.612,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 569.29,
+        "response_end_ms": 721.057
+      }
+    },
+    {
+      "sequence": 60,
+      "observed_unix_ms": 1789178730543,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "42920ff9-1826-46aa-818c-71094aa90b87",
+        "vercel_id": "bom1::hnd1::84ktv-1789178730562-1e7e69d8722c",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178730550.3918,
+        "request_start_ms": 1.25,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 595.565,
+        "response_end_ms": 601.645
+      }
+    },
+    {
+      "sequence": 61,
+      "observed_unix_ms": 1789178730544,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "974b9edd-7921-4ce8-ba8d-632101bd4500",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178730569-5952ea1fe1ad",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178730550.665,
+        "request_start_ms": 1.137,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 689.415,
+        "response_end_ms": 691.909
+      }
+    },
+    {
+      "sequence": 62,
+      "observed_unix_ms": 1789178730544,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "b5aa4f49-8e7d-480a-b5ba-65fe5e3e8cfa",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178730562-89400d8ba546",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178730550.915,
+        "request_start_ms": 1.502,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 561.156,
+        "response_end_ms": 563.063
+      }
+    },
+    {
+      "sequence": 63,
+      "observed_unix_ms": 1789178730544,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "346653ce-2c2f-46d3-8b62-c2fe9f027e46",
+        "vercel_id": "bom1::hnd1::8jnwb-1789178730563-0cdbaaba7167",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178730551.1191,
+        "request_start_ms": 1.378,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 549.051,
+        "response_end_ms": 564.433
+      }
+    },
+    {
+      "sequence": 64,
+      "observed_unix_ms": 1789178731284,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "2057c9e0-6d9a-4e91-929e-83f3a9940709",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178731302-43e57f58d9a3",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178731292.612,
+        "request_start_ms": 1.248,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 850.274,
+        "response_end_ms": 1001.362
+      }
+    },
+    {
+      "sequence": 65,
+      "observed_unix_ms": 1789178731667,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 66,
+      "observed_unix_ms": 1789178731711,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 67,
+      "observed_unix_ms": 1789178732109,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 68,
+      "observed_unix_ms": 1789178732329,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "781e3ab8-1dc0-4c69-b9e0-b4c2c1918775",
+        "vercel_id": "bom1::hnd1::8jnwb-1789178732353-10d16498182f",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178732336.461,
+        "request_start_ms": 1.975,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 644.668,
+        "response_end_ms": 646.184
+      }
+    },
+    {
+      "sequence": 69,
+      "observed_unix_ms": 1789178732329,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c2697424-21fb-43b5-8f9a-9f410cb85c89",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178732353-2d291e0315ea",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178732336.7341,
+        "request_start_ms": 1.45,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 554.7,
+        "response_end_ms": 556.802
+      }
+    },
+    {
+      "sequence": 70,
+      "observed_unix_ms": 1789178732329,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "dfecf70d-6bed-4d13-92e6-c2c5a5e292bd",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178732353-c75a3959cedd",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178732337.013,
+        "request_start_ms": 1.623,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 576.375,
+        "response_end_ms": 577.72
+      }
+    },
+    {
+      "sequence": 71,
+      "observed_unix_ms": 1789178732329,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "f479a539-5aa3-4467-8f2f-f07da2f1adc6",
+        "vercel_id": "bom1::hnd1::gjz2f-1789178732353-1a7eb6b8fc8d",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178732337.331,
+        "request_start_ms": 2.989,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 557.767,
+        "response_end_ms": 559.765
+      }
+    },
+    {
+      "sequence": 72,
+      "observed_unix_ms": 1789178734040,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8a8c1fca-85c5-47e5-af51-4f2cb8775d06",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178734069-7536e90ef8f3",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178734047.4841,
+        "request_start_ms": 1.04,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 572.296,
+        "response_end_ms": 578.253
+      }
+    },
+    {
+      "sequence": 73,
+      "observed_unix_ms": 1789178734468,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e32835a4-f6e7-4969-9243-200cb35b5b65",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178734492-f1af36b403b4",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178734475.792,
+        "request_start_ms": 1.077,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 560.928,
+        "response_end_ms": 573.099
+      }
+    },
+    {
+      "sequence": 74,
+      "observed_unix_ms": 1789178734619,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "46f63c0a-18f5-4d74-84f5-b0a97b191255",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178734642-eac3dcd71f1d",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178734626.717,
+        "request_start_ms": 1.208,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 557.222,
+        "response_end_ms": 564.238
+      }
+    },
+    {
+      "sequence": 75,
+      "observed_unix_ms": 1789178734743,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8f5ee021-9f56-4fb5-83af-d53eab6f9005",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178734773-80eb1636c284",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178734748.534,
+        "request_start_ms": 1.291,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 705.122,
+        "response_end_ms": 706.578
+      }
+    },
+    {
+      "sequence": 76,
+      "observed_unix_ms": 1789178734750,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "5cd88777-d7a2-449b-a654-3349ef8c9cc5",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178734772-3213ca2c88da",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178734756.4211,
+        "request_start_ms": 1.437,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 431.913,
+        "response_end_ms": 552.556
+      }
+    },
+    {
+      "sequence": 77,
+      "observed_unix_ms": 1789178735018,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "db737d24-5f4b-4098-8e6b-e8146de21aff",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178735042-6ba2e7258e79",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178735025.8171,
+        "request_start_ms": 2.383,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 422.34,
+        "response_end_ms": 430.76
+      }
+    },
+    {
+      "sequence": 78,
+      "observed_unix_ms": 1789178737629,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "91096c34-1f7d-4b71-8ee2-bdb833974c4f",
+        "vercel_id": "bom1::hnd1::pl99q-1789178737653-cecf3a1c07cd",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178737636.4172,
+        "request_start_ms": 2.559,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 774.657,
+        "response_end_ms": 847.218
+      }
+    },
+    {
+      "sequence": 79,
+      "observed_unix_ms": 1789178738520,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "f12cc02d-c7f4-4622-906f-95c5c8ee91bf",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178738544-37e9f8063aec",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178738527.9011,
+        "request_start_ms": 1.138,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 563.412,
+        "response_end_ms": 571.104
+      }
+    },
+    {
+      "sequence": 80,
+      "observed_unix_ms": 1789178738520,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "9a6d10cd-6314-4b3d-b604-c8a1442fc3ed",
+        "vercel_id": "bom1::hnd1::pl99q-1789178738542-4cbc193475f8",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178738528.158,
+        "request_start_ms": 1.005,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 559.897,
+        "response_end_ms": 561.191
+      }
+    },
+    {
+      "sequence": 81,
+      "observed_unix_ms": 1789178738520,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "0a3497ab-4095-4583-9b70-5d4bc8ff016b",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178738543-de87592e6436",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178738528.378,
+        "request_start_ms": 0.916,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 687.952,
+        "response_end_ms": 690.363
+      }
+    },
+    {
+      "sequence": 82,
+      "observed_unix_ms": 1789178738520,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "2fbdc0eb-98d1-41c9-8a96-fb96d1010ce9",
+        "vercel_id": "bom1::hnd1::6tcnq-1789178738543-a9cbac319d90",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178738528.579,
+        "request_start_ms": 1.497,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 561.633,
+        "response_end_ms": 563.046
+      }
+    },
+    {
+      "sequence": 83,
+      "observed_unix_ms": 1789178738862,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "5ca1ec1d-8a62-4749-b2ee-b9d3d8ed3646",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178738900-f11654a26a96",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178738870.6208,
+        "request_start_ms": 1.307,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 796.675,
+        "response_end_ms": 938.963
+      }
+    },
+    {
+      "sequence": 84,
+      "observed_unix_ms": 1789178739867,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ce4fd3f2-ccf5-4a01-bda4-eebc380fa2e2",
+        "vercel_id": "bom1::hnd1::54btn-1789178739898-b105089f3508",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178739874.3333,
+        "request_start_ms": 1.459,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 575.05,
+        "response_end_ms": 576.426
+      }
+    },
+    {
+      "sequence": 85,
+      "observed_unix_ms": 1789178739867,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "af1a3292-9ab8-459f-b159-be1d34956487",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178739897-7c3b4a84c1ce",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178739874.655,
+        "request_start_ms": 1.214,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 598.707,
+        "response_end_ms": 600.267
+      }
+    },
+    {
+      "sequence": 86,
+      "observed_unix_ms": 1789178739867,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "b98ef6e5-c503-476e-a5d5-f556c11317dd",
+        "vercel_id": "bom1::hnd1::dr2fl-1789178739897-51d439da8c3e",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178739874.884,
+        "request_start_ms": 1.065,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 520.99,
+        "response_end_ms": 531.713
+      }
+    },
+    {
+      "sequence": 87,
+      "observed_unix_ms": 1789178739867,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "28573e72-13b8-4b80-a8a0-b7d42162eaaf",
+        "vercel_id": "bom1::hnd1::6tcnq-1789178739897-3938754c62bd",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178739875.082,
+        "request_start_ms": 0.949,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 435.246,
+        "response_end_ms": 436.92
+      }
+    },
+    {
+      "sequence": 88,
+      "observed_unix_ms": 1789178741467,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "025b2eee-776b-4ace-8c2a-2cc8d8f7a4e8",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178741493-699ec53904a2",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178741475.2751,
+        "request_start_ms": 1.348,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 442.848,
+        "response_end_ms": 444.57
+      }
+    },
+    {
+      "sequence": 89,
+      "observed_unix_ms": 1789178741586,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c7a6382a-1624-4a15-b90f-a1d857cd2dd5",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178741602-9060da5a1ca4",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178741593.513,
+        "request_start_ms": 1.162,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 554.229,
+        "response_end_ms": 561.687
+      }
+    },
+    {
+      "sequence": 90,
+      "observed_unix_ms": 1789178741702,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "eac3b6bb-96c6-4322-af54-e2819fd32b6e",
+        "vercel_id": "bom1::hnd1::54btn-1789178741722-cfa0af593874",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178741709.7092,
+        "request_start_ms": 1.335,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 422.859,
+        "response_end_ms": 431.255
+      }
+    },
+    {
+      "sequence": 91,
+      "observed_unix_ms": 1789178741917,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "cf72d5ba-9c8d-4d46-b914-b2336d1116c3",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178741932-277f28ad5265",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178741924.7407,
+        "request_start_ms": 1.529,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 537.806,
+        "response_end_ms": 540.363
+      }
+    },
+    {
+      "sequence": 92,
+      "observed_unix_ms": 1789178742001,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "bfd395ae-2be6-4312-b55b-84cfc5963544",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178742032-f0a53b4d5eac",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178742008.95,
+        "request_start_ms": 1.075,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 437.305,
+        "response_end_ms": 586.836
+      }
+    },
+    {
+      "sequence": 93,
+      "observed_unix_ms": 1789178742133,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "89755d68-a28c-4716-94fe-6b48a2cc7081",
+        "vercel_id": "bom1::hnd1::8fv4w-1789178742162-78c17bd37e4b",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178742141.658,
+        "request_start_ms": 2.015,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 566.988,
+        "response_end_ms": 573.151
+      }
+    },
+    {
+      "sequence": 94,
+      "observed_unix_ms": 1789178744874,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c7501351-1887-40bb-8f47-0900261cccae",
+        "vercel_id": "bom1::hnd1::pl99q-1789178744902-4b38c2f27f7e",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178744880.1138,
+        "request_start_ms": 2.279,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 667.012,
+        "response_end_ms": 811.212
+      }
+    },
+    {
+      "sequence": 95,
+      "observed_unix_ms": 1789178745765,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "0c2b99ac-6216-41ae-a15e-c448c526efde",
+        "vercel_id": "bom1::hnd1::dr2fl-1789178745797-323405d800f0",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178745772.959,
+        "request_start_ms": 1.392,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 572.175,
+        "response_end_ms": 573.161
+      }
+    },
+    {
+      "sequence": 96,
+      "observed_unix_ms": 1789178745765,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "429bc661-301b-4b0b-9e8a-04f16f4d4793",
+        "vercel_id": "bom1::hnd1::r85fb-1789178745797-cb4ccc980dba",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178745773.336,
+        "request_start_ms": 1.313,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 585.58,
+        "response_end_ms": 587.314
+      }
+    },
+    {
+      "sequence": 97,
+      "observed_unix_ms": 1789178745765,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c93169f1-e061-4b93-acc7-753db2a97eda",
+        "vercel_id": "bom1::hnd1::2p7qv-1789178745797-2e63fe7746da",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178745773.6511,
+        "request_start_ms": 1.543,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 569.766,
+        "response_end_ms": 572.067
+      }
+    },
+    {
+      "sequence": 98,
+      "observed_unix_ms": 1789178745765,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "cec4317c-9cfd-43d9-adcc-f5c1b2f8e5d4",
+        "vercel_id": "bom1::hnd1::pzz4d-1789178745798-a87e085da524",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178745773.878,
+        "request_start_ms": 1.399,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 573.17,
+        "response_end_ms": 584.555
+      }
+    },
+    {
+      "sequence": 99,
+      "observed_unix_ms": 1789178746485,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "222afd9d-4d62-4c52-8078-f53a16967e5f",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178746527-5816b061fa12",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178746493.62,
+        "request_start_ms": 1.711,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 646.77,
+        "response_end_ms": 817.464
+      }
+    },
+    {
+      "sequence": 100,
+      "observed_unix_ms": 1789178747011,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 101,
+      "observed_unix_ms": 1789178747045,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 102,
+      "observed_unix_ms": 1789178747363,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "7664c986-33fb-4b4b-89df-4a8507263043",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178747383-dca672df3b03",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178747370.336,
+        "request_start_ms": 1.533,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 551.42,
+        "response_end_ms": 563.068
+      }
+    },
+    {
+      "sequence": 103,
+      "observed_unix_ms": 1789178747363,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "1d65f4dc-1b9f-4294-9576-5ea005b34706",
+        "vercel_id": "bom1::hnd1::mm5lb-1789178747383-5cea95ae40f6",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178747370.569,
+        "request_start_ms": 1.382,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 566.013,
+        "response_end_ms": 576.616
+      }
+    },
+    {
+      "sequence": 104,
+      "observed_unix_ms": 1789178747363,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "b56ac389-756f-4306-8cb0-6ea7e83db641",
+        "vercel_id": "bom1::hnd1::mnpkh-1789178747388-f44e47eed9dd",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178747370.7837,
+        "request_start_ms": 1.231,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 735.328,
+        "response_end_ms": 736.766
+      }
+    },
+    {
+      "sequence": 105,
+      "observed_unix_ms": 1789178747364,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c3bc4fb8-2a54-4c05-8a1a-bb9b3261d029",
+        "vercel_id": "bom1::hnd1::mm5lb-1789178747388-66677b40e4ab",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178747371.05,
+        "request_start_ms": 1.016,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 765.3,
+        "response_end_ms": 766.81
+      }
+    },
+    {
+      "sequence": 106,
+      "observed_unix_ms": 1789178749083,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "23a87209-3855-486a-98f4-56719ddfbc6a",
+        "vercel_id": "bom1::hnd1::mnpkh-1789178749102-54540037c8e3",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178749090.645,
+        "request_start_ms": 2.234,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 685.676,
+        "response_end_ms": 687.422
+      }
+    },
+    {
+      "sequence": 107,
+      "observed_unix_ms": 1789178749107,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "65bf6fb1-927e-4f4f-ae93-66933ab5383d",
+        "vercel_id": "bom1::hnd1::cpdj6-1789178749134-10ea99a62b09",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178749115.071,
+        "request_start_ms": 1.418,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 732.013,
+        "response_end_ms": 733.546
+      }
+    },
+    {
+      "sequence": 108,
+      "observed_unix_ms": 1789178749259,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "eb01ef6f-9774-48a5-9147-4c544aa0dff3",
+        "vercel_id": "bom1::hnd1::pl99q-1789178749282-e56919675c70",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178749266.768,
+        "request_start_ms": 1.01,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 407.021,
+        "response_end_ms": 414.285
+      }
+    },
+    {
+      "sequence": 109,
+      "observed_unix_ms": 1789178749475,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "d673dc1a-475a-409d-a25c-520b5e15a5fd",
+        "vercel_id": "bom1::hnd1::dvk5q-1789178749502-49594dd31caf",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178749482.069,
+        "request_start_ms": 2.098,
+        "dns_start_ms": -1,
+        "dns_end_ms": -1,
+        "connect_start_ms": -1,
+        "connect_end_ms": -1,
+        "tls_start_ms": -1,
+        "response_start_ms": 437.363,
+        "response_end_ms": 552.398
+      }
+    },
+    {
+      "sequence": 110,
+      "observed_unix_ms": 1789178749674,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 111,
+      "observed_unix_ms": 1789178749774,
+      "trial": {
+        "destination": "/dashboard/review-queue",
+        "sample": 3,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    }
+  ],
+  "results": [
+    {
+      "route": "/dashboard/ledger",
+      "source_route": "/dashboard/clients",
+      "trials": [
+        {
+          "sample": 1,
+          "hard_started_unix_ms": 1789178703835,
+          "hard_rows_observed_unix_ms": 1789178704814,
+          "click": {
+            "started_unix_ms": 1789178707668,
+            "rows_observed_unix_ms": 1789178708574,
+            "automation_ms": 906,
+            "browser_click_ms": 869
+          }
+        },
+        {
+          "sample": 2,
+          "hard_started_unix_ms": 1789178710593,
+          "hard_rows_observed_unix_ms": 1789178711605,
+          "click": {
+            "started_unix_ms": 1789178714601,
+            "rows_observed_unix_ms": 1789178715484,
+            "automation_ms": 884,
+            "browser_click_ms": 849
+          }
+        },
+        {
+          "sample": 3,
+          "hard_started_unix_ms": 1789178717493,
+          "hard_rows_observed_unix_ms": 1789178718492,
+          "click": {
+            "started_unix_ms": 1789178721558,
+            "rows_observed_unix_ms": 1789178726517,
+            "automation_ms": 4960,
+            "browser_click_ms": 4931
+          }
+        }
+      ],
+      "click_to_rows": {
+        "samples_ms": [
+          906,
+          884,
+          4960
+        ],
+        "p50_ms": 906,
+        "p95_ms": 4960,
+        "max_ms": 4960
+      },
+      "dispatched_click_to_rows_ms": [
+        869,
+        849,
+        4931
+      ],
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          979,
+          1012,
+          999
+        ],
+        "p50_ms": 999,
+        "p95_ms": 1012,
+        "max_ms": 1012
+      },
+      "document_waiting": {
+        "samples_ms": [
+          772.8000000119209,
+          871.1000000238419,
+          786.0999999642372
+        ],
+        "p50_ms": 786.0999999642372,
+        "p95_ms": 871.1000000238419,
+        "max_ms": 871.1000000238419
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          775.5999999642372,
+          874.8999999761581,
+          790.1999999880791
+        ],
+        "p50_ms": 790.1999999880791,
+        "p95_ms": 874.8999999761581,
+        "max_ms": 874.8999999761581
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 152.29999995231628,
+          "final_response_headers_start": 775.5999999642372,
+          "first_interim_response_start": 152.29999995231628
+        },
+        {
+          "first_response_start": 95.59999996423721,
+          "final_response_headers_start": 874.8999999761581,
+          "first_interim_response_start": 95.59999996423721
+        },
+        {
+          "first_response_start": 80.90000003576279,
+          "final_response_headers_start": 790.1999999880791,
+          "first_interim_response_start": 80.90000003576279
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::svhdt-1789178703867-400d67378608",
+          "request_id": "7246b596-5f01-452a-968e-2c10af3be034",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=49"
+        },
+        {
+          "vercel_id": "bom1::hnd1::dvk5q-1789178710637-5b077234c5fc",
+          "request_id": "afec8e12-51cd-4a11-a301-bf08ea01365a",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=33"
+        },
+        {
+          "vercel_id": "bom1::hnd1::dvk5q-1789178717522-60f6a7f91f89",
+          "request_id": "717eea5c-97a8-4fc4-b158-af2b2893f6c1",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=28"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "source_route": "/dashboard/clients",
+      "trials": [
+        {
+          "sample": 1,
+          "hard_started_unix_ms": 1789178729746,
+          "hard_rows_observed_unix_ms": 1789178731277,
+          "click": {
+            "started_unix_ms": 1789178734693,
+            "rows_observed_unix_ms": 1789178735605,
+            "automation_ms": 912,
+            "browser_click_ms": 864
+          }
+        },
+        {
+          "sample": 2,
+          "hard_started_unix_ms": 1789178737623,
+          "hard_rows_observed_unix_ms": 1789178738856,
+          "click": {
+            "started_unix_ms": 1789178741948,
+            "rows_observed_unix_ms": 1789178742850,
+            "automation_ms": 902,
+            "browser_click_ms": 854
+          }
+        },
+        {
+          "sample": 3,
+          "hard_started_unix_ms": 1789178744866,
+          "hard_rows_observed_unix_ms": 1789178746477,
+          "click": {
+            "started_unix_ms": 1789178749439,
+            "rows_observed_unix_ms": 1789178750332,
+            "automation_ms": 893,
+            "browser_click_ms": 864
+          }
+        }
+      ],
+      "click_to_rows": {
+        "samples_ms": [
+          912,
+          902,
+          893
+        ],
+        "p50_ms": 902,
+        "p95_ms": 912,
+        "max_ms": 912
+      },
+      "dispatched_click_to_rows_ms": [
+        864,
+        854,
+        864
+      ],
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          1531,
+          1233,
+          1611
+        ],
+        "p50_ms": 1531,
+        "p95_ms": 1611,
+        "max_ms": 1611
+      },
+      "document_waiting": {
+        "samples_ms": [
+          567.5999999642372,
+          771.7000000476837,
+          664.4000000357628
+        ],
+        "p50_ms": 664.4000000357628,
+        "p95_ms": 771.7000000476837,
+        "max_ms": 771.7000000476837
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          570.8000000119209,
+          776.1000000238419,
+          668.6000000238419
+        ],
+        "p50_ms": 668.6000000238419,
+        "p95_ms": 776.1000000238419,
+        "max_ms": 776.1000000238419
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 86.80000001192093,
+          "final_response_headers_start": 570.8000000119209,
+          "first_interim_response_start": 86.80000001192093
+        },
+        {
+          "first_response_start": 84.10000002384186,
+          "final_response_headers_start": 776.1000000238419,
+          "first_interim_response_start": 84.10000002384186
+        },
+        {
+          "first_response_start": 93.40000003576279,
+          "final_response_headers_start": 668.6000000238419,
+          "first_interim_response_start": 93.40000003576279
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::gjz2f-1789178729782-b544b63cd105",
+          "request_id": "50ad0c9b-eb27-4ab2-ad07-97979e59854c",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=26"
+        },
+        {
+          "vercel_id": "bom1::hnd1::pl99q-1789178737653-cecf3a1c07cd",
+          "request_id": "91096c34-1f7d-4b71-8ee2-bdb833974c4f",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=36"
+        },
+        {
+          "vercel_id": "bom1::hnd1::pl99q-1789178744902-4b38c2f27f7e",
+          "request_id": "c7501351-1887-40bb-8f47-0900261cccae",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=33"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        []
+      ]
+    }
+  ]
+}

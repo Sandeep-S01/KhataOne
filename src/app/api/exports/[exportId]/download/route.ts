@@ -63,13 +63,20 @@ export async function GET(
     );
   }
 
+  // Storage uses service-role access, so row ownership alone is insufficient.
+  const segments = exportRecord.storage_path.split("/");
+  if (segments.length !== 3 || segments[0] !== firm.id || segments[1] !== exportRecord.id ||
+      !/^[a-zA-Z0-9][a-zA-Z0-9._-]*\.(csv|pdf)$/.test(segments[2])) {
+    return NextResponse.json({ error: "Export file is unavailable." }, { status: 409 });
+  }
+
   const { data: file, error: downloadError } = await admin.storage
     .from("exports")
     .download(exportRecord.storage_path);
 
   if (downloadError || !file) {
     return NextResponse.json(
-      { error: downloadError?.message ?? "Could not download export." },
+      { error: "Could not download export." },
       { status: 500 },
     );
   }
@@ -80,6 +87,7 @@ export async function GET(
     headers: {
       "content-disposition": `attachment; filename="${fileName}"`,
       "content-type": contentType(fileName),
+      "cache-control": "private, no-store",
     },
   });
 }

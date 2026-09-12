@@ -11,7 +11,7 @@ import {
 } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
-  const rateLimit = checkRateLimit({
+  const rateLimit = await checkRateLimit({
     key: clientRateLimitKey({
       scope: "job-ai-extraction",
       forwardedFor: request.headers.get("x-forwarded-for"),
@@ -24,6 +24,13 @@ export async function POST(request: NextRequest) {
     ),
     windowMs: 60_000,
   });
+
+  if (!rateLimit.available) {
+    return NextResponse.json(
+      { error: "Request protection is temporarily unavailable." },
+      { status: 503, headers: { "Retry-After": "1" } },
+    );
+  }
 
   if (!rateLimit.ok) {
     return NextResponse.json(
@@ -39,21 +46,25 @@ export async function POST(request: NextRequest) {
 
   const configuredSecret = getOptionalServerEnv("JOB_RUNNER_SECRET");
 
-  if (configuredSecret) {
-    const providedSecret = request.headers.get("x-job-runner-secret");
+  if (!configuredSecret) {
+    return NextResponse.json(
+      { error: "Extraction worker authentication is not configured." },
+      { status: 503, headers: { "Cache-Control": "private, no-store" } },
+    );
+  }
 
-    if (providedSecret !== configuredSecret) {
-      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
-    }
+  if (request.headers.get("x-job-runner-secret") !== configuredSecret) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
   const body = (await request.json().catch(() => null)) as {
     document_id?: string;
   } | null;
 
-  if (!body?.document_id) {
+  if (typeof body?.document_id !== "string" ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.document_id)) {
     return NextResponse.json(
-      { error: "document_id is required." },
+      { error: "A valid document_id is required." },
       { status: 400 },
     );
   }

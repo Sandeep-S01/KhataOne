@@ -1,9 +1,9 @@
 {
-  "manifest_version": "phase3-capacity-v1",
+  "manifest_version": "phase3-capacity-v2",
   "created_at": "2026-09-11",
   "source": "KhataOne launch audit illustrative workload model",
   "status": "NOT_EXECUTED",
-  "provider_mode": "simulated_by_default_live_provider_requires_explicit_authorization",
+  "provider_mode": "dashboard_only_by_default_worker_provider_load_requires_explicit_authorization",
   "global_assumptions": {
     "active_window_hours": 10,
     "sender_document_messages_per_day": 2,
@@ -87,24 +87,31 @@
       "audit_logs for approval/export actions"
     ]
   },
-  "gates": {
-    "webhook_durable_ack_p95_ms": 200,
-    "webhook_durable_ack_p99_ms": 500,
+  "measured_gates": {
     "authenticated_read_p95_ms": 500,
     "authenticated_read_p99_ms": 1000,
+    "worker_tick_p95_ms_when_enabled": 1000,
+    "duplicate_logical_handoffs_after_run": 0
+  },
+  "separate_unmeasured_release_gates": {
+    "webhook_durable_ack_p95_ms": 200,
+    "webhook_durable_ack_p99_ms": 500,
     "approval_p95_ms": 1000,
     "approval_p99_ms": 2000,
     "document_to_reviewable_draft_p95_seconds": 60,
     "large_export_request_accept_p95_ms": 1000,
     "lost_accepted_messages": 0,
-    "duplicate_logical_handoffs": 0,
     "cross_tenant_access_observed": 0
   },
   "execution_requirements": {
     "target_label": "non-production",
+    "production_hostname_denied": "khataone.vercel.app",
+    "requires_exact_target_hostname": true,
     "requires_authenticated_test_accounts": true,
     "requires_staging_supabase_service_role": true,
-    "requires_provider_cost_authorization_for_live_media": true,
+    "requires_exact_staging_supabase_hostname": true,
+    "worker_provider_load_enabled_by_default": false,
+    "requires_provider_cost_authorization_when_worker_load_enabled": true,
     "requires_post_run_business_reconciliation": true
   }
 }

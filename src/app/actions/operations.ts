@@ -35,32 +35,17 @@ export async function runExtractionJobNowAction(formData: FormData) {
   }
 
   const { firm, supabase, userId: actorUserId } = context;
-  const { data: job } = await supabase
-    .from("processing_jobs")
-    .select("id, firm_id, client_id, job_type, entity_type, entity_id, status")
-    .eq("id", jobId)
-    .eq("firm_id", firm.id)
-    .eq("job_type", "ai_extraction")
-    .eq("entity_type", "document")
-    .maybeSingle();
+  const { data: jobData, error } = await supabase.rpc("request_manual_job_run", {
+    target_firm_id: firm.id,
+    target_job_id: jobId,
+    target_job_type: "ai_extraction",
+    target_entity_type: "document",
+  });
+  const job = jobData as { id?: string } | null;
 
-  if (!job || !["queued", "failed"].includes(job.status)) {
+  if (error || !job?.id) {
     redirect("/dashboard/operations");
   }
-
-  await supabase.from("audit_logs").insert({
-    firm_id: firm.id,
-    client_id: job.client_id,
-    actor_user_id: actorUserId,
-    action: "processing_job.manual_run_requested",
-    entity_type: "processing_job",
-    entity_id: job.id,
-    before_data: job,
-    metadata: {
-      job_type: job.job_type,
-      document_id: job.entity_id,
-    },
-  });
 
   await runAiExtractionJobNow({
     jobId: job.id,
@@ -90,32 +75,17 @@ export async function runExportGenerationJobNowAction(formData: FormData) {
   }
 
   const { firm, supabase, userId: actorUserId } = context;
-  const { data: job } = await supabase
-    .from("processing_jobs")
-    .select("id, firm_id, client_id, job_type, entity_type, entity_id, status")
-    .eq("id", jobId)
-    .eq("firm_id", firm.id)
-    .eq("job_type", "export_generation")
-    .eq("entity_type", "export")
-    .maybeSingle();
+  const { data: jobData, error } = await supabase.rpc("request_manual_job_run", {
+    target_firm_id: firm.id,
+    target_job_id: jobId,
+    target_job_type: "export_generation",
+    target_entity_type: "export",
+  });
+  const job = jobData as { id?: string } | null;
 
-  if (!job || !["queued", "failed"].includes(job.status)) {
+  if (error || !job?.id) {
     redirect("/dashboard/operations");
   }
-
-  await supabase.from("audit_logs").insert({
-    firm_id: firm.id,
-    client_id: job.client_id,
-    actor_user_id: actorUserId,
-    action: "processing_job.manual_run_requested",
-    entity_type: "processing_job",
-    entity_id: job.id,
-    before_data: job,
-    metadata: {
-      job_type: job.job_type,
-      export_id: job.entity_id,
-    },
-  });
 
   await runExportGenerationJobNow({
     jobId: job.id,

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getFirmContext, type FirmContext } from "@/lib/firms";
+import { getFirmContext } from "@/lib/firms";
 import { captureOperationalError } from "@/lib/observability";
 import { sendWhatsAppText } from "@/lib/whatsapp/client";
 
@@ -77,7 +77,7 @@ async function requireReviewContext(transactionId: string) {
     return { error: "Supabase is not configured yet." as const };
   }
 
-  const { firm, supabase, userId } = context;
+  const { firm, supabase } = context;
   const { data: transaction, error } = await supabase
     .from("transactions")
     .select("*")
@@ -92,50 +92,19 @@ async function requireReviewContext(transactionId: string) {
   return {
     firm,
     supabase,
-    userId,
     transaction: transaction as TransactionRecord,
   };
-}
-
-async function writeAuditLog({
-  supabase,
-  firmId,
-  clientId,
-  actorUserId,
-  action,
-  entityId,
-  beforeData,
-  afterData,
-  metadata,
-}: {
-  supabase: FirmContext["supabase"];
-  firmId: string;
-  clientId: string;
-  actorUserId: string | null;
-  action: string;
-  entityId: string;
-  beforeData?: unknown;
-  afterData?: unknown;
-  metadata?: unknown;
-}) {
-  await supabase.from("audit_logs").insert({
-    firm_id: firmId,
-    client_id: clientId,
-    actor_user_id: actorUserId,
-    action,
-    entity_type: "transaction",
-    entity_id: entityId,
-    before_data: beforeData ?? null,
-    after_data: afterData ?? null,
-    metadata: metadata ?? null,
-  });
 }
 
 function canReview(role: string) {
   return ["owner", "admin", "staff"].includes(role);
 }
 
-function redirectWithReviewError(transactionId: string, message: string) {
+function isPosted(status: string) {
+  return ["approved", "exported"].includes(status);
+}
+
+function redirectWithReviewError(transactionId: string, message: string): never {
   if (!transactionId) {
     redirect("/dashboard/review-queue");
   }
@@ -208,55 +177,49 @@ export async function updateTransactionAction(
     };
   }
 
-  const actorUserId = context.userId;
-  const beforeData = context.transaction;
-  const { data: updated, error } = await context.supabase
-    .from("transactions")
-    .update({
-      transaction_type: transactionType,
-      status:
-        context.transaction.status === "approved"
-          ? "needs_review"
-          : context.transaction.status,
-      transaction_date: transactionDate,
-      party_name: optional(readString(formData, "party_name")),
-      party_gstin: optional(readString(formData, "party_gstin").toUpperCase()),
-      invoice_number: optional(readString(formData, "invoice_number")),
-      description: optional(readString(formData, "description")),
-      category: optional(readString(formData, "category")),
-      place_of_supply: optional(readString(formData, "place_of_supply")),
-      taxable_amount: amounts.taxable_amount,
-      cgst_amount: amounts.cgst_amount,
-      sgst_amount: amounts.sgst_amount,
-      igst_amount: amounts.igst_amount,
-      cess_amount: amounts.cess_amount,
-      total_amount: amounts.total_amount,
-      payment_mode: optional(readString(formData, "payment_mode")),
-      approved_by: null,
-      approved_at: null,
-    })
-    .eq("id", transactionId)
-    .eq("firm_id", context.firm.id)
-    .select("*")
-    .single();
+  if (!canReview(context.firm.role)) {
+    return {
+      status: "error",
+      message: "Your workspace role cannot edit transactions.",
+    };
+  }
+
+  if (isPosted(context.transaction.status)) {
+    return {
+      status: "error",
+      message: "Posted transactions cannot be edited without a reversal workflow.",
+    };
+  }
+
+  const { data: updated, error } = await context.supabase.rpc(
+    "update_transaction_review",
+    {
+      target_firm_id: context.firm.id,
+      target_transaction_id: transactionId,
+      reviewed_transaction_type: transactionType,
+      reviewed_transaction_date: transactionDate,
+      reviewed_party_name: optional(readString(formData, "party_name")),
+      reviewed_party_gstin: optional(readString(formData, "party_gstin").toUpperCase()),
+      reviewed_invoice_number: optional(readString(formData, "invoice_number")),
+      reviewed_description: optional(readString(formData, "description")),
+      reviewed_category: optional(readString(formData, "category")),
+      reviewed_place_of_supply: optional(readString(formData, "place_of_supply")),
+      reviewed_taxable_amount: amounts.taxable_amount,
+      reviewed_cgst_amount: amounts.cgst_amount,
+      reviewed_sgst_amount: amounts.sgst_amount,
+      reviewed_igst_amount: amounts.igst_amount,
+      reviewed_cess_amount: amounts.cess_amount,
+      reviewed_total_amount: amounts.total_amount,
+      reviewed_payment_mode: optional(readString(formData, "payment_mode")),
+    },
+  );
 
   if (error || !updated) {
     return {
       status: "error",
-      message: error?.message ?? "Could not update transaction.",
+      message: "Could not update transaction. Please retry or contact your workspace administrator.",
     };
   }
-
-  await writeAuditLog({
-    supabase: context.supabase,
-    firmId: context.firm.id,
-    clientId: context.transaction.client_id,
-    actorUserId,
-    action: "transaction.updated",
-    entityId: transactionId,
-    beforeData,
-    afterData: updated,
-  });
 
   redirect(`/dashboard/review-queue/${transactionId}` as Route);
 }
@@ -307,7 +270,6 @@ export async function rejectTransactionAction(formData: FormData) {
   await markTransactionDecision({
     formData,
     status: "rejected",
-    action: "transaction.rejected",
   });
 }
 
@@ -315,18 +277,15 @@ export async function markDuplicateTransactionAction(formData: FormData) {
   await markTransactionDecision({
     formData,
     status: "duplicate",
-    action: "transaction.marked_duplicate",
   });
 }
 
 async function markTransactionDecision({
   formData,
   status,
-  action,
 }: {
   formData: FormData;
   status: "rejected" | "duplicate";
-  action: string;
 }) {
   const transactionId = readString(formData, "transaction_id");
   const note = readString(formData, "review_note");
@@ -336,28 +295,35 @@ async function markTransactionDecision({
     redirect("/dashboard/review-queue");
   }
 
-  const actorUserId = context.userId;
-  const beforeData = context.transaction;
-  const { data: updated } = await context.supabase
-    .from("transactions")
-    .update({ status, approved_by: null, approved_at: null })
-    .eq("id", transactionId)
-    .eq("firm_id", context.firm.id)
-    .select("*")
-    .single();
+  if (!canReview(context.firm.role)) {
+    redirectWithReviewError(
+      transactionId,
+      "Your workspace role cannot make review decisions.",
+    );
+  }
 
-  if (updated) {
-    await writeAuditLog({
-      supabase: context.supabase,
-      firmId: context.firm.id,
-      clientId: context.transaction.client_id,
-      actorUserId,
-      action,
-      entityId: transactionId,
-      beforeData,
-      afterData: updated,
-      metadata: { review_note: optional(note) },
-    });
+  if (isPosted(context.transaction.status)) {
+    redirectWithReviewError(
+      transactionId,
+      "Posted transactions require a reversal before another review decision.",
+    );
+  }
+
+  const { data: updated, error } = await context.supabase.rpc(
+    "decide_transaction_review",
+    {
+      target_firm_id: context.firm.id,
+      target_transaction_id: transactionId,
+      target_status: status,
+      review_note: optional(note),
+    },
+  );
+
+  if (error || !updated) {
+    redirectWithReviewError(
+      transactionId,
+      "Could not save the review decision. Please retry or contact your workspace administrator.",
+    );
   }
 
   revalidatePath("/dashboard/review-queue");
@@ -373,11 +339,48 @@ export async function requestClarificationAction(formData: FormData) {
     redirect("/dashboard/review-queue");
   }
 
-  const actorUserId = context.userId;
+  if (!canReview(context.firm.role)) {
+    redirectWithReviewError(transactionId, "Your workspace role cannot request clarification.");
+  }
+
+  if (isPosted(context.transaction.status)) {
+    redirectWithReviewError(
+      transactionId,
+      "Posted transactions require a reversal before requesting clarification.",
+    );
+  }
+
+  if (!note || note.length > 2000) {
+    redirectWithReviewError(
+      transactionId,
+      "Enter a clarification note of 2,000 characters or fewer.",
+    );
+  }
+
+  const { data: requestData, error: requestError } = await context.supabase.rpc(
+    "request_transaction_clarification",
+    {
+      target_firm_id: context.firm.id,
+      target_transaction_id: transactionId,
+      clarification_note: note,
+    },
+  );
+  const request = requestData as {
+    client_id?: string;
+    request_audit_id?: string;
+  } | null;
+
+  if (requestError || !request?.client_id || !request.request_audit_id) {
+    redirectWithReviewError(
+      transactionId,
+      "Could not record the clarification request. Please retry or contact your workspace administrator.",
+    );
+  }
+
   const { data: client } = await context.supabase
     .from("clients")
     .select("whatsapp_phone, phone, business_name")
-    .eq("id", context.transaction.client_id)
+    .eq("id", request.client_id)
     .eq("firm_id", context.firm.id)
     .single();
 
@@ -390,27 +393,31 @@ export async function requestClarificationAction(formData: FormData) {
         })
       : { ok: false, error: "No recipient or clarification note." };
 
-  await context.supabase
-    .from("transactions")
-    .update({ status: "needs_review" })
-    .eq("id", transactionId)
-    .eq("firm_id", context.firm.id);
-
-  await writeAuditLog({
-    supabase: context.supabase,
-    firmId: context.firm.id,
-    clientId: context.transaction.client_id,
-    actorUserId,
-    action: "transaction.clarification_requested",
-    entityId: transactionId,
-    beforeData: context.transaction,
-    metadata: {
-      clarification_note: optional(note),
-      whatsapp_sent: outbound.ok,
-      whatsapp_error: outbound.ok ? null : outbound.error,
+  const { error: deliveryAuditError } = await context.supabase.rpc(
+    "record_transaction_clarification_delivery",
+    {
+      target_firm_id: context.firm.id,
+      target_transaction_id: transactionId,
+      target_request_audit_id: request.request_audit_id,
+      delivered: outbound.ok,
+      delivery_error: outbound.ok ? null : outbound.error,
     },
-  });
+  );
+
+  if (deliveryAuditError) {
+    captureOperationalError({
+      area: "review.clarification_delivery_audit",
+      error: deliveryAuditError.message,
+      context: { transaction_id: transactionId, firm_id: context.firm.id },
+    });
+  }
 
   revalidatePath(`/dashboard/review-queue/${transactionId}` as Route);
+  if (!outbound.ok) {
+    redirectWithReviewError(
+      transactionId,
+      "Clarification was recorded, but the WhatsApp message could not be sent.",
+    );
+  }
   redirect(`/dashboard/review-queue/${transactionId}` as Route);
 }

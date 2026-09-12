@@ -92,6 +92,7 @@ async function processClaimedJob(job: ClaimedJob): Promise<JobRunResult> {
   try {
     const result = await processDocumentExtraction(job.entity_id, {
       jobId: job.id,
+      expectedOwner: { firmId: job.firm_id, clientId: job.client_id },
     });
 
     if (result.status === "skipped") {

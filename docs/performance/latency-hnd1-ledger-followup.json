@@ -1,0 +1,1792 @@
+{
+  "base_url": "https://khata-nnpeyuoho-sandeep-s01s-projects.vercel.app",
+  "sample_count": 10,
+  "measured_at": "2026-09-11T19:15:08.881Z",
+  "browser_version": "153.0.8010.12",
+  "browser_location": "unverified",
+  "network_conditions": "runner network; no emulation",
+  "population": "requires at least one row on overview and each measured route",
+  "warm_state": "destination warmed; function cold state unverified",
+  "percentile_status": "preliminary estimates, not release or capacity certification",
+  "cpu_trace": null,
+  "requests": [
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154000583.345,
+        "request_start_ms": 1.227,
+        "response_start_ms": 1802.025,
+        "response_end_ms": 1804.581
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154000745.803,
+        "request_start_ms": 1.438,
+        "response_start_ms": 1929.114,
+        "response_end_ms": 2072.151
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154001678.0122,
+        "request_start_ms": 2.154,
+        "response_start_ms": 987.751,
+        "response_end_ms": 989.616
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154002888.427,
+        "request_start_ms": 2.8,
+        "response_start_ms": 706.273,
+        "response_end_ms": 707.463
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154002889.5112,
+        "request_start_ms": 3.886,
+        "response_start_ms": 706.405,
+        "response_end_ms": 708.205
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154002893.087,
+        "request_start_ms": 0.836,
+        "response_start_ms": 742.675,
+        "response_end_ms": 896.408
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154003867.6282,
+        "request_start_ms": 1.12,
+        "response_start_ms": 580.811,
+        "response_end_ms": 582.061
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154006372.685,
+        "request_start_ms": 1.107,
+        "response_start_ms": 801.496,
+        "response_end_ms": 802.823
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154008859.262,
+        "request_start_ms": 2.131,
+        "response_start_ms": 878.022,
+        "response_end_ms": 880.735
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154009839.526,
+        "request_start_ms": 1.655,
+        "response_start_ms": 640.844,
+        "response_end_ms": 642.172
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154009839.8972,
+        "request_start_ms": 1.404,
+        "response_start_ms": 579.923,
+        "response_end_ms": 581.411
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154009870.1602,
+        "request_start_ms": 1.222,
+        "response_start_ms": 843.864,
+        "response_end_ms": 906.45
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154010808.4258,
+        "request_start_ms": 2.191,
+        "response_start_ms": 695.939,
+        "response_end_ms": 698.074
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154012703.7703,
+        "request_start_ms": 1.241,
+        "response_start_ms": 434.685,
+        "response_end_ms": 439.838
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154013143.4312,
+        "request_start_ms": 0.905,
+        "response_start_ms": 792.362,
+        "response_end_ms": 793.798
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154016534.124,
+        "request_start_ms": 1.511,
+        "response_start_ms": 963.765,
+        "response_end_ms": 1464.013
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154018070.9211,
+        "request_start_ms": 2.081,
+        "response_start_ms": 1106.424,
+        "response_end_ms": 1108.191
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154018071.558,
+        "request_start_ms": 1.676,
+        "response_start_ms": 886.768,
+        "response_end_ms": 888.601
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154018396.532,
+        "request_start_ms": 1.249,
+        "response_start_ms": 857.705,
+        "response_end_ms": 1020.013
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154019481.063,
+        "request_start_ms": 0.777,
+        "response_start_ms": 493.991,
+        "response_end_ms": 495.884
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154021128.567,
+        "request_start_ms": 1.272,
+        "response_start_ms": 438.05,
+        "response_end_ms": 439.69
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154021609.5322,
+        "request_start_ms": 1.244,
+        "response_start_ms": 720.366,
+        "response_end_ms": 723.27
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154024985.821,
+        "request_start_ms": 2.808,
+        "response_start_ms": 1051.342,
+        "response_end_ms": 1073.483
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154026138.124,
+        "request_start_ms": 1.996,
+        "response_start_ms": 720.878,
+        "response_end_ms": 722.347
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154026138.671,
+        "request_start_ms": 1.767,
+        "response_start_ms": 725.694,
+        "response_end_ms": 727.18
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154026181.536,
+        "request_start_ms": 0.977,
+        "response_start_ms": 861.281,
+        "response_end_ms": 967.386
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154027200.144,
+        "request_start_ms": 2.248,
+        "response_start_ms": 1002.741,
+        "response_end_ms": 1005.005
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154027200.619,
+        "request_start_ms": 1.883,
+        "response_start_ms": 920.298,
+        "response_end_ms": 922.215
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154027201.704,
+        "request_start_ms": 1.48,
+        "response_start_ms": 1153.295,
+        "response_end_ms": 1155.579
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154029549.1208,
+        "request_start_ms": 1.4,
+        "response_start_ms": 747.852,
+        "response_end_ms": 749.561
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154030304.0361,
+        "request_start_ms": 3.16,
+        "response_start_ms": 562.882,
+        "response_end_ms": 565.425
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154030305.7402,
+        "request_start_ms": 1.683,
+        "response_start_ms": 585.736,
+        "response_end_ms": 587.448
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154032947.493,
+        "request_start_ms": 3.848,
+        "response_start_ms": 993.656,
+        "response_end_ms": 1132.534
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154034162.457,
+        "request_start_ms": 1.391,
+        "response_start_ms": 798.594,
+        "response_end_ms": 993.379
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154034167.414,
+        "request_start_ms": 1.937,
+        "response_start_ms": 614.45,
+        "response_end_ms": 616.006
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154035217.487,
+        "request_start_ms": 1.086,
+        "response_start_ms": 723.958,
+        "response_end_ms": 725.082
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154035217.777,
+        "request_start_ms": 0.872,
+        "response_start_ms": 540.564,
+        "response_end_ms": 542.201
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154035218.044,
+        "request_start_ms": 0.657,
+        "response_start_ms": 688.722,
+        "response_end_ms": 690.291
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154037109.7312,
+        "request_start_ms": 1.293,
+        "response_start_ms": 25347.221,
+        "response_end_ms": 25352.906
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154037337.2869,
+        "request_start_ms": 1.502,
+        "response_start_ms": 25446.367,
+        "response_end_ms": 25448.31
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154037341.2192,
+        "request_start_ms": 1.048,
+        "response_start_ms": 25318.447,
+        "response_end_ms": 25322.932
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154062433.981,
+        "request_start_ms": 1.426,
+        "response_start_ms": 410.742,
+        "response_end_ms": 412.161
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154062710.3691,
+        "request_start_ms": 2.25,
+        "response_start_ms": 929.353,
+        "response_end_ms": 1076.161
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154062849.266,
+        "request_start_ms": 1.482,
+        "response_start_ms": 408.216,
+        "response_end_ms": 410.915
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154063027.079,
+        "request_start_ms": 1.219,
+        "response_start_ms": 407.197,
+        "response_end_ms": 408.762
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154063853.957,
+        "request_start_ms": 1.326,
+        "response_start_ms": 561.306,
+        "response_end_ms": 562.788
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154063854.4387,
+        "request_start_ms": 1.482,
+        "response_start_ms": 559.91,
+        "response_end_ms": 561.931
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154065561.039,
+        "request_start_ms": 1.318,
+        "response_start_ms": 566.744,
+        "response_end_ms": 568.391
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154065659.9219,
+        "request_start_ms": 1.215,
+        "response_start_ms": 688.829,
+        "response_end_ms": 690.625
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154066273.467,
+        "request_start_ms": 1.787,
+        "response_start_ms": 1026.225,
+        "response_end_ms": 1185.765
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154067538.955,
+        "request_start_ms": 0.982,
+        "response_start_ms": 869.54,
+        "response_end_ms": 1007.451
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154067547.56,
+        "request_start_ms": 1.556,
+        "response_start_ms": 771.756,
+        "response_end_ms": 774.418
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154067548.29,
+        "request_start_ms": 1.152,
+        "response_start_ms": 562.443,
+        "response_end_ms": 564.011
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154068612.986,
+        "request_start_ms": 1.304,
+        "response_start_ms": 549.016,
+        "response_end_ms": 550.434
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154068613.312,
+        "request_start_ms": 1.138,
+        "response_start_ms": 958.247,
+        "response_end_ms": 959.649
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154068613.559,
+        "request_start_ms": 1.009,
+        "response_start_ms": 682.624,
+        "response_end_ms": 684.451
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154075184.268,
+        "request_start_ms": 1.552,
+        "response_start_ms": 557.626,
+        "response_end_ms": 559.269
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154075195.57,
+        "request_start_ms": 1.713,
+        "response_start_ms": 585.232,
+        "response_end_ms": 586.943
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154077696.6418,
+        "request_start_ms": 1.288,
+        "response_start_ms": 646.518,
+        "response_end_ms": 678.073
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154078431.0159,
+        "request_start_ms": 1.238,
+        "response_start_ms": 568.978,
+        "response_end_ms": 570.54
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154078431.249,
+        "request_start_ms": 1.498,
+        "response_start_ms": 427.673,
+        "response_end_ms": 429.243
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154078797.5261,
+        "request_start_ms": 1.32,
+        "response_start_ms": 777.879,
+        "response_end_ms": 961.447
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154079787.5771,
+        "request_start_ms": 1.207,
+        "response_start_ms": 436.366,
+        "response_end_ms": 437.506
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154079787.7222,
+        "request_start_ms": 1.254,
+        "response_start_ms": 572.005,
+        "response_end_ms": 573.914
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154079787.882,
+        "request_start_ms": 1.416,
+        "response_start_ms": 811.371,
+        "response_end_ms": 812.869
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154082131.061,
+        "request_start_ms": 1.705,
+        "response_start_ms": 850.136,
+        "response_end_ms": 851.783
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154082500.304,
+        "request_start_ms": 2.345,
+        "response_start_ms": 656.981,
+        "response_end_ms": 659.035
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085011.915,
+        "request_start_ms": 2.317,
+        "response_start_ms": 706.66,
+        "response_end_ms": 807.114
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085872.4219,
+        "request_start_ms": 1.462,
+        "response_start_ms": 1292.587,
+        "response_end_ms": 1404.329
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085882.3882,
+        "request_start_ms": 1.869,
+        "response_start_ms": 965.415,
+        "response_end_ms": 966.384
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085882.925,
+        "request_start_ms": 1.531,
+        "response_start_ms": 963.985,
+        "response_end_ms": 965.407
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085883.319,
+        "request_start_ms": 1.306,
+        "response_start_ms": 961.425,
+        "response_end_ms": 963.275
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154085883.6238,
+        "request_start_ms": 1.588,
+        "response_start_ms": 987.635,
+        "response_end_ms": 990.194
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154087354.342,
+        "request_start_ms": 3.645,
+        "response_start_ms": 991.031,
+        "response_end_ms": 993.055
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154087355.656,
+        "request_start_ms": 2.659,
+        "response_start_ms": 562.338,
+        "response_end_ms": 564.884
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154087356.125,
+        "request_start_ms": 2.786,
+        "response_start_ms": 990.594,
+        "response_end_ms": 992.712
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154089455.978,
+        "request_start_ms": 1.328,
+        "response_start_ms": 870.491,
+        "response_end_ms": 871.95
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154089460.6472,
+        "request_start_ms": 1.022,
+        "response_start_ms": 865.058,
+        "response_end_ms": 868.151
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154089617.513,
+        "request_start_ms": 1.193,
+        "response_start_ms": 709.917,
+        "response_end_ms": 710.774
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154089715.477,
+        "request_start_ms": 1.277,
+        "response_start_ms": 919.662,
+        "response_end_ms": 921.325
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154089959.676,
+        "request_start_ms": 1.533,
+        "response_start_ms": 673.738,
+        "response_end_ms": 675.416
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154092834.106,
+        "request_start_ms": 3.537,
+        "response_start_ms": 1181.143,
+        "response_end_ms": 1385.134
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154094284.974,
+        "request_start_ms": 1.531,
+        "response_start_ms": 556.269,
+        "response_end_ms": 557.83
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154094300.2642,
+        "request_start_ms": 0.947,
+        "response_start_ms": 750.634,
+        "response_end_ms": 988.214
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154095131.376,
+        "request_start_ms": 2.468,
+        "response_start_ms": 723.966,
+        "response_end_ms": 725.218
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154095132.603,
+        "request_start_ms": 2.079,
+        "response_start_ms": 948.792,
+        "response_end_ms": 950.766
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154095133.388,
+        "request_start_ms": 1.722,
+        "response_start_ms": 926.451,
+        "response_end_ms": 929.527
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154097069.574,
+        "request_start_ms": 1.344,
+        "response_start_ms": 937.275,
+        "response_end_ms": 938.733
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154097135.019,
+        "request_start_ms": 1.102,
+        "response_start_ms": 665.761,
+        "response_end_ms": 667.354
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154097215.54,
+        "request_start_ms": 0.992,
+        "response_start_ms": 913.547,
+        "response_end_ms": 916.125
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154097493.9148,
+        "request_start_ms": 2.116,
+        "response_start_ms": 895.502,
+        "response_end_ms": 897.12
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154100887.9868,
+        "request_start_ms": 3.903,
+        "response_start_ms": 2853.788,
+        "response_end_ms": 3166.548
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154103845.8318,
+        "request_start_ms": 0.957,
+        "response_start_ms": 895.201,
+        "response_end_ms": 897.121
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154103846.108,
+        "request_start_ms": 0.805,
+        "response_start_ms": 1353.662,
+        "response_end_ms": 1355.391
+      }
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154103846.427,
+        "request_start_ms": 1.043,
+        "response_start_ms": 1327.103,
+        "response_end_ms": 1329.323
+      }
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154104208.431,
+        "request_start_ms": 1.482,
+        "response_start_ms": 1453.244,
+        "response_end_ms": 1598.937
+      }
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154105869.762,
+        "request_start_ms": 2.967,
+        "response_start_ms": 942.056,
+        "response_end_ms": 943.366
+      }
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "network": {
+        "start_unix_ms": 1789154107755.245,
+        "request_start_ms": 1.365,
+        "response_start_ms": 867.494,
+        "response_end_ms": 870.616
+      }
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "network_failed": true
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    }
+  ],
+  "results": [
+    {
+      "route": "/dashboard/ledger",
+      "click_to_rows": {
+        "samples_ms": [
+          896,
+          1415,
+          1388,
+          1417,
+          26945,
+          4988,
+          900,
+          1393,
+          1411,
+          917
+        ],
+        "p50_ms": 1393,
+        "p95_ms": 26945,
+        "max_ms": 26945
+      },
+      "dispatched_click_to_rows_ms": [
+        856,
+        1380,
+        1355,
+        1374,
+        null,
+        4930,
+        853,
+        1354,
+        1367,
+        870
+      ],
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          2141,
+          1008,
+          1858,
+          1195,
+          1212,
+          1258,
+          1099,
+          857,
+          1465,
+          3318
+        ],
+        "p50_ms": 1212,
+        "p95_ms": 3318,
+        "max_ms": 3318
+      },
+      "document_waiting": {
+        "samples_ms": [
+          1927.3999999761581,
+          875.6999999880791,
+          962.1999999880791,
+          1048.3999999761581,
+          989.5,
+          1024.199999988079,
+          645,
+          704.1000000238419,
+          1177.1000000238419,
+          2849.199999988079
+        ],
+        "p50_ms": 989.5,
+        "p95_ms": 2849.199999988079,
+        "max_ms": 2849.199999988079
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          1930.3999999761581,
+          879.6000000238419,
+          964.5,
+          1052.199999988079,
+          994.9000000357628,
+          1028.300000011921,
+          647.3999999761581,
+          707.8000000119209,
+          1182.5,
+          2854.5
+        ],
+        "p50_ms": 994.9000000357628,
+        "p95_ms": 2854.5,
+        "max_ms": 2854.5
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 1107.8999999761581,
+          "final_response_headers_start": 1930.3999999761581,
+          "first_interim_response_start": 1107.8999999761581
+        },
+        {
+          "first_response_start": 93.69999998807907,
+          "final_response_headers_start": 879.6000000238419,
+          "first_interim_response_start": 93.69999998807907
+        },
+        {
+          "first_response_start": 140.5,
+          "final_response_headers_start": 964.5,
+          "first_interim_response_start": 140.5
+        },
+        {
+          "first_response_start": 86.19999998807907,
+          "final_response_headers_start": 1052.199999988079,
+          "first_interim_response_start": 86.19999998807907
+        },
+        {
+          "first_response_start": 99.5,
+          "final_response_headers_start": 994.9000000357628,
+          "first_interim_response_start": 99.5
+        },
+        {
+          "first_response_start": 88.60000002384186,
+          "final_response_headers_start": 1028.300000011921,
+          "first_interim_response_start": 88.60000002384186
+        },
+        {
+          "first_response_start": 89.39999997615814,
+          "final_response_headers_start": 647.3999999761581,
+          "first_interim_response_start": 89.39999997615814
+        },
+        {
+          "first_response_start": 90.69999998807907,
+          "final_response_headers_start": 707.8000000119209,
+          "first_interim_response_start": 90.69999998807907
+        },
+        {
+          "first_response_start": 91.39999997615814,
+          "final_response_headers_start": 1182.5,
+          "first_interim_response_start": 91.39999997615814
+        },
+        {
+          "first_response_start": 93.89999997615814,
+          "final_response_headers_start": 2854.5,
+          "first_interim_response_start": 93.89999997615814
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::fxpz7-1789154002451-fa041a0c077d",
+          "request_id": "92946348-35ab-445b-bf44-9a1cb60aafab",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=86"
+        },
+        {
+          "vercel_id": "bom1::hnd1::s27r2-1789154009544-7ed70702a551",
+          "request_id": "97318865-372d-4bf9-a009-61e164d5ccf9",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=38"
+        },
+        {
+          "vercel_id": "bom1::hnd1::fxtw4-1789154017269-6a9afafcfad8",
+          "request_id": "eb3af67d-9824-4bc3-b84e-01450b70100f",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=38"
+        },
+        {
+          "vercel_id": "bom1::hnd1::xx96q-1789154025669-8e7a5d434ffb",
+          "request_id": "20091fd8-3300-4ac8-ac07-1a9bf0de39cf",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=39"
+        },
+        {
+          "vercel_id": "bom1::hnd1::w6xrf-1789154033619-47675e196c8c",
+          "request_id": "554a7c76-269b-4d2a-b8d0-4373cefc6166",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=38"
+        },
+        {
+          "vercel_id": "bom1::hnd1::g9b59-1789154066954-5af6e241017c",
+          "request_id": "b23a0cf8-f050-494b-b975-47d66b01b4a3",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=27"
+        },
+        {
+          "vercel_id": "bom1::hnd1::44brp-1789154078380-4f8bf5e4081c",
+          "request_id": "a5b27363-5018-4a24-9588-e8e84746f2ba",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=26"
+        },
+        {
+          "vercel_id": "bom1::hnd1::5gtqb-1789154085694-ade1a78d28f3",
+          "request_id": "d64fdcd9-5635-4b80-9724-e75ee72fba3d",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=43"
+        },
+        {
+          "vercel_id": "bom1::hnd1::lj58x-1789154093515-2604fb3f99f7",
+          "request_id": "fd3f2acf-2a3a-4a5e-8731-dfcfb7fd7e85",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=35"
+        },
+        {
+          "vercel_id": "bom1::hnd1::bdtnq-1789154101574-999b38de2306",
+          "request_id": "67ba266b-c69d-4fb1-85f7-a66c20ae2f04",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=671"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    }
+  ]
+}

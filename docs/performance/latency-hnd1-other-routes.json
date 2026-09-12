@@ -1,0 +1,1066 @@
+{
+  "base_url": "https://khata-nnpeyuoho-sandeep-s01s-projects.vercel.app",
+  "sample_count": 3,
+  "measured_at": "2026-09-11T19:11:31.787Z",
+  "browser_version": "153.0.8010.12",
+  "browser_location": "unverified",
+  "network_conditions": "runner network; no emulation",
+  "population": "requires at least one row on overview and each measured route",
+  "warm_state": "destination warmed; function cold state unverified",
+  "percentile_status": "preliminary estimates, not release or capacity certification",
+  "cpu_trace": null,
+  "requests": [
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    }
+  ],
+  "results": [
+    {
+      "route": "/dashboard/clients",
+      "click_to_rows": {
+        "samples_ms": [
+          877,
+          1416,
+          1403
+        ],
+        "p50_ms": 1403,
+        "p95_ms": 1416,
+        "max_ms": 1416
+      },
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          1597,
+          703,
+          1025
+        ],
+        "p50_ms": 1025,
+        "p95_ms": 1597,
+        "max_ms": 1597
+      },
+      "document_waiting": {
+        "samples_ms": [
+          637.6000000238419,
+          504.5,
+          854.8999999761581
+        ],
+        "p50_ms": 637.6000000238419,
+        "p95_ms": 854.8999999761581,
+        "max_ms": 854.8999999761581
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          641.1999999880791,
+          507.30000001192093,
+          857.5
+        ],
+        "p50_ms": 641.1999999880791,
+        "p95_ms": 857.5,
+        "max_ms": 857.5
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 75.89999997615814,
+          "final_response_headers_start": 641.1999999880791,
+          "first_interim_response_start": 75.89999997615814
+        },
+        {
+          "first_response_start": 73.30000001192093,
+          "final_response_headers_start": 507.30000001192093,
+          "first_interim_response_start": 73.30000001192093
+        },
+        {
+          "first_response_start": 87.5,
+          "final_response_headers_start": 857.5,
+          "first_interim_response_start": 87.5
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::8sfnc-1789153821112-8b90075df562",
+          "request_id": "b0883121-f962-4a71-817f-9f34f06a4678",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=42"
+        },
+        {
+          "vercel_id": "bom1::hnd1::8sfnc-1789153828660-1a2bd4b1e928",
+          "request_id": "3798f731-0f12-4fe2-a7bd-375e6b1ab160",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=39"
+        },
+        {
+          "vercel_id": "bom1::hnd1::lf6pm-1789153835955-008b4d1ac78e",
+          "request_id": "7a08f91f-11bb-4b03-812f-4f988049ba5f",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=42"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "click_to_rows": {
+        "samples_ms": [
+          885,
+          902,
+          5519
+        ],
+        "p50_ms": 902,
+        "p95_ms": 5519,
+        "max_ms": 5519
+      },
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          1491,
+          1082,
+          1137
+        ],
+        "p50_ms": 1137,
+        "p95_ms": 1491,
+        "max_ms": 1491
+      },
+      "document_waiting": {
+        "samples_ms": [
+          1016.6000000238419,
+          794,
+          995
+        ],
+        "p50_ms": 995,
+        "p95_ms": 1016.6000000238419,
+        "max_ms": 1016.6000000238419
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          1019.6000000238419,
+          797.1999999880791,
+          998.5999999642372
+        ],
+        "p50_ms": 998.5999999642372,
+        "p95_ms": 1019.6000000238419,
+        "max_ms": 1019.6000000238419
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 72,
+          "final_response_headers_start": 1019.6000000238419,
+          "first_interim_response_start": 72
+        },
+        {
+          "first_response_start": 80.19999998807907,
+          "final_response_headers_start": 797.1999999880791,
+          "first_interim_response_start": 80.19999998807907
+        },
+        {
+          "first_response_start": 82.79999995231628,
+          "final_response_headers_start": 998.5999999642372,
+          "first_interim_response_start": 82.79999995231628
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::d7xjf-1789153844530-f6be5bda580b",
+          "request_id": "e136b54f-183b-4a6e-a5e1-2b2ba0342202",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=40"
+        },
+        {
+          "vercel_id": "bom1::hnd1::lf6pm-1789153851730-2b682ec2a980",
+          "request_id": "8a6fdc93-3c0a-4bc7-8f38-0f1147190b7a",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=40"
+        },
+        {
+          "vercel_id": "bom1::hnd1::7r2l4-1789153858890-8a07c41911ec",
+          "request_id": "328b8ac9-1815-4aeb-af22-4fa1d8e9f71d",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=43"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "click_to_rows": {
+        "samples_ms": [
+          917,
+          919,
+          1436
+        ],
+        "p50_ms": 919,
+        "p95_ms": 1436,
+        "max_ms": 1436
+      },
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          1447,
+          1214,
+          1062
+        ],
+        "p50_ms": 1214,
+        "p95_ms": 1447,
+        "max_ms": 1447
+      },
+      "document_waiting": {
+        "samples_ms": [
+          491.69999998807907,
+          997.1000000238419,
+          852.8000000119209
+        ],
+        "p50_ms": 852.8000000119209,
+        "p95_ms": 997.1000000238419,
+        "max_ms": 997.1000000238419
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          494.60000002384186,
+          1000.7000000476837,
+          856
+        ],
+        "p50_ms": 856,
+        "p95_ms": 1000.7000000476837,
+        "max_ms": 1000.7000000476837
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 126.90000003576279,
+          "final_response_headers_start": 494.60000002384186,
+          "first_interim_response_start": 126.90000003576279
+        },
+        {
+          "first_response_start": 75.40000003576279,
+          "final_response_headers_start": 1000.7000000476837,
+          "first_interim_response_start": 75.40000003576279
+        },
+        {
+          "first_response_start": 75.69999998807907,
+          "final_response_headers_start": 856,
+          "first_interim_response_start": 75.69999998807907
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::hkh2z-1789153872480-d392c1d74e6d",
+          "request_id": "dea0ba3a-022f-4d42-bb3b-cfb39b05437f",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=40"
+        },
+        {
+          "vercel_id": "bom1::hnd1::jlfp4-1789153879890-19caf4b83238",
+          "request_id": "1bfa1e19-c391-4e6e-9268-daa5bfd885ad",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=43"
+        },
+        {
+          "vercel_id": "bom1::hnd1::44brp-1789153886921-545fd72cf529",
+          "request_id": "3cbae127-b4de-483e-a443-ef0e7d70cc02",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=64"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        [],
+        []
+      ]
+    }
+  ]
+}

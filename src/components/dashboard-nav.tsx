@@ -110,6 +110,8 @@ export function DashboardNav({
                   <li key={href}>
                     <Link
                       href={item.href}
+                      prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" &&
+                        (pathname === href || href === "/dashboard") ? false : undefined}
                       onClick={onNavigate}
                       aria-current={isActive ? "page" : undefined}
                       title={collapsed ? item.label : undefined}

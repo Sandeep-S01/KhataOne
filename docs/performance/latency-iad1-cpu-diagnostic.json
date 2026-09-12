@@ -1,0 +1,8146 @@
+{
+  "base_url": "https://khata-ely6f82jb-sandeep-s01s-projects.vercel.app",
+  "sample_count": 1,
+  "measured_at": "2026-09-11T19:01:11.982Z",
+  "browser_version": "153.0.8010.12",
+  "browser_location": "unverified",
+  "network_conditions": "runner network; no emulation",
+  "population": "requires at least one row on overview and each measured route",
+  "warm_state": "destination warmed; function cold state unverified",
+  "percentile_status": "preliminary estimates, not release or capacity certification",
+  "cpu_trace": {
+    "note": "Sanitized Chrome duration events; microseconds. Nested events overlap; do not sum as wall time.",
+    "traceEvents": [
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433457699115,
+        "dur": 1333,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433457959250,
+        "dur": 2264,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433457963129,
+        "dur": 8044,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433457971194,
+        "dur": 58,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433457971953,
+        "dur": 3674,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433457975648,
+        "dur": 25308,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433458002791,
+        "dur": 70,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458003236,
+        "dur": 327,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458003615,
+        "dur": 136,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458003877,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458003916,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458005206,
+        "dur": 2988,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458007406,
+        "dur": 387,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458008121,
+        "dur": 67,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458011498,
+        "dur": 229,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458011852,
+        "dur": 162,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458012024,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433458099881,
+        "dur": 306,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433458100199,
+        "dur": 10282,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458113042,
+        "dur": 3248,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458114844,
+        "dur": 800,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433458116143,
+        "dur": 138,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458313261,
+        "dur": 28,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458313298,
+        "dur": 218,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458354726,
+        "dur": 62,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458354800,
+        "dur": 274,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458371153,
+        "dur": 29,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433458371190,
+        "dur": 244,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459161575,
+        "dur": 9922,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459172254,
+        "dur": 3033,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459174352,
+        "dur": 577,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459175213,
+        "dur": 68,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459215342,
+        "dur": 88,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459215615,
+        "dur": 35,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459215658,
+        "dur": 498,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459226058,
+        "dur": 72,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459328080,
+        "dur": 700,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459328976,
+        "dur": 105,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459329304,
+        "dur": 181,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459330060,
+        "dur": 207,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459330320,
+        "dur": 9058,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459339397,
+        "dur": 4237,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459345415,
+        "dur": 964,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459348456,
+        "dur": 2889,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459351424,
+        "dur": 6483,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459357980,
+        "dur": 3702,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459361736,
+        "dur": 808,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459362582,
+        "dur": 683,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459363285,
+        "dur": 1027,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459364345,
+        "dur": 75,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459364768,
+        "dur": 6122,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459370550,
+        "dur": 141,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459370934,
+        "dur": 90,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459372350,
+        "dur": 143,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372509,
+        "dur": 33,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372563,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372578,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372588,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372593,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372602,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372607,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459372662,
+        "dur": 10495,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383168,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459383229,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383543,
+        "dur": 106,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383658,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383687,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383694,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383703,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383709,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383717,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383722,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383736,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383745,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383752,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383757,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383765,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383770,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383780,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383785,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383792,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383798,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383805,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383810,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383821,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383826,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383834,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383839,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383846,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383853,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383860,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383866,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383873,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383878,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383886,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383891,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383902,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383907,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383915,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383920,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383927,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383933,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383940,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383945,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383953,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383958,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383966,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383974,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383981,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383987,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383994,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459383999,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384006,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384012,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384020,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384042,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384050,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384055,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384062,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384071,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384079,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384085,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384092,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384098,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384105,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384110,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384117,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384125,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384132,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384153,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384164,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384170,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384178,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384183,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384191,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384197,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384204,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384209,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384217,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384222,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384229,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384235,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384246,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384252,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384259,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384264,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384272,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384277,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384284,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384289,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384297,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384302,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384309,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384315,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384353,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384360,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384367,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384372,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384379,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459384385,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459384460,
+        "dur": 266,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459385655,
+        "dur": 5013,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459390680,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459390932,
+        "dur": 2735,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459393677,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459393863,
+        "dur": 828,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459394698,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459394805,
+        "dur": 177,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459395009,
+        "dur": 176,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459395188,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459395213,
+        "dur": 829,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459396050,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459396271,
+        "dur": 378,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459396657,
+        "dur": 96,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459396955,
+        "dur": 98,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459397598,
+        "dur": 189,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459397791,
+        "dur": 366,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459399032,
+        "dur": 35,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459399083,
+        "dur": 51,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459404412,
+        "dur": 690,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459405886,
+        "dur": 272,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459406349,
+        "dur": 573,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459406957,
+        "dur": 94,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407077,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407114,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407146,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407170,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407197,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407243,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407361,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407394,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407420,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407447,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407478,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407568,
+        "dur": 48,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407678,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407756,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407830,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407900,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459407982,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408049,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408124,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408188,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408251,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408320,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408384,
+        "dur": 26,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433459408420,
+        "dur": 1361,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459409869,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459409935,
+        "dur": 67,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459410007,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459410364,
+        "dur": 145,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459410857,
+        "dur": 234,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411096,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411140,
+        "dur": 68,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411223,
+        "dur": 33,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411260,
+        "dur": 282,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411595,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459411640,
+        "dur": 76,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459412045,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459412059,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459412084,
+        "dur": 516,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459413238,
+        "dur": 338,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459413521,
+        "dur": 37,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459441019,
+        "dur": 371,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459453317,
+        "dur": 919,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459454546,
+        "dur": 371,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459481327,
+        "dur": 542,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459486388,
+        "dur": 686,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459541767,
+        "dur": 789,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459553296,
+        "dur": 769,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459568728,
+        "dur": 2645,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459586625,
+        "dur": 125,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459586770,
+        "dur": 127,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459587155,
+        "dur": 10469,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459593349,
+        "dur": 152,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459593550,
+        "dur": 80,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459597637,
+        "dur": 12447,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459611614,
+        "dur": 3022,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459612355,
+        "dur": 37,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459614169,
+        "dur": 269,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459614531,
+        "dur": 101,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459616068,
+        "dur": 5628,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459621719,
+        "dur": 32,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433459622201,
+        "dur": 410,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433459622618,
+        "dur": 428,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459623393,
+        "dur": 1251,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433459623419,
+        "dur": 1220,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459625386,
+        "dur": 5178,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459630591,
+        "dur": 45,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459631065,
+        "dur": 676,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459631748,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459631826,
+        "dur": 172,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459632000,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459632021,
+        "dur": 217,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459632241,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459650848,
+        "dur": 253,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433459651110,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460252827,
+        "dur": 42,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460252888,
+        "dur": 271,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460594868,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460594911,
+        "dur": 219,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460613787,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460613820,
+        "dur": 192,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460754509,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433460754568,
+        "dur": 240,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461615658,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461615691,
+        "dur": 218,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461617010,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461617045,
+        "dur": 172,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461655039,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461655062,
+        "dur": 1267,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461757600,
+        "dur": 43,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433461757652,
+        "dur": 778,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462331653,
+        "dur": 26,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462331687,
+        "dur": 284,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462338524,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462338549,
+        "dur": 236,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462740810,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462740842,
+        "dur": 320,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462796104,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433462796125,
+        "dur": 234,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463006458,
+        "dur": 182,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463006857,
+        "dur": 12994,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463020798,
+        "dur": 2934,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463023143,
+        "dur": 442,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463023677,
+        "dur": 51,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463027581,
+        "dur": 70,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463027949,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463027984,
+        "dur": 891,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463038172,
+        "dur": 58,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463195777,
+        "dur": 1382,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463197201,
+        "dur": 967,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463201165,
+        "dur": 101,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463201399,
+        "dur": 57,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463201618,
+        "dur": 28,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463201792,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463201869,
+        "dur": 5635,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433463207519,
+        "dur": 3636,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463212446,
+        "dur": 910,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463214768,
+        "dur": 188,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463214989,
+        "dur": 112,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463215118,
+        "dur": 271,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463215417,
+        "dur": 852,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463216340,
+        "dur": 113,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463216484,
+        "dur": 59,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463216564,
+        "dur": 2484,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463219129,
+        "dur": 173,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463219329,
+        "dur": 8086,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463227314,
+        "dur": 86,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463227455,
+        "dur": 79,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463227994,
+        "dur": 26,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228623,
+        "dur": 58,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228686,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228699,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228705,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228713,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228718,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463228758,
+        "dur": 6645,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463235423,
+        "dur": 55,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463235667,
+        "dur": 199,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463235908,
+        "dur": 96,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236356,
+        "dur": 136,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236503,
+        "dur": 41,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236555,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236564,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236578,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236586,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236597,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236605,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236615,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236623,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236634,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236642,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236652,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236660,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236676,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236683,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236694,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236701,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236711,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236719,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236729,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236736,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236747,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236754,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236766,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236774,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236789,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236797,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236807,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236816,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236826,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236833,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236850,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236858,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236868,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236875,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236886,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236901,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236912,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236920,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236931,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236938,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236949,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236956,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236967,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236974,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236984,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463236993,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237003,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237015,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237028,
+        "dur": 27,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237058,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237071,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237079,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237090,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237098,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237109,
+        "dur": 32,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237144,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237156,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237163,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237179,
+        "dur": 36,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237218,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237230,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237238,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237264,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237274,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237285,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237295,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237306,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237313,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237324,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237337,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237363,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237376,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237395,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237408,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237423,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237436,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237453,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237465,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237477,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237495,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237512,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237524,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237541,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237549,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237560,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237568,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237578,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237586,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237597,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237605,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237615,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237623,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237634,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463237645,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463237744,
+        "dur": 487,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463238717,
+        "dur": 4939,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463243672,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463243782,
+        "dur": 1997,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463245799,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463246124,
+        "dur": 361,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463246809,
+        "dur": 1147,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463247967,
+        "dur": 29,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463248057,
+        "dur": 197,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463248257,
+        "dur": 625,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463250982,
+        "dur": 442,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463251439,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463251788,
+        "dur": 1263,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463253073,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463253186,
+        "dur": 46,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463253258,
+        "dur": 58,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463258726,
+        "dur": 276,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463259693,
+        "dur": 175,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260052,
+        "dur": 284,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260359,
+        "dur": 76,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260452,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260479,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260501,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260521,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260539,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260561,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260621,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260646,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260667,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260685,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260710,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260794,
+        "dur": 38,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260895,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463260973,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261040,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261111,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261178,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261241,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261307,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261368,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261450,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261529,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261574,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433463261595,
+        "dur": 71,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463261734,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463261801,
+        "dur": 28,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463261833,
+        "dur": 33,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463262058,
+        "dur": 503,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463262651,
+        "dur": 246,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463262901,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433463264669,
+        "dur": 132,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463265094,
+        "dur": 142,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463286173,
+        "dur": 389,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463288961,
+        "dur": 68,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289046,
+        "dur": 38,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289088,
+        "dur": 127,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289271,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289292,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289435,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463289445,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463297481,
+        "dur": 452,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463298155,
+        "dur": 364,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463298454,
+        "dur": 47,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463330967,
+        "dur": 533,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463399880,
+        "dur": 933,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463412362,
+        "dur": 386,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463445603,
+        "dur": 496,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463511150,
+        "dur": 885,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463536180,
+        "dur": 83,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463536274,
+        "dur": 57,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463536460,
+        "dur": 3725,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433463540197,
+        "dur": 4684,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463546301,
+        "dur": 2014,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463546822,
+        "dur": 63,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463547965,
+        "dur": 211,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463548237,
+        "dur": 75,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463549952,
+        "dur": 5084,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463555056,
+        "dur": 32,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433463555295,
+        "dur": 1352,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433463556661,
+        "dur": 624,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463557756,
+        "dur": 661,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433463557783,
+        "dur": 632,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463558791,
+        "dur": 2679,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463561482,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463561579,
+        "dur": 194,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463561776,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463561795,
+        "dur": 199,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463561997,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463569459,
+        "dur": 229,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463569696,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463941257,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433463941279,
+        "dur": 118,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464120036,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464120058,
+        "dur": 106,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464426173,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464426196,
+        "dur": 145,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464892436,
+        "dur": 50,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464892494,
+        "dur": 210,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464969881,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433464969912,
+        "dur": 165,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465071205,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465071233,
+        "dur": 139,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465120679,
+        "dur": 43,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465120729,
+        "dur": 319,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465408108,
+        "dur": 206,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465408653,
+        "dur": 13887,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465423733,
+        "dur": 3693,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465426761,
+        "dur": 490,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465427353,
+        "dur": 68,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465431397,
+        "dur": 43,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465431703,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465431744,
+        "dur": 1015,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465441199,
+        "dur": 65,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465506907,
+        "dur": 190,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465507218,
+        "dur": 92,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465507508,
+        "dur": 210,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465507804,
+        "dur": 274,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465508102,
+        "dur": 197,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465508315,
+        "dur": 136,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465508464,
+        "dur": 684,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465509176,
+        "dur": 67,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465509257,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465509311,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465509364,
+        "dur": 74,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465509556,
+        "dur": 136,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465509744,
+        "dur": 9909,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433465519713,
+        "dur": 4681,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465525966,
+        "dur": 1091,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465529214,
+        "dur": 15656,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465544679,
+        "dur": 162,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465544936,
+        "dur": 124,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465545711,
+        "dur": 38,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547467,
+        "dur": 193,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547676,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547728,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547744,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547770,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547783,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465547895,
+        "dur": 6908,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465554869,
+        "dur": 51,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465555008,
+        "dur": 79,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465555985,
+        "dur": 4666,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465560665,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465560804,
+        "dur": 1363,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465562181,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465562224,
+        "dur": 160,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465562387,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465562405,
+        "dur": 557,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465562967,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465563005,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563053,
+        "dur": 44,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563707,
+        "dur": 135,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563849,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563878,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563885,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563896,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563904,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563917,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563925,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563946,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563958,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563971,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563983,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465563995,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564003,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564013,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564020,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564032,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564040,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564053,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564062,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564078,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564086,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564098,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564107,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564119,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564138,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564152,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564160,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564172,
+        "dur": 5,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564180,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564192,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564202,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564226,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564245,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564272,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564291,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564315,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564339,
+        "dur": 68,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564420,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564441,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564468,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564490,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564517,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564548,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564580,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564604,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564631,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564651,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564677,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564698,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564724,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564742,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564766,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564784,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564806,
+        "dur": 27,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564839,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564867,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564887,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564913,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564934,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564970,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465564990,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565014,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565034,
+        "dur": 72,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565156,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565174,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565203,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565218,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565236,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565249,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565267,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565280,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565297,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565309,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565328,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565340,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565357,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565370,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565396,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565409,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565427,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565441,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565458,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565472,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565491,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565503,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565523,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565542,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565569,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565589,
+        "dur": 28,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565627,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565641,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565660,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565674,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565692,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465565705,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465565867,
+        "dur": 677,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433465566559,
+        "dur": 145,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465567041,
+        "dur": 114,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465567778,
+        "dur": 199,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465567984,
+        "dur": 405,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465580091,
+        "dur": 290,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465700909,
+        "dur": 100,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465701031,
+        "dur": 52,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465701088,
+        "dur": 204,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465701357,
+        "dur": 45,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465701408,
+        "dur": 80,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465715055,
+        "dur": 989,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465716365,
+        "dur": 828,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465716996,
+        "dur": 155,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465841386,
+        "dur": 454,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465849787,
+        "dur": 512,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465852704,
+        "dur": 492,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465853821,
+        "dur": 281,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465854246,
+        "dur": 338,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465854659,
+        "dur": 79,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465854815,
+        "dur": 115,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465854997,
+        "dur": 41,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465855113,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465855197,
+        "dur": 31,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465855277,
+        "dur": 59,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465855391,
+        "dur": 46,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "EvaluateScript",
+        "ts": 433465855458,
+        "dur": 317,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465855902,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465856013,
+        "dur": 44,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465856065,
+        "dur": 53,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465856220,
+        "dur": 152,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465856781,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465856800,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465857604,
+        "dur": 701,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465858358,
+        "dur": 4051,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465862425,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465862555,
+        "dur": 283,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465862843,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465862876,
+        "dur": 448,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465863331,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465868385,
+        "dur": 291,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465868687,
+        "dur": 62,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433465868904,
+        "dur": 3308,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433465872229,
+        "dur": 5536,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465878590,
+        "dur": 1396,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465879448,
+        "dur": 245,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465879920,
+        "dur": 61,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465882102,
+        "dur": 452,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465882571,
+        "dur": 57,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465896992,
+        "dur": 135,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433465897135,
+        "dur": 37,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465897866,
+        "dur": 1781,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465898718,
+        "dur": 700,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433465899558,
+        "dur": 81,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466437260,
+        "dur": 40,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466437317,
+        "dur": 266,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466449362,
+        "dur": 149,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466449547,
+        "dur": 290,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466456469,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466456501,
+        "dur": 163,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466738517,
+        "dur": 29,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433466738553,
+        "dur": 196,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467146438,
+        "dur": 39,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467146488,
+        "dur": 263,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467155449,
+        "dur": 27,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467155483,
+        "dur": 186,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467451724,
+        "dur": 39,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467451776,
+        "dur": 274,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467559547,
+        "dur": 30,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467559583,
+        "dur": 162,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467861357,
+        "dur": 43,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467861406,
+        "dur": 479,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467942072,
+        "dur": 788,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467951874,
+        "dur": 92,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467957262,
+        "dur": 464,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467957927,
+        "dur": 90,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958023,
+        "dur": 156,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958211,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958230,
+        "dur": 254,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958490,
+        "dur": 73,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958580,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958604,
+        "dur": 41,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958680,
+        "dur": 97,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958781,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467958808,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959279,
+        "dur": 429,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467959393,
+        "dur": 198,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959715,
+        "dur": 44,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959762,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959793,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959805,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467959819,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467959897,
+        "dur": 76,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960013,
+        "dur": 30,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960046,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960204,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960217,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960239,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960267,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960275,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960293,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960327,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960333,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960354,
+        "dur": 3,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467960359,
+        "dur": 2829,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467963221,
+        "dur": 1778,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467965075,
+        "dur": 64,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467965626,
+        "dur": 201,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966138,
+        "dur": 70,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966215,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966250,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966268,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966288,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966299,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966315,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467966326,
+        "dur": 26,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433467966425,
+        "dur": 913,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433467966848,
+        "dur": 447,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467968163,
+        "dur": 260,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467968447,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467968846,
+        "dur": 1876,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467970731,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467970874,
+        "dur": 2597,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467973486,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467973637,
+        "dur": 4381,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467974092,
+        "dur": 2249,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433467976350,
+        "dur": 642,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467978029,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467978050,
+        "dur": 6,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467980322,
+        "dur": 231,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467980564,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467980671,
+        "dur": 213,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433467980895,
+        "dur": 604,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982099,
+        "dur": 59,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982164,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982189,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982200,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982213,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982223,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982234,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982243,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982254,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982269,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982284,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982293,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982304,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982318,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982330,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982338,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982349,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982358,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982369,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467982378,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467982417,
+        "dur": 42,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433467982533,
+        "dur": 576,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467984252,
+        "dur": 405,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467984664,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467984715,
+        "dur": 322,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985039,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985060,
+        "dur": 115,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985178,
+        "dur": 4,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985198,
+        "dur": 294,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985497,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985525,
+        "dur": 93,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467985621,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433467994390,
+        "dur": 720,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995563,
+        "dur": 125,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995697,
+        "dur": 105,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995817,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995838,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995857,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995872,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995890,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995906,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995940,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995956,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467995973,
+        "dur": 159,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996148,
+        "dur": 35,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996198,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996221,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996239,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996255,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996273,
+        "dur": 42,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996326,
+        "dur": 23,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996364,
+        "dur": 19,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996385,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996416,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996433,
+        "dur": 42,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996481,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996497,
+        "dur": 18,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996522,
+        "dur": 22,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996547,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996563,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996577,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996592,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996605,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996620,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996634,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996656,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996670,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996687,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996701,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996716,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996730,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996746,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996758,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996774,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996787,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996803,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996822,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996837,
+        "dur": 32,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996872,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996891,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996905,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996921,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996936,
+        "dur": 15,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996955,
+        "dur": 13,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467996988,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997003,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997014,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997026,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997040,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997052,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997062,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997074,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997084,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997096,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997107,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997119,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997129,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997141,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997151,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997166,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997188,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997199,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997210,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997221,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997231,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997243,
+        "dur": 9,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997254,
+        "dur": 25,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997284,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997294,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997306,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997315,
+        "dur": 14,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997334,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997343,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997357,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997366,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997377,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997386,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997397,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997406,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997417,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997426,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997437,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997446,
+        "dur": 10,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997460,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997469,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997480,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997489,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997500,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433467997509,
+        "dur": 7,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433467997726,
+        "dur": 335,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433467997829,
+        "dur": 214,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468016723,
+        "dur": 851,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468017761,
+        "dur": 436,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468017901,
+        "dur": 274,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468026508,
+        "dur": 169,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468033331,
+        "dur": 752,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468034263,
+        "dur": 408,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468034370,
+        "dur": 281,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468050219,
+        "dur": 1146,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468051592,
+        "dur": 515,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468051734,
+        "dur": 345,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468066808,
+        "dur": 979,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468068020,
+        "dur": 537,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468068191,
+        "dur": 338,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468083064,
+        "dur": 804,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468084323,
+        "dur": 761,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468084705,
+        "dur": 358,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468099379,
+        "dur": 755,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468100310,
+        "dur": 385,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468100418,
+        "dur": 257,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468116379,
+        "dur": 161,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468116561,
+        "dur": 45,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468116869,
+        "dur": 1099,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468118181,
+        "dur": 488,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468118312,
+        "dur": 334,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132519,
+        "dur": 108,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132639,
+        "dur": 26,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132678,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132716,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132734,
+        "dur": 12,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468132749,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468132897,
+        "dur": 872,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468134029,
+        "dur": 503,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433468134169,
+        "dur": 339,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468149054,
+        "dur": 488,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468270720,
+        "dur": 250,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468379987,
+        "dur": 287,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468783848,
+        "dur": 319,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468856890,
+        "dur": 64,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468857176,
+        "dur": 909,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468858093,
+        "dur": 11,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468858141,
+        "dur": 437,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468858584,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433468858619,
+        "dur": 58,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433468863672,
+        "dur": 332,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469193318,
+        "dur": 17,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469193339,
+        "dur": 133,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469194937,
+        "dur": 34,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469194979,
+        "dur": 347,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469239444,
+        "dur": 21,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469239470,
+        "dur": 182,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469659611,
+        "dur": 20,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469659635,
+        "dur": 167,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469733407,
+        "dur": 81,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469733824,
+        "dur": 4994,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469738871,
+        "dur": 24,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469738961,
+        "dur": 10092,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433469740611,
+        "dur": 3837,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Layout",
+        "ts": 433469744470,
+        "dur": 4226,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469749063,
+        "dur": 16,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469749222,
+        "dur": 200,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433469751385,
+        "dur": 39,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433469752712,
+        "dur": 1993,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "ts": 433469753139,
+        "dur": 72,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433469754354,
+        "dur": 212,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "Paint",
+        "ts": 433469754637,
+        "dur": 65,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469755660,
+        "dur": 95,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      },
+      {
+        "name": "FunctionCall",
+        "ts": 433469755760,
+        "dur": 8,
+        "pid": 34112,
+        "tid": 13952,
+        "ph": "X"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "document",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "kind": "client_navigation",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET"
+    }
+  ],
+  "results": [
+    {
+      "route": "/dashboard/review-queue",
+      "click_to_rows": {
+        "samples_ms": [
+          1894
+        ],
+        "p50_ms": 1894,
+        "p95_ms": 1894,
+        "max_ms": 1894
+      },
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          2247
+        ],
+        "p50_ms": 2247,
+        "p95_ms": 2247,
+        "max_ms": 2247
+      },
+      "document_waiting": {
+        "samples_ms": [
+          1327.199999988079
+        ],
+        "p50_ms": 1327.199999988079,
+        "p95_ms": 1327.199999988079,
+        "max_ms": 1327.199999988079
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          1329
+        ],
+        "p50_ms": 1329,
+        "p95_ms": 1329,
+        "max_ms": 1329
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 81.89999997615814,
+          "final_response_headers_start": 1329,
+          "first_interim_response_start": 81.89999997615814
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::iad1::c68sc-1789153264270-019262a4cc24",
+          "request_id": "f06831f6-1d02-4568-babc-7b7242a6dae1",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=181"
+        }
+      ],
+      "document_long_tasks": [
+        []
+      ],
+      "client_navigation_long_tasks": [
+        []
+      ]
+    }
+  ]
+}

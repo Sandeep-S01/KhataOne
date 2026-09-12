@@ -31,7 +31,7 @@ import {
 import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
-import { withServerTiming } from "@/lib/performance";
+import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
 

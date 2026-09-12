@@ -116,6 +116,24 @@ KhataOne uses Next.js for the landing page, CA dashboard, API routes, and server
 
 ## Security Requirements
 
+Audit remediation (2026-09-12, local only): privileged export downloads validate
+the firm/export storage prefix and a safe generated filename before admin storage
+access. Worker processors validate job firm/client ownership before processing;
+direct extraction POST requires an explicitly configured operator secret. Outbound
+clarification requires owner/admin/staff. These guards supplement rather than
+replace RLS and database integrity constraints; deployed-policy verification and
+database write restrictions remain pending. See `docs/security-hardening-plan.md`.
+
+
+Protection decision (2026-09-12, local only): retain in-process endpoint counters as
+an early guard and add Supabase-backed atomic fixed-window enforcement for distributed
+Vercel instances. Store only HMAC-SHA-256 key identifiers generated with a dedicated
+32-character-or-longer secret; deny browser access and bound counter cleanup. A selected
+but unavailable shared store fails closed. Keep cheap `/api/health/live` public, while
+production deep readiness requires a separate strong bearer secret, returns no-store
+responses, and verifies shared-store reachability. Migration and environment activation
+must be staged together; external platform/edge declarations require independent proof.
+
 - Supabase Row Level Security for firm-scoped data.
 - Firm isolation on every query.
 - Secure webhook signature validation.
@@ -146,6 +164,12 @@ KhataOne uses Next.js for the landing page, CA dashboard, API routes, and server
 - Exports and PDF generation should run as jobs for large datasets.
 
 ## Deployment Requirements
+
+Dashboard latency decision (2026-09-12): deploy Vercel functions in `hnd1` near the confirmed Supabase primary in Tokyo (`ap-northeast-1`). The controlled preview reduced review-queue median click-to-rows from 1905 ms to 913 ms; p95 remains above target, so this does not establish complete performance readiness. Keep selective prefetch suppression disabled by default. `vercel.json` preserves existing cron jobs. Region-only commit `c62e3ef` was built and promoted as deployment `dpl_CUpLfdbKjMnDntcXEuShjQQdsVtH`; public-domain authenticated Clients, Ledger and Review Queue smoke verified populated rows and hnd1 responses. Original Edge middleware remains unchanged. The release commit is now integrated into main and pushed to GitHub. The subsequent Git-triggered deployment `dpl_jkyuKGWc8XiDEyELvAcdefJzsMF9` is READY and serves khataone.vercel.app; its API metadata confirms the exact commit and hnd1. Other diagnostic/recovery changes are not included. See `docs/performance/dashboard-latency-results.md` for deployment evidence, limitations and rollback.
+
+Auth resilience (2026-09-12): middleware retains fresh Supabase `getUser` verification with a five-second application deadline and abortable auth transport. Invalid/missing sessions retain login redirects; transient failures, unknown exceptions and deadline expiry fail closed with a private, non-cacheable 503 and Retry-After, never authenticated fallback. Preserve cookies written before completion and ignore late writes. The deadline is best effort under runtime scheduling delays and does not bound server-render auth or membership queries. Numeric HTTP-header timing distinguishes transport from the outer SDK operation without logging URLs, tokens or bodies. This is a preview-validated resilience change, not evidence that latency targets are met.
+
+Server workspace recovery (2026-09-12): `getFirmContext` preserves fresh server auth and active membership lookup with request-scoped React memoization. Invalid/missing sessions still redirect to login; a successful lookup with no active membership still redirects to onboarding. Resolved auth-service or membership-query failures now throw generic errors instead of being mistaken for missing access. A route-group error boundary above the dashboard layout offers explicit Next 16.3 `retry()` recovery without displaying upstream messages or automatically replaying mutations. This does not introduce cross-request permission caching or extend the middleware timeout to server queries. API/action callers still fail closed before obtaining context; their complete error-presentation integration remains a separate verification concern.
 
 - Production, staging, and local environments.
 - Database migrations tracked in source control.

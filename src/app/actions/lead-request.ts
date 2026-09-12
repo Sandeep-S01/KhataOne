@@ -52,7 +52,7 @@ export async function submitLeadRequest(
   const message = readString(formData, "message");
   const fieldErrors = { ...initialFieldErrors };
   const headerStore = await headers();
-  const rateLimit = checkRateLimit({
+  const rateLimit = await checkRateLimit({
     key: clientRateLimitKey({
       scope: "lead-request",
       forwardedFor: headerStore.get("x-forwarded-for"),
@@ -62,6 +62,13 @@ export async function submitLeadRequest(
     limit: configuredRateLimitPerWindow("LEAD_REQUEST_RATE_LIMIT_PER_HOUR", 8),
     windowMs: 60 * 60 * 1000,
   });
+
+  if (!rateLimit.available) {
+    return {
+      status: "error",
+      message: "Request protection is temporarily unavailable. Please try again.",
+    };
+  }
 
   if (!rateLimit.ok) {
     return {

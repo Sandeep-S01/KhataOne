@@ -84,7 +84,9 @@ async function processClaimedJob(job: ClaimedExportJob): Promise<ExportJobResult
   }
 
   try {
-    const result = await processExportGeneration(job.entity_id);
+    const result = await processExportGeneration(job.entity_id, {
+      firmId: job.firm_id, clientId: job.client_id,
+    });
     const status = result.ok ? "completed" : "failed";
 
     await markJob({ job, status, message: result.message });

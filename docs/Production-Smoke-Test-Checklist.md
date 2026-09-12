@@ -8,7 +8,7 @@ Run this checklist before marking a deployment production-ready.
 - `SMOKE_BASE_URL=<deployment-url> npm run smoke:local` passes.
 - `LIVE_DASHBOARD_BASE_URL=<deployment-url> npm run perf:live-dashboard` passes with `LIVE_DASHBOARD_EMAIL` and `LIVE_DASHBOARD_PASSWORD` configured for an approved live test account.
 - `/api/health/live` returns `ok`.
-- `/api/health` or `/api/health/ready` returns `ok` or an expected `degraded` status with only intentionally disabled integrations.
+- `/api/health` or `/api/health/ready`, called with the readiness bearer secret, returns `ok` or an expected `degraded` status with only intentionally disabled integrations; unauthenticated production requests return `401`.
 
 ## Environment
 
@@ -16,6 +16,9 @@ Run this checklist before marking a deployment production-ready.
 - OpenAI API key and extraction model are configured.
 - WhatsApp verify token, app secret, access token, phone number ID, and Graph API version are configured.
 - Job runner secret is configured for non-public job execution.
+- Readiness check secret is configured for protected operational diagnostics.
+- Readiness and rate-limit key secrets are independent random values of at least 32 characters.
+- Shared rate-limit migration is applied before setting `RATE_LIMIT_SHARED_ENFORCEMENT=shared-store` and `RATE_LIMIT_REQUIRE_SHARED_ENFORCEMENT=true`.
 - Error tracking or structured log collection is configured.
 - Supabase backups and restore process are confirmed.
 
@@ -44,7 +47,7 @@ Run this checklist before marking a deployment production-ready.
 
 - Failed extraction jobs appear in `/dashboard/operations`.
 - Audit entries appear in `/dashboard/audit-logs` for client changes, AI extraction, review actions, ledger corrections, GST summaries, and exports.
-- Rate limits return `429` on repeated sensitive endpoint calls.
+- Shared rate limits return `429` across separate application instances on repeated sensitive endpoint calls and fail closed with `503` when the configured store is unavailable.
 - Webhook signature failures return `401`.
 - Deployment rollback path is documented and tested.
 

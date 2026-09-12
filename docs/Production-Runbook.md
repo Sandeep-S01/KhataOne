@@ -5,6 +5,7 @@
 Do not mark KhataOne production-ready until all of these pass:
 
 - `npm run verify`
+- `npm run verify:release-local` for the complete local hardening suite
 - `npm run smoke:local` against the running deployment or preview URL
 - Supabase migrations applied successfully
 - `docs/Production-Smoke-Test-Checklist.md` completed against live credentials
@@ -16,6 +17,8 @@ Do not mark KhataOne production-ready until all of these pass:
 
 1. Install dependencies with `npm ci`.
 2. Run `npm run verify`.
+   For a hardened release candidate, run `npm run verify:release-local` instead; it includes
+   the build plus local security, financial-integrity, recovery, and performance regressions.
 3. Apply Supabase migrations in chronological order.
 4. Configure production environment variables from `.env.example`.
 5. Deploy the Next.js app.
@@ -38,6 +41,8 @@ Required for full workflow:
 - `AI_EXTRACTION_PROVIDER_ORDER`
 - `JOB_RUNNER_SECRET`
 - `CRON_SECRET`
+- `READINESS_CHECK_SECRET`
+- `RATE_LIMIT_KEY_SECRET`
 - `WHATSAPP_APP_SECRET`
 - `WHATSAPP_VERIFY_TOKEN`
 - `WHATSAPP_ACCESS_TOKEN`
@@ -47,7 +52,9 @@ Required for full workflow:
 Recommended for production:
 
 - `ERROR_TRACKING_DSN`
-- `RATE_LIMIT_SHARED_ENFORCEMENT=platform` or another documented shared mode after platform/edge/shared-store enforcement is configured.
+- `RATE_LIMIT_SHARED_ENFORCEMENT=shared-store` after migration `20260912190000` is applied, or `platform`/`edge` only after that external control is independently verified.
+- `RATE_LIMIT_REQUIRE_SHARED_ENFORCEMENT=true` after shared enforcement is verified.
+- Use independent random values of at least 32 characters for `READINESS_CHECK_SECRET` and `RATE_LIMIT_KEY_SECRET`.
 - `TRUST_FORWARDED_IP_HEADERS=true` only when the app is behind a trusted proxy that sets those headers correctly.
 
 For no-credit AI testing, set:
@@ -88,7 +95,7 @@ ledger entry, GST period, GST summary, processing job, and audit entry.
 ## Incident Checklist
 
 - Check `/api/health/live` for fast application liveness.
-- Check `/api/health/ready` or `/api/health` for environment and database readiness.
+- Check `/api/health/ready` or `/api/health` with `Authorization: Bearer <READINESS_CHECK_SECRET>` for environment and database readiness. Keep `/api/health/live` public for load-balancer liveness.
 - Treat `rate_limit_enforcement` readiness warnings as a production-hardening blocker for unrestricted target-scale launch.
 - Treat `forwarded_ip_trust` readiness warnings as an environment review item before tuning per-IP limits.
 - Treat `processing_jobs` readiness warnings as an operations follow-up: inspect queue age, failed jobs, provider credentials, and worker scheduler status.

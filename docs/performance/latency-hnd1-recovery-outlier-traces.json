@@ -1,0 +1,129 @@
+{
+  "captured_at": "2026-09-12T02:07:05.302Z",
+  "note": "Logical Auth/Data API elapsed time, not SQL execution time. Filtered request log sample; not all deployment traffic.",
+  "summary": [
+    {
+      "operation": "verified_client_navigation:firm_context.auth_get_user",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 59,
+      "p95_ms": 59
+    },
+    {
+      "operation": "verified_client_navigation:firm_context.membership_lookup",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 35,
+      "p95_ms": 35
+    },
+    {
+      "operation": "verified_client_navigation:dashboard.ledger.query",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 38,
+      "p95_ms": 38
+    },
+    {
+      "operation": "verified_client_navigation:dashboard.ledger.clients_query",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 38,
+      "p95_ms": 38
+    },
+    {
+      "operation": "verified_client_navigation:middleware.auth_http_headers",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 38,
+      "p95_ms": 38
+    },
+    {
+      "operation": "verified_client_navigation:middleware.auth_get_user",
+      "count": 1,
+      "errors": 0,
+      "p50_ms": 45,
+      "p95_ms": 45
+    }
+  ],
+  "spans": [
+    {
+      "name": "firm_context.auth_get_user",
+      "duration_ms": 59,
+      "start_unix_ms": 1789178725801,
+      "end_unix_ms": 1789178725859,
+      "status": "ok",
+      "call": 1,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "nodejs",
+      "server_reported_request_kind": "unclassified_get"
+    },
+    {
+      "name": "firm_context.membership_lookup",
+      "duration_ms": 35,
+      "start_unix_ms": 1789178725860,
+      "end_unix_ms": 1789178725894,
+      "status": "ok",
+      "call": 2,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "nodejs",
+      "server_reported_request_kind": "unclassified_get"
+    },
+    {
+      "name": "dashboard.ledger.query",
+      "duration_ms": 38,
+      "start_unix_ms": 1789178725895,
+      "end_unix_ms": 1789178725933,
+      "status": "ok",
+      "call": 3,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "nodejs",
+      "server_reported_request_kind": "unclassified_get"
+    },
+    {
+      "name": "dashboard.ledger.clients_query",
+      "duration_ms": 38,
+      "start_unix_ms": 1789178725895,
+      "end_unix_ms": 1789178725933,
+      "status": "ok",
+      "call": 4,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "nodejs",
+      "server_reported_request_kind": "unclassified_get"
+    },
+    {
+      "name": "middleware.auth_http_headers",
+      "duration_ms": 38,
+      "start_unix_ms": 1789178725467,
+      "end_unix_ms": 1789178725505,
+      "status": "ok",
+      "call": 2,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "edge",
+      "http_status": 200,
+      "server_reported_request_kind": "unclassified_get"
+    },
+    {
+      "name": "middleware.auth_get_user",
+      "duration_ms": 45,
+      "start_unix_ms": 1789178725463,
+      "end_unix_ms": 1789178725508,
+      "status": "ok",
+      "call": 1,
+      "request_id": "d054bc6b-fd40-4f56-ae70-774acc46b3e8",
+      "request_kind": "verified_client_navigation",
+      "region": "hnd1",
+      "runtime": "edge",
+      "server_reported_request_kind": "unclassified_get"
+    }
+  ]
+}

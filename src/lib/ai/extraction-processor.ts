@@ -179,7 +179,7 @@ function failedExtractionMessage(failures: ExtractionProviderFailure[]) {
 
 export async function processDocumentExtraction(
   documentId: string,
-  options: { jobId?: string } = {},
+  options: { jobId?: string; expectedOwner?: { firmId: string; clientId: string | null } } = {},
 ): Promise<ExtractionResult> {
   const supabase = createAdminClient();
 
@@ -191,13 +191,24 @@ export async function processDocumentExtraction(
     };
   }
 
-  const { data: document, error: documentError } = await supabase
+  const documentQuery = supabase
     .from("documents")
     .select(
       "id, firm_id, client_id, document_type, file_name, file_mime_type, storage_path, source_text",
     )
-    .eq("id", documentId)
-    .single();
+    .eq("id", documentId);
+  if (options.expectedOwner) {
+    documentQuery.eq("firm_id", options.expectedOwner.firmId);
+  }
+  const { data: document, error: documentError } = await documentQuery.single();
+
+  if (options.expectedOwner && (documentError || !document ||
+      document.firm_id !== options.expectedOwner.firmId ||
+      document.client_id !== options.expectedOwner.clientId)) {
+    await markJob({ jobId: options.jobId, documentId, status: "failed",
+      error: "Job document ownership could not be verified." });
+    return { ok: false, status: "failed", message: "Job document ownership could not be verified." };
+  }
 
   if (documentError || !document) {
     await markJob({

@@ -414,7 +414,10 @@ async function buildExportFile({
   };
 }
 
-export async function processExportGeneration(exportId: string) {
+export async function processExportGeneration(
+  exportId: string,
+  expectedOwner: { firmId: string; clientId: string | null },
+) {
   const supabase = createAdminClient();
 
   if (!supabase) {
@@ -428,12 +431,14 @@ export async function processExportGeneration(exportId: string) {
     .from("exports")
     .select("id, firm_id, client_id, gst_period_id, export_type, metadata, created_at")
     .eq("id", exportId)
+    .eq("firm_id", expectedOwner.firmId)
     .single();
 
-  if (error || !exportRecord) {
+  if (error || !exportRecord || exportRecord.firm_id !== expectedOwner.firmId ||
+      exportRecord.client_id !== expectedOwner.clientId) {
     return {
       ok: false,
-      message: error?.message ?? "Export record not found.",
+      message: "Job export ownership could not be verified.",
     };
   }
 

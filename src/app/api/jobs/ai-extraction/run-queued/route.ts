@@ -33,7 +33,7 @@ function hasAuthorizedSecret(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const rateLimit = checkRateLimit({
+  const rateLimit = await checkRateLimit({
     key: clientRateLimitKey({
       scope: "job-ai-extraction-run-queued",
       forwardedFor: request.headers.get("x-forwarded-for"),
@@ -43,6 +43,13 @@ export async function GET(request: NextRequest) {
     limit: configuredRateLimitPerWindow("JOB_RUNNER_RATE_LIMIT_PER_MINUTE", 20),
     windowMs: 60_000,
   });
+
+  if (!rateLimit.available) {
+    return NextResponse.json(
+      { error: "Request protection is temporarily unavailable." },
+      { status: 503, headers: { "Retry-After": "1" } },
+    );
+  }
 
   if (!rateLimit.ok) {
     return NextResponse.json(

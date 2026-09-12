@@ -1,4 +1,5 @@
 const baseUrl = process.env.SMOKE_BASE_URL ?? "http://localhost:3001";
+const readinessSecret = process.env.READINESS_CHECK_SECRET;
 
 const checks = [
   { path: "/", expected: [200] },
@@ -25,6 +26,11 @@ for (const check of checks) {
 
   try {
     const response = await fetch(url, {
+      headers:
+        readinessSecret &&
+        ["/api/health", "/api/health/ready"].includes(check.path)
+          ? { Authorization: `Bearer ${readinessSecret}` }
+          : undefined,
       redirect: "manual",
     });
 

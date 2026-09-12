@@ -1,6 +1,7 @@
 import type OpenAI from "openai";
 import type { ResponseInputMessageContentList } from "openai/resources/responses/responses";
 
+import { readStreamWithByteLimit } from "@/lib/ai/bounded-stream";
 import { getOptionalServerEnv } from "@/lib/env";
 import { createAdminClient } from "@/lib/supabase/server";
 
@@ -29,6 +30,7 @@ export type MediaDocument = {
 
 const DEFAULT_MAX_MEDIA_BYTES = 10 * 1024 * 1024;
 const DEFAULT_MAX_AUDIO_BYTES = 15 * 1024 * 1024;
+const DEFAULT_MEDIA_DOWNLOAD_TIMEOUT_MS = 15_000;
 const supportedImageTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 const supportedPdfTypes = new Set(["application/pdf"]);
 const supportedAudioTypes = new Set([
@@ -48,6 +50,18 @@ function configuredBytes(key: string, fallback: number) {
   return Number.isFinite(configured) && configured > 0 ? configured : fallback;
 }
 
+function configuredDownloadTimeout() {
+  const configured = Number(
+    getOptionalServerEnv("MEDIA_DOWNLOAD_TIMEOUT_MS"),
+  );
+
+  if (!Number.isInteger(configured)) {
+    return DEFAULT_MEDIA_DOWNLOAD_TIMEOUT_MS;
+  }
+
+  return Math.min(Math.max(configured, 1_000), 60_000);
+}
+
 function cleanMimeType(value: string | null) {
   return value?.split(";")[0]?.trim().toLowerCase() ?? null;
 }
@@ -60,11 +74,15 @@ function fileNameFor(document: MediaDocument, fallbackExtension: string) {
   return document.file_name || `khataone-document-${document.id}.${fallbackExtension}`;
 }
 
-async function downloadDocumentMedia(document: MediaDocument) {
+async function downloadDocumentMedia(
+  document: MediaDocument,
+  maxBytes: number,
+) {
   if (!document.storage_path) {
     return {
       ok: false as const,
       message: "Document media is missing from private storage.",
+      riskFlag: "MEDIA_DOWNLOAD_FAILED",
     };
   }
 
@@ -74,26 +92,54 @@ async function downloadDocumentMedia(document: MediaDocument) {
     return {
       ok: false as const,
       message: "Supabase service role is not configured for media preparation.",
+      riskFlag: "MEDIA_DOWNLOAD_FAILED",
     };
   }
 
-  const { data, error } = await supabase.storage
-    .from("whatsapp-media-raw")
-    .download(document.storage_path);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), configuredDownloadTimeout());
 
-  if (error || !data) {
+  try {
+    const { data, error } = await supabase.storage
+      .from("whatsapp-media-raw")
+      .download(document.storage_path, undefined, {
+        signal: controller.signal,
+      })
+      .asStream();
+
+    if (error || !data) {
+      return {
+        ok: false as const,
+        message: "Could not download document media.",
+        riskFlag: "MEDIA_DOWNLOAD_FAILED",
+      };
+    }
+
+    const bounded = await readStreamWithByteLimit(data, maxBytes);
+
+    if (!bounded.ok) {
+      return {
+        ok: false as const,
+        message: "Document exceeds its configured extraction byte limit.",
+        riskFlag: "MEDIA_TOO_LARGE",
+        byteSize: bounded.byteSize,
+      };
+    }
+
+    return bounded;
+  } catch {
+    const timedOut = controller.signal.aborted;
+
     return {
       ok: false as const,
-      message: error?.message ?? "Could not download document media.",
+      message: timedOut
+        ? "Document media download timed out."
+        : "Could not download document media.",
+      riskFlag: timedOut ? "MEDIA_DOWNLOAD_TIMEOUT" : "MEDIA_DOWNLOAD_FAILED",
     };
+  } finally {
+    clearTimeout(timeout);
   }
-
-  const arrayBuffer = await data.arrayBuffer();
-
-  return {
-    ok: true as const,
-    bytes: Buffer.from(arrayBuffer),
-  };
 }
 
 async function transcribeAudio({
@@ -163,19 +209,6 @@ export async function prepareOpenAIInputForDocument({
   }
 
   const mimeType = cleanMimeType(document.file_mime_type);
-  const download = await downloadDocumentMedia(document);
-
-  if (!download.ok) {
-    return {
-      ok: false,
-      message: download.message,
-      riskFlag: "MEDIA_DOWNLOAD_FAILED",
-      provenance: {
-        input_method: "storage_download",
-        storage_path_present: Boolean(document.storage_path),
-      },
-    };
-  }
 
   if (!mimeType) {
     return {
@@ -183,13 +216,11 @@ export async function prepareOpenAIInputForDocument({
       message: "Document media MIME type is missing.",
       riskFlag: "UNSUPPORTED_MEDIA_TYPE",
       provenance: {
-        input_method: "media_bytes",
-        byte_size: download.bytes.byteLength,
+        input_method: "media_metadata",
       },
     };
   }
 
-  const byteSize = download.bytes.byteLength;
   const maxMediaBytes = configuredBytes(
     "OPENAI_MEDIA_MAX_BYTES",
     DEFAULT_MAX_MEDIA_BYTES,
@@ -198,22 +229,43 @@ export async function prepareOpenAIInputForDocument({
     "OPENAI_AUDIO_MAX_BYTES",
     DEFAULT_MAX_AUDIO_BYTES,
   );
+  const isImage = supportedImageTypes.has(mimeType);
+  const isPdf = supportedPdfTypes.has(mimeType);
+  const isAudio =
+    supportedAudioTypes.has(mimeType) || document.document_type === "audio_note";
 
-  if (supportedImageTypes.has(mimeType)) {
-    if (byteSize > maxMediaBytes) {
-      return {
-        ok: false,
-        message: "Image exceeds configured media extraction byte limit.",
-        riskFlag: "MEDIA_TOO_LARGE",
-        provenance: {
-          input_method: "openai_image",
-          mime_type: mimeType,
-          byte_size: byteSize,
-          max_bytes: maxMediaBytes,
-        },
-      };
-    }
+  if (!isImage && !isPdf && !isAudio) {
+    return {
+      ok: false,
+      message: `Unsupported media type for extraction: ${mimeType}.`,
+      riskFlag: "UNSUPPORTED_MEDIA_TYPE",
+      provenance: {
+        input_method: "media_metadata",
+        mime_type: mimeType,
+      },
+    };
+  }
 
+  const maxBytes = isAudio ? maxAudioBytes : maxMediaBytes;
+  const download = await downloadDocumentMedia(document, maxBytes);
+
+  if (!download.ok) {
+    return {
+      ok: false,
+      message: download.message,
+      riskFlag: download.riskFlag,
+      provenance: {
+        input_method: "storage_download",
+        storage_path_present: Boolean(document.storage_path),
+        max_bytes: maxBytes,
+        ...(download.byteSize ? { byte_size: download.byteSize } : {}),
+      },
+    };
+  }
+
+  const byteSize = download.bytes.byteLength;
+
+  if (isImage) {
     return {
       ok: true,
       content: [
@@ -235,21 +287,7 @@ export async function prepareOpenAIInputForDocument({
     };
   }
 
-  if (supportedPdfTypes.has(mimeType)) {
-    if (byteSize > maxMediaBytes) {
-      return {
-        ok: false,
-        message: "PDF exceeds configured media extraction byte limit.",
-        riskFlag: "MEDIA_TOO_LARGE",
-        provenance: {
-          input_method: "openai_pdf",
-          mime_type: mimeType,
-          byte_size: byteSize,
-          max_bytes: maxMediaBytes,
-        },
-      };
-    }
-
+  if (isPdf) {
     return {
       ok: true,
       content: [
@@ -271,21 +309,7 @@ export async function prepareOpenAIInputForDocument({
     };
   }
 
-  if (supportedAudioTypes.has(mimeType) || document.document_type === "audio_note") {
-    if (byteSize > maxAudioBytes) {
-      return {
-        ok: false,
-        message: "Audio exceeds configured transcription byte limit.",
-        riskFlag: "MEDIA_TOO_LARGE",
-        provenance: {
-          input_method: "openai_audio_transcription",
-          mime_type: mimeType,
-          byte_size: byteSize,
-          max_bytes: maxAudioBytes,
-        },
-      };
-    }
-
+  if (isAudio) {
     try {
       const transcription = await transcribeAudio({
         openai,
@@ -339,14 +363,5 @@ export async function prepareOpenAIInputForDocument({
     }
   }
 
-  return {
-    ok: false,
-    message: `Unsupported media type for extraction: ${mimeType}.`,
-    riskFlag: "UNSUPPORTED_MEDIA_TYPE",
-    provenance: {
-      input_method: "media_bytes",
-      mime_type: mimeType,
-      byte_size: byteSize,
-    },
-  };
+  throw new Error("Supported media type was not routed for extraction.");
 }

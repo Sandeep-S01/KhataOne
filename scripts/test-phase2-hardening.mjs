@@ -23,6 +23,9 @@ const operationsPage = read("src/app/(dashboard)/dashboard/operations/page.tsx")
 const exportMigration = read(
   "supabase/migrations/20260910170000_export_generation_jobs.sql",
 );
+const controlledAuditMigration = read(
+  "supabase/migrations/20260912170000_control_dashboard_audit_writers.sql",
+);
 const vercelConfig = read("vercel.json");
 
 assert(
@@ -51,11 +54,12 @@ assert(
 );
 
 assert(
-  exportAction.includes('status: "queued"') &&
-    exportAction.includes('job_type: "export_generation"') &&
-    exportAction.includes('action: "export.queued"') &&
+  exportAction.includes('"queue_dashboard_export"') &&
+    controlledAuditMigration.includes("create or replace function public.queue_dashboard_export") &&
+    controlledAuditMigration.includes("insert into public.processing_jobs") &&
+    controlledAuditMigration.includes("'export.queued'") &&
     !exportAction.includes(".storage.from(\"exports\").upload"),
-  "export action must queue durable export generation instead of doing request-path file work",
+  "export action must atomically queue durable export generation instead of doing request-path file work",
 );
 
 assert(

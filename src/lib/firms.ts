@@ -2,8 +2,9 @@ import { redirect } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
 import { cache } from "react";
 
+import { isInvalidSession } from "@/lib/auth-deadline";
 import { hasSupabaseConfig } from "@/lib/env";
-import { withServerTiming } from "@/lib/performance";
+import { withServerTiming } from "@/lib/request-performance";
 import { createClient } from "@/lib/supabase/server";
 
 export type ActiveFirm = {
@@ -27,17 +28,22 @@ export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
   const supabase = await createClient();
   const {
     data: { user },
+    error: authError,
   } = await withServerTiming(
     "firm_context.auth_get_user",
     () => supabase.auth.getUser(),
     { component: "firm_context" },
   );
 
-  if (!user) {
+  if (authError && !isInvalidSession(authError)) {
+    throw new Error("Workspace authentication is temporarily unavailable.");
+  }
+
+  if (authError || !user) {
     redirect("/login");
   }
 
-  const { data: membership } = await withServerTiming(
+  const { data: membership, error: membershipError } = await withServerTiming(
     "firm_context.membership_lookup",
     () =>
       supabase
@@ -49,6 +55,10 @@ export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
         .maybeSingle(),
     { component: "firm_context" },
   );
+
+  if (membershipError) {
+    throw new Error("Workspace membership could not be verified.");
+  }
 
   if (!membership) {
     redirect("/onboarding");

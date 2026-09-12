@@ -4,7 +4,7 @@ import type { Route } from "next";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
-import { getFirmContext, type FirmContext } from "@/lib/firms";
+import { getFirmContext } from "@/lib/firms";
 
 export type ClientActionState = {
   status: "idle" | "success" | "error";
@@ -100,36 +100,23 @@ function validateClientInput(input: ReturnType<typeof collectClientInput>) {
   return fieldErrors;
 }
 
-async function writeAuditLog({
-  supabase,
-  firmId,
-  clientId,
-  actorUserId,
-  action,
-  entityId,
-  beforeData,
-  afterData,
-}: {
-  supabase: FirmContext["supabase"];
-  firmId: string;
-  clientId?: string | null;
-  actorUserId: string | null;
-  action: string;
-  entityId?: string | null;
-  beforeData?: unknown;
-  afterData?: unknown;
-}) {
-  await supabase.from("audit_logs").insert({
-    firm_id: firmId,
-    client_id: clientId ?? null,
-    actor_user_id: actorUserId,
-    action,
-    entity_type: "client",
-    entity_id: entityId ?? null,
-    before_data: beforeData ?? null,
-    after_data: afterData ?? null,
-    metadata: { source: "dashboard" },
-  });
+function canManageClients(role: string) {
+  return ["owner", "admin", "staff"].includes(role);
+}
+
+function clientRpcInput(firmId: string, input: ReturnType<typeof collectClientInput>) {
+  return {
+    target_firm_id: firmId,
+    target_business_name: input.businessName,
+    target_contact_name: optional(input.contactName),
+    target_phone: optional(input.phone),
+    target_whatsapp_phone: optional(input.whatsappPhone),
+    target_email: optional(input.email),
+    target_gstin: optional(input.gstin),
+    target_state_code: optional(input.stateCode),
+    target_filing_frequency: input.filingFrequency,
+    target_status: input.status,
+  };
 }
 
 export async function createClientAction(
@@ -164,42 +151,22 @@ export async function createClientAction(
     };
   }
 
-  const { firm, supabase, userId: actorUserId } = context;
-  const { data: client, error } = await supabase
-    .from("clients")
-    .insert({
-      firm_id: firm.id,
-      business_name: input.businessName,
-      contact_name: optional(input.contactName),
-      phone: optional(input.phone),
-      whatsapp_phone: optional(input.whatsappPhone),
-      email: optional(input.email),
-      gstin: optional(input.gstin),
-      state_code: optional(input.stateCode),
-      filing_frequency: input.filingFrequency,
-      status: input.status,
-    })
-    .select("*")
-    .single();
+  const { firm, supabase } = context;
+  if (!canManageClients(firm.role)) {
+    return { status: "error", message: "Your workspace role cannot create clients." };
+  }
+  const { data: clientId, error } = await supabase.rpc(
+    "create_dashboard_client",
+    clientRpcInput(firm.id, input),
+  );
 
-  if (error || !client) {
+  if (error || typeof clientId !== "string" || !clientId) {
     return {
       status: "error",
-      message: error?.message ?? "Could not create client.",
+      message: "Could not create client. Please retry or contact your workspace administrator.",
     };
   }
-
-  await writeAuditLog({
-    supabase,
-    firmId: firm.id,
-    clientId: client.id,
-    actorUserId,
-    action: "client.created",
-    entityId: client.id,
-    afterData: client,
-  });
-
-  redirect(`/dashboard/clients/${client.id}` as Route);
+  redirect(`/dashboard/clients/${clientId}` as Route);
 }
 
 export async function updateClientAction(
@@ -239,51 +206,22 @@ export async function updateClientAction(
     };
   }
 
-  const { firm, supabase, userId: actorUserId } = context;
-  const { data: beforeData } = await supabase
-    .from("clients")
-    .select("*")
-    .eq("id", clientId)
-    .eq("firm_id", firm.id)
-    .single();
+  const { firm, supabase } = context;
+  if (!canManageClients(firm.role)) {
+    return { status: "error", message: "Your workspace role cannot update clients." };
+  }
+  const { data: updatedClientId, error } = await supabase.rpc(
+    "update_dashboard_client",
+    { ...clientRpcInput(firm.id, input), target_client_id: clientId },
+  );
 
-  const { data: client, error } = await supabase
-    .from("clients")
-    .update({
-      business_name: input.businessName,
-      contact_name: optional(input.contactName),
-      phone: optional(input.phone),
-      whatsapp_phone: optional(input.whatsappPhone),
-      email: optional(input.email),
-      gstin: optional(input.gstin),
-      state_code: optional(input.stateCode),
-      filing_frequency: input.filingFrequency,
-      status: input.status,
-    })
-    .eq("id", clientId)
-    .eq("firm_id", firm.id)
-    .select("*")
-    .single();
-
-  if (error || !client) {
+  if (error || typeof updatedClientId !== "string" || !updatedClientId) {
     return {
       status: "error",
-      message: error?.message ?? "Could not update client.",
+      message: "Could not update client. Please retry or contact your workspace administrator.",
     };
   }
-
-  await writeAuditLog({
-    supabase,
-    firmId: firm.id,
-    clientId: client.id,
-    actorUserId,
-    action: "client.updated",
-    entityId: client.id,
-    beforeData,
-    afterData: client,
-  });
-
-  redirect(`/dashboard/clients/${client.id}` as Route);
+  redirect(`/dashboard/clients/${updatedClientId}` as Route);
 }
 
 export async function archiveClientAction(formData: FormData) {
@@ -299,34 +237,14 @@ export async function archiveClientAction(formData: FormData) {
     redirect("/dashboard/clients");
   }
 
-  const { firm, supabase, userId: actorUserId } = context;
-  const { data: beforeData } = await supabase
-    .from("clients")
-    .select("*")
-    .eq("id", clientId)
-    .eq("firm_id", firm.id)
-    .single();
-
-  const { data: client } = await supabase
-    .from("clients")
-    .update({ status: "archived" })
-    .eq("id", clientId)
-    .eq("firm_id", firm.id)
-    .select("*")
-    .single();
-
-  if (client) {
-    await writeAuditLog({
-      supabase,
-      firmId: firm.id,
-      clientId: client.id,
-      actorUserId,
-      action: "client.archived",
-      entityId: client.id,
-      beforeData,
-      afterData: client,
-    });
+  const { firm, supabase } = context;
+  if (!canManageClients(firm.role)) {
+    redirect("/dashboard/clients?error=forbidden");
   }
+  await supabase.rpc("archive_dashboard_client", {
+    target_firm_id: firm.id,
+    target_client_id: clientId,
+  });
 
   redirect("/dashboard/clients");
 }

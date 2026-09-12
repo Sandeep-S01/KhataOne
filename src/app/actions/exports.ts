@@ -27,8 +27,9 @@ export async function createExportAction(
   formData: FormData,
 ): Promise<ExportActionState> {
   const exportType = readString(formData, "export_type") as ExportType;
-  const clientId = readString(formData, "client_id");
-  const gstPeriodId = readString(formData, "gst_period_id");
+  // Both selectors remain mounted; ignore the selector unrelated to this export.
+  const clientId = exportType === "csv_transactions" ? readString(formData, "client_id") : "";
+  const gstPeriodId = exportType === "csv_transactions" ? "" : readString(formData, "gst_period_id");
   const periodStart = readString(formData, "period_start");
   const periodEnd = readString(formData, "period_end");
   const fieldErrors: Record<string, string> = {};
@@ -87,77 +88,21 @@ export async function createExportAction(
     };
   }
 
-  const { firm, supabase, userId: actorUserId } = context;
-
-  const { data: exportRecord, error: exportError } = await supabase
-    .from("exports")
-    .insert({
-      firm_id: firm.id,
-      client_id: clientId || null,
-      gst_period_id: gstPeriodId || null,
-      export_type: exportType,
-      status: "queued",
-      requested_by: actorUserId,
-      metadata: {
-        client_id: clientId || null,
-        gst_period_id: gstPeriodId || null,
-        requested_period_start: periodStart || null,
-        requested_period_end: periodEnd || null,
-      },
-    })
-    .select("id")
-    .single();
-
-  if (exportError || !exportRecord) {
-    return {
-      status: "error",
-      message: exportError?.message ?? "Could not create export record.",
-    };
+  const { firm, supabase } = context;
+  if (!["owner", "admin", "staff"].includes(firm.role)) {
+    return { status: "error", message: "Your workspace role cannot create exports." };
   }
-
-  const { error: jobError } = await supabase.from("processing_jobs").insert({
-    firm_id: firm.id,
-    client_id: clientId || null,
-    job_type: "export_generation",
-    entity_type: "export",
-    entity_id: exportRecord.id,
-    status: "queued",
+  const { data: exportId, error } = await supabase.rpc("queue_dashboard_export", {
+    target_firm_id: firm.id,
+    target_client_id: clientId || null,
+    target_gst_period_id: gstPeriodId || null,
+    target_export_type: exportType,
+    target_period_start: periodStart || null,
+    target_period_end: periodEnd || null,
   });
-
-  if (jobError) {
-    await supabase
-      .from("exports")
-      .update({
-        status: "failed",
-        metadata: {
-          client_id: clientId || null,
-          gst_period_id: gstPeriodId || null,
-          requested_period_start: periodStart || null,
-          requested_period_end: periodEnd || null,
-          error: jobError.message,
-        },
-      })
-      .eq("id", exportRecord.id)
-      .eq("firm_id", firm.id);
-
-    return {
-      status: "error",
-      message: jobError.message,
-    };
+  if (error || typeof exportId !== "string" || !exportId) {
+    return { status: "error", message: "Could not queue export. Please retry or contact your workspace administrator." };
   }
-
-  await supabase.from("audit_logs").insert({
-    firm_id: firm.id,
-    client_id: clientId || null,
-    actor_user_id: actorUserId,
-    action: "export.queued",
-    entity_type: "export",
-    entity_id: exportRecord.id,
-    metadata: {
-      export_type: exportType,
-      direct_gst_filing: false,
-    },
-  });
 
   revalidatePath("/dashboard/exports");
   revalidatePath("/dashboard/reports");

@@ -1,0 +1,1004 @@
+{
+  "base_url": "https://khata-2dpl9ypqs-sandeep-s01s-projects.vercel.app",
+  "sample_count": 2,
+  "measured_at": "2026-09-12T01:56:28.938Z",
+  "browser_version": "153.0.8010.12",
+  "browser_location": "unverified",
+  "network_conditions": "runner network; no emulation",
+  "population": "requires at least one row on overview and each measured route",
+  "warm_state": "destination warmed; function cold state unverified",
+  "percentile_status": "preliminary estimates, not release or capacity certification",
+  "cpu_trace": null,
+  "requests": [
+    {
+      "sequence": 1,
+      "observed_unix_ms": 1789178176785,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "96cd0911-4970-425f-99aa-086d9192de15",
+        "vercel_id": "bom1::hnd1::kmzr2-1789178176800-aa9338ff9beb",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178176785.15,
+        "request_start_ms": 0.91,
+        "response_start_ms": 548.718,
+        "response_end_ms": 559.775
+      }
+    },
+    {
+      "sequence": 2,
+      "observed_unix_ms": 1789178177327,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "08d739de-cc25-4a08-a526-13831fb7f549",
+        "vercel_id": "bom1::hnd1::kmzr2-1789178177358-b1b8a960aa33",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178177327.162,
+        "request_start_ms": 1.841,
+        "response_start_ms": 431.002,
+        "response_end_ms": 438.168
+      }
+    },
+    {
+      "sequence": 3,
+      "observed_unix_ms": 1789178177334,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8ba00ad4-e5c2-4a8d-b626-6e0bfb1f473b",
+        "vercel_id": "bom1::hnd1::gs5fh-1789178177360-0f04664f72af",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178177334.6702,
+        "request_start_ms": 1.228,
+        "response_start_ms": 554.518,
+        "response_end_ms": 560.093
+      }
+    },
+    {
+      "sequence": 4,
+      "observed_unix_ms": 1789178177348,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e037cfa3-c458-4e4f-a5a4-766124dc180b",
+        "vercel_id": "bom1::hnd1::ln24s-1789178177366-7c2a2453e3f7",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178177347.637,
+        "request_start_ms": 1.224,
+        "response_start_ms": 551.256,
+        "response_end_ms": 552.872
+      }
+    },
+    {
+      "sequence": 5,
+      "observed_unix_ms": 1789178177600,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "f159b644-851d-4713-bef9-883392ad0796",
+        "vercel_id": "bom1::hnd1::n8qs2-1789178177629-9ed51399b035",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178177601.0198,
+        "request_start_ms": 1.543,
+        "response_start_ms": 639.722,
+        "response_end_ms": 773.449
+      }
+    },
+    {
+      "sequence": 6,
+      "observed_unix_ms": 1789178177639,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "d2b25c29-0369-41a9-8d64-47f6608c00e6",
+        "vercel_id": "bom1::hnd1::wp6v9-1789178177653-fa174756c232",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178177639.281,
+        "request_start_ms": 1.564,
+        "response_start_ms": 407.568,
+        "response_end_ms": 413.798
+      }
+    },
+    {
+      "sequence": 7,
+      "observed_unix_ms": 1789178178424,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "aad5f209-79b8-4650-bcdb-a11cff4b8153",
+        "vercel_id": "bom1::hnd1::wp6v9-1789178178448-4fd1523bea27",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178178423.938,
+        "request_start_ms": 0.938,
+        "response_start_ms": 459.725,
+        "response_end_ms": 461.025
+      }
+    },
+    {
+      "sequence": 8,
+      "observed_unix_ms": 1789178178425,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "22f2301c-9ed7-46f0-8cd4-e6e7abef8b5f",
+        "vercel_id": "bom1::hnd1::4l5kh-1789178178449-4e5bcffea025",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178178424.178,
+        "request_start_ms": 0.83,
+        "response_start_ms": 460.926,
+        "response_end_ms": 461.874
+      }
+    },
+    {
+      "sequence": 9,
+      "observed_unix_ms": 1789178178425,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "222d1add-c767-43db-9512-c95c0b7affa1",
+        "vercel_id": "bom1::hnd1::6t5rz-1789178178449-2647222bba97",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178178424.3738,
+        "request_start_ms": 1.073,
+        "response_start_ms": 461.449,
+        "response_end_ms": 462.402
+      }
+    },
+    {
+      "sequence": 10,
+      "observed_unix_ms": 1789178178425,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET"
+    },
+    {
+      "sequence": 11,
+      "observed_unix_ms": 1789178178430,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "8a915bfb-492a-4d36-a310-a7978938796d",
+        "vercel_id": "bom1::hnd1::mnpkh-1789178178466-3f10c51e7a70",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178178431.416,
+        "request_start_ms": 0.742,
+        "response_start_ms": 511.039,
+        "response_end_ms": 658.8
+      }
+    },
+    {
+      "sequence": 12,
+      "observed_unix_ms": 1789178179164,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "963a6a2d-7a62-4b12-afe8-fac8b8e9b18d",
+        "vercel_id": "bom1::hnd1::kmzr2-1789178179195-5c323879f98b",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178179164.319,
+        "request_start_ms": 0.984,
+        "response_start_ms": 640.719,
+        "response_end_ms": 642.166
+      }
+    },
+    {
+      "sequence": 13,
+      "observed_unix_ms": 1789178179164,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "6ac40738-301b-4465-ab31-6e93e253ef11",
+        "vercel_id": "bom1::hnd1::n8qs2-1789178179206-4842897a530f",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178179164.671,
+        "request_start_ms": 0.707,
+        "response_start_ms": 642.625,
+        "response_end_ms": 643.607
+      }
+    },
+    {
+      "sequence": 14,
+      "observed_unix_ms": 1789178179164,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "57dd1ed6-3909-492c-915a-f832cf4db1b2",
+        "vercel_id": "bom1::hnd1::6t5rz-1789178179195-88882cddf927",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178179164.845,
+        "request_start_ms": 0.949,
+        "response_start_ms": 667.064,
+        "response_end_ms": 668.5
+      }
+    },
+    {
+      "sequence": 15,
+      "observed_unix_ms": 1789178179164,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "29851114-e11d-4551-a361-cbbc370dfd76",
+        "vercel_id": "bom1::hnd1::wp6v9-1789178179195-601047669ea6",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178179164.9648,
+        "request_start_ms": 0.906,
+        "response_start_ms": 641.584,
+        "response_end_ms": 642.833
+      }
+    },
+    {
+      "sequence": 16,
+      "observed_unix_ms": 1789178181014,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "580390bc-1444-478b-bb5c-406477182677",
+        "vercel_id": "bom1::hnd1::6t5rz-1789178181043-b0e8fe60ea09",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178181014.533,
+        "request_start_ms": 1.126,
+        "response_start_ms": 738.809,
+        "response_end_ms": 739.915
+      }
+    },
+    {
+      "sequence": 17,
+      "observed_unix_ms": 1789178181027,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "32ec9440-55b9-4aa5-9d38-e2c003cc17f8",
+        "vercel_id": "bom1::hnd1::8wj7b-1789178181048-59b40e88920b",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178181026.197,
+        "request_start_ms": 1.433,
+        "response_start_ms": 471.576,
+        "response_end_ms": 474.213
+      }
+    },
+    {
+      "sequence": 18,
+      "observed_unix_ms": 1789178181163,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "af0554bd-7bf3-431d-9f7b-17ad0f8ca781",
+        "vercel_id": "bom1::hnd1::mnpkh-1789178181178-1dea9ac9c512",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178181162.548,
+        "request_start_ms": 1.301,
+        "response_start_ms": 590.163,
+        "response_end_ms": 591.557
+      }
+    },
+    {
+      "sequence": 19,
+      "observed_unix_ms": 1789178181254,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "6f72bbdc-bf50-4ceb-9f1e-dd8d5408621b",
+        "vercel_id": "bom1::hnd1::6kfn7-1789178181268-18b0399d132f",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178181254.542,
+        "request_start_ms": 1.102,
+        "response_start_ms": 497.026,
+        "response_end_ms": 498.469
+      }
+    },
+    {
+      "sequence": 20,
+      "observed_unix_ms": 1789178181271,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c51b238f-06bf-4a33-94eb-c599f7766929",
+        "vercel_id": "bom1::hnd1::kmzr2-1789178181288-e36a3967d5ab",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178181270.9,
+        "request_start_ms": 1.233,
+        "response_start_ms": 552.656,
+        "response_end_ms": 558.765
+      }
+    },
+    {
+      "sequence": 21,
+      "observed_unix_ms": 1789178181279,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 1,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "1310c79d-0006-4aef-b4e5-0e1b897d2c49",
+        "vercel_id": "bom1::hnd1::svhdt-1789178181293-1289a13492dd",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178181278.578,
+        "request_start_ms": 1,
+        "response_start_ms": 690.093,
+        "response_end_ms": 812.503
+      }
+    },
+    {
+      "sequence": 22,
+      "observed_unix_ms": 1789178184156,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "b537965c-e2a6-4df1-9538-012c71858c23",
+        "vercel_id": "bom1::hnd1::8wj7b-1789178184189-786565976814",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178184156.635,
+        "request_start_ms": 2.594,
+        "response_start_ms": 769.661,
+        "response_end_ms": 805.027
+      }
+    },
+    {
+      "sequence": 23,
+      "observed_unix_ms": 1789178185026,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "c41f9b71-bbfd-4aac-8216-17901bbe1790",
+        "vercel_id": "bom1::hnd1::rtzjd-1789178185049-be189cdb9038",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185025.349,
+        "request_start_ms": 1.746,
+        "response_start_ms": 623.874,
+        "response_end_ms": 625.057
+      }
+    },
+    {
+      "sequence": 24,
+      "observed_unix_ms": 1789178185026,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "d9be79dd-5808-4ba3-964f-4ea70a9329a1",
+        "vercel_id": "bom1::hnd1::8wj7b-1789178185049-8969d759b485",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178185025.763,
+        "request_start_ms": 1.527,
+        "response_start_ms": 558.314,
+        "response_end_ms": 615.259
+      }
+    },
+    {
+      "sequence": 25,
+      "observed_unix_ms": 1789178185026,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "dc52cba8-3910-43b4-89da-b4f7163eefb4",
+        "vercel_id": "bom1::hnd1::c5sfs-1789178185049-a11665344012",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185026.211,
+        "request_start_ms": 1.707,
+        "response_start_ms": 516.065,
+        "response_end_ms": 517.634
+      }
+    },
+    {
+      "sequence": 26,
+      "observed_unix_ms": 1789178185026,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "hard_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "db8682cd-8e4a-4b20-994a-7145ab4c92bd",
+        "vercel_id": "bom1::hnd1::wp6v9-1789178185049-a251261bc719",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185026.562,
+        "request_start_ms": 1.433,
+        "response_start_ms": 514.527,
+        "response_end_ms": 516.671
+      }
+    },
+    {
+      "sequence": 27,
+      "observed_unix_ms": 1789178185056,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "document",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "e5e26cad-cb35-4fd7-9dd1-ccfe451cf48d",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178185083-d58036a06117",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185057.087,
+        "request_start_ms": 1.077,
+        "response_start_ms": 706.823,
+        "response_end_ms": 847.166
+      }
+    },
+    {
+      "sequence": 28,
+      "observed_unix_ms": 1789178185976,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "395d9cb2-b34a-49c6-866a-551822f99c77",
+        "vercel_id": "bom1::hnd1::sj24c-1789178185994-db121b5c4002",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178185975.359,
+        "request_start_ms": 3.09,
+        "response_start_ms": 559.105,
+        "response_end_ms": 567.475
+      }
+    },
+    {
+      "sequence": 29,
+      "observed_unix_ms": 1789178185976,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "b2549bb9-ea99-4852-9cb5-d2478f0da4af",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178185994-dc8cf8032b6a",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185975.929,
+        "request_start_ms": 2.162,
+        "response_start_ms": 413.01,
+        "response_end_ms": 415.037
+      }
+    },
+    {
+      "sequence": 30,
+      "observed_unix_ms": 1789178185979,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "115c9176-9444-4bea-a6d1-00fe6141c636",
+        "vercel_id": "bom1::hnd1::mnpkh-1789178185994-71a7b2e6a0e1",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185976.5688,
+        "request_start_ms": 2.241,
+        "response_start_ms": 545.843,
+        "response_end_ms": 548.589
+      }
+    },
+    {
+      "sequence": 31,
+      "observed_unix_ms": 1789178185979,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "tree_prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "5b993d8b-b6b6-4cfb-8224-639e89ac7929",
+        "vercel_id": "bom1::hnd1::rtzjd-1789178185994-7d68d65ec0bf",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178185977.041,
+        "request_start_ms": 3.376,
+        "response_start_ms": 770.481,
+        "response_end_ms": 773.275
+      }
+    },
+    {
+      "sequence": 32,
+      "observed_unix_ms": 1789178187576,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "5e655033-7238-4c3b-bf21-f88df184dcff",
+        "vercel_id": "bom1::hnd1::fxv9b-1789178187603-6cac7491eea7",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178187576.1619,
+        "request_start_ms": 1.273,
+        "response_start_ms": 562.795,
+        "response_end_ms": 564
+      }
+    },
+    {
+      "sequence": 33,
+      "observed_unix_ms": 1789178187655,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/inbox",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "118cea3a-d76c-4b32-89ee-daf46f19281f",
+        "vercel_id": "bom1::hnd1::rtzjd-1789178187668-d79bb2251dcc",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178187655.653,
+        "request_start_ms": 1.294,
+        "response_start_ms": 410.931,
+        "response_end_ms": 412.875
+      }
+    },
+    {
+      "sequence": 34,
+      "observed_unix_ms": 1789178187797,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/review-queue",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "cd1563d0-4a9e-42e3-b70a-ef1102f669f5",
+        "vercel_id": "bom1::hnd1::tw4sw-1789178187818-d0f9093f1de9",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178187798.013,
+        "request_start_ms": 1.831,
+        "response_start_ms": 419.822,
+        "response_end_ms": 421.989
+      }
+    },
+    {
+      "sequence": 35,
+      "observed_unix_ms": 1789178187875,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "source_navigation"
+      },
+      "route": "/dashboard/clients",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "ebb94434-d13a-4b77-8ec7-e26ba6259fb0",
+        "vercel_id": "bom1::hnd1::wp6v9-1789178187893-b4f76fe857b2",
+        "private_no_store": true
+      },
+      "network": {
+        "start_unix_ms": 1789178187876.042,
+        "request_start_ms": 1.289,
+        "response_start_ms": 442.568,
+        "response_end_ms": 445.256
+      }
+    },
+    {
+      "sequence": 36,
+      "observed_unix_ms": 1789178188072,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "prefetch",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "35445f53-f149-47c1-ada0-fcb58646da77",
+        "vercel_id": "bom1::hnd1::fxv9b-1789178188110-0045cc03f9c5",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178188072.321,
+        "request_start_ms": 1.36,
+        "response_start_ms": 417.447,
+        "response_end_ms": 424.396
+      }
+    },
+    {
+      "sequence": 37,
+      "observed_unix_ms": 1789178188094,
+      "trial": {
+        "destination": "/dashboard/ledger",
+        "sample": 2,
+        "phase": "click_navigation"
+      },
+      "route": "/dashboard/ledger",
+      "kind": "client_navigation",
+      "method": "GET",
+      "response": {
+        "status": 200,
+        "request_id": "08108f4e-f8e8-4a03-89d2-3d184b21c9b3",
+        "vercel_id": "bom1::hnd1::rtzjd-1789178188113-96d5386c7f25",
+        "private_no_store": true
+      },
+      "network_failed": true,
+      "network": {
+        "start_unix_ms": 1789178188094.2148,
+        "request_start_ms": 1.294,
+        "response_start_ms": 426.564,
+        "response_end_ms": 531.902
+      }
+    }
+  ],
+  "results": [
+    {
+      "route": "/dashboard/ledger",
+      "source_route": "/dashboard/clients",
+      "trials": [
+        {
+          "sample": 1,
+          "hard_started_unix_ms": 1789178177596,
+          "hard_rows_observed_unix_ms": 1789178178418,
+          "click": {
+            "started_unix_ms": 1789178181226,
+            "rows_observed_unix_ms": 1789178182131,
+            "automation_ms": 904,
+            "browser_click_ms": 860
+          }
+        },
+        {
+          "sample": 2,
+          "hard_started_unix_ms": 1789178184151,
+          "hard_rows_observed_unix_ms": 1789178185051,
+          "click": {
+            "started_unix_ms": 1789178188049,
+            "rows_observed_unix_ms": 1789178188931,
+            "automation_ms": 882,
+            "browser_click_ms": 843
+          }
+        }
+      ],
+      "click_to_rows": {
+        "samples_ms": [
+          904,
+          882
+        ],
+        "p50_ms": 882,
+        "p95_ms": 904,
+        "max_ms": 904
+      },
+      "dispatched_click_to_rows_ms": [
+        860,
+        843
+      ],
+      "hard_navigation_to_rows": {
+        "samples_ms": [
+          822,
+          900
+        ],
+        "p50_ms": 822,
+        "p95_ms": 900,
+        "max_ms": 900
+      },
+      "document_waiting": {
+        "samples_ms": [
+          638,
+          767
+        ],
+        "p50_ms": 638,
+        "p95_ms": 767,
+        "max_ms": 767
+      },
+      "document_ttfb": {
+        "samples_ms": [
+          640.8000000119209,
+          771.5
+        ],
+        "p50_ms": 640.8000000119209,
+        "p95_ms": 771.5,
+        "max_ms": 771.5
+      },
+      "document_timing_evidence": [
+        {
+          "first_response_start": 81.5,
+          "final_response_headers_start": 640.8000000119209,
+          "first_interim_response_start": 81.5
+        },
+        {
+          "first_response_start": 84.39999997615814,
+          "final_response_headers_start": 771.5,
+          "first_interim_response_start": 84.39999997615814
+        }
+      ],
+      "response_evidence": [
+        {
+          "vercel_id": "bom1::hnd1::n8qs2-1789178177629-9ed51399b035",
+          "request_id": "f159b644-851d-4713-bef9-883392ad0796",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=31"
+        },
+        {
+          "vercel_id": "bom1::hnd1::8wj7b-1789178184189-786565976814",
+          "request_id": "b537965c-e2a6-4df1-9538-012c71858c23",
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "server_timing": "middleware_auth;dur=42"
+        }
+      ],
+      "document_long_tasks": [
+        [],
+        []
+      ],
+      "client_navigation_long_tasks": [
+        [],
+        []
+      ]
+    }
+  ]
+}

@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const rateLimit = checkRateLimit({
+  const rateLimit = await checkRateLimit({
     key: clientRateLimitKey({
       scope: "whatsapp-webhook",
       forwardedFor: request.headers.get("x-forwarded-for"),
@@ -51,6 +51,13 @@ export async function POST(request: NextRequest) {
     ),
     windowMs: 60_000,
   });
+
+  if (!rateLimit.available) {
+    return NextResponse.json(
+      { error: "Request protection is temporarily unavailable." },
+      { status: 503, headers: { "Retry-After": "1" } },
+    );
+  }
 
   if (!rateLimit.ok) {
     return NextResponse.json(

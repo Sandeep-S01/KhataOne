@@ -86,6 +86,7 @@ export function DashboardSidebar({
         {!isCollapsed ? (
           <Link
             href="/dashboard"
+            prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
             className="min-w-0 flex-1 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             aria-label="KhataOne dashboard"
           >
@@ -94,6 +95,7 @@ export function DashboardSidebar({
         ) : (
           <Link
             href="/dashboard"
+            prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
             className="mx-auto flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             title="KhataOne Home"
             aria-label="KhataOne dashboard"

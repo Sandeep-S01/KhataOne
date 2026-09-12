@@ -24,6 +24,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
 
@@ -118,6 +119,7 @@ export default async function DashboardPage() {
     .eq("firm_id", firm.id)
     .in("status", ["draft", "needs_review", "duplicate"])
     .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
     .limit(8);
 
   const [
@@ -129,13 +131,13 @@ export default async function DashboardPage() {
     exportsThisMonth,
     reviewItemsResult,
   ] = await Promise.all([
-    pendingReviewPromise,
-    gstReadyPromise,
-    gstBlockedPromise,
-    intakeAttentionPromise,
-    exportsAttentionPromise,
-    exportsThisMonthPromise,
-    reviewItemsPromise,
+    withServerTiming("dashboard.pending_review_count", () => pendingReviewPromise),
+    withServerTiming("dashboard.gst_ready_count", () => gstReadyPromise),
+    withServerTiming("dashboard.gst_blocked_count", () => gstBlockedPromise),
+    withServerTiming("dashboard.intake_count", () => intakeAttentionPromise),
+    withServerTiming("dashboard.exports_attention_count", () => exportsAttentionPromise),
+    withServerTiming("dashboard.exports_month_count", () => exportsThisMonthPromise),
+    withServerTiming("dashboard.review_snapshot", () => reviewItemsPromise),
   ]);
   const { data: reviewItems, error: reviewItemsError } = reviewItemsResult;
   const priorityItems = [

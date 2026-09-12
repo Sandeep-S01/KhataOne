@@ -82,6 +82,18 @@ export default async function SettingsPage() {
     ["Rule-based fallback", getExtractionProviderOrder().includes("rule_based_text")],
     ["Job runner secret", Boolean(getOptionalServerEnv("JOB_RUNNER_SECRET"))],
     ["Cron secret", Boolean(getOptionalServerEnv("CRON_SECRET"))],
+    [
+      "Readiness check secret",
+      (getOptionalServerEnv("READINESS_CHECK_SECRET")?.length ?? 0) >= 32,
+    ],
+    [
+      "Rate-limit key secret",
+      (getOptionalServerEnv("RATE_LIMIT_KEY_SECRET")?.length ?? 0) >= 32,
+    ],
+    [
+      "Shared rate-limit store",
+      getOptionalServerEnv("RATE_LIMIT_SHARED_ENFORCEMENT") === "shared-store",
+    ],
   ] as const;
 
   const configuredCount = integrationRows.filter(([, configured]) => configured)
