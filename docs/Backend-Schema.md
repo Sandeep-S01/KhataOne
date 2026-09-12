@@ -174,6 +174,11 @@ Legacy compatibility note: older imported databases may still have required lega
 - `confidence_score`
 - `approved_by`
 - `approved_at`
+
+Legacy compatibility: migration `20260912125000` restores missing nullable approval
+metadata columns without inventing historical values. Migration `20260912135000`
+creates missing ledger handoffs for already-approved transactions and records a
+system repair audit with a null actor when the historical approver is unavailable.
 - `created_at`
 - `updated_at`
 

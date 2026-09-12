@@ -30,6 +30,7 @@ try {
   await db.exec(sql("20260810203000_create_ledger_entries_and_review_policies.sql"));
   await db.exec(sql("20260910160000_atomic_transaction_approval.sql"));
   await db.exec(sql("20260912120000_atomic_ledger_correction.sql"));
+  await db.exec(sql("20260912125000_restore_legacy_approval_metadata.sql"));
   await db.exec(sql("20260912130000_preserve_ledger_corrections_on_reapproval.sql"));
   await db.exec(sql("20260912140000_protect_posted_transaction_lifecycle.sql"));
   await db.exec(`grant usage on schema public,auth to authenticated,anon;
@@ -98,7 +99,15 @@ try {
   assert.equal((await db.query(`select count(*)::int as n from ledger_entries where transaction_id='${id(14)}'`)).rows[0].n,0);
   await assert.rejects(db.exec(`select approve_transaction_with_handoff('${id(15)}')`),/synthetic audit failure/);
   assert.equal((await db.query(`select count(*)::int as n from ledger_entries where transaction_id='${id(15)}'`)).rows[0].n,0);
-  await db.exec(`reset role; drop trigger test_audit_failure on audit_logs;
+  await db.exec("reset role; drop trigger test_audit_failure on audit_logs;");
+  await db.exec(sql("20260912135000_backfill_missing_ledger_handoffs.sql"));
+  assert.equal((await db.query(`select count(*)::int as n from ledger_entries where transaction_id='${id(15)}'`)).rows[0].n,1);
+  const legacyRepairAudit = (await db.query(`select * from audit_logs where action='transaction.ledger_handoff_repaired'
+    and entity_id='${id(15)}'`)).rows[0];
+  assert.equal(legacyRepairAudit.actor_user_id,null);
+  assert.equal(legacyRepairAudit.metadata.repair_actor,"database_migration");
+  assert.equal(legacyRepairAudit.metadata.historical_approval_metadata,"unavailable");
+  await db.exec(`
     update transactions set client_id='${id(21)}' where id='${id(12)}';`);
   await actor(1); await assert.rejects(db.exec(call()),e=>e.code==='42501');
   console.log("OK PostgreSQL ledger correction, audit rollback, ownership/roles, direct-write denial and approval compatibility");
