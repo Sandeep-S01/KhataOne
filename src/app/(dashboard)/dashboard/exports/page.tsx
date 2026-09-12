@@ -28,6 +28,10 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import {
+  formatDisplayDateRange,
+  formatDisplayDateTime,
+} from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -118,7 +122,7 @@ export default async function ExportsPage() {
       <PageHeader
         eyebrow="Exports"
         title="Export jobs"
-        description="Generate traceable CSV and PDF files from approved transactions and GST summaries. Exports are stored privately and logged for audit."
+        description="Queue and download audited CSV or PDF files from approved records."
       />
 
       <PageBody>
@@ -168,9 +172,12 @@ export default async function ExportsPage() {
                     | Record<string, string | number>
                     | null;
                   const periodText = period
-                    ? `${period.period_start} to ${period.period_end}`
+                    ? formatDisplayDateRange(period.period_start, period.period_end)
                     : metadata?.period_start && metadata?.period_end
-                      ? `${metadata.period_start} to ${metadata.period_end}`
+                      ? formatDisplayDateRange(
+                          String(metadata.period_start),
+                          String(metadata.period_end),
+                        )
                       : "Not linked";
 
                   return (
@@ -208,15 +215,14 @@ export default async function ExportsPage() {
                         )}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {new Date(exportRecord.created_at).toLocaleString(
-                          "en-IN",
-                        )}
+                        {formatDisplayDateTime(exportRecord.created_at)}
                       </td>
                       <td className={tableActionCellClass}>
                         {exportRecord.status === "completed" &&
                         exportRecord.storage_path ? (
                           <TextLink
                             href={`/api/exports/${exportRecord.id}/download`}
+                            aria-label={`Download ${exportLabel(exportRecord.export_type)}`}
                           >
                             <Download className="size-4" />
                             Download

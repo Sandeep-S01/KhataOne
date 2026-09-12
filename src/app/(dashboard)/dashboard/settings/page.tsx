@@ -22,21 +22,22 @@ import { StatusChip } from "@/components/status-chip";
 import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateTime } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
 function ConfigStatus({
   label,
-  configured,
+  present,
 }: {
   label: string;
-  configured: boolean;
+  present: boolean;
 }) {
   return (
     <div className="flex items-center justify-between gap-3 border-b border-khata-border py-3 last:border-b-0">
       <span className="text-sm font-medium">{label}</span>
-      <StatusChip tone={configured ? "success" : "warning"}>
-        {configured ? "Configured" : "Pending"}
+      <StatusChip tone={present ? "success" : "warning"}>
+        {present ? "Present" : "Missing"}
       </StatusChip>
     </div>
   );
@@ -104,7 +105,7 @@ export default async function SettingsPage() {
       <PageHeader
         eyebrow="Settings"
         title="Firm configuration"
-        description="Review workspace identity, role boundaries, integration readiness, and security setup for this firm."
+        description="Review workspace identity, roles, configuration presence, and verified checks."
       />
 
       <PageBody>
@@ -112,37 +113,51 @@ export default async function SettingsPage() {
         <SectionCard
           title="Firm profile"
           actions={
-            <StatusChip tone={firmRecord?.status === "active" ? "success" : "warning"}>
-              {firmRecord?.status ?? "pending"}
+            <StatusChip
+              tone={
+                !firmRecord?.status
+                  ? "neutral"
+                  : firmRecord.status === "active"
+                    ? "success"
+                    : "warning"
+              }
+            >
+              {firmRecord?.status ?? "Not available"}
             </StatusChip>
           }
         >
           <DetailList
             labelWidth="100px"
             items={[
-              { label: "Name", value: firmRecord?.name ?? firm?.name ?? "Pending" },
-              { label: "Slug", value: firmRecord?.slug ?? "Pending", mono: true },
-              { label: "GSTIN", value: firmRecord?.gstin ?? "Pending", mono: true },
-              { label: "Phone", value: firmRecord?.phone ?? "Pending", mono: true },
-              { label: "Email", value: firmRecord?.email ?? "Pending" },
-              { label: "Address", value: firmRecord?.address ?? "Pending" },
+              { label: "Name", value: firmRecord?.name ?? firm?.name ?? "Not provided" },
+              { label: "Slug", value: firmRecord?.slug ?? "Not provided", mono: true },
+              { label: "GSTIN", value: firmRecord?.gstin ?? "Not provided", mono: true },
+              { label: "Phone", value: firmRecord?.phone ?? "Not provided", mono: true },
+              { label: "Email", value: firmRecord?.email ?? "Not provided" },
+              { label: "Address", value: firmRecord?.address ?? "Not provided" },
             ]}
           />
         </SectionCard>
 
         <SectionCard
-          title="Integration readiness"
-          actions={<RecordCount value={configuredCount} label={`of ${integrationRows.length}`} />}
+          title="Configuration status"
+          description="Presence confirms that required configuration is available to the app; it does not verify provider connectivity or delivery health."
+          actions={
+            <RecordCount
+              value={configuredCount}
+              label={`of ${integrationRows.length} present`}
+            />
+          }
         >
           <p className="mt-2 font-mono text-xs text-khata-muted">
-            AI order: {getExtractionProviderOrder().join(", ")}
+            Configured AI order: {getExtractionProviderOrder().join(", ")}
           </p>
           <div className="mt-3">
             {integrationRows.map(([label, configured]) => (
               <ConfigStatus
                 key={label}
                 label={label}
-                configured={configured}
+                present={configured}
               />
             ))}
           </div>
@@ -151,7 +166,13 @@ export default async function SettingsPage() {
 
       <SectionCard
         title="Workspace members"
-        actions={<RecordCount value={members?.length ?? 0} label="users" />}
+        actions={
+          <RecordCount
+            value={members?.length ?? 0}
+            label="users"
+            singularLabel="user"
+          />
+        }
         bodyClassName="p-0"
       >
         {!members || members.length === 0 ? (
@@ -184,7 +205,7 @@ export default async function SettingsPage() {
                       </StatusChip>
                     </td>
                     <td className={`${tableNumericCellClass} text-xs`}>
-                      {new Date(member.created_at).toLocaleString("en-IN")}
+                      {formatDisplayDateTime(member.created_at)}
                     </td>
                   </tr>
                 ))}

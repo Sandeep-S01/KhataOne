@@ -45,7 +45,7 @@ export default async function DashboardLayout({
             <div className="min-w-0 flex-1 pr-1">
               <p className="truncate text-sm font-semibold">{firmName}</p>
               <p className="hidden truncate text-xs text-khata-muted sm:block">
-                Draft AI outputs require CA approval before ledger impact.
+                AI drafts require CA approval.
               </p>
             </div>
 

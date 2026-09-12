@@ -2,6 +2,10 @@
 
 import { redirect } from "next/navigation";
 
+import {
+  isEmailAddress,
+  validateAuthFields,
+} from "@/lib/auth-validation";
 import { getPublicAppUrl, hasSupabaseConfig } from "@/lib/env";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 
@@ -16,10 +20,6 @@ function readString(formData: FormData, key: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function isEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -29,27 +29,16 @@ function slugify(value: string) {
     .slice(0, 48);
 }
 
-function validateAuth(email: string, password: string) {
-  const fieldErrors: Record<string, string> = {};
-
-  if (!isEmail(email)) {
-    fieldErrors.email = "Enter a valid work email.";
-  }
-
-  if (password.length < 8) {
-    fieldErrors.password = "Use at least 8 characters.";
-  }
-
-  return fieldErrors;
-}
-
 export async function signIn(
   _previousState: AuthActionState,
   formData: FormData,
 ): Promise<AuthActionState> {
   const email = readString(formData, "email");
   const password = readString(formData, "password");
-  const fieldErrors = validateAuth(email, password);
+  const fieldErrors = validateAuthFields(
+    { email, password },
+    ["email", "password"],
+  );
 
   if (Object.keys(fieldErrors).length > 0) {
     return {
@@ -91,15 +80,10 @@ export async function signUp(
   const password = readString(formData, "password");
   const fullName = readString(formData, "full_name");
   const firmName = readString(formData, "firm_name");
-  const fieldErrors = validateAuth(email, password);
-
-  if (fullName.length < 2) {
-    fieldErrors.full_name = "Enter your name.";
-  }
-
-  if (firmName.length < 2) {
-    fieldErrors.firm_name = "Enter your firm name.";
-  }
+  const fieldErrors = validateAuthFields(
+    { email, password, full_name: fullName, firm_name: firmName },
+    ["full_name", "firm_name", "email", "password"],
+  );
 
   if (Object.keys(fieldErrors).length > 0) {
     return {
@@ -154,7 +138,7 @@ export async function requestPasswordReset(
   const email = readString(formData, "email");
   const fieldErrors: Record<string, string> = {};
 
-  if (!isEmail(email)) {
+  if (!isEmailAddress(email)) {
     fieldErrors.email = "Enter a valid work email.";
   }
 
@@ -217,7 +201,7 @@ export async function createFirm(
     fieldErrors.firm_name = "Enter your firm name.";
   }
 
-  if (email && !isEmail(email)) {
+  if (email && !isEmailAddress(email)) {
     fieldErrors.email = "Enter a valid firm email.";
   }
 

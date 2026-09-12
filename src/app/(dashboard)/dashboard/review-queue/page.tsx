@@ -31,6 +31,7 @@ import {
 import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDate } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +54,7 @@ function statusTone(status: string) {
 
 function formatCurrency(value: number | null) {
   if (value === null || value === undefined) {
-    return "Pending";
+    return "Not provided";
   }
 
   return new Intl.NumberFormat("en-IN", {
@@ -80,14 +81,6 @@ const documentTypeOptions = [
 
 function extractionSource(model?: string | null) {
   return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
-}
-
-function formatDate(value: string | null) {
-  if (!value) {
-    return "Pending";
-  }
-
-  return new Date(value).toLocaleDateString("en-IN");
 }
 
 function formatAge(value: string) {
@@ -245,7 +238,7 @@ export default async function ReviewQueuePage({
       <PageHeader
         eyebrow="Review Queue"
         title="AI extraction review"
-        description="AI-created transactions stay draft or needs-review until a CA approves them in the next workflow phase."
+        description="Review AI-created draft and needs-review transactions before approval."
       />
 
       <PageBody>
@@ -455,7 +448,7 @@ export default async function ReviewQueuePage({
                         {client?.business_name ?? "Unknown client"}
                       </td>
                       <td className={tableCellClass}>
-                        {transaction.party_name ?? "Pending"}
+                        {transaction.party_name ?? "Not provided"}
                         <p className={`mt-1 ${tableSecondaryTextClass}`}>
                           {extractionSource(extraction?.model)}
                         </p>
@@ -463,17 +456,17 @@ export default async function ReviewQueuePage({
                       <td className={tableCellClass}>
                         <p className={`${tableSecondaryTextClass} capitalize`}>
                           {document?.document_type?.replaceAll("_", " ") ??
-                            "Unknown"}
+                            "Not provided"}
                         </p>
                         <p className={`${tableMonoTextClass} text-khata-muted`}>
                           {document?.file_name ?? "No file"}
                         </p>
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {transaction.invoice_number ?? "Pending"}
+                        {transaction.invoice_number ?? "Not provided"}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {formatDate(transaction.transaction_date)}
+                        {formatDisplayDate(transaction.transaction_date)}
                       </td>
                       <td className={`${tableCellClass} capitalize`}>
                         {transaction.transaction_type}
@@ -504,6 +497,7 @@ export default async function ReviewQueuePage({
                       <td className={tableActionCellClass}>
                         <TextLink
                           href={`/dashboard/review-queue/${transaction.id}`}
+                          aria-label={`Review ${transaction.invoice_number ?? transaction.party_name ?? "transaction"}`}
                         >
                           Review
                         </TextLink>

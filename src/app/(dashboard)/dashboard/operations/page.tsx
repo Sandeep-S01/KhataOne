@@ -1,5 +1,6 @@
 import type { Route } from "next";
 import { RefreshCw } from "lucide-react";
+import Link from "next/link";
 
 import {
   ActionLink,
@@ -36,6 +37,7 @@ import {
 } from "@/app/actions/operations";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateTime } from "@/lib/format";
 import {
   evaluatePipelineAlerts,
   getPipelineHealthSnapshot,
@@ -75,15 +77,15 @@ function configuredPositiveInteger(key: string, fallback: number) {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 }
 
-function ageLabel(value: string | null) {
+function ageLabel(value: string | null, emptyLabel = "No activity") {
   if (!value) {
-    return "-";
+    return emptyLabel;
   }
 
   const createdAt = new Date(value).getTime();
 
   if (Number.isNaN(createdAt)) {
-    return "-";
+    return "Unavailable";
   }
 
   const minutes = Math.max(0, Math.floor((Date.now() - createdAt) / 60_000));
@@ -121,7 +123,7 @@ function ageMinutes(value: string | null) {
 
 function durationLabel(value: number | null) {
   if (value === null || !Number.isFinite(value)) {
-    return "-";
+    return "No samples";
   }
 
   return value < 1000 ? `${Math.round(value)} ms` : `${(value / 1000).toFixed(1)} s`;
@@ -337,7 +339,7 @@ export default async function OperationsPage({
       <PageHeader
         eyebrow="Operations"
         title="Job health"
-        description="Monitor WhatsApp ingestion, AI extraction, and future background workflows that need follow-up."
+        description="Monitor WhatsApp ingestion, extraction, export jobs, and recovery workers."
         actions={
         <ActionLink
           href={"/dashboard/operations" as Route}
@@ -351,10 +353,21 @@ export default async function OperationsPage({
       <PageBody>
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         <StatTile label="Queued or processing" value={queuedCount ?? 0} tone="warning" />
-        <StatTile label="Failed jobs" value={failedCount ?? 0} tone="danger" />
+        <Link
+          href="/dashboard/operations?status=failed"
+          className="rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+          aria-label={`View ${failedCount ?? 0} failed jobs`}
+        >
+          <StatTile
+            label="Failed jobs"
+            value={failedCount ?? 0}
+            tone="danger"
+            hint="View failed jobs"
+          />
+        </Link>
         <StatTile
           label="Oldest active job"
-          value={ageLabel(oldestQueued)}
+          value={ageLabel(oldestQueued, "No active jobs")}
           tone="info"
           hint="Queued or processing age"
         />
@@ -374,7 +387,10 @@ export default async function OperationsPage({
                 <div className="min-w-0">
                   <p className={tableSecondaryTextClass}>Oldest due inbound</p>
                   <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
-                    {ageLabel(inboundHealth?.oldest_queued_at ?? null)}
+                    {ageLabel(
+                      inboundHealth?.oldest_queued_at ?? null,
+                      "No queued events",
+                    )}
                   </p>
                 </div>
                 <div className="min-w-0">
@@ -432,10 +448,10 @@ export default async function OperationsPage({
                           {durationLabel(row.p95_ack_delay_ms)}
                         </td>
                         <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                          {ageLabel(row.last_worker_completed_at)}
+                          {ageLabel(row.last_worker_completed_at, "No completed run")}
                         </td>
                         <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                          {ageLabel(row.last_worker_success_at)}
+                          {ageLabel(row.last_worker_success_at, "No successful run")}
                         </td>
                         <td className={tableCellClass}>
                           {rowAlerts.length > 0 ? (
@@ -491,7 +507,7 @@ export default async function OperationsPage({
                     <td className={tableNumericCellClass}>{summary.completed}</td>
                     <td className={tableCellClass}>
                       <span className={tableMonoTextClass}>
-                        {ageLabel(summary.oldestActive)}
+                        {ageLabel(summary.oldestActive, "No active jobs")}
                       </span>
                     </td>
                     <td className={tableCellClass}>
@@ -625,7 +641,7 @@ export default async function OperationsPage({
                         )}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        <span>{new Date(job.created_at).toLocaleString("en-IN")}</span>
+                        <span>{formatDisplayDateTime(job.created_at)}</span>
                         <p className="mt-1 font-mono text-[11px] text-khata-muted">
                           Age {ageLabel(job.created_at)}
                         </p>
@@ -644,7 +660,7 @@ export default async function OperationsPage({
                               </Button>
                             </form>
                           ) : (
-                            <span className={tableSecondaryTextClass}>-</span>
+                            <span className={tableSecondaryTextClass}>No action</span>
                           );
                         })()}
                       </td>

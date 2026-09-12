@@ -3,6 +3,7 @@ import {
   Button,
   DataTable,
   EmptyState,
+  FieldLabel,
   FilterBar,
   Input,
   PageBody,
@@ -142,7 +143,7 @@ export default async function ClientsPage({
       <PageHeader
         eyebrow="Clients"
         title="Client workspaces"
-        description={`Manage GSTIN details, WhatsApp sender mapping, filing cadence, assignment readiness, and client status for ${firm?.name ?? "this firm"}.`}
+        description={`Manage client identity, WhatsApp mapping, filing cadence, and status for ${firm?.name ?? "this firm"}.`}
         actions={
         <ActionLink
           href="/dashboard/clients/new"
@@ -198,12 +199,15 @@ export default async function ClientsPage({
               </ActionLink>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {statusCounts.map((item) => (
-              <StatusChip key={item.status} tone={statusTone(item.status)}>
-                {item.status.replaceAll("_", " ")}: {item.count}
-              </StatusChip>
-            ))}
+          <div>
+            <FieldLabel>Current page status counts</FieldLabel>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {statusCounts.map((item) => (
+                <StatusChip key={item.status} tone={statusTone(item.status)}>
+                  {item.status.replaceAll("_", " ")}: {item.count}
+                </StatusChip>
+              ))}
+            </div>
           </div>
         </FilterBar>
 
@@ -251,14 +255,14 @@ export default async function ClientsPage({
                     <td className={tableCellClass}>
                       <p className={tablePrimaryTextClass}>{client.business_name}</p>
                       <p className={tableSecondaryTextClass}>
-                        {client.contact_name || client.phone || "Contact pending"}
+                        {client.contact_name || client.phone || "Not provided"}
                       </p>
                     </td>
                     <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                       {client.whatsapp_phone || "Not linked"}
                     </td>
                     <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                      {client.gstin || "Pending"}
+                      {client.gstin || "Not provided"}
                     </td>
                     <td className={`${tableCellClass} capitalize`}>
                       {client.filing_frequency}
@@ -271,6 +275,7 @@ export default async function ClientsPage({
                     <td className={tableActionCellClass}>
                       <TextLink
                         href={`/dashboard/clients/${client.id}`}
+                        aria-label={`Open ${client.business_name}`}
                       >
                         Open
                       </TextLink>

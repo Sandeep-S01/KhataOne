@@ -31,6 +31,7 @@ import {
 import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDate } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
@@ -145,7 +146,7 @@ export default async function LedgerPage({
       <PageHeader
         eyebrow="Ledger"
         title="Approved ledger handoff"
-        description="Filter approved handoff entries, inspect source transactions, and correct ledger mapping without silently rewriting extraction history."
+        description="Inspect approved handoffs and make audited ledger corrections."
       />
 
       <PageBody>
@@ -232,9 +233,9 @@ export default async function LedgerPage({
 
       <div className="grid gap-3 sm:grid-cols-3">
         {[
-          ["Entries", String(pageEntries.length), "neutral"],
-          ["Debit", formatCurrency(totalDebit), "brand"],
-          ["Credit", formatCurrency(totalCredit), "success"],
+          ["Page entries", String(pageEntries.length), "neutral"],
+          ["Page debit", formatCurrency(totalDebit), "brand"],
+          ["Page credit", formatCurrency(totalCredit), "success"],
         ].map(([label, value, tone]) => (
           <StatTile
             key={label}
@@ -297,7 +298,7 @@ export default async function LedgerPage({
                   return (
                     <tr key={entry.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {entry.entry_date ?? "Pending"}
+                        {formatDisplayDate(entry.entry_date)}
                       </td>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
@@ -305,7 +306,7 @@ export default async function LedgerPage({
                       <td className={tableCellClass}>{entry.account_name}</td>
                       <td className={tableCellClass}>
                         <p className={tableMonoTextClass}>
-                          {transaction?.invoice_number ?? "Pending invoice"}
+                          {transaction?.invoice_number ?? "Invoice not provided"}
                         </p>
                         <p className={tableSecondaryTextClass}>
                           {transaction?.party_name ??
@@ -322,6 +323,7 @@ export default async function LedgerPage({
                       <td className={tableActionCellClass}>
                         <TextLink
                           href={`/dashboard/ledger/${entry.id}`}
+                          aria-label={`Open ledger entry for ${client?.business_name ?? "unknown client"}`}
                         >
                           Open
                         </TextLink>

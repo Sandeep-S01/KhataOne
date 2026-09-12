@@ -30,7 +30,7 @@ export const dynamic = "force-dynamic";
 
 function formatCurrency(value: number | null) {
   if (value === null || value === undefined) {
-    return "Pending";
+    return "Not provided";
   }
 
   return new Intl.NumberFormat("en-IN", {
@@ -58,8 +58,12 @@ function statusTone(status: string) {
   }
 }
 
-function attentionTone(count: number): "warning" | "success" {
-  return count > 0 ? "warning" : "success";
+function attentionTone(count: number): "warning" | "neutral" {
+  return count > 0 ? "warning" : "neutral";
+}
+
+function positiveTone(count: number): "success" | "neutral" {
+  return count > 0 ? "success" : "neutral";
 }
 
 export default async function DashboardPage() {
@@ -147,6 +151,7 @@ export default async function DashboardPage() {
       href: "/dashboard/review-queue",
       tone: attentionTone(pendingReview.count ?? 0),
       description: "Draft, needs-review, and duplicate-risk records waiting for CA decision.",
+      actionLabel: "Review transactions",
     },
     {
       label: "Triage WhatsApp intake",
@@ -154,6 +159,7 @@ export default async function DashboardPage() {
       href: "/dashboard/inbox",
       tone: attentionTone(intakeAttention.count ?? 0),
       description: "Unmatched, received, failed, or media-failed inbound messages.",
+      actionLabel: "Open WhatsApp inbox",
     },
     {
       label: "Resolve GST blockers",
@@ -161,6 +167,7 @@ export default async function DashboardPage() {
       href: "/dashboard/gst-summary",
       tone: attentionTone(gstBlocked.count ?? 0),
       description: "Periods blocked by missing documents, mismatches, or pending review.",
+      actionLabel: "View GST periods",
     },
     {
       label: "Check export jobs",
@@ -168,15 +175,15 @@ export default async function DashboardPage() {
       href: "/dashboard/exports",
       tone: attentionTone(exportsAttention.count ?? 0),
       description: "Queued, processing, or failed private export jobs.",
+      actionLabel: "View export jobs",
     },
   ];
 
   return (
     <div>
       <PageHeader
-        eyebrow="Overview"
         title="CA operations console"
-        description={`Track intake, review work, ledger handoff, GST readiness, exports, and audit activity for ${firm.name ?? "this firm"}.`}
+        description={`Prioritize intake, review, GST, and export work for ${firm.name ?? "this firm"}.`}
         actions={
           <>
             <ActionLink href="/dashboard/review-queue" variant="primary">
@@ -194,7 +201,7 @@ export default async function DashboardPage() {
           <StatTile
             label="Pending review"
             value={pendingReview.count ?? 0}
-            tone={(pendingReview.count ?? 0) > 0 ? "warning" : "success"}
+            tone={attentionTone(pendingReview.count ?? 0)}
             hint="Draft, needs-review, and duplicate-risk transactions."
           />
           <StatTile
@@ -206,7 +213,7 @@ export default async function DashboardPage() {
           <StatTile
             label="GST ready periods"
             value={gstReady.count ?? 0}
-            tone="success"
+            tone={positiveTone(gstReady.count ?? 0)}
             hint="Generated periods marked ready for review/export."
           />
           <StatTile
@@ -241,7 +248,9 @@ export default async function DashboardPage() {
                     {item.description}
                   </p>
                 </div>
-                <TextLink href={item.href}>Open queue</TextLink>
+                <TextLink href={item.href} aria-label={item.actionLabel}>
+                  {item.actionLabel}
+                </TextLink>
               </div>
             ))}
           </div>
@@ -297,10 +306,10 @@ export default async function DashboardPage() {
                     {client?.business_name ?? "Unknown client"}
                   </td>
                   <td className={tableCellClass}>
-                    {item.party_name ?? "Pending"}
+                    {item.party_name ?? "Not provided"}
                   </td>
                   <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                    {item.invoice_number ?? "Pending"}
+                    {item.invoice_number ?? "Not provided"}
                   </td>
                   <td className={`${tableCellClass} capitalize`}>
                     {item.transaction_type}
@@ -317,7 +326,10 @@ export default async function DashboardPage() {
                     {formatCurrency(item.total_amount)}
                   </td>
                   <td className={tableActionCellClass}>
-                    <TextLink href={`/dashboard/review-queue/${item.id}`}>
+                    <TextLink
+                      href={`/dashboard/review-queue/${item.id}`}
+                      aria-label={`Review ${item.invoice_number ?? item.party_name ?? "transaction"}`}
+                    >
                       Review
                     </TextLink>
                   </td>

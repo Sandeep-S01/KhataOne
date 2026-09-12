@@ -26,6 +26,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateRange } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -89,7 +90,7 @@ export default async function GstSummaryPage() {
       <PageHeader
         eyebrow="GST Summary"
         title="GST readiness"
-        description="Generate CA-reviewed GST summaries from approved transactions. This prepares review and export data; it does not submit GST filings."
+        description="Prepare GST summaries for a custom date range from approved transactions; it does not submit GST filings."
       />
 
       <PageBody>
@@ -141,7 +142,10 @@ export default async function GstSummaryPage() {
                         {client?.business_name ?? "Unknown client"}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {period.period_start} to {period.period_end}
+                        {formatDisplayDateRange(
+                          period.period_start,
+                          period.period_end,
+                        )}
                       </td>
                       <td className={`${tableCellClass} capitalize`}>
                         {period.filing_type}
@@ -163,6 +167,7 @@ export default async function GstSummaryPage() {
                       <td className={tableActionCellClass}>
                         <TextLink
                           href={`/dashboard/gst-summary/${period.id}`}
+                          aria-label={`Open GST period for ${client?.business_name ?? "unknown client"}`}
                         >
                           Open
                         </TextLink>

@@ -213,6 +213,14 @@ forwarder. GitHub documents that scheduled jobs may still be delayed or dropped,
 cadence evidence and an independent readiness monitor remain production gates; recovery is
 not the normal delivery path.
 
+WA-LAT-6 scheduler decision (2026-09-12): observed GitHub schedule history contained
+multi-hour gaps, so it is not the authoritative recovery clock. Supabase Cron invokes a
+fixed, service-only dispatcher every minute for WhatsApp ingestion and AI extraction. The
+dispatcher uses asynchronous `pg_net` GET requests to the existing protected routes and
+reads the base URL and bearer credential from named Supabase Vault entries. Browser roles
+cannot execute the dispatcher, arbitrary targets are rejected, and existing database claims
+and ordering leases make temporary overlap with GitHub and Vercel fallbacks idempotent.
+
 ## Deployment Requirements
 
 Dashboard latency decision (2026-09-12): deploy Vercel functions in `hnd1` near the confirmed Supabase primary in Tokyo (`ap-northeast-1`). The controlled preview reduced review-queue median click-to-rows from 1905 ms to 913 ms; p95 remains above target, so this does not establish complete performance readiness. Keep selective prefetch suppression disabled by default. `vercel.json` preserves existing cron jobs. Region-only commit `c62e3ef` was built and promoted as deployment `dpl_CUpLfdbKjMnDntcXEuShjQQdsVtH`; public-domain authenticated Clients, Ledger and Review Queue smoke verified populated rows and hnd1 responses. Original Edge middleware remains unchanged. The release commit is now integrated into main and pushed to GitHub. The subsequent Git-triggered deployment `dpl_jkyuKGWc8XiDEyELvAcdefJzsMF9` is READY and serves khataone.vercel.app; its API metadata confirms the exact commit and hnd1. Other diagnostic/recovery changes are not included. See `docs/performance/dashboard-latency-results.md` for deployment evidence, limitations and rollback.

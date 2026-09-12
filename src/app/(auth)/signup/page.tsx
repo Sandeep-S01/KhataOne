@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 export default function SignupPage() {
   return (
     <section className="grid min-h-screen lg:grid-cols-2">
-      <div className="flex flex-col justify-center px-6 py-10 sm:px-12">
+      <div className="flex flex-col px-6 py-10 sm:px-12 lg:py-16">
         <div className="mx-auto w-full max-w-sm">
           <Link
             href="/"
@@ -82,12 +82,12 @@ export default function SignupPage() {
 
           <div className="mt-6 grid gap-3 text-sm text-khata-muted">
             {assurances.map((item) => (
-              <div key={item} className="flex gap-2.5">
+              <div key={item} className="flex items-start gap-2.5">
                 <ShieldCheck
                   className="mt-0.5 size-4 shrink-0 text-khata-green"
                   aria-hidden="true"
                 />
-                <p>{item}</p>
+                <p className="leading-5">{item}</p>
               </div>
             ))}
           </div>

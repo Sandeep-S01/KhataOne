@@ -12,7 +12,6 @@ import {
   FieldLabel,
   FilterBar,
   FormMessage,
-  InfoNote,
   Input,
   Select,
 } from "@/components/design-system";
@@ -74,7 +73,7 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
 
       <label className="block">
         <FieldLabel>
-          Start
+          Custom period start
         </FieldLabel>
         <Input
           name="period_start"
@@ -87,7 +86,7 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
 
       <label className="block">
         <FieldLabel>
-          End
+          Custom period end
         </FieldLabel>
         <Input
           name="period_end"
@@ -123,11 +122,6 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
           {pending ? "Generating..." : "Generate"}
         </Button>
       </div>
-
-      <InfoNote>
-        GST summaries prepare review and export data from approved transactions;
-        they do not submit filings.
-      </InfoNote>
 
       {state.message && (
         <FormMessage

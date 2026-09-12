@@ -6,6 +6,23 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-12 WA-LAT recovery scheduling follow-up: production deployment and CI for commit
+  `943a2d1` passed, but no recovery heartbeat appeared at the expected GitHub schedule slot.
+  Read-only Actions history confirms multi-hour gaps between nominal five-minute runs, so
+  GitHub scheduling is retained only as a temporary fallback and WA-LAT-6 recovery cadence
+  is not certified. Repository and official Supabase flow inspection found the smallest
+  replacement: Supabase Cron can invoke the two existing protected GET routes through
+  asynchronous `pg_net`, with URL and bearer secret held in Vault. Added a read-only
+  prerequisite/conflict/secret-presence preflight. Hosted preflight confirmed PostgreSQL 17,
+  active Vault, and available but disabled `pg_cron` and `pg_net`. The owner enabled both and
+  provisioned the two named Vault values without exposing them. Migration `20260912240000`
+  adds a fixed-target, service-only Vault-backed dispatcher and two one-minute Supabase Cron
+  jobs for the existing protected recovery routes. The owner applied migration `20260912240000`;
+  hosted verification found both jobs active with successful Cron dispatches and three
+  consecutive one-minute application heartbeats per worker. All six worker runs succeeded in
+  about 0.1-0.95 seconds while idle; both due queues, retry counts, recent failures, and stale
+  leases were zero. The longer cadence window and suppressed-wake-up recovery canary remain
+  pending before GitHub fallback removal; no queue or financial record was mutated by checks.
 - 2026-09-12 hosted WA-LAT migration gate passed. The owner applied migrations
   `20260912200000`, `20260912210000`, and `20260912220000` in order. Read-only hosted
   verification confirms the ordering-lease and worker-run tables are available, the
@@ -350,3 +367,13 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-06 | Added a shared icon-panel primitive and migrated settings assurance cards, platform roadmap cards, and the legacy module page wrapper to shared dashboard presentation patterns. |
 | 2026-09-06 | Centralized dashboard table numeric and action header alignment into shared design-system table header classes across operational list, overview, detail, history, and legacy module tables. |
 | 2026-09-06 | Centralized common dashboard table row typography into shared primary, secondary, and monospace text classes across client, inbox, review, ledger, GST, reports, exports, audit, operations, platform, and legacy module rows. |
+| 2026-09-12 | Cleaned obsolete repository artifacts by removing generated caches, the redundant legacy credential file, an unused module-page component, the superseded frontend-only prototype document, and unreferenced logo exports; retained active assets and release evidence, then verified lint and TypeScript. |
+| 2026-09-12 | Completed Dashboard UI Refinement step 1 locally: Settings now distinguishes configuration presence from verified health, missing firm/client values say `Not provided`, Ledger totals explicitly describe the current page, and Operations empty timing values use contextual labels. Added focused semantic regression coverage without changing queries, mutations, authorization, or accounting behavior. |
+| 2026-09-12 | Completed Dashboard UI Refinement step 2 locally: Export fields now follow the selected transaction/GST format and the action says `Queue export`; failed Operations jobs are directly reachable through the existing status filter; GST date inputs explicitly define a custom period and duplicate filing-boundary copy was removed. Existing server validation, queue states, audit behavior, and per-job retry permissions were preserved. |
+| 2026-09-12 | Completed Dashboard UI Refinement step 3 locally: shared pagination captions and record-count grammar are consistent; dashboard dates use centralized India-local formatting; repeated row actions have descriptive accessible labels; empty states are denser; missing/no-data labels are contextual; controls retain compact desktop sizing with larger mobile targets; and shared cards now follow the documented 8px radius. Added focused regression coverage without changing data access or workflow behavior. |
+| 2026-09-12 | Completed Dashboard UI Refinement step 4 locally: retained the compact top bar and sidebar widths, shortened repeated approval copy, kept one collapse control in a stable header location, added keyboard-visible collapsed-navigation tooltips through a body portal, added navigation scroll containment, moved Platform after Settings into a Planned group, and replaced the mobile details menu with a native modal dialog supporting Escape, outside-click, focus trapping, and focus return. Focused dashboard tests, lint, TypeScript, release preflight, production build, and unauthenticated route smoke checks passed; authenticated viewport and focus verification remains pending credentials. |
+| 2026-09-12 | Completed Dashboard UI Refinement step 5 locally: top-level operational headers are more concise; Overview zero-count attention and readiness signals are neutral; worklist actions name their destinations; Client status chips explicitly cover the current page; Ledger retains localized dates and handoff language; and Platform shows neutral Planned items in at most three columns. Focused regression coverage was added without changing queries, mutations, authorization, accounting, or audit behavior. |
+| 2026-09-12 | Prepared Dashboard UI Refinement step 6 verification: added a fail-closed read-only Playwright harness for six authenticated viewport sizes, page overflow, accessible names, mobile targets, skip-link/sidebar/mobile-menu focus behavior, private screenshots, and a 200% zoom stress check. Chromium and the unauthenticated login shell passed at 320x568, 390x844, 768x1024, 1024x768, 1280x800, and 1440x900. The protected dashboard run correctly refuses to start because authorized `LIVE_DASHBOARD_EMAIL` and `LIVE_DASHBOARD_PASSWORD` credentials are absent; Phase 6 remains incomplete without that evidence. |
+| 2026-09-12 | Aligned login and registration to a stable desktop top rhythm, corrected password visibility icon centering against the input itself, and made assurance icon/text alignment explicit. Audited the existing browser constraints and authoritative server-action validation before the live-validation follow-up. |
+| 2026-09-12 | Refined registration field labels and spacing into one compact, non-shifting rhythm and added accessible real-time validation for name, firm, email, and password. Browser and server actions now consume the same validation rules; invalid submissions are blocked locally and still revalidated authoritatively on the server. |
+| 2026-09-12 | Passed the full local release gate for the dashboard refinement, auth validation, and Supabase recovery scheduler changes: repository preflight, hardening/security/worker/database policy suites, dashboard regression harnesses, accounting RPC tests, dependency audit, lint, TypeScript, and production build all passed. External capacity certification and hosted provider/tenant checks remain explicitly outside the local gate. |

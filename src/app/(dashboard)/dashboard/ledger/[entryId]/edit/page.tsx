@@ -14,6 +14,7 @@ import {
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -75,7 +76,7 @@ export default async function EditLedgerEntryPage({
         >
           <DetailList
             items={[
-              { label: "Date", value: entry.entry_date ?? "Pending", mono: true },
+              { label: "Date", value: formatDisplayDate(entry.entry_date), mono: true },
               { label: "Account", value: entry.account_name },
               { label: "Debit", value: formatCurrency(entry.debit_amount), mono: true },
               { label: "Credit", value: formatCurrency(entry.credit_amount), mono: true },

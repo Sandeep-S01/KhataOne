@@ -29,6 +29,10 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import {
+  formatDisplayDateRange,
+  formatDisplayDateTime,
+} from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -197,12 +201,12 @@ export default async function ClientDetailPage({
           <DetailList
             labelWidth="130px"
             items={[
-              { label: "Contact", value: client.contact_name || "Pending" },
-              { label: "Phone", value: client.phone || "Pending", mono: true },
+              { label: "Contact", value: client.contact_name || "Not provided" },
+              { label: "Phone", value: client.phone || "Not provided", mono: true },
               { label: "WhatsApp", value: client.whatsapp_phone || "Not linked", mono: true },
-              { label: "Email", value: client.email || "Pending" },
-              { label: "GSTIN", value: client.gstin || "Pending", mono: true },
-              { label: "State code", value: client.state_code || "Pending", mono: true },
+              { label: "Email", value: client.email || "Not provided" },
+              { label: "GSTIN", value: client.gstin || "Not provided", mono: true },
+              { label: "State code", value: client.state_code || "Not provided", mono: true },
               { label: "Filing", value: client.filing_frequency },
             ]}
           />
@@ -244,9 +248,9 @@ export default async function ClientDetailPage({
                       </StatusChip>
                     </td>
                     <td className={`${tableNumericCellClass} text-xs`}>
-                      {new Date(
+                      {formatDisplayDateTime(
                         document.received_at ?? document.created_at,
-                      ).toLocaleString("en-IN")}
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -257,7 +261,13 @@ export default async function ClientDetailPage({
 
         <SectionCard
           title="GST readiness"
-          actions={<RecordCount value={gstPeriods.length} label="periods" />}
+          actions={
+            <RecordCount
+              value={gstPeriods.length}
+              label="periods"
+              singularLabel="period"
+            />
+          }
           bodyClassName="p-0"
         >
           {gstPeriods.length === 0 ? (
@@ -288,7 +298,10 @@ export default async function ClientDetailPage({
                   return (
                     <tr key={period.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {period.period_start} to {period.period_end}
+                        {formatDisplayDateRange(
+                          period.period_start,
+                          period.period_end,
+                        )}
                         <p className={`${tableSecondaryTextClass} capitalize`}>
                           {period.filing_type}
                         </p>
@@ -303,7 +316,10 @@ export default async function ClientDetailPage({
                         {formatCurrency(summary?.net_tax_payable ?? 0)}
                       </td>
                       <td className={tableActionCellClass}>
-                        <TextLink href={`/dashboard/gst-summary/${period.id}`}>
+                        <TextLink
+                          href={`/dashboard/gst-summary/${period.id}`}
+                          aria-label={`Open GST period for ${client.business_name}`}
+                        >
                           Open
                         </TextLink>
                       </td>
@@ -338,7 +354,7 @@ export default async function ClientDetailPage({
                         {audit.actor_user_id || "system"}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        {new Date(audit.created_at).toLocaleString("en-IN")}
+                        {formatDisplayDateTime(audit.created_at)}
                       </td>
                     </tr>
                   ))}

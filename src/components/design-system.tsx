@@ -22,10 +22,10 @@ const buttonVariants = {
 };
 
 const buttonSizes = {
-  sm: "h-8 px-3 text-xs",
-  md: "h-9 px-4 py-2 text-sm",
-  lg: "h-10 px-8 text-sm",
-  icon: "h-9 w-9 p-0",
+  sm: "h-11 px-3 text-xs md:h-8",
+  md: "h-11 px-4 py-2 text-sm md:h-9",
+  lg: "h-11 px-8 text-sm md:h-10",
+  icon: "h-11 w-11 p-0 md:h-9 md:w-9",
 };
 
 export function Button({
@@ -83,18 +83,20 @@ export function TextLink({
   href,
   children,
   className,
+  ...props
 }: {
   href: ComponentPropsWithoutRef<typeof Link>["href"] | string;
   children: React.ReactNode;
   className?: string;
-}) {
+} & Omit<ComponentPropsWithoutRef<typeof Link>, "href" | "children" | "className">) {
   return (
     <Link
       href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
       className={cn(
-        "inline-flex items-center justify-end gap-1.5 text-sm font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green [&_svg]:size-4 [&_svg]:shrink-0",
+        "inline-flex min-h-11 items-center justify-end gap-1.5 text-sm font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0 [&_svg]:size-4 [&_svg]:shrink-0",
         className,
       )}
+      {...props}
     >
       {children}
     </Link>
@@ -104,7 +106,7 @@ export function TextLink({
 type InputProps = ComponentPropsWithoutRef<"input">;
 
 export const controlClassName =
-  "flex h-9 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
+  "flex h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
 
 export function Input({ className, type, ...props }: InputProps) {
   return (
@@ -352,13 +354,17 @@ export function SectionCard({
 export function RecordCount({
   value,
   label = "records",
+  singularLabel = label === "records" ? "record" : undefined,
 }: {
   value: number;
   label?: string;
+  singularLabel?: string;
 }) {
+  const resolvedLabel = value === 1 && singularLabel ? singularLabel : label;
+
   return (
     <span className="font-mono text-xs text-khata-muted">
-      {value} {label}
+      {value} {resolvedLabel}
     </span>
   );
 }
@@ -396,13 +402,13 @@ export function PaginationControls({
   };
 
   const disabledClassName = cn(
-    "inline-flex h-8 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted px-3 text-xs font-medium text-khata-muted opacity-60",
+    "inline-flex h-11 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted px-3 text-xs font-medium text-khata-muted opacity-60 md:h-8",
   );
 
   return (
     <div className="flex flex-col gap-2 border-t border-khata-border bg-khata-paperMuted/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <span className="font-mono text-xs text-khata-muted">
-        Page {page} {label}
+        Page {page} - {label}
       </span>
       <div className="flex items-center gap-2">
         {page > 1 ? (
@@ -562,7 +568,7 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center px-6 py-14 text-center">
+    <div className="flex flex-col items-center px-6 py-10 text-center md:py-12">
       <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted text-khata-green">
         <Icon className="h-5 w-5" />
       </div>

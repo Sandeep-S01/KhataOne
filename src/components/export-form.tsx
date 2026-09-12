@@ -1,7 +1,7 @@
 "use client";
 
 import { Download, FileSpreadsheet, FileText } from "lucide-react";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 import {
   createExportAction,
@@ -17,11 +17,14 @@ import {
   Input,
   Select,
 } from "@/components/design-system";
+import { formatDisplayDateRange } from "@/lib/format";
 
 export type ExportClientOption = {
   id: string;
   business_name: string;
 };
+
+type ExportType = "csv_transactions" | "gst_summary" | "pdf_summary";
 
 export type ExportPeriodOption = {
   id: string;
@@ -77,12 +80,20 @@ export function ExportForm({
     createExportAction,
     initialState,
   );
+  const [exportType, setExportType] = useState<ExportType>("csv_transactions");
+  const isTransactionExport = exportType === "csv_transactions";
 
   return (
     <FilterBar
       action={formAction}
     >
-      <div className="grid gap-3 lg:grid-cols-[1fr_1fr_0.8fr_0.8fr_auto]">
+      <div
+        className={
+          isTransactionExport
+            ? "grid gap-3 lg:grid-cols-[1fr_1fr_0.8fr_0.8fr_auto]"
+            : "grid gap-3 lg:grid-cols-[1fr_2fr_auto]"
+        }
+      >
         <label className="block">
           <FieldLabel>
             Type
@@ -90,7 +101,8 @@ export function ExportForm({
           <Select
             name="export_type"
             className="mt-1"
-            defaultValue="csv_transactions"
+            value={exportType}
+            onChange={(event) => setExportType(event.target.value as ExportType)}
           >
             <option value="csv_transactions">Transactions CSV</option>
             <option value="gst_summary">GST summary CSV</option>
@@ -99,50 +111,59 @@ export function ExportForm({
           <FieldError message={state.fieldErrors?.export_type} />
         </label>
 
-        <label className="block">
-          <FieldLabel>
-            Client for transactions
-          </FieldLabel>
-          <Select
-            name="client_id"
-            className="mt-1"
-            defaultValue=""
-          >
-            <option value="">Select client</option>
-            {clients.map((client) => (
-              <option key={client.id} value={client.id}>
-                {client.business_name}
-              </option>
-            ))}
-          </Select>
-          <FieldError message={state.fieldErrors?.client_id} />
-        </label>
+        {isTransactionExport ? (
+          <>
+            <label className="block">
+              <FieldLabel>Client</FieldLabel>
+              <Select name="client_id" className="mt-1" defaultValue="">
+                <option value="">Select client</option>
+                {clients.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {client.business_name}
+                  </option>
+                ))}
+              </Select>
+              <FieldError message={state.fieldErrors?.client_id} />
+            </label>
 
-        <label className="block">
-          <FieldLabel>
-            Start
-          </FieldLabel>
-          <Input
-            name="period_start"
-            type="date"
-            defaultValue={monthStart()}
-            className="mt-1"
-          />
-          <FieldError message={state.fieldErrors?.period_start} />
-        </label>
+            <label className="block">
+              <FieldLabel>Period start</FieldLabel>
+              <Input
+                name="period_start"
+                type="date"
+                defaultValue={monthStart()}
+                className="mt-1"
+              />
+              <FieldError message={state.fieldErrors?.period_start} />
+            </label>
 
-        <label className="block">
-          <FieldLabel>
-            End
-          </FieldLabel>
-          <Input
-            name="period_end"
-            type="date"
-            defaultValue={monthEnd()}
-            className="mt-1"
-          />
-          <FieldError message={state.fieldErrors?.period_end} />
-        </label>
+            <label className="block">
+              <FieldLabel>Period end</FieldLabel>
+              <Input
+                name="period_end"
+                type="date"
+                defaultValue={monthEnd()}
+                className="mt-1"
+              />
+              <FieldError message={state.fieldErrors?.period_end} />
+            </label>
+          </>
+        ) : (
+          <label className="block">
+            <FieldLabel>Generated GST period</FieldLabel>
+            <Select name="gst_period_id" className="mt-1" defaultValue="">
+              <option value="">Select generated GST period</option>
+              {periods.map((period) => (
+                <option key={period.id} value={period.id}>
+                  {clientName(period)} |{" "}
+                  {formatDisplayDateRange(period.period_start, period.period_end)} |{" "}
+                  {period.status.replaceAll("_", " ")}
+                </option>
+              ))}
+            </Select>
+            <FieldError message={state.fieldErrors?.gst_period_id} />
+          </label>
+        )}
 
         <div className="flex items-end">
           <Button
@@ -158,32 +179,12 @@ export function ExportForm({
             ) : (
               <>
                 <FileSpreadsheet className="size-4" />
-                Export
+                Queue export
               </>
             )}
           </Button>
         </div>
       </div>
-
-      <label className="mt-3 block">
-        <FieldLabel>
-          GST period for summary exports
-        </FieldLabel>
-        <Select
-          name="gst_period_id"
-          className="mt-1"
-          defaultValue=""
-        >
-          <option value="">Select generated GST period</option>
-          {periods.map((period) => (
-            <option key={period.id} value={period.id}>
-              {clientName(period)} | {period.period_start} to{" "}
-              {period.period_end} | {period.status.replaceAll("_", " ")}
-            </option>
-          ))}
-        </Select>
-        <FieldError message={state.fieldErrors?.gst_period_id} />
-      </label>
 
       <div className="mt-3 flex flex-wrap gap-2 text-xs text-khata-muted">
         <span className="inline-flex items-center gap-1">

@@ -28,6 +28,7 @@ import { StatusChip } from "@/components/status-chip";
 import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateTime } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
@@ -155,7 +156,7 @@ export default async function InboxPage({
       <PageHeader
         eyebrow="Inbox"
         title="WhatsApp document intake"
-        description="Track inbound WhatsApp messages, client matching, media download, and queue status before AI extraction."
+        description="Track WhatsApp intake from receipt through client matching and extraction queueing."
       />
 
       <PageBody>
@@ -266,7 +267,7 @@ export default async function InboxPage({
                         </StatusChip>
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        {new Date(message.received_at).toLocaleString("en-IN")}
+                        {formatDisplayDateTime(message.received_at)}
                       </td>
                       <td className={tableActionCellClass}>
                         <span className="text-xs font-medium text-khata-muted">

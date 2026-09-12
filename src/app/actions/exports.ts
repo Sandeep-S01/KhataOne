@@ -27,7 +27,7 @@ export async function createExportAction(
   formData: FormData,
 ): Promise<ExportActionState> {
   const exportType = readString(formData, "export_type") as ExportType;
-  // Both selectors remain mounted; ignore the selector unrelated to this export.
+  // Treat the selected type as authoritative even if a crafted request adds extra fields.
   const clientId = exportType === "csv_transactions" ? readString(formData, "client_id") : "";
   const gstPeriodId = exportType === "csv_transactions" ? "" : readString(formData, "gst_period_id");
   const periodStart = readString(formData, "period_start");

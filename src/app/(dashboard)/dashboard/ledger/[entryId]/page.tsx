@@ -22,6 +22,7 @@ import {
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDate, formatDisplayDateTime } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -107,7 +108,7 @@ export default async function LedgerEntryPage({
           <DetailList
             items={[
               { label: "Client", value: client?.business_name ?? "Unknown client" },
-              { label: "Date", value: entry.entry_date ?? "Pending", mono: true },
+              { label: "Date", value: formatDisplayDate(entry.entry_date), mono: true },
               { label: "Account", value: entry.account_name },
               { label: "Debit", value: formatCurrency(entry.debit_amount), mono: true },
               { label: "Credit", value: formatCurrency(entry.credit_amount), mono: true },
@@ -119,10 +120,10 @@ export default async function LedgerEntryPage({
         <SectionCard title="Source transaction">
           <DetailList
             items={[
-              { label: "Invoice", value: transaction?.invoice_number ?? "Pending", mono: true },
-              { label: "Party", value: transaction?.party_name ?? "Pending" },
-              { label: "Type", value: transaction?.transaction_type ?? "Unknown" },
-              { label: "Status", value: transaction?.status ?? "Unknown" },
+              { label: "Invoice", value: transaction?.invoice_number ?? "Not provided", mono: true },
+              { label: "Party", value: transaction?.party_name ?? "Not provided" },
+              { label: "Type", value: transaction?.transaction_type ?? "Not provided" },
+              { label: "Status", value: transaction?.status ?? "Not provided" },
               { label: "Amount", value: formatCurrency(transaction?.total_amount ?? null), mono: true },
             ]}
           />
@@ -172,7 +173,7 @@ export default async function LedgerEntryPage({
                         {metadata?.correction_note || "No note"}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        {new Date(audit.created_at).toLocaleString("en-IN")}
+                        {formatDisplayDateTime(audit.created_at)}
                       </td>
                     </tr>
                   );

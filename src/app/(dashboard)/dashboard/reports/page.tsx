@@ -26,6 +26,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateRange } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -117,7 +118,7 @@ export default async function ReportsPage() {
       <PageHeader
         eyebrow="Reports"
         title="CA reports"
-        description="Review client GST readiness, unresolved work, and export activity before sharing files with clients."
+        description="Review GST readiness and unresolved work before sharing exports."
         actions={
         <ActionLink
           href="/dashboard/exports"
@@ -147,7 +148,13 @@ export default async function ReportsPage() {
 
       <SectionCard
         title="GST readiness report"
-        actions={<RecordCount value={periods?.length ?? 0} label="periods" />}
+        actions={
+          <RecordCount
+            value={periods?.length ?? 0}
+            label="periods"
+            singularLabel="period"
+          />
+        }
         bodyClassName="p-0"
       >
 
@@ -191,10 +198,13 @@ export default async function ReportsPage() {
                         {client?.business_name ?? "Unknown client"}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {client?.gstin ?? "Pending"}
+                        {client?.gstin ?? "Not provided"}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                        {period.period_start} to {period.period_end}
+                        {formatDisplayDateRange(
+                          period.period_start,
+                          period.period_end,
+                        )}
                       </td>
                       <td className={tableCellClass}>
                         <StatusChip tone={statusTone(period.status)}>
@@ -213,6 +223,7 @@ export default async function ReportsPage() {
                       <td className={tableActionCellClass}>
                         <TextLink
                           href={`/dashboard/gst-summary/${period.id}`}
+                          aria-label={`Open GST period for ${client?.business_name ?? "unknown client"}`}
                         >
                           Open
                           <ArrowRight className="size-4" />

@@ -47,7 +47,7 @@ function statusTone(status: string) {
 
 function formatCurrency(value: number | null) {
   if (value === null || value === undefined) {
-    return "Pending";
+    return "Not provided";
   }
 
   return new Intl.NumberFormat("en-IN", {
@@ -150,7 +150,7 @@ export default async function TransactionReviewPage({
             <DetailList
               items={[
                 { label: "Client", value: client?.business_name ?? "Unknown client" },
-                { label: "Invoice", value: transaction.invoice_number ?? "Pending", mono: true },
+                { label: "Invoice", value: transaction.invoice_number ?? "Not provided", mono: true },
                 { label: "Amount", value: formatCurrency(transaction.total_amount), mono: true },
                 { label: "Confidence", value: `${Math.round(transaction.confidence_score * 100)}%`, mono: true },
                 { label: "Source", value: extractionSource(extraction?.model) },

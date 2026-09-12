@@ -15,7 +15,6 @@ build
 .env.test.local
 .env.production.local
 *.env
-OldpplicationImpEnvCredential.env
 
 # logs
 npm-debug.log*

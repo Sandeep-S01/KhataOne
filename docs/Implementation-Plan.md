@@ -331,14 +331,14 @@ ordering, lease, memory, and provider-rate tests pass.
 Exit gate: event-driven delivery remains within target during normal operation and a
 deliberately suppressed wake-up is recovered by the sweep within its documented bound.
 
-Local implementation status (2026-09-12): complete. Protected recovery routes now record
-service-only run heartbeats and emit aggregate threshold alerts; readiness and Operations
-surface queue latency, lease, retry, failure, and worker completion/success data. The
-external five-minute GitHub schedules are offset from the top of the hour and fail on a
-non-successful worker payload. Migration `20260912220000` and deployment are pending.
-Because GitHub schedules can be delayed or dropped, the exit gate remains open until an
-observation window proves cadence and a suppressed-wake-up canary is recovered within the
-documented five-minute schedule plus scheduler/runtime variance.
+Implementation status (2026-09-12): protected recovery routes record service-only run
+heartbeats and expose aggregate health through readiness and Operations. Production evidence
+showed the external GitHub schedule has multi-hour gaps, so migrations `20260912230000` and
+`20260912240000` move authoritative recovery to one-minute Supabase Cron jobs. A locked-down
+database dispatcher reads only named Vault configuration and asynchronously calls the two
+existing bearer-protected routes through `pg_net`; it cannot target arbitrary URLs or expose
+the secret to browser roles. GitHub remains temporary fallback until hosted cadence and the
+suppressed-wake-up canary pass. The exit gate remains open until that evidence is collected.
 
 ### Verification And Rollout
 
@@ -359,6 +359,50 @@ documented five-minute schedule plus scheduler/runtime variance.
 Rollback: disable immediate wake-up and restore the previous scheduler-driven path.
 Never roll back by deleting queued events, source media, extraction history, transactions,
 or audit records.
+
+## Phase 12B: Dashboard UI Refinement
+
+Refine the existing CA operations console without redesigning it or changing its
+Supabase, authorization, accounting, or audit boundaries.
+
+### Delivery Sequence
+
+1. Semantic accuracy: configuration presence, missing values, page-scoped ledger
+   totals, operational empty states, and GST preparation boundaries. Completed
+   locally on 2026-09-12.
+2. Workflow improvements: conditional export fields, explicit queue actions,
+   Operations failure navigation, and custom GST period clarity. Completed
+   locally on 2026-09-12.
+3. Shared component corrections: pagination, pluralization, date formatting,
+   accessible row actions, empty-state density, mobile control targets, and
+   documented card radius. Completed locally on 2026-09-12.
+4. Navigation and shell: keyboard tooltips, stable sidebar controls, scroll
+   containment, roadmap placement, and mobile-menu focus behavior. Completed
+   locally on 2026-09-12; authenticated viewport verification remains in step 6.
+5. Page refinement: concise headers, neutral zero states, clearer work links,
+   client count scope, ledger dates, and Platform roadmap density. Completed
+   locally on 2026-09-12.
+6. Authenticated responsive and accessibility verification across mobile, tablet,
+   desktop, keyboard-only, and 200% zoom scenarios. The read-only Playwright
+   harness and six-viewport public baseline are complete locally; the authenticated
+   run remains blocked by missing `LIVE_DASHBOARD_EMAIL` and
+   `LIVE_DASHBOARD_PASSWORD`.
+
+Run the remaining gate with an authorized test account:
+
+```powershell
+$env:LIVE_DASHBOARD_BASE_URL='http://127.0.0.1:3000'
+$env:LIVE_DASHBOARD_EMAIL='<authorized-test-user>'
+$env:LIVE_DASHBOARD_PASSWORD='<test-password>'
+npm.cmd run verify:dashboard-responsive
+```
+
+The harness performs read-only navigation and stores potentially sensitive
+screenshots only under ignored `.codex-tmp/dashboard-accessibility/` by default.
+
+Exit gate: dashboard language describes only verified state, repeated workflows are
+efficient, and authenticated viewport checks pass without changing financial or
+tenant-isolation behavior.
 
 ## Phase 13: Long-Term Platform Extensions
 

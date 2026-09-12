@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useId, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { dashboardNavItems } from "@/lib/dashboard/nav";
 import { cn } from "@/lib/utils";
@@ -58,11 +60,117 @@ const groups = [
     items: [
       "/dashboard/audit-logs",
       "/dashboard/operations",
-      "/dashboard/platform",
       "/dashboard/settings",
     ],
   },
+  {
+    title: "Planned",
+    items: ["/dashboard/platform"],
+  },
 ];
+
+type DashboardNavItem = (typeof dashboardNavItems)[number];
+
+function DashboardNavLink({
+  item,
+  icon: Icon,
+  isActive,
+  collapsed,
+  pathname,
+  onNavigate,
+}: {
+  item: DashboardNavItem;
+  icon: LucideIcon;
+  isActive: boolean;
+  collapsed: boolean;
+  pathname: string;
+  onNavigate?: () => void;
+}) {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const tooltipId = useId();
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
+
+  useLayoutEffect(() => {
+    if (!collapsed || !tooltipVisible) {
+      return;
+    }
+
+    const updatePosition = () => {
+      const rect = linkRef.current?.getBoundingClientRect();
+
+      if (rect) {
+        setTooltipPosition({
+          left: rect.right + 8,
+          top: rect.top + rect.height / 2,
+        });
+      }
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [collapsed, tooltipVisible]);
+
+  const showTooltip = () => {
+    if (collapsed) {
+      setTooltipVisible(true);
+    }
+  };
+
+  const hideTooltip = () => setTooltipVisible(false);
+  const href = item.href as string;
+
+  return (
+    <>
+      <Link
+        ref={linkRef}
+        href={item.href}
+        prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" &&
+          (pathname === href || href === "/dashboard") ? false : undefined}
+        onClick={onNavigate}
+        onMouseEnter={showTooltip}
+        onMouseLeave={hideTooltip}
+        onFocus={showTooltip}
+        onBlur={hideTooltip}
+        aria-current={isActive ? "page" : undefined}
+        aria-label={collapsed ? item.label : undefined}
+        aria-describedby={collapsed && tooltipVisible ? tooltipId : undefined}
+        className={cn(
+          "flex items-center rounded-lg text-xs font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+          collapsed
+            ? "mx-auto size-9 justify-center"
+            : "min-h-11 gap-2.5 px-2.5 py-2 lg:min-h-9",
+          isActive
+            ? "bg-khata-green/10 font-semibold text-khata-green shadow-sm"
+            : "text-khata-ink/80 hover:bg-khata-paperMuted hover:text-khata-ink",
+        )}
+      >
+        <Icon className="size-4 shrink-0" aria-hidden="true" />
+        {!collapsed && (
+          <span className="min-w-0 flex-1 truncate">{item.label}</span>
+        )}
+      </Link>
+      {collapsed && tooltipVisible && typeof document !== "undefined" &&
+        createPortal(
+          <span
+            id={tooltipId}
+            role="tooltip"
+            className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-md bg-khata-ink px-2 py-1 text-xs font-medium text-white shadow-lg"
+            style={tooltipPosition}
+          >
+            {item.label}
+          </span>,
+          document.body,
+        )}
+    </>
+  );
+}
 
 export function DashboardNav({
   onNavigate,
@@ -79,7 +187,7 @@ export function DashboardNav({
   return (
     <nav
       className={cn(
-        "flex-1 overflow-y-auto k-scrollbar py-3",
+        "min-h-0 flex-1 overflow-y-auto k-scrollbar py-3",
         collapsed ? "px-2 space-y-4" : "px-2.5",
       )}
       aria-label="Workspace"
@@ -108,28 +216,14 @@ export function DashboardNav({
 
                 return (
                   <li key={href}>
-                    <Link
-                      href={item.href}
-                      prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" &&
-                        (pathname === href || href === "/dashboard") ? false : undefined}
-                      onClick={onNavigate}
-                      aria-current={isActive ? "page" : undefined}
-                      title={collapsed ? item.label : undefined}
-                      className={cn(
-                        "flex items-center rounded-lg text-xs font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
-                        collapsed
-                          ? "size-9 mx-auto justify-center"
-                          : "min-h-9 gap-2.5 px-2.5 py-2",
-                        isActive
-                          ? "bg-khata-green/10 font-semibold text-khata-green shadow-sm"
-                          : "text-khata-ink/80 hover:bg-khata-paperMuted hover:text-khata-ink",
-                      )}
-                    >
-                      <Icon className="size-4 shrink-0" aria-hidden="true" />
-                      {!collapsed && (
-                        <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                      )}
-                    </Link>
+                    <DashboardNavLink
+                      item={item}
+                      icon={Icon}
+                      isActive={isActive}
+                      collapsed={collapsed}
+                      pathname={pathname}
+                      onNavigate={onNavigate}
+                    />
                   </li>
                 );
               })}

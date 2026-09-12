@@ -21,6 +21,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateTime } from "@/lib/format";
 import { getGstIntegrationProvider } from "@/lib/integrations/gst";
 
 export const dynamic = "force-dynamic";
@@ -29,35 +30,35 @@ const roadmap = [
   {
     title: "Direct GST integration",
     icon: ShieldCheck,
-    status: "Future gated",
+    status: "Planned",
     description:
       "Provider-backed GSTR comparison, filing preparation, and eventual submission after compliance verification.",
   },
   {
     title: "Bank reconciliation",
     icon: Landmark,
-    status: "Future gated",
+    status: "Planned",
     description:
       "Bank statement ingestion, matching rules, unmatched items, and review-first reconciliation workflows.",
   },
   {
     title: "WhatsApp reminders",
     icon: Send,
-    status: "Future gated",
+    status: "Planned",
     description:
       "Missing document nudges, clarification loops, client confirmations, and filing-period reminders.",
   },
   {
     title: "Accounting sync",
     icon: Blocks,
-    status: "Future gated",
+    status: "Planned",
     description:
       "Tally, Zoho Books, and QuickBooks integration events using the export/audit foundation.",
   },
   {
     title: "Billing and subscriptions",
     icon: CircleDollarSign,
-    status: "Future gated",
+    status: "Planned",
     description:
       "Firm billing, plan limits, usage tracking, invoices, and subscription lifecycle workflows.",
   },
@@ -122,11 +123,11 @@ export default async function PlatformPage() {
       <PageHeader
         eyebrow="Platform"
         title="Long-term extensions"
-        description="Future platform capabilities are tracked behind explicit provider, compliance, audit, and review gates. Production v1 remains GST summary and export preparation only."
+        description="Track planned integrations behind provider, compliance, audit, and review gates."
       />
 
       <PageBody>
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {roadmap.map((item) => {
           const Icon = item.icon;
 
@@ -137,7 +138,7 @@ export default async function PlatformPage() {
               title={item.title}
               description={item.description}
               tone="brand"
-              action={<StatusChip tone="warning">{item.status}</StatusChip>}
+              action={<StatusChip tone="neutral">{item.status}</StatusChip>}
               className="k-card-hover"
             />
           );
@@ -162,7 +163,13 @@ export default async function PlatformPage() {
 
         <SectionCard
           title="Integration records"
-          actions={<RecordCount value={integrationEventCount ?? 0} label="events" />}
+          actions={
+            <RecordCount
+              value={integrationEventCount ?? 0}
+              label="events"
+              singularLabel="event"
+            />
+          }
           bodyClassName="p-0"
         >
           <DataTable minWidth={680} ariaLabel="Platform integration records">
@@ -213,7 +220,7 @@ export default async function PlatformPage() {
                         </StatusChip>
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        {new Date(item.created_at).toLocaleString("en-IN")}
+                        {formatDisplayDateTime(item.created_at)}
                       </td>
                     </tr>
                   ))

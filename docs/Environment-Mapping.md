@@ -1,8 +1,8 @@
 # KhataOne Environment Mapping
 
-The local `.env.local` file was generated from
-`OldpplicationImpEnvCredential.env`. Secret values must stay local and must not
-be copied into docs or source control.
+The local `.env.local` file uses the current application variable names. Secret
+values must stay local and must not be copied into docs or source control. The
+table below is retained only as a reference for legacy deployment environments.
 
 ## Current App Mappings
 
@@ -32,9 +32,9 @@ be copied into docs or source control.
 These keys are retained in `.env.local` for future migration work, but the
 current KhataOne app does not read them directly.
 
-## Missing For Current AI Flow
+## Required For Current AI Flow
 
-The current AI extraction implementation uses OpenAI. The old env file did not
-provide an `OPENAI_API_KEY` or `OPENAI_EXTRACTION_MODEL`, so those remain blank
-until OpenAI credentials are provided or a separate Gemini/Anthropic extraction
-provider is intentionally implemented.
+The current AI extraction implementation expects `OPENAI_API_KEY` and
+`OPENAI_EXTRACTION_MODEL` when OpenAI is enabled in the configured provider
+order. A separate Gemini or Anthropic provider must not be assumed until it is
+intentionally implemented.

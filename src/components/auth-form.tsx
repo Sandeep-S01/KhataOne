@@ -1,9 +1,13 @@
 "use client";
 
-import { useActionState, useState } from "react";
 import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import type { ComponentPropsWithoutRef } from "react";
+import { useActionState, useState } from "react";
+import type {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  FormEvent,
+} from "react";
 
 import {
   signIn,
@@ -11,6 +15,10 @@ import {
   type AuthActionState,
 } from "@/app/actions/auth";
 import { Button, FieldError, FormMessage } from "@/components/design-system";
+import {
+  type AuthFieldName,
+  validateAuthField,
+} from "@/lib/auth-validation";
 
 const initialState: AuthActionState = {
   status: "idle",
@@ -18,91 +26,157 @@ const initialState: AuthActionState = {
 };
 
 const labelClass = "text-sm font-medium leading-none text-khata-ink";
+const fieldGroupClass = "grid gap-1.5";
 const fieldClass =
-  "mt-1.5 h-9 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
+  "h-9 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus:ring-destructive disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
+
+type AuthValues = Record<AuthFieldName, string>;
+
+const initialValues: AuthValues = {
+  full_name: "",
+  firm_name: "",
+  email: "",
+  password: "",
+};
+
+function InlineFieldError({ id, message }: { id: string; message?: string }) {
+  return (
+    <span
+      id={id}
+      aria-live="polite"
+      className="min-h-4 text-right text-xs font-medium leading-4 text-destructive"
+    >
+      {message}
+    </span>
+  );
+}
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [values, setValues] = useState<AuthValues>(initialValues);
+  const [dirtyFields, setDirtyFields] = useState<
+    Partial<Record<AuthFieldName, boolean>>
+  >({});
   const [state, formAction, pending] = useActionState(
     mode === "login" ? signIn : signUp,
     initialState,
   );
-  const passwordHelpId = mode === "signup" ? "signup-password-help" : undefined;
-  const passwordErrorId = state.fieldErrors?.password
-    ? `${mode}-password-error`
-    : undefined;
-  const passwordDescription = [passwordHelpId, passwordErrorId]
-    .filter(Boolean)
-    .join(" ");
+  const activeFields: AuthFieldName[] =
+    mode === "signup"
+      ? ["full_name", "firm_name", "email", "password"]
+      : ["email", "password"];
+  const fieldError = (field: AuthFieldName) =>
+    dirtyFields[field]
+      ? validateAuthField(field, values[field])
+      : state.fieldErrors?.[field];
+  const fullNameError = fieldError("full_name");
+  const firmNameError = fieldError("firm_name");
+  const emailError = fieldError("email");
+  const passwordError = fieldError("password");
   const passwordInputId = `${mode}-password`;
+  const passwordHelpId = mode === "signup" ? "signup-password-help" : undefined;
   const forgotPasswordHref =
     "/forgot-password" as ComponentPropsWithoutRef<typeof Link>["href"];
 
+  const updateField =
+    (field: AuthFieldName) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues((current) => ({ ...current, [field]: event.target.value }));
+      setDirtyFields((current) => ({ ...current, [field]: true }));
+    };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    setDirtyFields((current) => ({
+      ...current,
+      ...Object.fromEntries(activeFields.map((field) => [field, true])),
+    }));
+
+    if (activeFields.some((field) => validateAuthField(field, values[field]))) {
+      event.preventDefault();
+    }
+  };
+
   return (
-    <form action={formAction} className="mt-6 grid gap-4">
+    <form
+      action={formAction}
+      className="mt-6 grid gap-4"
+      noValidate
+      onSubmit={handleSubmit}
+    >
       {mode === "signup" && (
         <>
-          <label className="block">
-            <span className={labelClass}>Name</span>
+          <label className={fieldGroupClass}>
+            <span className="flex min-h-4 items-center justify-between gap-3">
+              <span className={labelClass}>Full name</span>
+              <InlineFieldError
+                id="signup-full-name-error"
+                message={fullNameError}
+              />
+            </span>
             <input
               name="full_name"
               type="text"
               autoComplete="name"
               required
-              aria-invalid={Boolean(state.fieldErrors?.full_name)}
+              value={values.full_name}
+              onChange={updateField("full_name")}
+              aria-invalid={Boolean(fullNameError)}
               aria-describedby={
-                state.fieldErrors?.full_name ? "signup-full-name-error" : undefined
+                fullNameError ? "signup-full-name-error" : undefined
               }
               className={fieldClass}
             />
-            <FieldError
-              id="signup-full-name-error"
-              message={state.fieldErrors?.full_name}
-            />
           </label>
 
-          <label className="block">
-            <span className={labelClass}>Firm</span>
+          <label className={fieldGroupClass}>
+            <span className="flex min-h-4 items-center justify-between gap-3">
+              <span className={labelClass}>Firm name</span>
+              <InlineFieldError
+                id="signup-firm-name-error"
+                message={firmNameError}
+              />
+            </span>
             <input
               name="firm_name"
               type="text"
               autoComplete="organization"
               required
-              aria-invalid={Boolean(state.fieldErrors?.firm_name)}
+              value={values.firm_name}
+              onChange={updateField("firm_name")}
+              aria-invalid={Boolean(firmNameError)}
               aria-describedby={
-                state.fieldErrors?.firm_name ? "signup-firm-name-error" : undefined
+                firmNameError ? "signup-firm-name-error" : undefined
               }
               className={fieldClass}
-            />
-            <FieldError
-              id="signup-firm-name-error"
-              message={state.fieldErrors?.firm_name}
             />
           </label>
         </>
       )}
 
-      <label className="block">
-        <span className={labelClass}>Work email</span>
+      <label className={fieldGroupClass}>
+        <span className="flex min-h-4 items-center justify-between gap-3">
+          <span className={labelClass}>Work email</span>
+          {mode === "signup" && (
+            <InlineFieldError id="signup-email-error" message={emailError} />
+          )}
+        </span>
         <input
           name="email"
           type="email"
           autoComplete="email"
           required
-          aria-invalid={Boolean(state.fieldErrors?.email)}
-          aria-describedby={
-            state.fieldErrors?.email ? `${mode}-email-error` : undefined
-          }
+          value={values.email}
+          onChange={updateField("email")}
+          aria-invalid={Boolean(emailError)}
+          aria-describedby={emailError ? `${mode}-email-error` : undefined}
           className={fieldClass}
         />
-        <FieldError
-          id={`${mode}-email-error`}
-          message={state.fieldErrors?.email}
-        />
+        {mode === "login" && (
+          <FieldError id="login-email-error" message={emailError} />
+        )}
       </label>
 
-      <div className="block">
-        <div className="flex items-center justify-between gap-3">
+      <div className={fieldGroupClass}>
+        <div className="flex min-h-4 items-center justify-between gap-3">
           <label htmlFor={passwordInputId} className={labelClass}>
             Password
           </label>
@@ -123,8 +197,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             autoComplete={mode === "login" ? "current-password" : "new-password"}
             required
             minLength={8}
-            aria-invalid={Boolean(state.fieldErrors?.password)}
-            aria-describedby={passwordDescription || undefined}
+            value={values.password}
+            onChange={updateField("password")}
+            aria-invalid={Boolean(passwordError)}
+            aria-describedby={
+              mode === "signup"
+                ? passwordHelpId
+                : passwordError
+                  ? "login-password-error"
+                  : undefined
+            }
             className={`${fieldClass} pr-10`}
           />
           <button
@@ -140,27 +222,27 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             )}
           </button>
         </span>
-        {mode === "signup" && (
-          <p id={passwordHelpId} className="mt-1 text-xs leading-5 text-khata-muted">
-            Use at least 8 characters.
+        {mode === "signup" ? (
+          <p
+            id={passwordHelpId}
+            aria-live="polite"
+            className={`text-xs font-medium leading-4 ${
+              passwordError ? "text-destructive" : "text-khata-muted"
+            }`}
+          >
+            {passwordError ?? "Use at least 8 characters."}
           </p>
+        ) : (
+          <FieldError id="login-password-error" message={passwordError} />
         )}
-        <FieldError
-          id={`${mode}-password-error`}
-          message={state.fieldErrors?.password}
-        />
       </div>
 
       <FormMessage
-        message={state.message}
+        message={state.fieldErrors ? undefined : state.message}
         tone={state.status === "success" ? "success" : "danger"}
       />
 
-      <Button
-        type="submit"
-        disabled={pending}
-        className="w-full"
-      >
+      <Button type="submit" disabled={pending} className="w-full">
         {pending && <LoaderCircle className="animate-spin" aria-hidden="true" />}
         {pending
           ? "Working..."

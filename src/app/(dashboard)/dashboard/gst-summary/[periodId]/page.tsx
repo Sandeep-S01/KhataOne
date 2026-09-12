@@ -22,6 +22,11 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import {
+  formatDisplayDate,
+  formatDisplayDateRange,
+  formatDisplayDateTime,
+} from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -127,10 +132,18 @@ export default async function GstPeriodPage({
           <DetailList
             items={[
               { label: "Client", value: client?.business_name ?? "Unknown client" },
-              { label: "GSTIN", value: client?.gstin ?? "Pending", mono: true },
-              { label: "Period", value: `${period.period_start} to ${period.period_end}`, mono: true },
+              { label: "GSTIN", value: client?.gstin ?? "Not provided", mono: true },
+              {
+                label: "Period",
+                value: formatDisplayDateRange(period.period_start, period.period_end),
+                mono: true,
+              },
               { label: "Filing", value: period.filing_type },
-              { label: "Generated", value: summary?.generated_at ? new Date(summary.generated_at).toLocaleString("en-IN") : "Pending", mono: true },
+              {
+                label: "Generated",
+                value: formatDisplayDateTime(summary?.generated_at),
+                mono: true,
+              },
             ]}
           />
         </SectionCard>
@@ -192,13 +205,13 @@ export default async function GstPeriodPage({
                 {sourceTransactions.map((transaction) => (
                   <tr key={transaction.id} className={tableRowClass}>
                     <td className={`${tableCellClass} ${tableMonoTextClass}`}>
-                      {transaction.transaction_date ?? "Pending"}
+                      {formatDisplayDate(transaction.transaction_date)}
                     </td>
                     <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
-                      {transaction.party_name ?? "Pending"}
+                      {transaction.party_name ?? "Not provided"}
                     </td>
                     <td className={`${tableCellClass} num`}>
-                      {transaction.invoice_number ?? "Pending"}
+                      {transaction.invoice_number ?? "Not provided"}
                     </td>
                     <td className={`${tableCellClass} capitalize`}>
                       {transaction.transaction_type}
@@ -253,7 +266,7 @@ export default async function GstPeriodPage({
                       {audit.actor_user_id ?? "system"}
                     </td>
                     <td className={`${tableNumericCellClass} text-xs`}>
-                      {new Date(audit.created_at).toLocaleString("en-IN")}
+                      {formatDisplayDateTime(audit.created_at)}
                     </td>
                   </tr>
                 ))}

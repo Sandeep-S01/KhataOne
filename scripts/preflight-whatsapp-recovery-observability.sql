@@ -18,8 +18,8 @@ select
   count(*) filter (where completed_at >= now() - interval '1 hour') as completed_last_hour,
   max(completed_at) as last_completed_at,
   max(completed_at) filter (where succeeded) as last_success_at,
-  max(extract(epoch from (completed_at - started_at)) * 1000)::bigint
-    filter (where completed_at >= now() - interval '1 hour') as max_runtime_ms
+  (max(extract(epoch from (completed_at - started_at)) * 1000)
+    filter (where completed_at >= now() - interval '1 hour'))::bigint as max_runtime_ms
 from public.background_worker_runs
 group by worker_name
 order by worker_name;

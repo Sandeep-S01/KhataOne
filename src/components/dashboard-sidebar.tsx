@@ -2,7 +2,6 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import { ChevronRight, PanelLeft, PanelLeftClose } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
@@ -83,7 +82,7 @@ export function DashboardSidebar({
       )}
     >
       <div className="flex h-14 items-center justify-between border-b border-khata-border px-3.5">
-        {!isCollapsed ? (
+        {!isCollapsed && (
           <Link
             href="/dashboard"
             prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
@@ -91,22 +90,6 @@ export function DashboardSidebar({
             aria-label="KhataOne dashboard"
           >
             <BrandLogo />
-          </Link>
-        ) : (
-          <Link
-            href="/dashboard"
-            prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
-            className="mx-auto flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-            title="KhataOne Home"
-            aria-label="KhataOne dashboard"
-          >
-            <Image
-              src="/khataone-mark-light-transparent.png"
-              alt="KhataOne mark"
-              width={32}
-              height={32}
-              className="size-7 object-contain drop-shadow-sm"
-            />
           </Link>
         )}
 
@@ -117,7 +100,7 @@ export function DashboardSidebar({
           title={isCollapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
           className={cn(
             "flex size-8 shrink-0 items-center justify-center rounded-lg text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
-            isCollapsed && "mx-auto mt-2 hidden",
+            isCollapsed && "mx-auto",
           )}
         >
           {isCollapsed ? (
@@ -131,7 +114,7 @@ export function DashboardSidebar({
       <div className="border-b border-khata-border p-2.5">
         {!isCollapsed ? (
           <div
-            className="group flex items-center justify-between rounded-xl border border-khata-border bg-khata-paper p-2 transition-all hover:bg-khata-paperMuted cursor-default"
+            className="group flex cursor-default items-center justify-between rounded-md border border-khata-border bg-khata-paper p-2 transition-all hover:bg-khata-paperMuted"
             title={`${firmName} (${roleLabel})`}
           >
             <div className="flex items-center gap-2.5 min-w-0">
@@ -151,7 +134,7 @@ export function DashboardSidebar({
           </div>
         ) : (
           <div
-            className="flex size-9 mx-auto items-center justify-center rounded-xl bg-khata-ink text-xs font-bold text-white shadow-sm cursor-default"
+            className="mx-auto flex size-9 cursor-default items-center justify-center rounded-md bg-khata-ink text-xs font-bold text-white shadow-sm"
             title={`${firmName} (${roleLabel})`}
           >
             {firmInitial}
@@ -160,20 +143,6 @@ export function DashboardSidebar({
       </div>
 
       <DashboardNav collapsed={isCollapsed} />
-
-      {isCollapsed && (
-        <div className="border-t border-khata-border p-2">
-          <button
-            type="button"
-            onClick={toggleSidebar}
-            aria-label="Expand sidebar (Ctrl+B)"
-            title="Expand sidebar (Ctrl+B)"
-            className="flex size-9 mx-auto items-center justify-center rounded-lg text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-          >
-            <PanelLeft className="size-4" aria-hidden="true" />
-          </button>
-        </div>
-      )}
     </aside>
   );
 }

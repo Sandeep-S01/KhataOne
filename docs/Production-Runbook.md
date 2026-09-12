@@ -70,11 +70,18 @@ Recommended for production:
   and before deploying WA-LAT-5 so overlapping workers honor global sender/client ordering.
 - Apply migration `20260912220000_observe_whatsapp_recovery.sql` after `210000` and before
   deploying WA-LAT-6 recovery-route observability.
+- Store `khataone_recovery_base_url` and `khataone_recovery_cron_secret` in Supabase Vault.
+  The secret must equal the deployed `CRON_SECRET`; never place its value in migration SQL.
+- Apply `20260912230000_enable_recovery_scheduler_extensions.sql`, then
+  `20260912240000_schedule_recovery_workers.sql` to activate one-minute Supabase recovery.
 
 ## WhatsApp Recovery Cadence
 
-- Immediate ingestion and exact-job AI wake-up are the normal path. GitHub Actions invokes
-  each protected recovery route at minutes 2, 7, 12, and so on as a safety net.
+- Immediate ingestion and exact-job AI wake-up are the normal path. Supabase Cron invokes
+  each protected recovery route every minute as the authoritative recovery safety net.
+- Keep GitHub Actions enabled only through the initial Supabase cadence observation window;
+  overlapping invocations are protected by skip-locked claims and ordering leases. Disable
+  the GitHub schedules after the Supabase jobs and recovery canary are proven.
 - After deployment, run `scripts/preflight-whatsapp-recovery-observability.sql`. Expect up
   to 12 completed rows per worker over a healthy one-hour window and investigate missing
   runs or any observed completion gap over five minutes.

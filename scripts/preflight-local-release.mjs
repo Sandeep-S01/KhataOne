@@ -46,6 +46,8 @@ const orderedMigrations = [
   "20260912200000_classify_whatsapp_retries.sql",
   "20260912210000_bound_worker_concurrency_ordering.sql",
   "20260912220000_observe_whatsapp_recovery.sql",
+  "20260912230000_enable_recovery_scheduler_extensions.sql",
+  "20260912240000_schedule_recovery_workers.sql",
 ];
 
 for (const migration of orderedMigrations) {
@@ -106,6 +108,14 @@ for (const script of [
   "test:keyed-worker-pool",
   "test:worker-ordering-leases",
   "test:worker-observability",
+  "test:recovery-scheduler",
+  "test:dashboard-semantics",
+  "test:dashboard-workflows",
+  "test:dashboard-shared-components",
+  "test:dashboard-navigation-shell",
+  "test:dashboard-page-refinement",
+  "test:dashboard-responsive-harness",
+  "verify:dashboard-responsive",
 ]) {
   if (!packageJson.scripts?.[script]) {
     fail(`package.json is missing ${script}`);

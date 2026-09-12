@@ -12,6 +12,10 @@ const migration = readFileSync(
   "supabase/migrations/20260912220000_observe_whatsapp_recovery.sql",
   "utf8",
 );
+const preflight = readFileSync(
+  "scripts/preflight-whatsapp-recovery-observability.sql",
+  "utf8",
+);
 
 const db = new PGlite();
 
@@ -61,6 +65,7 @@ try {
   `);
 
   await db.exec(migration);
+  await db.exec(preflight);
   await db.exec(`
     insert into whatsapp_webhook_events(status, scheduled_at, received_at, created_at)
     values ('queued', now() - interval '2 minutes', now() - interval '2 minutes', now() - interval '2 minutes');

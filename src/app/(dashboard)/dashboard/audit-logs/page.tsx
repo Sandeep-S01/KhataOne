@@ -25,6 +25,7 @@ import {
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { formatDisplayDateTime } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -122,7 +123,7 @@ export default async function AuditLogsPage({
       <PageHeader
         eyebrow="Audit Logs"
         title="Traceability"
-        description="Review firm actions across client setup, AI extraction, approvals, ledger corrections, GST summaries, and exports."
+        description="Trace client, extraction, review, ledger, GST, and export activity."
       />
 
       <PageBody>
@@ -252,7 +253,7 @@ export default async function AuditLogsPage({
                         {log.actor_user_id ?? "system"}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
-                        {new Date(log.created_at).toLocaleString("en-IN")}
+                        {formatDisplayDateTime(log.created_at)}
                       </td>
                     </tr>
                   );
