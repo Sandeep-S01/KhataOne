@@ -102,7 +102,7 @@ export function DashboardSidebar({
           <Link
             href="/dashboard"
             prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
-            className="min-w-0 flex-1 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="flex h-8 min-w-0 flex-1 items-center rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             aria-label="KhataOne dashboard"
           >
             <BrandLogo />
