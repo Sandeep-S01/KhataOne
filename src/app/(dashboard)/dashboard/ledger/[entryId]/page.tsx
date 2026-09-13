@@ -7,6 +7,7 @@ import {
   EmptyState,
   PageBody,
   PageHeader,
+  PermissionNotice,
   SectionCard,
   SetupRequired,
   TextLink,
@@ -23,6 +24,13 @@ import {
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate, formatDisplayDateTime } from "@/lib/format";
+import { canCorrectLedgerEntries, readOnlyRoleMessage } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  dashboardReturnHref,
+  ledgerReturnKeys,
+  sanitizeReturnContext,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -36,10 +44,19 @@ function formatCurrency(value: number | null) {
 
 export default async function LedgerEntryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ entryId: string }>;
+  searchParams: Promise<{ return_to?: string }>;
 }) {
   const { entryId } = await params;
+  const { return_to: rawReturnContext } = await searchParams;
+  const returnContext = sanitizeReturnContext(rawReturnContext, ledgerReturnKeys);
+  const ledgerHref = dashboardReturnHref(
+    "/dashboard/ledger",
+    returnContext,
+    ledgerReturnKeys,
+  );
 
   if (!hasSupabaseConfig()) {
     return (
@@ -71,6 +88,7 @@ export default async function LedgerEntryPage({
   const transaction = Array.isArray(entry.transactions)
     ? entry.transactions[0]
     : entry.transactions;
+  const canCorrectEntry = canCorrectLedgerEntries(firm.role);
   const { data: audits } = await supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, metadata, created_at")
@@ -89,21 +107,34 @@ export default async function LedgerEntryPage({
         actions={
           <>
           <ActionLink
-            href="/dashboard/ledger"
+            href={ledgerHref}
           >
             Back to ledger
           </ActionLink>
-        <ActionLink
-          href={`/dashboard/ledger/${entry.id}/edit`}
-          variant="primary"
-        >
-          Correct entry
-        </ActionLink>
+        {canCorrectEntry && (
+          <ActionLink
+            href={appendReturnContext(
+              `/dashboard/ledger/${entry.id}/edit`,
+              returnContext,
+            )}
+            variant="primary"
+          >
+            Correct entry
+          </ActionLink>
+        )}
           </>
         }
       />
 
       <PageBody className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
+        {!canCorrectEntry && (
+          <div className="xl:col-span-2">
+            <SectionCard title="Read-only access">
+              <PermissionNotice message={readOnlyRoleMessage} />
+            </SectionCard>
+          </div>
+        )}
+
         <SectionCard title="Entry details">
           <DetailList
             items={[

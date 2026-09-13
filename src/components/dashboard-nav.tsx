@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { dashboardNavItems } from "@/lib/dashboard/nav";
@@ -117,6 +117,21 @@ function DashboardNavLink({
     };
   }, [collapsed, tooltipVisible]);
 
+  useEffect(() => {
+    if (!collapsed || !tooltipVisible) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setTooltipVisible(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [collapsed, tooltipVisible]);
+
   const showTooltip = () => {
     if (collapsed) {
       setTooltipVisible(true);
@@ -134,6 +149,11 @@ function DashboardNavLink({
         prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" &&
           (pathname === href || href === "/dashboard") ? false : undefined}
         onClick={onNavigate}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setTooltipVisible(false);
+          }
+        }}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         onFocus={showTooltip}

@@ -1,10 +1,19 @@
 "use server";
 
 import type { Route } from "next";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { canManageClients } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  clientReturnKeys,
+  dashboardReturnHref,
+  sanitizeReturnContext,
+  withQueryParam,
+} from "@/lib/return-context";
 
 export type ClientActionState = {
   status: "idle" | "success" | "error";
@@ -100,10 +109,6 @@ function validateClientInput(input: ReturnType<typeof collectClientInput>) {
   return fieldErrors;
 }
 
-function canManageClients(role: string) {
-  return ["owner", "admin", "staff"].includes(role);
-}
-
 function clientRpcInput(firmId: string, input: ReturnType<typeof collectClientInput>) {
   return {
     target_firm_id: firmId,
@@ -119,10 +124,23 @@ function clientRpcInput(firmId: string, input: ReturnType<typeof collectClientIn
   };
 }
 
+function redirectWithArchiveResult(result: string, returnContext = ""): never {
+  const clientsHref = dashboardReturnHref(
+    "/dashboard/clients",
+    returnContext,
+    clientReturnKeys,
+  );
+  redirect(withQueryParam(clientsHref, "archive", result));
+}
+
 export async function createClientAction(
   _previousState: ClientActionState,
   formData: FormData,
 ): Promise<ClientActionState> {
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    clientReturnKeys,
+  );
   const input = collectClientInput(formData);
   const fieldErrors = validateClientInput(input);
 
@@ -166,7 +184,7 @@ export async function createClientAction(
       message: "Could not create client. Please retry or contact your workspace administrator.",
     };
   }
-  redirect(`/dashboard/clients/${clientId}` as Route);
+  redirect(appendReturnContext(`/dashboard/clients/${clientId}`, returnContext));
 }
 
 export async function updateClientAction(
@@ -174,6 +192,10 @@ export async function updateClientAction(
   formData: FormData,
 ): Promise<ClientActionState> {
   const clientId = readString(formData, "client_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    clientReturnKeys,
+  );
   const input = collectClientInput(formData);
   const fieldErrors = validateClientInput(input);
 
@@ -221,30 +243,40 @@ export async function updateClientAction(
       message: "Could not update client. Please retry or contact your workspace administrator.",
     };
   }
-  redirect(`/dashboard/clients/${updatedClientId}` as Route);
+  redirect(appendReturnContext(`/dashboard/clients/${updatedClientId}`, returnContext));
 }
 
 export async function archiveClientAction(formData: FormData) {
   const clientId = readString(formData, "client_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    clientReturnKeys,
+  );
 
   if (!clientId || !hasSupabaseConfig()) {
-    redirect("/dashboard/clients");
+    redirectWithArchiveResult("unavailable", returnContext);
   }
 
   const context = await getFirmContext();
 
   if (!context) {
-    redirect("/dashboard/clients");
+    redirectWithArchiveResult("unavailable", returnContext);
   }
 
   const { firm, supabase } = context;
   if (!canManageClients(firm.role)) {
-    redirect("/dashboard/clients?error=forbidden");
+    redirectWithArchiveResult("forbidden", returnContext);
   }
-  await supabase.rpc("archive_dashboard_client", {
+  const { data: archivedClientId, error } = await supabase.rpc("archive_dashboard_client", {
     target_firm_id: firm.id,
     target_client_id: clientId,
   });
 
-  redirect("/dashboard/clients");
+  if (error || typeof archivedClientId !== "string" || !archivedClientId) {
+    redirectWithArchiveResult("failed", returnContext);
+  }
+
+  revalidatePath("/dashboard/clients");
+  revalidatePath(`/dashboard/clients/${clientId}` as Route);
+  redirectWithArchiveResult("success", returnContext);
 }

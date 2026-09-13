@@ -5,6 +5,7 @@ import {
   EmptyState,
   FieldLabel,
   FilterBar,
+  FormMessage,
   Input,
   PageBody,
   PageHeader,
@@ -34,6 +35,11 @@ import {
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { withServerTiming } from "@/lib/request-performance";
+import {
+  appendReturnContext,
+  buildReturnContext,
+  clientReturnKeys,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +60,7 @@ function statusTone(status: string) {
 
 const statusOptions = [
   "all",
+  "onboarding",
   "active",
   "pending_documents",
   "review_needed",
@@ -63,10 +70,37 @@ const statusOptions = [
 
 const pageSize = 50;
 
+function archiveResultMessage(result: string | undefined) {
+  switch (result) {
+    case "success":
+      return {
+        tone: "success" as const,
+        message: "Client archived. The record remains available in archived filters and audit history.",
+      };
+    case "forbidden":
+      return {
+        tone: "danger" as const,
+        message: "Your workspace role cannot archive clients.",
+      };
+    case "failed":
+      return {
+        tone: "danger" as const,
+        message: "Could not archive the client. Please retry or contact your workspace administrator.",
+      };
+    case "unavailable":
+      return {
+        tone: "danger" as const,
+        message: "Client archive is unavailable until the workspace and database are configured.",
+      };
+    default:
+      return null;
+  }
+}
+
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; status?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; status?: string; q?: string; archive?: string }>;
 }) {
   if (!hasSupabaseConfig()) {
     return (
@@ -131,6 +165,9 @@ export default async function ClientsPage({
   );
   const pageClients = (clients ?? []).slice(0, pageSize);
   const hasNextPage = (clients?.length ?? 0) > pageSize;
+  const hasActiveFilters = selectedStatus !== "all" || Boolean(searchPattern);
+  const archiveMessage = archiveResultMessage(filters.archive);
+  const returnContext = buildReturnContext(filters, clientReturnKeys);
   const statusCounts = statusOptions
     .filter((status) => status !== "all")
     .map((status) => ({
@@ -146,7 +183,7 @@ export default async function ClientsPage({
         description={`Manage client identity, WhatsApp mapping, filing cadence, and status for ${firm?.name ?? "this firm"}.`}
         actions={
         <ActionLink
-          href="/dashboard/clients/new"
+          href={appendReturnContext("/dashboard/clients/new", returnContext)}
           variant="primary"
         >
           Add client
@@ -155,6 +192,13 @@ export default async function ClientsPage({
       />
 
       <PageBody>
+        {archiveMessage && (
+          <FormMessage
+            tone={archiveMessage.tone}
+            message={archiveMessage.message}
+          />
+        )}
+
         <FilterBar action="/dashboard/clients">
           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_auto] md:items-end">
             <div className="grid gap-1.5">
@@ -221,14 +265,14 @@ export default async function ClientsPage({
           <QueryError message={error.message} />
         )}
 
-        {!error && (!clients || clients.length === 0) && (
+        {!error && (!clients || clients.length === 0) && !hasActiveFilters && (
           <EmptyState
             title="No clients yet"
             message="Add the first business client before wiring WhatsApp ingestion, AI extraction, ledger review, and GST summaries."
           />
         )}
 
-        {!error && clients && clients.length > 0 && pageClients.length === 0 && (
+        {!error && (!clients || pageClients.length === 0) && hasActiveFilters && (
           <EmptyState
             title="No clients match these filters"
             message="Adjust the search or status filter to return client workspaces."
@@ -274,7 +318,10 @@ export default async function ClientsPage({
                     </td>
                     <td className={tableActionCellClass}>
                       <TextLink
-                        href={`/dashboard/clients/${client.id}`}
+                        href={appendReturnContext(
+                          `/dashboard/clients/${client.id}`,
+                          returnContext,
+                        )}
                         aria-label={`Open ${client.business_name}`}
                       >
                         Open

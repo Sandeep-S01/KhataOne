@@ -3,10 +3,13 @@ import {
   type GstClientOption,
 } from "@/components/gst-summary-form";
 import {
+  ActionLink,
   DataTable,
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
+  PermissionNotice,
   QueryError,
   RecordCount,
   SectionCard,
@@ -24,11 +27,15 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import { formatNullableCurrency } from "@/lib/availability";
+import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDateRange } from "@/lib/format";
+import { canGenerateGstSummaries, readOnlyRoleMessage } from "@/lib/permissions";
 
 export const dynamic = "force-dynamic";
+const pageSize = 50;
 
 function statusTone(status: string) {
   switch (status) {
@@ -43,15 +50,12 @@ function statusTone(status: string) {
   }
 }
 
-function formatCurrency(value: number | null) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2,
-  }).format(value ?? 0);
-}
 
-export default async function GstSummaryPage() {
+export default async function GstSummaryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables and migrations before generating GST readiness summaries." />
@@ -65,6 +69,13 @@ export default async function GstSummaryPage() {
   }
 
   const { firm, supabase } = context;
+  const filters = await searchParams;
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  const historyHref = page > 1
+    ? `/dashboard/gst-summary?page=${page}`
+    : "/dashboard/gst-summary";
   const clientsQuery = supabase
     .from("clients")
     .select("id, business_name, filing_frequency")
@@ -78,12 +89,16 @@ export default async function GstSummaryPage() {
     )
     .eq("firm_id", firm.id)
     .order("period_start", { ascending: false })
-    .limit(60);
+    .order("id", { ascending: false })
+    .range(rangeFrom, rangeTo);
 
   const [{ data: clients }, { data: periods, error }] = await Promise.all([
     clientsQuery,
     periodsQuery,
   ]);
+  const pagePeriods = (periods ?? []).slice(0, pageSize);
+  const hasNextPage = (periods?.length ?? 0) > pageSize;
+  const canGenerateSummaries = canGenerateGstSummaries(firm.role);
 
   return (
     <div>
@@ -91,19 +106,31 @@ export default async function GstSummaryPage() {
         eyebrow="GST Summary"
         title="GST readiness"
         description="Prepare GST summaries for a custom date range from approved transactions; it does not submit GST filings."
+        actions={
+          <ActionLink href={historyHref}>
+            Refresh periods
+          </ActionLink>
+        }
       />
 
       <PageBody>
-        <GstSummaryForm clients={(clients ?? []) as GstClientOption[]} />
+        {canGenerateSummaries ? (
+          <GstSummaryForm clients={(clients ?? []) as GstClientOption[]} />
+        ) : (
+          <SectionCard title="Read-only access">
+            <PermissionNotice message={readOnlyRoleMessage} />
+          </SectionCard>
+        )}
 
       <SectionCard
         title="Generated periods"
-        actions={<RecordCount value={periods?.length ?? 0} />}
+        description="Newest generated periods are shown first. Use pagination to reach older GST periods."
+        actions={<RecordCount value={pagePeriods.length} />}
         bodyClassName="p-0"
       >
 
         {error && (
-          <QueryError message={error.message} />
+          <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
         )}
 
         {!error && (!periods || periods.length === 0) && (
@@ -114,6 +141,7 @@ export default async function GstSummaryPage() {
         )}
 
         {!error && periods && periods.length > 0 && (
+          <>
           <DataTable minWidth={980} ariaLabel="GST readiness periods">
               <thead className={tableHeaderClass}>
                 <tr>
@@ -128,7 +156,7 @@ export default async function GstSummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {periods.map((period) => {
+                {pagePeriods.map((period) => {
                   const client = Array.isArray(period.clients)
                     ? period.clients[0]
                     : period.clients;
@@ -156,13 +184,13 @@ export default async function GstSummaryPage() {
                         </StatusChip>
                       </td>
                       <td className={tableNumericCellClass}>
-                        {summary?.mismatch_count ?? 0}
+                        {summary?.mismatch_count ?? "Unavailable"}
                       </td>
                       <td className={tableNumericCellClass}>
-                        {summary?.missing_document_count ?? 0}
+                        {summary?.missing_document_count ?? "Unavailable"}
                       </td>
                       <td className={tableNumericCellClass}>
-                        {formatCurrency(summary?.net_tax_payable ?? 0)}
+                        {formatNullableCurrency(summary?.net_tax_payable)}
                       </td>
                       <td className={tableActionCellClass}>
                         <TextLink
@@ -177,6 +205,14 @@ export default async function GstSummaryPage() {
                 })}
               </tbody>
           </DataTable>
+          <PaginationControls
+            basePath="/dashboard/gst-summary"
+            page={page}
+            hasNext={hasNextPage}
+            searchParams={filters}
+            label="GST periods"
+          />
+          </>
         )}
       </SectionCard>
       </PageBody>

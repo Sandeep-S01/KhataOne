@@ -1,0 +1,1871 @@
+{
+  "environment": {
+    "origin": "https://khataone.vercel.app",
+    "mode": "hosted deployment; deployed commit unverified",
+    "authorization": "User authorized read-only dashboard login on 2026-09-13; business mutations excluded",
+    "dataset": "Existing account; identifiers and financial payloads excluded",
+    "browser": "153.0.8010.12",
+    "timezone": "Asia/Kolkata",
+    "network": "No emulation; one sequential sample per route/viewport",
+    "role": "owner"
+  },
+  "results": [
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1816,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-320.png"
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1177,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-clients-320.png"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 876,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-inbox-320.png"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1183,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        },
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-review-queue-320.png"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1346,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-ledger-320.png"
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 941,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 254
+        },
+        {
+          "name": "period_end",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-gst-summary-320.png"
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1400,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-reports-320.png"
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 937,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 254
+        },
+        {
+          "name": "period_end",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-exports-320.png"
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 846,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-audit-logs-320.png"
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1141,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 3,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-operations-320.png"
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 897,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-settings-320.png"
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 938,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-platform-320.png"
+    },
+    {
+      "route": "/dashboard/clients/new",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 851,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-new-320.png"
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1074,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-1440.png"
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 959,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 779,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 779
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-clients-1440.png"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 777,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 769,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 769
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-inbox-1440.png"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 3611,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 71,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 71
+        },
+        {
+          "name": "from",
+          "width": 150
+        },
+        {
+          "name": "to",
+          "width": 149
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-review-queue-1440.png"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1201,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 211
+        },
+        {
+          "name": "to",
+          "width": 211
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-ledger-1440.png"
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 990,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 320,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 213,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 213,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 214,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 213
+        },
+        {
+          "name": "period_end",
+          "width": 213
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-gst-summary-1440.png"
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 964,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-reports-1440.png"
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 897,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 252,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 252,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 202,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 202,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 146,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 202
+        },
+        {
+          "name": "period_end",
+          "width": 202
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-exports-1440.png"
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 760,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 211
+        },
+        {
+          "name": "to",
+          "width": 211
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-audit-logs-1440.png"
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 906,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 479,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 479,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-operations-1440.png"
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 884,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-settings-1440.png"
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1255,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-platform-1440.png"
+    },
+    {
+      "route": "/dashboard/clients/new",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 887,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "tel",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "tel",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "email",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 117,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-new-1440.png"
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 883,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-1440.png"
+    },
+    {
+      "route": "/dashboard/clients/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 901,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 2,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-record-320.png"
+    },
+    {
+      "route": "/dashboard/clients/[recordId]/edit",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 798,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-record-edit-320.png"
+    },
+    {
+      "route": "/dashboard/clients/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 890,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 66,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-record-1440.png"
+    },
+    {
+      "route": "/dashboard/clients/[recordId]/edit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 847,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "tel",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "tel",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "email",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 539,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 103,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-clients-record-edit-1440.png"
+    },
+    {
+      "route": "/dashboard/review-queue/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1027,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [
+        {
+          "tag": "TEXTAREA",
+          "type": null
+        }
+      ],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "transaction_date",
+          "width": 246
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-review-queue-record-320.png"
+    },
+    {
+      "route": "/dashboard/review-queue/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 923,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [
+        {
+          "tag": "TEXTAREA",
+          "type": null
+        }
+      ],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 145,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 471,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 229,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 229,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 471,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "transaction_date",
+          "width": 279
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-review-queue-record-1440.png"
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 920,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-ledger-record-320.png"
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]/edit",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 811,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "entry_date",
+          "width": 246
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-ledger-record-edit-320.png"
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 909,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-ledger-record-1440.png"
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]/edit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 836,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 180,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "entry_date",
+          "width": 307
+        }
+      ],
+      "screenshot": "hosted-redacted-dashboard-ledger-record-edit-1440.png"
+    },
+    {
+      "route": "/dashboard/gst-summary/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1079,
+      "width": 320,
+      "scrollWidth": 998,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-gst-summary-record-320.png"
+    },
+    {
+      "route": "/dashboard/gst-summary/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 835,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [],
+      "screenshot": "hosted-redacted-dashboard-gst-summary-record-1440.png"
+    }
+  ],
+  "interactions": {
+    "login": "passed using configured account credentials; no credentials persisted",
+    "firstTabIsSkip": true,
+    "skipFocus": true,
+    "collapsedTooltip": true,
+    "tooltipAfterEscape": true,
+    "mobileEscape": true,
+    "mobileFocusReturn": true
+  },
+  "blockedRequests": 0,
+  "pageErrorCount": 0
+}

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { canCreateExports } from "@/lib/permissions";
 
 export type ExportActionState = {
   status: "idle" | "success" | "error";
@@ -89,7 +90,7 @@ export async function createExportAction(
   }
 
   const { firm, supabase } = context;
-  if (!["owner", "admin", "staff"].includes(firm.role)) {
+  if (!canCreateExports(firm.role)) {
     return { status: "error", message: "Your workspace role cannot create exports." };
   }
   const { data: exportId, error } = await supabase.rpc("queue_dashboard_export", {

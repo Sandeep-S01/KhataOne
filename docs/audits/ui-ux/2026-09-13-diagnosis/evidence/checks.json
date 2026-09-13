@@ -1,0 +1,37 @@
+[
+  {
+    "script": "scripts/test-dashboard-semantic-accuracy.mjs",
+    "status": 0,
+    "output": "OK dashboard semantic accuracy checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-workflow-clarity.mjs",
+    "status": 0,
+    "output": "OK dashboard workflow clarity checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-shared-components.mjs",
+    "status": 0,
+    "output": "OK dashboard shared component checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-navigation-shell.mjs",
+    "status": 0,
+    "output": "OK dashboard navigation shell checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-page-refinement.mjs",
+    "status": 0,
+    "output": "OK dashboard page refinement checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-responsive-harness.mjs",
+    "status": 0,
+    "output": "OK dashboard responsive harness contract checks passed\n"
+  },
+  {
+    "script": "scripts/test-dashboard-query-semantics.mjs",
+    "status": 0,
+    "output": "OK dashboard query semantics checks passed\n"
+  }
+]

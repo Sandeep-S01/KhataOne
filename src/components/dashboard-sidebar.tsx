@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { ChevronRight, PanelLeft, PanelLeftClose } from "lucide-react";
+import { PanelLeft, PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
@@ -114,7 +114,7 @@ export function DashboardSidebar({
       <div className="border-b border-khata-border p-2.5">
         {!isCollapsed ? (
           <div
-            className="group flex cursor-default items-center justify-between rounded-md border border-khata-border bg-khata-paper p-2 transition-all hover:bg-khata-paperMuted"
+            className="flex cursor-default items-center rounded-md border border-khata-border bg-khata-paper p-2"
             title={`${firmName} (${roleLabel})`}
           >
             <div className="flex items-center gap-2.5 min-w-0">
@@ -130,7 +130,6 @@ export function DashboardSidebar({
                 </p>
               </div>
             </div>
-            <ChevronRight className="size-3.5 shrink-0 text-khata-muted opacity-60" aria-hidden="true" />
           </div>
         ) : (
           <div

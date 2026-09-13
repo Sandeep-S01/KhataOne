@@ -1,0 +1,149 @@
+{
+  "screenRoutes": [
+    {
+      "route": "/forgot-password",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/login",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/reset-password",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/signup",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/clients/new",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/clients",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/clients/[clientId]/edit",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/exports",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/inbox",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/ledger",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]/edit",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/operations",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/platform",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/reports",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/dashboard/settings",
+      "source": "CODE_INSPECTED",
+      "browser": "See authenticated-browser/followup exact route samples"
+    },
+    {
+      "route": "/contact",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/onboarding",
+      "source": "CODE_INSPECTED",
+      "browser": "BLOCKED: existing firm account; creation excluded"
+    },
+    {
+      "route": "/",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/privacy",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    },
+    {
+      "route": "/terms",
+      "source": "CODE_INSPECTED",
+      "browser": "public-browser.json"
+    }
+  ],
+  "componentFiles": 18,
+  "publicSamples": 56,
+  "hostedMainSamples": 97,
+  "hostedFollowupSamples": 10,
+  "findings": 27
+}

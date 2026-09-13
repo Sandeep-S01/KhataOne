@@ -1,0 +1,5175 @@
+{
+  "environment": {
+    "origin": "http://127.0.0.1:3105",
+    "mode": "development; integration configuration absent",
+    "role": "anonymous",
+    "dataset": "public static content only",
+    "browser": "153.0.8010.12",
+    "os": "win32",
+    "zoom": "100% except explicitly labelled CSS stress",
+    "network": "no emulation; localhost; browser external and write requests blocked"
+  },
+  "results": [
+    {
+      "route": "/",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 1452,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Open navigation menu",
+          "width": 40,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 266,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 266,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 266,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 266,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 266,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 246,
+          "height": 114
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 288,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 288,
+          "height": 64
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 288,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 288,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-home-320.png"
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 751,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Open navigation menu",
+          "width": 40,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 314,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 314,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 314,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 314,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 314,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 316,
+          "height": 114
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 358,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 358,
+          "height": 64
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 358,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 358,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 711,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 99.921875,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 78.453125,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 50.640625,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 65.65625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 124.15625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 40
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 694,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 694,
+          "height": 36
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 736,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 736,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 736,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 736,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 697,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 99.921875,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 78.453125,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 50.640625,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 65.65625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 124.15625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 40
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 246.703125,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 505.40625,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 505.40625,
+          "height": 36
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 696,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 99.921875,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 78.453125,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 50.640625,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 65.65625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 124.15625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 40
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 579,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 579,
+          "height": 36
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 731,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 99.921875,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 78.453125,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 50.640625,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 65.65625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 124.15625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 40
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 579,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 579,
+          "height": 36
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-home-1440.png"
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 735,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 99.921875,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 78.453125,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 50.640625,
+          "height": 24
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 65.65625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 124.15625,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 175.1875,
+          "height": 40
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 283.5,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 579,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 579,
+          "height": 36
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 864,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 171.015625,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 80.765625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 57.03125,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 81.84375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 25.640625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 72.9375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 100.4375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 103.390625,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 86.984375,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 106.5,
+          "height": 19
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 73.34375,
+          "height": 19
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 745,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 272,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-login-320.png"
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 664,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 342,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 663,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 668,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 655,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 656,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-login-1440.png"
+    },
+    {
+      "route": "/login",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 652,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 101.46875,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 721,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 272,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-signup-320.png"
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 656,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 342,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 774,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 820,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 814,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 751,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-signup-1440.png"
+    },
+    {
+      "route": "/signup",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 684,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 123.265625,
+          "height": 20
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 1235,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 272,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-forgot-password-320.png"
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 667,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 342,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 817,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 734,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 755,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 816,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-forgot-password-1440.png"
+    },
+    {
+      "route": "/forgot-password",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 668,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Reset your password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Send reset link",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Reset password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 1068,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 272,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 272,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-reset-password-320.png"
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 676,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 342,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 342,
+          "height": 44
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 655,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 670,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 743,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 769,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-reset-password-1440.png"
+    },
+    {
+      "route": "/reset-password",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 773,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Set a new password"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 28,
+          "height": 28
+        },
+        {
+          "tag": "INPUT",
+          "name": "confirm_password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Update password",
+          "width": 384,
+          "height": 36
+        },
+        {
+          "tag": "A",
+          "name": "Back to sign in",
+          "width": 113.875,
+          "height": 20
+        }
+      ],
+      "title": "Update password | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 996,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 246,
+          "height": 44
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 246,
+          "height": 114
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 246,
+          "height": 44
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-contact-320.png"
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 725,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 316,
+          "height": 44
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 316,
+          "height": 114
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 316,
+          "height": 44
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 757,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 341,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 694,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 694,
+          "height": 36
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 805,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 822,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 822,
+          "height": 36
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 723,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 822,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 822,
+          "height": 36
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 752,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 822,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 822,
+          "height": 36
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-contact-1440.png"
+    },
+    {
+      "route": "/contact",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 739,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "Talk to KhataOne"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 405,
+          "height": 36
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 822,
+          "height": 98
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 822,
+          "height": 36
+        }
+      ],
+      "title": "Contact | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 978,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-privacy-320.png"
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 716,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 780,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 681,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 719,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 733,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-privacy-1440.png"
+    },
+    {
+      "route": "/privacy",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 710,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "KhataOne privacy summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Privacy | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "status": 200,
+      "usableObservationMs": 983,
+      "width": 320,
+      "scrollWidth": 320,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-terms-320.png"
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 710,
+      "width": 390,
+      "scrollWidth": 390,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "usableObservationMs": 706,
+      "width": 768,
+      "scrollWidth": 768,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "usableObservationMs": 701,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "status": 200,
+      "usableObservationMs": 696,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 716,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      },
+      "screenshot": "public-terms-1440.png"
+    },
+    {
+      "route": "/terms",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "status": 200,
+      "usableObservationMs": 723,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "dpr": 1,
+      "h1": [
+        "KhataOne terms summary"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 111.609375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 102.8125,
+          "height": 20
+        }
+      ],
+      "title": "Terms | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "1",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    }
+  ],
+  "invalidSignup": {
+    "width": 320,
+    "scrollWidth": 320,
+    "dpr": 1,
+    "h1": [
+      "Create your firm workspace"
+    ],
+    "unnamed": [],
+    "controls": [
+      {
+        "tag": "A",
+        "name": "KhataOne home",
+        "width": 111.609375,
+        "height": 32
+      },
+      {
+        "tag": "INPUT",
+        "name": "full_name",
+        "width": 272,
+        "height": 36
+      },
+      {
+        "tag": "INPUT",
+        "name": "firm_name",
+        "width": 272,
+        "height": 36
+      },
+      {
+        "tag": "INPUT",
+        "name": "email",
+        "width": 272,
+        "height": 36
+      },
+      {
+        "tag": "INPUT",
+        "name": "password",
+        "width": 272,
+        "height": 36
+      },
+      {
+        "tag": "BUTTON",
+        "name": "Show password",
+        "width": 28,
+        "height": 28
+      },
+      {
+        "tag": "BUTTON",
+        "name": "Create account",
+        "width": 272,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "name": "Sign in to existing workspace",
+        "width": 272,
+        "height": 36
+      },
+      {
+        "tag": "A",
+        "name": "Back to website",
+        "width": 123.265625,
+        "height": 20
+      }
+    ],
+    "title": "Create account | KhataOne",
+    "fontStatus": "loaded",
+    "zoom": "1",
+    "tokens": {
+      "--background": "#f7f5ef",
+      "--foreground": "#1f2a24",
+      "--success": "#168a4a",
+      "--warning": "#8a5b11",
+      "--border": "#d8d2c4"
+    }
+  },
+  "passwordToggle": "text",
+  "menuOpen": true,
+  "menuOpenAfterEscape": true,
+  "menuClosedAfterLink": true,
+  "stress": [
+    {
+      "route": "/",
+      "method": "CSS zoom 2 (not browser zoom)",
+      "width": 1280,
+      "scrollWidth": 1297,
+      "dpr": 1,
+      "h1": [
+        "Bookkeeping that starts where your clients already are: WhatsApp"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "Skip to content",
+          "width": 2,
+          "height": 2
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 223.203125,
+          "height": 76
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 199.84375,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 156.90625,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 101.265625,
+          "height": 48
+        },
+        {
+          "tag": "A",
+          "name": "Sign in",
+          "width": 106.9375,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 188.703125,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 342.015625,
+          "height": 80
+        },
+        {
+          "tag": "A",
+          "name": "See how it works",
+          "width": 350.375,
+          "height": 80
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 272.59375,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 272.609375,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 272.59375,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "phone",
+          "width": 272.609375,
+          "height": 72
+        },
+        {
+          "tag": "SELECT",
+          "name": "firm_size",
+          "width": 272.59375,
+          "height": 72
+        },
+        {
+          "tag": "SELECT",
+          "name": "intent",
+          "width": 272.609375,
+          "height": 72
+        },
+        {
+          "tag": "TEXTAREA",
+          "name": "message",
+          "width": 569.203125,
+          "height": 196
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Request demo",
+          "width": 569.203125,
+          "height": 72
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Does the AI post entries by itself?",
+          "width": 1216,
+          "height": 96
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "What happens to the original WhatsApp document?",
+          "width": 1216,
+          "height": 96
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "How does GST readiness work?",
+          "width": 1216,
+          "height": 96
+        },
+        {
+          "tag": "SUMMARY",
+          "name": "Can this fit an existing CA workflow?",
+          "width": 1216,
+          "height": 96
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 342.015625,
+          "height": 80
+        },
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 223.203125,
+          "height": 64
+        },
+        {
+          "tag": "A",
+          "name": "How it works",
+          "width": 161.515625,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Features",
+          "width": 114.046875,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Book a demo",
+          "width": 163.6875,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "FAQ",
+          "width": 51.265625,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Firm Sign in",
+          "width": 145.859375,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Create account",
+          "width": 106.75,
+          "height": 78
+        },
+        {
+          "tag": "A",
+          "name": "Reset password",
+          "width": 124.875,
+          "height": 78
+        },
+        {
+          "tag": "A",
+          "name": "Privacy Policy",
+          "width": 173.96875,
+          "height": 38
+        },
+        {
+          "tag": "A",
+          "name": "Terms of Service",
+          "width": 111.46875,
+          "height": 78
+        },
+        {
+          "tag": "A",
+          "name": "Contact Us",
+          "width": 146.671875,
+          "height": 38
+        }
+      ],
+      "title": "KhataOne | WhatsApp-first GST workflow for CA firms",
+      "fontStatus": "loaded",
+      "zoom": "2",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/signup",
+      "method": "CSS zoom 2 (not browser zoom)",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Create your firm workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 223.203125,
+          "height": 64
+        },
+        {
+          "tag": "INPUT",
+          "name": "full_name",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "firm_name",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 56,
+          "height": 56
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Create account",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Sign in to existing workspace",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 246.515625,
+          "height": 40
+        }
+      ],
+      "title": "Create account | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "2",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    },
+    {
+      "route": "/login",
+      "method": "CSS zoom 2 (not browser zoom)",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "dpr": 1,
+      "h1": [
+        "Sign in to your workspace"
+      ],
+      "unnamed": [],
+      "controls": [
+        {
+          "tag": "A",
+          "name": "KhataOne home",
+          "width": 223.203125,
+          "height": 64
+        },
+        {
+          "tag": "INPUT",
+          "name": "email",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Forgot password?",
+          "width": 202.9375,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "name": "password",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Show password",
+          "width": 56,
+          "height": 56
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Create your firm account",
+          "width": 448,
+          "height": 72
+        },
+        {
+          "tag": "A",
+          "name": "Back to website",
+          "width": 246.515625,
+          "height": 40
+        }
+      ],
+      "title": "Sign in | KhataOne",
+      "fontStatus": "loaded",
+      "zoom": "2",
+      "tokens": {
+        "--background": "#f7f5ef",
+        "--foreground": "#1f2a24",
+        "--success": "#168a4a",
+        "--warning": "#8a5b11",
+        "--border": "#d8d2c4"
+      }
+    }
+  ],
+  "firstFocus": {
+    "tag": "A",
+    "name": "KhataOne home",
+    "outline": "solid"
+  },
+  "blocked": [],
+  "errors": []
+}

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { AuthForm } from "@/components/auth-form";
 import { BrandLogo } from "@/components/brand-logo";
+import { ActionLink } from "@/components/design-system";
 
 const assurances = [
   "Client documents arrive on WhatsApp and stay preserved as the source.",
@@ -36,7 +37,7 @@ export default function LoginPage() {
           <Link
             href="/"
             aria-label="KhataOne home"
-            className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
           >
             <BrandLogo />
           </Link>
@@ -57,16 +58,17 @@ export default function LoginPage() {
             <div className="h-px flex-1 bg-khata-border" />
           </div>
 
-          <Link
+          <ActionLink
             href="/signup"
-            className="inline-flex h-9 w-full items-center justify-center rounded-md border border-khata-border bg-transparent px-4 py-2 text-sm font-medium text-khata-ink shadow-sm transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            size="md"
+            className="w-full bg-transparent focus-visible:outline-offset-4"
           >
             Create your firm account
-          </Link>
+          </ActionLink>
 
           <Link
             href="/"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
             Back to website

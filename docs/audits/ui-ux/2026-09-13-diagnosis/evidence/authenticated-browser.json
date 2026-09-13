@@ -1,0 +1,5016 @@
+{
+  "environment": {
+    "origin": "https://khataone.vercel.app",
+    "mode": "hosted deployment; deployed commit unverified",
+    "authorization": "User authorized read-only dashboard login on 2026-09-13; business mutations excluded",
+    "dataset": "Existing account; identifiers and financial payloads excluded",
+    "browser": "153.0.8010.12",
+    "timezone": "Asia/Kolkata",
+    "network": "No emulation; one sequential sample per route/viewport"
+  },
+  "results": [
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1279,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 768,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 890,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1305,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 254
+        },
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1017,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 937,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 254
+        },
+        {
+          "name": "period_end",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1090,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1166,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 254
+        },
+        {
+          "name": "period_end",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1069,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 254
+        },
+        {
+          "name": "to",
+          "width": 254
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1380,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 3,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 939,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 913,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1258,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 917,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 765,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1135,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 324
+        },
+        {
+          "name": "from",
+          "width": 324
+        },
+        {
+          "name": "to",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1105,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 324
+        },
+        {
+          "name": "to",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 835,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 324
+        },
+        {
+          "name": "period_end",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1116,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 909,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 324
+        },
+        {
+          "name": "period_end",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1019,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 324
+        },
+        {
+          "name": "to",
+          "width": 324
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 775,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 3,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 1038,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "usableObservationMs": 893,
+      "width": 390,
+      "scrollWidth": 390,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1098,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 889,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 363,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 363
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 903,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 353,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 353
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1025,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 686
+        },
+        {
+          "name": "from",
+          "width": 686
+        },
+        {
+          "name": "to",
+          "width": 686
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 895,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 128
+        },
+        {
+          "name": "to",
+          "width": 128
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 870,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 148,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 99,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 149
+        },
+        {
+          "name": "period_end",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 926,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 849,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 686,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 686,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 686
+        },
+        {
+          "name": "period_end",
+          "width": 686
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 885,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 128
+        },
+        {
+          "name": "to",
+          "width": 128
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 965,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 271,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 271,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 3,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1022,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 926,
+      "width": 768,
+      "scrollWidth": 768,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 36,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 953,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 908,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 363,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 363
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 943,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 353,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 353
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1094,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 120,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 170,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 170,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 120,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 170,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 120
+        },
+        {
+          "name": "from",
+          "width": 190
+        },
+        {
+          "name": "to",
+          "width": 170
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1006,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 128
+        },
+        {
+          "name": "to",
+          "width": 128
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1092,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 148,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 99,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 149
+        },
+        {
+          "name": "period_end",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1019,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 2944,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 97,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 97,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 146,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 149
+        },
+        {
+          "name": "period_end",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1337,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 128,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 128
+        },
+        {
+          "name": "to",
+          "width": 128
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 892,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 271,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 271,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 3,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1379,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 776,
+      "width": 1024,
+      "scrollWidth": 1024,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 956,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 991,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 619,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 619
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1070,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 609,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 609
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 865,
+      "width": 1280,
+      "scrollWidth": 1328,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 51,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 14,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 51
+        },
+        {
+          "name": "from",
+          "width": 150
+        },
+        {
+          "name": "to",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1011,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 179
+        },
+        {
+          "name": "to",
+          "width": 179
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1185,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 267,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 178,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 178,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 178,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 178
+        },
+        {
+          "name": "period_end",
+          "width": 178
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 881,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 883,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 208,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 208,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 166,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 166,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 146,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 166
+        },
+        {
+          "name": "period_end",
+          "width": 166
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 920,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 179,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 179
+        },
+        {
+          "name": "to",
+          "width": 179
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 842,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 399,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 399,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 2,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 971,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 880,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 855,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 915,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 779,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 779
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1148,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 769,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 769
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 950,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 71,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 71
+        },
+        {
+          "name": "from",
+          "width": 150
+        },
+        {
+          "name": "to",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 983,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 211
+        },
+        {
+          "name": "to",
+          "width": 211
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1017,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 320,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 213,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 213,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 214,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 213
+        },
+        {
+          "name": "period_end",
+          "width": 213
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 964,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 728,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 252,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 252,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 202,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 202,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 146,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 202
+        },
+        {
+          "name": "period_end",
+          "width": 202
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1069,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 211,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 211
+        },
+        {
+          "name": "to",
+          "width": 211
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 954,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 479,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 479,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 862,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 863,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 969,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 728,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 1259,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 1259
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/inbox",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1187,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 1249,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 35,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 1249
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1307,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 551,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 190,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 160,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 150,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 149,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 14,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "q",
+          "width": 551
+        },
+        {
+          "name": "from",
+          "width": 150
+        },
+        {
+          "name": "to",
+          "width": 149
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 905,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "search",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 56,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 307
+        },
+        {
+          "name": "to",
+          "width": 307
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 967,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 480,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 320,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 320,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 320,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 93,
+          "height": 36
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 320
+        },
+        {
+          "name": "period_end",
+          "width": 320
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/reports",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 965,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/exports",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 894,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 386,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 386,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 308,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 309,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 146,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "period_start",
+          "width": 308
+        },
+        {
+          "name": "period_end",
+          "width": 309
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 823,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 307,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        }
+      ],
+      "tableCount": 24,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "from",
+          "width": 307
+        },
+        {
+          "name": "to",
+          "width": 307
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/operations",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1206,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 719,
+          "height": 36
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 719,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 52,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 74,
+          "height": 32
+        }
+      ],
+      "tableCount": 31,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/settings",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 723,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/platform",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 938,
+      "width": 1920,
+      "scrollWidth": 1920,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 1,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 882,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 7,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1149,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 2,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients/[recordId]",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 890,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 66,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/clients/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 957,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 66,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/review-queue/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1216,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [
+        {
+          "tag": "TEXTAREA",
+          "type": null
+        }
+      ],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": [
+        {
+          "name": "transaction_date",
+          "width": 246
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue/[recordId]",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1229,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [
+        {
+          "tag": "TEXTAREA",
+          "type": null
+        }
+      ],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 235,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 151,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 145,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 399,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 193,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 193,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 399,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "transaction_date",
+          "width": 235
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/review-queue/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 931,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [
+        {
+          "tag": "TEXTAREA",
+          "type": null
+        }
+      ],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "width": 279,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "width": 180,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 145,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 471,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 229,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 229,
+          "height": 36
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 471,
+          "height": 36
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": [
+        {
+          "name": "transaction_date",
+          "width": 279
+        }
+      ]
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 780,
+      "width": 320,
+      "scrollWidth": 320,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 919,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/ledger/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 783,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 0,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/gst-summary/[recordId]",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 1096,
+      "width": 320,
+      "scrollWidth": 998,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 32,
+          "height": 44
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 0,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/gst-summary/[recordId]",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 974,
+      "width": 1280,
+      "scrollWidth": 1280,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 1,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    },
+    {
+      "route": "/dashboard/gst-summary/[recordId]",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "usableObservationMs": 912,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "unnamed": [],
+      "small": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "width": 32,
+          "height": 32
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "width": 95,
+          "height": 32
+        }
+      ],
+      "tableCount": 2,
+      "tableOverflowCount": 0,
+      "navHeight": 56,
+      "sidebarWidth": 256,
+      "filterInputWidths": []
+    }
+  ],
+  "interactions": {
+    "login": "passed using configured account credentials; no credentials persisted",
+    "firstTabIsSkip": true,
+    "skipFocus": true,
+    "collapsedTooltip": true,
+    "tooltipAfterEscape": true,
+    "mobileEscape": true,
+    "mobileFocusReturn": true
+  },
+  "blockedRequests": 0,
+  "pageErrorCount": 0
+}

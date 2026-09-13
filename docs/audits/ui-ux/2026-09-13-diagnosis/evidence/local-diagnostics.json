@@ -1,0 +1,60 @@
+{
+  "method": "Isolated arithmetic and Chromium Date expressions; no application mutations or integrations",
+  "sourceDateExpressionPresent": true,
+  "contrastResults": [
+    {
+      "name": "success",
+      "foreground": "#168a4a",
+      "background": "10% foreground blended over white",
+      "ratio": 3.88,
+      "normalTextAA": false
+    },
+    {
+      "name": "warning",
+      "foreground": "#8a5b11",
+      "background": "10% foreground blended over white",
+      "ratio": 5.1,
+      "normalTextAA": true
+    },
+    {
+      "name": "danger",
+      "foreground": "#b42318",
+      "background": "10% foreground blended over white",
+      "ratio": 5.57,
+      "normalTextAA": true
+    },
+    {
+      "name": "info",
+      "foreground": "#2563a8",
+      "background": "10% foreground blended over white",
+      "ratio": 5.31,
+      "normalTextAA": true
+    },
+    {
+      "name": "brand",
+      "foreground": "#146b43",
+      "background": "10% foreground blended over white",
+      "ratio": 5.64,
+      "normalTextAA": true
+    }
+  ],
+  "dates": [
+    {
+      "timezoneId": "UTC",
+      "monthStart": "2026-09-01",
+      "monthEnd": "2026-09-30"
+    },
+    {
+      "timezoneId": "Asia/Kolkata",
+      "monthStart": "2026-08-31",
+      "monthEnd": "2026-09-29"
+    }
+  ],
+  "reviewPaginationExample": {
+    "fixture": "51 synthetic rows; first 50 do not match q; final row does",
+    "beforePageFilterMatches": 1,
+    "afterFirstPageFilterMatches": 0,
+    "hasNextBeforeFiltering": true,
+    "conclusion": "Current conditional pagination hides the route to later matches when filtered visible page is empty"
+  }
+}

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { canGenerateGstSummaries } from "@/lib/permissions";
 
 export type GstActionState = {
   status: "idle" | "success" | "error";
@@ -47,7 +48,7 @@ export async function generateGstSummaryAction(
   if (!hasSupabaseConfig()) return { status: "error", message: "Supabase is not configured yet." };
   const context = await getFirmContext();
   if (!context) return { status: "error", message: "Supabase is not configured yet." };
-  if (!["owner", "admin", "staff"].includes(context.firm.role)) {
+  if (!canGenerateGstSummaries(context.firm.role)) {
     return { status: "error", message: "Your workspace role cannot generate GST summaries." };
   }
   const { data: periodId, error } = await context.supabase.rpc("generate_gst_summary", {

@@ -23,6 +23,7 @@ const inboxPage = read("src/app/(dashboard)/dashboard/inbox/page.tsx");
 const reviewPage = read("src/app/(dashboard)/dashboard/review-queue/page.tsx");
 const ledgerPage = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
 const queryUtils = read("src/lib/dashboard-query.ts");
+const filterRpcs = read("supabase/migrations/20260913110000_complete_dashboard_filtered_results.sql");
 
 assert(
   queryUtils.includes("toPostgrestContainsPattern") &&
@@ -48,15 +49,34 @@ assert(
 );
 
 assert(
-  inboxPage.includes("search_applied_after_page: Boolean(search)") &&
-    reviewPage.includes("search_applied_after_page: Boolean(search)"),
-  "remaining relationship-aware post-page filters must stay explicitly observable",
+  inboxPage.includes('supabase.rpc("search_whatsapp_inbox"') &&
+    reviewPage.includes('supabase.rpc("search_review_queue"'),
+  "review queue and inbox must use database-side filtered pagination",
 );
 
 assert(
-  [clientsPage, inboxPage, reviewPage, ledgerPage].every((source) =>
+  inboxPage.includes("filters_applied_before_page: true") &&
+    reviewPage.includes("filters_applied_before_page: true"),
+  "review queue and inbox timing metadata must identify before-page filtering",
+);
+
+assert(
+  !inboxPage.includes("filteredMessages") &&
+    !reviewPage.includes("filteredTransactions"),
+  "review queue and inbox must not filter current page rows in memory",
+);
+
+assert(
+  clientsPage.includes('"onboarding"'),
+  "clients status filter must include onboarding records",
+);
+
+assert(
+  [clientsPage, ledgerPage].every((source) =>
     source.includes('.order("id", { ascending: false })'),
-  ),
+  ) &&
+    filterRpcs.includes("order by m.received_at desc, m.id desc") &&
+    filterRpcs.includes("order by t.created_at desc, t.id desc"),
   "dashboard list pages must use a unique tie-breaker for stable pagination",
 );
 

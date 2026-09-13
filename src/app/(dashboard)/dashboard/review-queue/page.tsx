@@ -33,6 +33,11 @@ import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
+import {
+  appendReturnContext,
+  buildReturnContext,
+  reviewQueueReturnKeys,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -78,6 +83,24 @@ const documentTypeOptions = [
   "text_note",
   "unclear",
 ];
+
+type ReviewQueueRow = {
+  id: string;
+  client_id: string;
+  transaction_type: string;
+  status: string;
+  transaction_date: string | null;
+  party_name: string | null;
+  invoice_number: string | null;
+  total_amount: number | null;
+  confidence_score: number;
+  created_at: string;
+  client_business_name: string | null;
+  document_type: string | null;
+  document_file_name: string | null;
+  risk_flags: string[] | null;
+  extraction_model: string | null;
+};
 
 function extractionSource(model?: string | null) {
   return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
@@ -140,43 +163,25 @@ export default async function ReviewQueuePage({
   const search = normalizeSearch(filters.q);
   const page = normalizePage(filters.page);
   const rangeFrom = (page - 1) * pageSize;
-  const rangeTo = rangeFrom + pageSize;
   const clientsPromise = supabase
     .from("clients")
     .select("id, business_name")
     .eq("firm_id", firm.id)
     .neq("status", "archived")
     .order("business_name");
-  let query = supabase
-    .from("transactions")
-    .select(
-      "id, client_id, transaction_type, status, transaction_date, party_name, invoice_number, total_amount, confidence_score, created_at, clients(business_name), documents(document_type, file_name), ai_extractions(risk_flags, model)",
-    )
-    .eq("firm_id", firm.id)
-    .in("status", ["draft", "needs_review", "duplicate"])
-    .order("created_at", { ascending: false })
-    .order("id", { ascending: false })
-    .range(rangeFrom, rangeTo);
-
-  if (filters.client) {
-    query = query.eq("client_id", filters.client);
-  }
-
-  if (selectedStatus !== "all") {
-    query = query.eq("status", selectedStatus);
-  }
-
-  if (filters.from) {
-    query = query.gte("transaction_date", filters.from);
-  }
-
-  if (filters.to) {
-    query = query.lte("transaction_date", filters.to);
-  }
-
-  if (selectedRisk === "low_confidence") {
-    query = query.lt("confidence_score", 0.7);
-  }
+  const query = supabase.rpc("search_review_queue", {
+    target_firm_id: firm.id,
+    target_client_id: filters.client || null,
+    target_status: selectedStatus === "all" ? null : selectedStatus,
+    target_risk: selectedRisk === "all" ? null : selectedRisk,
+    target_document_type:
+      selectedDocumentType === "all" ? null : selectedDocumentType,
+    target_from: filters.from || null,
+    target_to: filters.to || null,
+    target_search: search || null,
+    page_limit: pageSize + 1,
+    page_offset: rangeFrom,
+  });
 
   const [transactionsResult, clientsResult] = await Promise.all([
     withServerTiming("dashboard.review_queue.query", () => query, {
@@ -187,9 +192,7 @@ export default async function ReviewQueuePage({
       has_search_filter: Boolean(search),
       has_document_filter: selectedDocumentType !== "all",
       has_low_confidence_filter: selectedRisk === "low_confidence",
-      search_applied_after_page: Boolean(search),
-      document_filter_applied_after_page: selectedDocumentType !== "all",
-      risk_flags_applied_after_page: selectedRisk === "risk",
+      filters_applied_before_page: true,
     }),
     withServerTiming("dashboard.review_queue.clients_query", () => clientsPromise, {
       page,
@@ -197,41 +200,12 @@ export default async function ReviewQueuePage({
   ]);
   const { data: transactions, error } = transactionsResult;
   const clients = clientsResult.data ?? [];
-  const pageTransactions = (transactions ?? []).slice(0, pageSize);
+  const pageTransactions = ((transactions ?? []) as ReviewQueueRow[]).slice(
+    0,
+    pageSize,
+  );
   const hasNextPage = (transactions?.length ?? 0) > pageSize;
-  const filteredTransactions = pageTransactions.filter((transaction) => {
-    const client = Array.isArray(transaction.clients)
-      ? transaction.clients[0]
-      : transaction.clients;
-    const document = Array.isArray(transaction.documents)
-      ? transaction.documents[0]
-      : transaction.documents;
-    const extraction = Array.isArray(transaction.ai_extractions)
-      ? transaction.ai_extractions[0]
-      : transaction.ai_extractions;
-    const riskCount = extraction?.risk_flags?.length ?? 0;
-    const matchesRisk =
-      selectedRisk === "all" ||
-      (selectedRisk === "risk" && riskCount > 0) ||
-      selectedRisk === "low_confidence";
-    const matchesDocumentType =
-      selectedDocumentType === "all" ||
-      document?.document_type === selectedDocumentType;
-    const matchesSearch =
-      !search ||
-      [
-        client?.business_name,
-        document?.file_name,
-        document?.document_type,
-        transaction.party_name,
-        transaction.invoice_number,
-        transaction.transaction_type,
-      ]
-        .filter(Boolean)
-        .some((value) => value!.toLowerCase().includes(search));
-
-    return matchesRisk && matchesDocumentType && matchesSearch;
-  });
+  const returnContext = buildReturnContext(filters, reviewQueueReturnKeys);
 
   return (
     <div>
@@ -244,7 +218,7 @@ export default async function ReviewQueuePage({
       <PageBody>
         {clientsResult.error && <QueryError message="Client filters could not be loaded. Please retry." />}
         <FilterBar action="/dashboard/review-queue">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_190px_170px_170px] xl:grid-cols-[minmax(0,1fr)_190px_160px_160px_150px_150px_auto] xl:items-end">
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_190px_170px_170px] 2xl:grid-cols-[minmax(0,1fr)_190px_160px_160px_150px_150px_auto] 2xl:items-end">
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-search"
@@ -362,7 +336,7 @@ export default async function ReviewQueuePage({
                 defaultValue={filters.to ?? ""}
               />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 lg:col-span-4 2xl:col-span-1">
               <Button type="submit" size="sm">
                 Apply
               </Button>
@@ -375,7 +349,7 @@ export default async function ReviewQueuePage({
 
         <SectionCard
           title="Extracted transactions"
-          actions={<RecordCount value={filteredTransactions.length} label="shown" />}
+          actions={<RecordCount value={pageTransactions.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -393,7 +367,7 @@ export default async function ReviewQueuePage({
         {!error &&
           transactions &&
           transactions.length > 0 &&
-          filteredTransactions.length === 0 && (
+          pageTransactions.length === 0 && (
             <EmptyState
               title="No review items match these filters"
               message="Adjust search, status, or risk filters to return extracted transactions."
@@ -405,7 +379,7 @@ export default async function ReviewQueuePage({
             />
           )}
 
-        {!error && filteredTransactions.length > 0 && (
+        {!error && pageTransactions.length > 0 && (
           <>
             <DataTable minWidth={1080} ariaLabel="Review queue transactions">
               <thead className={tableHeaderClass}>
@@ -427,17 +401,8 @@ export default async function ReviewQueuePage({
                 </tr>
               </thead>
               <tbody>
-                {filteredTransactions.map((transaction) => {
-                  const client = Array.isArray(transaction.clients)
-                    ? transaction.clients[0]
-                    : transaction.clients;
-                  const extraction = Array.isArray(transaction.ai_extractions)
-                    ? transaction.ai_extractions[0]
-                    : transaction.ai_extractions;
-                  const document = Array.isArray(transaction.documents)
-                    ? transaction.documents[0]
-                    : transaction.documents;
-                  const riskCount = extraction?.risk_flags?.length ?? 0;
+                {pageTransactions.map((transaction) => {
+                  const riskCount = transaction.risk_flags?.length ?? 0;
 
                   return (
                     <tr
@@ -445,21 +410,21 @@ export default async function ReviewQueuePage({
                       className={tableRowClass}
                     >
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
-                        {client?.business_name ?? "Unknown client"}
+                        {transaction.client_business_name ?? "Unknown client"}
                       </td>
                       <td className={tableCellClass}>
                         {transaction.party_name ?? "Not provided"}
                         <p className={`mt-1 ${tableSecondaryTextClass}`}>
-                          {extractionSource(extraction?.model)}
+                          {extractionSource(transaction.extraction_model)}
                         </p>
                       </td>
                       <td className={tableCellClass}>
                         <p className={`${tableSecondaryTextClass} capitalize`}>
-                          {document?.document_type?.replaceAll("_", " ") ??
+                          {transaction.document_type?.replaceAll("_", " ") ??
                             "Not provided"}
                         </p>
                         <p className={`${tableMonoTextClass} text-khata-muted`}>
-                          {document?.file_name ?? "No file"}
+                          {transaction.document_file_name ?? "No file"}
                         </p>
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
@@ -496,7 +461,10 @@ export default async function ReviewQueuePage({
                       </td>
                       <td className={tableActionCellClass}>
                         <TextLink
-                          href={`/dashboard/review-queue/${transaction.id}`}
+                          href={appendReturnContext(
+                            `/dashboard/review-queue/${transaction.id}`,
+                            returnContext,
+                          )}
                           aria-label={`Review ${transaction.invoice_number ?? transaction.party_name ?? "transaction"}`}
                         >
                           Review

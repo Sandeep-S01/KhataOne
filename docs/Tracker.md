@@ -6,6 +6,221 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-13 UI/UX isolated verification package prepared:
+  [ISOLATED_VERIFICATION_PLAN.md](audits/ui-ux/2026-09-13-diagnosis/ISOLATED_VERIFICATION_PLAN.md)
+  now defines the disposable two-firm workspace, role set, fixture groups,
+  browser/accessibility matrix, per-finding assertions for KO-UX-001 through
+  KO-UX-027, release gates and evidence output paths. Added
+  `scripts/prepare-ui-ux-isolated-evidence.mjs` and
+  `scripts/test-ui-ux-isolated-verification-plan.mjs`; `npm.cmd run
+  prepare:ui-ux-evidence` created pending `run-summary.json`,
+  `fixture-manifest.json`, `browser-matrix.json`, `console-errors.json` and
+  `finding-results.csv` under the isolated-verification evidence folder.
+  ui-ux-verification-plan, date-period-defaults, deliberate-density,
+  safe-investigation-detail, truthful-identity-claims, typecheck, lint, build
+  and diff checks passed. This prepares the next release-readiness phase without
+  using live credentials or mutating production data.
+- 2026-09-13 R02B UI/UX remediation locally verified: Audit Logs timestamp
+  filters now convert each `YYYY-MM-DD` input into the full Asia/Kolkata
+  calendar-day UTC range before querying `created_at`, and the page copy states
+  that date filters use India calendar days. `src/lib/format.ts` now exposes
+  `auditDateOnlyToIndiaUtcRange()`; `scripts/test-date-period-defaults.mjs`
+  covers UTC/Asia/Calcutta month defaults, leap-day validity, invalid leap-day
+  rejection, exact India-day UTC boundaries and Audit Logs helper wiring.
+  date-period-defaults, export-history-visibility, typecheck, lint and build
+  checks passed. Hosted boundary-row browser verification remains blocked
+  without isolated audit fixtures.
+- 2026-09-13 R12A UI/UX remediation locally verified: shared dashboard hierarchy
+  now uses named constants for PageHeader/PageTitle/PageDescription and
+  SectionCard header/title/description roles. The desktop page title step is a
+  deliberate compact 26px, table header/body padding is tightened to `py-2.5`
+  while the 46px row minimum remains, and the 56px shell plus 256/68px sidebar
+  baseline is preserved. Login and signup secondary CTAs now use shared
+  `ActionLink size="md"` controls instead of one-off 36px links. Added
+  `scripts/test-deliberate-density-hierarchy.mjs`; deliberate-density,
+  truthful-identity-claims, accessibility-contracts, responsive-containment,
+  typecheck, lint, build and diff checks passed. Local Playwright checks for
+  `/`, `/login`, `/signup`, `/forgot-password` and `/reset-password` passed at
+  390px and 1440px. Broader visual-density changes remain gated by D07 visual
+  approval and isolated authenticated fixtures.
+- 2026-09-13 R11A UI/UX remediation locally verified: the sidebar firm identity
+  block no longer uses a chevron or hover card treatment that implies an
+  unavailable firm switcher. Landing copy now labels the review queue as an
+  illustrative sample, describes implemented record-level confidence/risk/source
+  evidence instead of field-level evidence, and changes the footer GST chip to
+  "GST prep only" while preserving the direct-filing-outside-v1 boundary. Added
+  `scripts/test-truthful-identity-public-claims.mjs`; truthful-identity-claims,
+  accessibility-contracts, typecheck, lint, build and diff checks passed. Local
+  Playwright checks for `/`, `/login` and `/signup` passed at 390px and 1440px.
+- 2026-09-13 R10A UI/UX remediation locally verified: Audit Logs now selects
+  `before_data` and `after_data`, links entities only through allowlisted internal
+  dashboard routes, and shows a Safe investigation detail column with allowlisted
+  field changes and metadata chips. Operations job errors now show complete
+  sanitized text with links and token-shaped values redacted instead of a
+  140-character slice. Shared `InlineAlert` supports wrapping detail text when a
+  screen opts in. Added `scripts/test-safe-investigation-detail.mjs`;
+  safe-investigation-detail, export-history-visibility, accessibility-contracts,
+  responsive-containment, typecheck, lint, build and diff checks passed. Hosted
+  correction-trace and long-error browser checks remain blocked without isolated
+  metadata/error fixtures.
+- 2026-09-13 R09A UI/UX remediation locally verified: Export history now has
+  explicit refresh, truthful queued/processing/failed file-state labels, private
+  download-route preservation and 50-row lookahead pagination. GST Summary,
+  Reports, Audit Logs and Operations histories now use bounded pagination instead
+  of fixed latest-record limits; Audit and Operations retain active filters across
+  pages, and Operations refresh preserves the filtered page. Export and GST form
+  validation messages are associated with their fields. Added
+  `scripts/test-export-history-visibility.mjs`; export-history-visibility,
+  accessibility-contracts, responsive-containment, typecheck, lint, build and
+  diff checks passed. Live queued/processing/completed worker transitions and
+  more-than-50 pagination fixtures remain blocked without an isolated environment.
+- 2026-09-13 R08A UI/UX remediation locally verified: semantic foreground
+  tokens now improve small feedback/status contrast; collapsed sidebar tooltips
+  dismiss on Escape; client, ledger, review and onboarding forms connect invalid
+  controls to inline errors; login/signup/forgot/reset password fields use 44px
+  mobile input or toggle targets; update-password validation identifies the field
+  that owns the current inline message. Added `scripts/test-accessibility-contracts.mjs`;
+  accessibility-contracts, update-password-form, review-dirty-interlock,
+  typecheck, lint and build checks passed. Local public auth browser checks passed
+  at 390px and 1440px. Authenticated screen-reader/role browser checks remain
+  blocked without isolated fixtures.
+- 2026-09-13 R07A UI/UX remediation source/build verified: Review Queue filters
+  no longer force the dense seven-column toolbar at the 1280px breakpoint, GST
+  detail grid/table sections can shrink into scrollable table regions, shared
+  `DataTable` wrappers are max-width constrained, and the mobile sign-out button
+  now has a 44px minimum width while keeping its accessible name. Added
+  `scripts/test-responsive-containment.mjs`; responsive-containment,
+  dashboard-responsive-harness contract, typecheck, lint, build and diff checks
+  passed. Full authenticated browser checks across all viewports and sidebar
+  states remain blocked without isolated fixtures.
+- 2026-09-13 R06A-R06B UI/UX remediation locally verified: added
+  `src/lib/document-evidence.ts` and `src/components/document-evidence-panel.tsx`
+  so Review detail can show supported private image/PDF/text/audio source evidence
+  through 120-second signed URLs from `whatsapp-media-raw`, with precise fallbacks
+  and extracted source text retained. GST period detail now labels generated totals
+  as the saved GST summary, labels rows as live current-period transactions, and
+  shows current blockers without changing the accounting query or totals. Added
+  `scripts/test-evidence-provenance.mjs`; evidence-provenance, dirty-interlock,
+  unavailable-state, lint, typecheck and build checks passed. Hosted signed-storage
+  and post-generation GST provenance verification remain blocked without isolated
+  fixtures.
+- 2026-09-13 R05A UI/UX remediation locally verified: added
+  `src/lib/availability.ts` for explicit unavailable count, nullable currency and
+  nullable percent display. Overview, Reports, Operations, client detail, GST Summary
+  and GST period detail now separate failed or absent reads from real zero values, use
+  generic retry copy for read failures, and keep static `StatTile` cards from looking
+  clickable. Overview confidence no longer maps absence to `0%`; missing GST summary
+  totals/counts show `Unavailable` while valid zero remains numeric. Added
+  `scripts/test-unavailable-states.mjs`; unavailable-state, return-context,
+  action-outcome, role-affordance, dashboard workflow, query-semantics, lint, typecheck
+  and build checks passed. Hosted injected-read-failure and deeper count-destination
+  verification remain blocked without isolated fixtures.
+
+- 2026-09-13 R04E UI/UX remediation locally verified: added
+  `src/lib/return-context.ts` for allowlisted `return_to` dashboard list context.
+  Clients, Review Queue and Ledger now carry safe page/filter context from lists into
+  detail/edit/correction flows and back through client, review and ledger server-action
+  redirects. Archive outcomes append fixed result codes to the safe Clients destination;
+  reject/duplicate return to the filtered Review Queue; approval still routes to Ledger
+  after handoff. Added `scripts/test-return-context.mjs` and updated source tests for the
+  new form props; return-context, action-outcome, role-affordance, dirty-interlock,
+  dashboard workflow, lint, typecheck and build checks passed. No live archive, review
+  decision, approval, ledger correction, WhatsApp delivery or financial mutation was
+  performed; hosted mutation/role verification remains blocked without isolated fixtures.
+
+- 2026-09-13 R04D UI/UX remediation locally verified: added shared
+  `PendingSubmitButton` form-status feedback and fixed outcome reporting for client
+  archive and Operations manual job runs. Archive now checks the RPC result, revalidates
+  client routes on success, and redirects to fixed success/error banners on Clients.
+  Manual job actions now map bounded worker summaries to fixed result messages, catch
+  worker exceptions, route failures to the failed-job filter, and avoid raw error text in
+  URLs. Added `scripts/test-action-outcome-feedback.mjs`; action-outcome, role-affordance,
+  dirty-interlock, dashboard workflow, query-semantics, lint, typecheck and build checks
+  passed. No live archive, manual run, export, WhatsApp delivery or financial mutation was
+  performed; R04 return-context behavior is now covered by the R04E record above.
+
+- 2026-09-13 R04C UI/UX remediation locally verified: added shared
+  `src/lib/permissions.ts` role helpers and aligned page-level mutation affordances
+  with the existing owner/admin/staff server-action boundary. Client create/edit/detail,
+  Review detail, Ledger detail/edit, GST Summary, Exports and Operations now show a
+  shared read-only permission notice instead of create/edit/decision/generation/manual-run
+  controls for read-only roles, while read-only histories and downloads remain visible.
+  Added `scripts/test-role-aware-affordances.mjs`; role-affordance, dirty-interlock,
+  dashboard workflow, query-semantics, lint, typecheck and build checks passed. Hosted
+  owner/admin/staff/viewer matrix verification remains blocked without isolated role fixtures.
+
+- 2026-09-13 R04B UI/UX remediation locally verified: review decision forms now
+  expose submit-pending state through `useFormStatus()`. Approve, Reject and Mark
+  duplicate disable while their own form is submitting and show specific pending labels;
+  the WhatsApp clarification textarea and submit button also disable during submission
+  with busy/disabled accessibility state. Updated `scripts/test-review-dirty-interlock.mjs`;
+  dirty-interlock, lint, typecheck and build checks passed. No action RPC, redirect,
+  ledger handoff, WhatsApp delivery, authorization or audit behavior changed. Client
+  archive and Operations pending/outcome feedback remain in R04.
+
+- 2026-09-13 R04A UI/UX remediation locally verified: added a coordinated
+  `TransactionReviewWorkspace` for non-posted review details so unsaved field edits
+  disable Approve, Reject, Mark duplicate and Request WhatsApp clarification until
+  the explicit Save completes. `TransactionReviewForm` now reports dirty state, the
+  dirty warning is announced and referenced by disabled decisions, the clarification
+  textarea has a persistent label/help contract, and posted records remain read-only
+  with their summary/evidence rail intact. Added `scripts/test-review-dirty-interlock.mjs`;
+  dirty-interlock, dashboard workflow, query-semantics, lint, typecheck and build checks
+  passed. No live approval/rejection/duplicate/WhatsApp clarification or financial
+  mutation was performed; remaining R04 role, pending/outcome and return-context work
+  still needs isolated fixtures.
+
+- 2026-09-13 R03 UI/UX remediation locally verified: added migration
+  `20260913110000_complete_dashboard_filtered_results.sql` with authenticated read-only
+  `search_review_queue()` and `search_whatsapp_inbox()` functions so Review Queue and
+  Inbox search/status/document/risk/date predicates run before pagination. Updated both
+  pages to consume flat RPC rows and removed current-page memory filtering. Clients now
+  includes the `onboarding` status and shows filtered-empty copy when active filters
+  return zero rows. Added `scripts/test-dashboard-filter-rpcs.mjs`; dashboard RPC,
+  query-semantics, date-default, password-form, lint, typecheck, and build checks passed.
+  Hosted verification is pending until the migration is applied; R04 review action safety
+  is the next workflow package.
+
+- 2026-09-13 R02A UI/UX remediation locally verified: centralized GST/export
+  month-default construction in `src/lib/format.ts` with `currentMonthDateRange()`
+  and updated `src/components/gst-summary-form.tsx` plus `src/components/export-form.tsx`
+  to avoid `toISOString()` shifting date-only calendar boundaries. Added
+  `scripts/test-date-period-defaults.mjs` and `npm run test:date-period-defaults`,
+  covering September 2026 in UTC and Asia/Calcutta, leap February 2024 and December
+  month end. Focused date/password tests, lint, typecheck, and build passed. Audit-log
+  timestamp-day filtering remains R02B pending the documented D02 timezone decision;
+  R03 complete filtered results is the next ready workflow slice.
+
+- 2026-09-13 R01 UI/UX remediation locally verified: fixed the password-reset
+  submit handler in `src/components/update-password-form.tsx` so the form element is
+  captured before the async Supabase Auth update and a genuine success cannot be
+  converted into the setup-failure message by a cleared event reference. Added
+  `scripts/test-update-password-form.mjs` and `npm run test:update-password-form`
+  with a mocked deferred provider success plus provider rejection; no real password was
+  changed. `npm.cmd run test:update-password-form`, lint, typecheck, and build passed;
+  the built `/reset-password` route rendered at 390px and 1440px without horizontal
+  overflow. Hosted recovery-session verification remains pending; R02 calendar
+  boundaries are the next planned workflow slice.
+
+- 2026-09-13 UI/UX remediation planning complete: created
+  [UI-UX-Remediation-Plan.md](UI-UX-Remediation-Plan.md), assigning all 27 diagnosis
+  findings to 12 scoped packages with acceptance criteria, decision defaults,
+  fixture requirements and release gates. Linked the workstream from the
+  implementation plan. R01 (password-reset success handling) is the first planned
+  implementation slice, using a mocked provider; no remediation code has been
+  implemented. Documentation-only change; existing audit evidence and Overview
+  concepts preserved. Finding coverage, references and diff checks passed.
+
+- 2026-09-13 Overview concept 2: prepared `docs/design-reviews/overview/overview-proposal-v2.png`
+  and `layout-v2.md` from the user's additional layout reference. Proposed one header firm
+  context, simpler navigation, a unified summary band, and compact review surfaces.
+  Static visual approval remains pending; no application or backend changes.
+
+- 2026-09-13 Overview screenshot review: prepared a page-specific visual audit and
+  PNG approval concept in `docs/design-reviews/overview/`. Proposal improves density,
+  worklist alignment, table wrapping, and visual hierarchy using the supplied records.
+  Awaiting visual approval; no application code, backend, or other pages changed.
+
 - 2026-09-12 WA-LAT recovery scheduling follow-up: production deployment and CI for commit
   `943a2d1` passed, but no recovery heartbeat appeared at the expected GitHub schedule slot.
   Read-only Actions history confirms multi-hour gaps between nominal five-minute runs, so
@@ -377,3 +592,11 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-12 | Aligned login and registration to a stable desktop top rhythm, corrected password visibility icon centering against the input itself, and made assurance icon/text alignment explicit. Audited the existing browser constraints and authoritative server-action validation before the live-validation follow-up. |
 | 2026-09-12 | Refined registration field labels and spacing into one compact, non-shifting rhythm and added accessible real-time validation for name, firm, email, and password. Browser and server actions now consume the same validation rules; invalid submissions are blocked locally and still revalidated authoritatively on the server. |
 | 2026-09-12 | Passed the full local release gate for the dashboard refinement, auth validation, and Supabase recovery scheduler changes: repository preflight, hardening/security/worker/database policy suites, dashboard regression harnesses, accounting RPC tests, dependency audit, lint, TypeScript, and production build all passed. External capacity certification and hosted provider/tenant checks remain explicitly outside the local gate. |
+
+2026-09-13 UI/UX remediation progress: R06A-R06B original evidence and GST provenance are locally verified. Added private review evidence signing/rendering and GST saved/current provenance labels. Verification passed: `npm.cmd run test:evidence-provenance`, `npm.cmd run test:review-dirty-interlock`, `npm.cmd run test:unavailable-states`, `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check`. Hosted closure remains gated on isolated private-storage and GST snapshot/change fixtures.
+
+| 2026-09-13 | Added a safe UI/UX browser-matrix runner that verifies public landing/auth routes locally, records protected dashboard routes as blocked without an isolated Playwright storage state, writes sanitized evidence files, and keeps live credentials out of the verification path. |
+
+| 2026-09-13 | Ran the new UI/UX browser matrix locally after fixing public mobile touch targets. Public landing/login/signup/forgot-password/reset-password routes passed at 390px and 1440px with zero failures; 105 authenticated dashboard checks remain blocked pending isolated Playwright storage state and fixture IDs. |
+
+| 2026-09-13 | Added an isolated UI/UX auth-state capture helper and contract test. The helper requires explicit disposable-workspace confirmation, writes storage state under ignored `.codex-tmp/`, and documents the fixture-ID handoff needed before authenticated dashboard browser checks can move from blocked to pass/fail. |

@@ -193,7 +193,11 @@ export function FieldError({
   }
 
   return (
-    <p id={id} className="mt-1 text-xs font-medium text-destructive">
+    <p
+      id={id}
+      role="status"
+      className="mt-1 text-xs font-medium text-destructive-foreground"
+    >
       {message}
     </p>
   );
@@ -213,9 +217,10 @@ export function FormMessage({
   }
 
   const toneClasses = {
-    success: "border-success/30 bg-success/10 text-success",
-    danger: "border-destructive/30 bg-destructive/10 text-destructive",
-    info: "border-info/30 bg-info/10 text-info",
+    success: "border-success/35 bg-success/10 text-success-foreground",
+    danger:
+      "border-destructive/35 bg-destructive/10 text-destructive-foreground",
+    info: "border-info/35 bg-info/10 text-info-foreground",
   };
 
   return (
@@ -268,6 +273,19 @@ type PageHeaderProps = {
   actions?: React.ReactNode;
 };
 
+export const pageHeaderClassName =
+  "flex flex-col gap-3 border-b border-khata-border bg-white px-4 py-5 md:px-6 lg:flex-row lg:items-center lg:justify-between";
+export const pageTitleClassName =
+  "text-xl font-semibold leading-7 tracking-normal text-khata-ink md:text-[1.625rem] md:leading-8";
+export const pageDescriptionClassName =
+  "mt-2 max-w-3xl text-sm leading-6 text-khata-muted";
+export const sectionCardHeaderClassName =
+  "flex flex-col justify-between gap-2 border-b border-khata-border bg-khata-paperMuted/60 px-4 py-3 sm:flex-row sm:items-center";
+export const sectionCardTitleClassName =
+  "text-sm font-semibold leading-5 tracking-normal text-khata-ink";
+export const sectionCardDescriptionClassName =
+  "mt-0.5 text-xs leading-5 text-khata-muted";
+
 export function PageHeader({
   eyebrow,
   title,
@@ -276,17 +294,17 @@ export function PageHeader({
   actions,
 }: PageHeaderProps) {
   return (
-    <header className="flex flex-col gap-3 border-b border-khata-border bg-white px-4 py-5 md:px-6 lg:flex-row lg:items-center lg:justify-between">
+    <header className={pageHeaderClassName}>
       <div className="min-w-0">
         {eyebrow && <p className="k-eyebrow text-khata-green">{eyebrow}</p>}
         <div className="mt-1.5 flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-semibold tracking-normal text-khata-ink md:text-2xl">
+          <h1 className={pageTitleClassName}>
             {title}
           </h1>
           {meta}
         </div>
         {description && (
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-khata-muted">
+          <p className={pageDescriptionClassName}>
             {description}
           </p>
         )}
@@ -334,11 +352,11 @@ export function SectionCard({
   return (
     <section className={cn("k-card overflow-hidden", className)}>
       {(title || description || actions) && (
-        <div className="flex flex-col justify-between gap-2 border-b border-khata-border bg-khata-paperMuted/60 px-4 py-3 sm:flex-row sm:items-center">
+        <div className={sectionCardHeaderClassName}>
           <div>
-            {title && <h2 className="text-sm font-semibold tracking-normal">{title}</h2>}
+            {title && <h2 className={sectionCardTitleClassName}>{title}</h2>}
             {description && (
-              <p className="mt-0.5 text-xs leading-5 text-khata-muted">
+              <p className={sectionCardDescriptionClassName}>
                 {description}
               </p>
             )}
@@ -492,8 +510,8 @@ export function StatTile({
     <Comp
       {...(onClick ? { onClick, type: "button" as const } : {})}
       className={cn(
-        "k-card k-card-hover relative w-full overflow-hidden p-4 pl-5 text-left before:absolute before:inset-y-0 before:left-0 before:w-1",
-        onClick && "cursor-pointer",
+        "k-card relative w-full overflow-hidden p-4 pl-5 text-left before:absolute before:inset-y-0 before:left-0 before:w-1",
+        onClick && "k-card-hover cursor-pointer",
         statToneClasses[tone],
         className,
       )}
@@ -628,7 +646,7 @@ export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 
 export function InfoNote({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 rounded-md border border-info/30 bg-info/10 px-3 py-2 text-sm leading-6 text-info">
+    <div className="flex gap-3 rounded-md border border-info/35 bg-info/10 px-3 py-2 text-sm leading-6 text-info-foreground">
       <Info className="mt-0.5 h-4 w-4 shrink-0" />
       <div>{children}</div>
     </div>
@@ -639,14 +657,16 @@ export function InlineAlert({
   children,
   tone = "danger",
   className,
+  truncate = true,
 }: {
   children: React.ReactNode;
   tone?: "warning" | "danger";
   className?: string;
+  truncate?: boolean;
 }) {
   const toneClasses = {
-    warning: "text-warning",
-    danger: "text-destructive",
+    warning: "text-warning-foreground",
+    danger: "text-destructive-foreground",
   };
 
   return (
@@ -658,7 +678,9 @@ export function InlineAlert({
       )}
     >
       <AlertTriangle className="size-3.5 shrink-0" />
-      <span className="truncate">{children}</span>
+      <span className={truncate ? "truncate" : "min-w-0 whitespace-normal break-words leading-5"}>
+        {children}
+      </span>
     </span>
   );
 }
@@ -740,7 +762,7 @@ export function DataTable({
 }) {
   return (
     <div
-      className="overflow-x-auto"
+      className="max-w-full overflow-x-auto k-scrollbar"
       role="region"
       aria-label={ariaLabel}
       tabIndex={0}
@@ -757,12 +779,12 @@ export function DataTable({
 
 export const tableHeaderClass =
   "sticky top-0 z-10 bg-khata-paperMuted/95 text-xs text-khata-muted";
-export const tableHeadCellClass = "px-4 py-3 font-medium";
+export const tableHeadCellClass = "px-4 py-2.5 font-medium";
 export const tableNumericHeadCellClass = `${tableHeadCellClass} text-right`;
 export const tableActionHeadCellClass = tableNumericHeadCellClass;
 export const tableRowClass =
   "k-row border-t border-khata-border transition-colors hover:bg-khata-paperMuted/55";
-export const tableCellClass = "px-4 py-3";
+export const tableCellClass = "px-4 py-2.5 align-middle";
 export const tableNumericCellClass = `${tableCellClass} num text-right`;
 export const tableActionCellClass = `${tableCellClass} text-right`;
 export const tablePrimaryTextClass = "font-medium text-khata-ink";

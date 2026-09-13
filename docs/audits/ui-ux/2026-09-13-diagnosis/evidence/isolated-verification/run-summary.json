@@ -1,0 +1,20 @@
+{
+  "status": "pending",
+  "created_at": "2026-09-13T10:47:52.937Z",
+  "environment": {
+    "type": "isolated-local-or-staging",
+    "base_url": "REPLACE_WITH_ISOLATED_BASE_URL",
+    "production_data_used": false,
+    "live_credentials_used": false,
+    "workers_enabled_for_specific_tests_only": false
+  },
+  "candidate": {
+    "commit": "REPLACE_WITH_CANDIDATE_COMMIT",
+    "migration_required": "20260913110000_complete_dashboard_filtered_results.sql"
+  },
+  "safety_notes": [
+    "Do not store passwords, access tokens, signed URLs, phone numbers or private document contents in evidence files.",
+    "Do not use production financial records as test evidence.",
+    "Mark unavailable fixtures as blocked instead of substituting live mutations."
+  ]
+}

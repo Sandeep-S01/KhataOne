@@ -33,6 +33,11 @@ import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
+import {
+  appendReturnContext,
+  buildReturnContext,
+  ledgerReturnKeys,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -140,6 +145,7 @@ export default async function LedgerPage({
     pageEntries.reduce((sum, entry) => sum + Number(entry.credit_amount ?? 0), 0) ??
     0;
   const activeFilters = activeFilterSummary(filters);
+  const returnContext = buildReturnContext(filters, ledgerReturnKeys);
 
   return (
     <div>
@@ -322,7 +328,10 @@ export default async function LedgerPage({
                       </td>
                       <td className={tableActionCellClass}>
                         <TextLink
-                          href={`/dashboard/ledger/${entry.id}`}
+                          href={appendReturnContext(
+                            `/dashboard/ledger/${entry.id}`,
+                            returnContext,
+                          )}
                           aria-label={`Open ledger entry for ${client?.business_name ?? "unknown client"}`}
                         >
                           Open

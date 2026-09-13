@@ -30,15 +30,27 @@ const initialState: LedgerActionState = {
   message: "",
 };
 
-export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
+export function LedgerEntryForm({
+  entry,
+  returnContext = "",
+}: {
+  entry: LedgerEntryValues;
+  returnContext?: string;
+}) {
   const [state, formAction, pending] = useActionState(
     updateLedgerEntryAction,
     initialState,
   );
 
+  const errorId = (name: string) =>
+    state.fieldErrors?.[name] ? `ledger-${name.replaceAll("_", "-")}-error` : undefined;
+
   return (
     <form action={formAction} className="k-card p-5">
       <input type="hidden" name="entry_id" value={entry.id} />
+      {returnContext && (
+        <input type="hidden" name="return_context" value={returnContext} />
+      )}
       <div className="grid gap-4 lg:grid-cols-2">
         <label className="block">
           <FieldLabel>
@@ -58,11 +70,13 @@ export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
           </FieldLabel>
           <Input
             name="account_name"
+            aria-invalid={Boolean(state.fieldErrors?.account_name)}
+            aria-describedby={errorId("account_name")}
             type="text"
             defaultValue={entry.account_name}
             className="mt-1"
           />
-          <FieldError message={state.fieldErrors?.account_name} />
+          <FieldError id={errorId("account_name")} message={state.fieldErrors?.account_name} />
         </label>
 
         <label className="block">
@@ -71,12 +85,14 @@ export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
           </FieldLabel>
           <Input
             name="debit_amount"
+            aria-invalid={Boolean(state.fieldErrors?.debit_amount)}
+            aria-describedby={errorId("debit_amount")}
             type="number"
             step="0.01"
             defaultValue={entry.debit_amount}
             className="num mt-1 text-right"
           />
-          <FieldError message={state.fieldErrors?.debit_amount} />
+          <FieldError id={errorId("debit_amount")} message={state.fieldErrors?.debit_amount} />
         </label>
 
         <label className="block">
@@ -85,12 +101,14 @@ export function LedgerEntryForm({ entry }: { entry: LedgerEntryValues }) {
           </FieldLabel>
           <Input
             name="credit_amount"
+            aria-invalid={Boolean(state.fieldErrors?.credit_amount)}
+            aria-describedby={errorId("credit_amount")}
             type="number"
             step="0.01"
             defaultValue={entry.credit_amount}
             className="num mt-1 text-right"
           />
-          <FieldError message={state.fieldErrors?.credit_amount} />
+          <FieldError id={errorId("credit_amount")} message={state.fieldErrors?.credit_amount} />
         </label>
       </div>
 

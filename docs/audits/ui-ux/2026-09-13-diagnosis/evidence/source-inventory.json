@@ -1,0 +1,2215 @@
+[
+  {
+    "file": "src/app/(auth)/forgot-password/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowLeft, ShieldCheck }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 5
+      },
+      {
+        "module": "@/components/password-reset-form",
+        "symbols": "{ PasswordResetForm }",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(auth)/layout.tsx",
+    "client": false,
+    "imports": [],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(auth)/login/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowLeft, ShieldCheck }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "@/components/auth-form",
+        "symbols": "{ AuthForm }",
+        "line": 5
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(auth)/reset-password/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowLeft, ShieldCheck }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 5
+      },
+      {
+        "module": "@/components/update-password-form",
+        "symbols": "{ UpdatePasswordForm }",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(auth)/signup/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowLeft, ShieldCheck }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "@/components/auth-form",
+        "symbols": "{ AuthForm }",
+        "line": 5
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/audit-logs/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  Button,\n  DataTable,\n  EmptyState,\n  FieldLabel,\n  FilterBar,\n  Input,\n  PageBody,\n  PageHeader,\n  QueryError,\n  RecordCount,\n  SectionCard,\n  Select,\n  SetupRequired,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableRowClass,\n}",
+        "line": 1
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 25
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 26
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 27
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateTime }",
+        "line": 28
+      }
+    ],
+    "tables": [
+      "audit_logs",
+      "audit_logs"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/clients/new/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/client-form",
+        "symbols": "{ ClientForm }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ ActionLink, PageBody, PageHeader }",
+        "line": 2
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/clients/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DataTable,\n  EmptyState,\n  FieldLabel,\n  FilterBar,\n  Input,\r\n  PageBody,\r\n  PageHeader,\r\n  PaginationControls,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  Select,\r\n  SetupRequired,\r\n  TextLink,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tablePrimaryTextClass,\r\n  tableSecondaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 1
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 28
+      },
+      {
+        "module": "@/lib/dashboard-query",
+        "symbols": "{\r\n  normalizePage,\r\n  normalizeSearch,\r\n  toPostgrestContainsPattern,\r\n}",
+        "line": 29
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 34
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 35
+      },
+      {
+        "module": "@/lib/request-performance",
+        "symbols": "{ withServerTiming }",
+        "line": 36
+      }
+    ],
+    "tables": [
+      "clients"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState",
+      "PaginationControls"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/clients/[clientId]/edit/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/components/client-form",
+        "symbols": "{ ClientForm }",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  PageBody,\n  PageHeader,\n  SetupRequired,\n}",
+        "line": 4
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 10
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 11
+      }
+    ],
+    "tables": [
+      "clients"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/clients/[clientId]/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/app/actions/clients",
+        "symbols": "{ archiveClientAction }",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  Button,\n  DataTable,\n  DetailList,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  RecordCount,\n  SectionCard,\n  SetupRequired,\n  StatTile,\n  TextLink,\n  tableActionCellClass,\n  tableActionHeadCellClass,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableSecondaryTextClass,\n  tableRowClass,\n}",
+        "line": 4
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 29
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 30
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 31
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{\n  formatDisplayDateRange,\n  formatDisplayDateTime,\n}",
+        "line": 32
+      }
+    ],
+    "tables": [
+      "clients",
+      "documents",
+      "transactions",
+      "transactions",
+      "gst_periods",
+      "audit_logs"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/exports/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ Download }",
+        "line": 1
+      },
+      {
+        "module": "@/components/export-form",
+        "symbols": "{\n  ExportForm,\n  type ExportClientOption,\n  type ExportPeriodOption,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  DataTable,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  QueryError,\n  RecordCount,\n  SectionCard,\n  SetupRequired,\n  TextLink,\n  tableActionCellClass,\n  tableActionHeadCellClass,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tablePrimaryTextClass,\n  tableSecondaryTextClass,\n  tableRowClass,\n}",
+        "line": 8
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 28
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 29
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 30
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{\n  formatDisplayDateRange,\n  formatDisplayDateTime,\n}",
+        "line": 31
+      }
+    ],
+    "tables": [
+      "clients",
+      "gst_periods",
+      "exports"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/gst-summary/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/gst-summary-form",
+        "symbols": "{\n  GstSummaryForm,\n  type GstClientOption,\n}",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  DataTable,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  QueryError,\n  RecordCount,\n  SectionCard,\n  SetupRequired,\n  TextLink,\n  tableActionCellClass,\n  tableActionHeadCellClass,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableRowClass,\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 26
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 27
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 28
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateRange }",
+        "line": 29
+      }
+    ],
+    "tables": [
+      "clients",
+      "gst_periods"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/gst-summary/[periodId]/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  DataTable,\n  DetailList,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  SectionCard,\n  SetupRequired,\n  StatTile,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableRowClass,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 22
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 23
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 24
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{\n  formatDisplayDate,\n  formatDisplayDateRange,\n  formatDisplayDateTime,\n}",
+        "line": 25
+      }
+    ],
+    "tables": [
+      "gst_periods",
+      "transactions",
+      "audit_logs"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/inbox/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DataTable,\r\n  EmptyState,\r\n  FilterBar,\r\n  Input,\r\n  PageBody,\r\n  PageHeader,\r\n  PaginationControls,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  Select,\r\n  SetupRequired,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericHeadCellClass,\r\n  tableNumericCellClass,\r\n  tablePrimaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 1
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 27
+      },
+      {
+        "module": "@/lib/dashboard-query",
+        "symbols": "{ normalizePage, normalizeSearch }",
+        "line": 28
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 29
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 30
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateTime }",
+        "line": 31
+      },
+      {
+        "module": "@/lib/request-performance",
+        "symbols": "{ withServerTiming }",
+        "line": 32
+      }
+    ],
+    "tables": [
+      "whatsapp_messages"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState",
+      "PaginationControls"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/layout.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ LogOut }",
+        "line": 2
+      },
+      {
+        "module": "@/app/actions/auth",
+        "symbols": "{ signOut }",
+        "line": 4
+      },
+      {
+        "module": "@/components/dashboard-mobile-menu",
+        "symbols": "{ DashboardMobileMenu }",
+        "line": 5
+      },
+      {
+        "module": "@/components/dashboard-sidebar",
+        "symbols": "{ DashboardSidebar }",
+        "line": 6
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ Button }",
+        "line": 7
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 8
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/ledger/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DataTable,\r\n  EmptyState,\r\n  FieldLabel,\r\n  FilterBar,\r\n  Input,\r\n  PageBody,\r\n  PageHeader,\r\n  PaginationControls,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  Select,\r\n  SetupRequired,\r\n  StatTile,\r\n  TextLink,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericCellClass,\r\n  tableNumericHeadCellClass,\r\n  tablePrimaryTextClass,\r\n  tableSecondaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 1
+      },
+      {
+        "module": "@/lib/dashboard-query",
+        "symbols": "{ normalizePage }",
+        "line": 31
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 32
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 33
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDate }",
+        "line": 34
+      },
+      {
+        "module": "@/lib/request-performance",
+        "symbols": "{ withServerTiming }",
+        "line": 35
+      }
+    ],
+    "tables": [
+      "clients",
+      "ledger_entries"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState",
+      "PaginationControls"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/ledger/[entryId]/edit/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/components/ledger-entry-form",
+        "symbols": "{\n  LedgerEntryForm,\n  type LedgerEntryValues,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  DetailList,\n  PageBody,\n  PageHeader,\n  SectionCard,\n  SetupRequired,\n}",
+        "line": 7
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 15
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 16
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDate }",
+        "line": 17
+      }
+    ],
+    "tables": [
+      "ledger_entries"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/ledger/[entryId]/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  DataTable,\n  DetailList,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  SectionCard,\n  SetupRequired,\n  TextLink,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableSecondaryTextClass,\n  tableRowClass,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 23
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 24
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDate, formatDisplayDateTime }",
+        "line": 25
+      }
+    ],
+    "tables": [
+      "ledger_entries",
+      "audit_logs"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/loading.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  PageBody,\n  PageHeader,\n  SectionCard,\n  TableSkeleton,\n}",
+        "line": 1
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "aria-busy"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/operations/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Route }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ RefreshCw }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DataTable,\r\n  EmptyState,\r\n  FieldLabel,\r\n  FilterBar,\r\n  InlineAlert,\r\n  PageBody,\r\n  PageHeader,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  Select,\r\n  SetupRequired,\r\n  StatTile,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericCellClass,\r\n  tableNumericHeadCellClass,\r\n  tablePrimaryTextClass,\r\n  tableSecondaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 33
+      },
+      {
+        "module": "@/app/actions/operations",
+        "symbols": "{\r\n  runExportGenerationJobNowAction,\r\n  runExtractionJobNowAction,\r\n}",
+        "line": 34
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv, hasSupabaseConfig }",
+        "line": 38
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 39
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateTime }",
+        "line": 40
+      },
+      {
+        "module": "@/lib/jobs/worker-observability",
+        "symbols": "{\r\n  evaluatePipelineAlerts,\r\n  getPipelineHealthSnapshot,\r\n  type PipelineHealthRow,\r\n}",
+        "line": 41
+      }
+    ],
+    "tables": [
+      "processing_jobs",
+      "processing_jobs",
+      "processing_jobs",
+      "processing_jobs",
+      "processing_jobs",
+      "processing_jobs"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  DataTable,\r\n  EmptyState,\r\n  PageBody,\r\n  PageHeader,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  SetupRequired,\r\n  StatTile,\r\n  TextLink,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericCellClass,\r\n  tableNumericHeadCellClass,\r\n  tablePrimaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 1
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 24
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 25
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 26
+      },
+      {
+        "module": "@/lib/request-performance",
+        "symbols": "{ withServerTiming }",
+        "line": 27
+      }
+    ],
+    "tables": [
+      "transactions",
+      "gst_periods",
+      "gst_periods",
+      "whatsapp_messages",
+      "exports",
+      "exports",
+      "transactions"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/platform/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ Blocks, CircleDollarSign, Landmark, Send, ShieldCheck }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  DataTable,\n  DetailList,\n  IconPanel,\n  PageBody,\n  PageHeader,\n  RecordCount,\n  SectionCard,\n  SetupRequired,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableRowClass,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 21
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 22
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 23
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateTime }",
+        "line": 24
+      },
+      {
+        "module": "@/lib/integrations/gst",
+        "symbols": "{ getGstIntegrationProvider }",
+        "line": 25
+      }
+    ],
+    "tables": [
+      "gst_integrations",
+      "external_integrations",
+      "integration_events"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/reports/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowRight, FileText }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  ActionLink,\n  DataTable,\n  EmptyState,\n  PageBody,\n  PageHeader,\n  QueryError,\n  RecordCount,\n  SectionCard,\n  SetupRequired,\n  StatTile,\n  TextLink,\n  tableActionCellClass,\n  tableActionHeadCellClass,\n  tableCellClass,\n  tableHeadCellClass,\n  tableHeaderClass,\n  tableMonoTextClass,\n  tableNumericCellClass,\n  tableNumericHeadCellClass,\n  tablePrimaryTextClass,\n  tableRowClass,\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 26
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 27
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 28
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateRange }",
+        "line": 29
+      }
+    ],
+    "tables": [
+      "gst_periods",
+      "transactions",
+      "transactions",
+      "exports"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/review-queue/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DataTable,\r\n  EmptyState,\r\n  FilterBar,\r\n  InlineAlert,\r\n  Input,\r\n  PageBody,\r\n  PageHeader,\r\n  PaginationControls,\r\n  QueryError,\r\n  RecordCount,\r\n  SectionCard,\r\n  Select,\r\n  SetupRequired,\r\n  TextLink,\r\n  tableActionCellClass,\r\n  tableActionHeadCellClass,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericCellClass,\r\n  tableNumericHeadCellClass,\r\n  tablePrimaryTextClass,\r\n  tableSecondaryTextClass,\r\n  tableRowClass,\r\n}",
+        "line": 2
+      },
+      {
+        "module": "@/lib/dashboard-query",
+        "symbols": "{ normalizePage, normalizeSearch }",
+        "line": 31
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 32
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 33
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDate }",
+        "line": 34
+      },
+      {
+        "module": "@/lib/request-performance",
+        "symbols": "{ withServerTiming }",
+        "line": 35
+      }
+    ],
+    "tables": [
+      "clients",
+      "transactions"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState",
+      "PaginationControls"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/review-queue/[transactionId]/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ notFound }",
+        "line": 1
+      },
+      {
+        "module": "@/app/actions/review",
+        "symbols": "{\r\n  approveTransactionAction,\r\n  markDuplicateTransactionAction,\r\n  rejectTransactionAction,\r\n  requestClarificationAction,\r\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/transaction-review-form",
+        "symbols": "{\r\n  TransactionReviewForm,\r\n  type TransactionReviewValues,\r\n}",
+        "line": 9
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  ActionLink,\r\n  Button,\r\n  DetailList,\r\n  FieldLabel,\r\n  FormMessage,\r\n  InfoNote,\r\n  PageBody,\r\n  PageHeader,\r\n  SectionCard,\r\n  SetupRequired,\r\n  Textarea,\r\n}",
+        "line": 13
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 26
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 27
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 28
+      }
+    ],
+    "tables": [
+      "transactions"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "notFound(",
+      "SetupRequired"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/dashboard/settings/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ CheckCircle2, CircleAlert }",
+        "line": 1
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\r\n  DataTable,\r\n  DetailList,\r\n  EmptyState,\r\n  IconPanel,\r\n  PageBody,\r\n  PageHeader,\r\n  RecordCount,\r\n  SectionCard,\r\n  SetupRequired,\r\n  tableCellClass,\r\n  tableHeadCellClass,\r\n  tableHeaderClass,\r\n  tableMonoTextClass,\r\n  tableNumericCellClass,\r\n  tableNumericHeadCellClass,\r\n  tableRowClass,\r\n}",
+        "line": 3
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 21
+      },
+      {
+        "module": "@/lib/ai/extraction-providers",
+        "symbols": "{ getExtractionProviderOrder }",
+        "line": 22
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv, hasSupabaseConfig }",
+        "line": 23
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 24
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateTime }",
+        "line": 25
+      }
+    ],
+    "tables": [
+      "firms",
+      "firm_users"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "EmptyState"
+    ]
+  },
+  {
+    "file": "src/app/(dashboard)/error.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ RotateCw }",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ Button, PageBody }",
+        "line": 5
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/exports/[exportId]/download/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse }",
+        "line": 1
+      },
+      {
+        "module": "next/server",
+        "symbols": "type { NextRequest }",
+        "line": 2
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 4
+      },
+      {
+        "module": "@/lib/firms",
+        "symbols": "{ getFirmContext }",
+        "line": 5
+      },
+      {
+        "module": "@/lib/supabase/server",
+        "symbols": "{ createAdminClient }",
+        "line": 6
+      }
+    ],
+    "tables": [
+      "exports",
+      "exports"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/health/live/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/health",
+        "symbols": "{ buildLivenessHealth }",
+        "line": 3
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/health/ready/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/health",
+        "symbols": "{\r\n  buildReadinessHealth,\r\n  healthStatusCode,\r\n}",
+        "line": 3
+      },
+      {
+        "module": "@/lib/health-auth",
+        "symbols": "{ authorizeReadinessRequest }",
+        "line": 7
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/health/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/health",
+        "symbols": "{\r\n  buildReadinessHealth,\r\n  healthStatusCode,\r\n}",
+        "line": 3
+      },
+      {
+        "module": "@/lib/health-auth",
+        "symbols": "{ authorizeReadinessRequest }",
+        "line": 7
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/jobs/ai-extraction/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv }",
+        "line": 3
+      },
+      {
+        "module": "@/lib/ai/extraction-processor",
+        "symbols": "{ processDocumentExtraction }",
+        "line": 4
+      },
+      {
+        "module": "@/lib/observability",
+        "symbols": "{ captureOperationalError }",
+        "line": 5
+      },
+      {
+        "module": "@/lib/rate-limit",
+        "symbols": "{\r\n  checkRateLimit,\r\n  clientRateLimitKey,\r\n  configuredRateLimitPerWindow,\r\n  retryAfterSeconds,\r\n}",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/jobs/ai-extraction/run-queued/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv }",
+        "line": 3
+      },
+      {
+        "module": "@/lib/jobs/worker-observability",
+        "symbols": "{\r\n  recoveryTriggerSource,\r\n  runObservedRecoveryWorker,\r\n}",
+        "line": 4
+      },
+      {
+        "module": "@/lib/ai/extraction-worker",
+        "symbols": "{ runQueuedAiExtractionJobs }",
+        "line": 8
+      },
+      {
+        "module": "@/lib/rate-limit",
+        "symbols": "{\r\n  checkRateLimit,\r\n  clientRateLimitKey,\r\n  configuredRateLimitPerWindow,\r\n  retryAfterSeconds,\r\n}",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/jobs/exports/run-queued/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv }",
+        "line": 3
+      },
+      {
+        "module": "@/lib/exports/worker",
+        "symbols": "{ runQueuedExportGenerationJobs }",
+        "line": 4
+      },
+      {
+        "module": "@/lib/rate-limit",
+        "symbols": "{\r\n  checkRateLimit,\r\n  clientRateLimitKey,\r\n  configuredRateLimitPerWindow,\r\n  retryAfterSeconds,\r\n}",
+        "line": 5
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/jobs/whatsapp-ingestion/run-queued/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv }",
+        "line": 3
+      },
+      {
+        "module": "@/lib/jobs/worker-observability",
+        "symbols": "{\r\n  recoveryTriggerSource,\r\n  runObservedRecoveryWorker,\r\n}",
+        "line": 4
+      },
+      {
+        "module": "@/lib/whatsapp/ingestion-worker",
+        "symbols": "{ runQueuedWhatsAppIngestionEvents }",
+        "line": 8
+      },
+      {
+        "module": "@/lib/rate-limit",
+        "symbols": "{\r\n  checkRateLimit,\r\n  clientRateLimitKey,\r\n  configuredRateLimitPerWindow,\r\n  retryAfterSeconds,\r\n}",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/api/webhooks/whatsapp/route.ts",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/server",
+        "symbols": "{ after, NextResponse, type NextRequest }",
+        "line": 1
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getOptionalServerEnv }",
+        "line": 3
+      },
+      {
+        "module": "@/lib/ai/extraction-worker",
+        "symbols": "{ runAiExtractionJobNow }",
+        "line": 4
+      },
+      {
+        "module": "@/lib/jobs/keyed-worker-pool",
+        "symbols": "{ runKeyedWorkerPool }",
+        "line": 5
+      },
+      {
+        "module": "@/lib/observability",
+        "symbols": "{ captureOperationalError }",
+        "line": 6
+      },
+      {
+        "module": "@/lib/performance",
+        "symbols": "{ withServerTiming }",
+        "line": 7
+      },
+      {
+        "module": "@/lib/rate-limit",
+        "symbols": "{\r\n  checkRateLimit,\r\n  clientRateLimitKey,\r\n  configuredRateLimitPerWindow,\r\n  retryAfterSeconds,\r\n}",
+        "line": 8
+      },
+      {
+        "module": "@/lib/whatsapp/ingestion-worker",
+        "symbols": "{\r\n  enqueueWhatsAppWebhookEvents,\r\n  runQueuedWhatsAppIngestionEvents,\r\n}",
+        "line": 14
+      },
+      {
+        "module": "@/lib/whatsapp/types",
+        "symbols": "type { WhatsAppWebhookPayload }",
+        "line": 18
+      },
+      {
+        "module": "@/lib/whatsapp/verify",
+        "symbols": "{ verifyMetaSignature }",
+        "line": 19
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/contact/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "@/components/lead-capture-form",
+        "symbols": "{ LeadCaptureForm }",
+        "line": 3
+      },
+      {
+        "module": "@/components/public-page-shell",
+        "symbols": "{ PublicPageShell }",
+        "line": 4
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/layout.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata, Viewport }",
+        "line": 1
+      },
+      {
+        "module": "next/font/google",
+        "symbols": "{ JetBrains_Mono, Manrope, Sora }",
+        "line": 2
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getPublicAppUrl }",
+        "line": 4
+      },
+      {
+        "module": "./globals.css",
+        "symbols": "",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/onboarding/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/navigation",
+        "symbols": "{ redirect }",
+        "line": 1
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 3
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ SectionCard, SetupRequired }",
+        "line": 4
+      },
+      {
+        "module": "@/components/firm-onboarding-form",
+        "symbols": "{ FirmOnboardingForm }",
+        "line": 5
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ hasSupabaseConfig }",
+        "line": 6
+      },
+      {
+        "module": "@/lib/supabase/server",
+        "symbols": "{ createClient }",
+        "line": 7
+      }
+    ],
+    "tables": [
+      "firm_users"
+    ],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired"
+    ]
+  },
+  {
+    "file": "src/app/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "type { LucideIcon }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{\n  ArrowRight,\n  BadgeCheck,\n  BookOpenCheck,\n  Check,\n  ChevronRight,\n  FileSpreadsheet,\n  MessageSquareText,\n  ScanLine,\n  ShieldCheck,\n  Sparkles,\n  Users,\n}",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 15
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 17
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ ActionLink }",
+        "line": 18
+      },
+      {
+        "module": "@/components/landing-navigation",
+        "symbols": "{ LandingNavigation }",
+        "line": 19
+      },
+      {
+        "module": "@/components/lead-capture-form",
+        "symbols": "{ LeadCaptureForm }",
+        "line": 20
+      },
+      {
+        "module": "@/components/status-chip",
+        "symbols": "{ StatusChip }",
+        "line": 21
+      },
+      {
+        "module": "@/lib/env",
+        "symbols": "{ getPublicAppUrl }",
+        "line": 22
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/privacy/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "@/components/public-page-shell",
+        "symbols": "{\n  PublicInfoSection,\n  PublicPageShell,\n}",
+        "line": 3
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/app/terms/page.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next",
+        "symbols": "type { Metadata }",
+        "line": 1
+      },
+      {
+        "module": "@/components/public-page-shell",
+        "symbols": "{\n  PublicInfoSection,\n  PublicPageShell,\n}",
+        "line": 3
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/auth-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ Eye, EyeOff, LoaderCircle }",
+        "line": 3
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 4
+      },
+      {
+        "module": "react",
+        "symbols": "{ useActionState, useState }",
+        "line": 5
+      },
+      {
+        "module": "react",
+        "symbols": "type {\n  ChangeEvent,\n  ComponentPropsWithoutRef,\n  FormEvent,\n}",
+        "line": 6
+      },
+      {
+        "module": "@/app/actions/auth",
+        "symbols": "{\n  signIn,\n  signUp,\n  type AuthActionState,\n}",
+        "line": 12
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ Button, FieldError, FormMessage }",
+        "line": 17
+      },
+      {
+        "module": "@/lib/auth-validation",
+        "symbols": "{\n  type AuthFieldName,\n  validateAuthField,\n}",
+        "line": 18
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useState",
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/brand-logo.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/image",
+        "symbols": "Image",
+        "line": 1
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/client-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "@/app/actions/clients",
+        "symbols": "{\n  createClientAction,\n  updateClientAction,\n  type ClientActionState,\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FormActions,\n  FormMessage,\n  Input,\n  Select,\n}",
+        "line": 10
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/dashboard-mobile-menu.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ Menu, X }",
+        "line": 3
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 4
+      },
+      {
+        "module": "react",
+        "symbols": "{ useRef, useState }",
+        "line": 5
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 7
+      },
+      {
+        "module": "@/components/dashboard-nav",
+        "symbols": "{ DashboardNav }",
+        "line": 8
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/dashboard-nav.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{\r\n  FileDown,\r\n  FileText,\r\n  Inbox,\r\n  LayoutDashboard,\r\n  ListChecks,\r\n  Receipt,\r\n  ScrollText,\r\n  Settings,\r\n  ShieldCheck,\r\n  Users,\r\n  Wrench,\r\n  PanelsTopLeft,\r\n  type LucideIcon,\r\n}",
+        "line": 3
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 18
+      },
+      {
+        "module": "next/navigation",
+        "symbols": "{ usePathname }",
+        "line": 19
+      },
+      {
+        "module": "react",
+        "symbols": "{ useId, useLayoutEffect, useRef, useState }",
+        "line": 20
+      },
+      {
+        "module": "react-dom",
+        "symbols": "{ createPortal }",
+        "line": 21
+      },
+      {
+        "module": "@/lib/dashboard/nav",
+        "symbols": "{ dashboardNavItems }",
+        "line": 23
+      },
+      {
+        "module": "@/lib/utils",
+        "symbols": "{ cn }",
+        "line": 24
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useState",
+      "usePathname"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/dashboard-sidebar.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useEffect, useSyncExternalStore }",
+        "line": 3
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ChevronRight, PanelLeft, PanelLeftClose }",
+        "line": 4
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 5
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 7
+      },
+      {
+        "module": "@/components/dashboard-nav",
+        "symbols": "{ DashboardNav }",
+        "line": 8
+      },
+      {
+        "module": "@/lib/utils",
+        "symbols": "{ cn }",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useSyncExternalStore",
+      "useEffect"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/design-system.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "type { LucideIcon }",
+        "line": 1
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ AlertTriangle, ClipboardList, Info, LockKeyhole }",
+        "line": 2
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 3
+      },
+      {
+        "module": "react",
+        "symbols": "type { ComponentPropsWithoutRef, CSSProperties }",
+        "line": 4
+      },
+      {
+        "module": "@/lib/utils",
+        "symbols": "{ cn }",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": [
+      "SetupRequired",
+      "QueryError",
+      "EmptyState",
+      "PaginationControls",
+      "aria-busy"
+    ]
+  },
+  {
+    "file": "src/components/export-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "lucide-react",
+        "symbols": "{ Download, FileSpreadsheet, FileText }",
+        "line": 3
+      },
+      {
+        "module": "react",
+        "symbols": "{ useActionState, useState }",
+        "line": 4
+      },
+      {
+        "module": "@/app/actions/exports",
+        "symbols": "{\n  createExportAction,\n  type ExportActionState,\n}",
+        "line": 6
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FilterBar,\n  FormMessage,\n  InfoNote,\n  Input,\n  Select,\n}",
+        "line": 10
+      },
+      {
+        "module": "@/lib/format",
+        "symbols": "{ formatDisplayDateRange }",
+        "line": 20
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/firm-onboarding-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "@/app/actions/auth",
+        "symbols": "{ createFirm, type AuthActionState }",
+        "line": 5
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FormMessage,\n  Input,\n  Textarea,\n}",
+        "line": 6
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/gst-summary-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "@/app/actions/gst",
+        "symbols": "{\n  generateGstSummaryAction,\n  type GstActionState,\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FilterBar,\n  FormMessage,\n  Input,\n  Select,\n}",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/landing-navigation.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useEffect, useRef, useState }",
+        "line": 3
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowRight, Menu }",
+        "line": 4
+      },
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 5
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 7
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useState",
+      "useEffect"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/lead-capture-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "react-dom",
+        "symbols": "{ useFormStatus }",
+        "line": 4
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowRight, LoaderCircle }",
+        "line": 5
+      },
+      {
+        "module": "@/app/actions/lead-request",
+        "symbols": "{\n  submitLeadRequest,\n  type LeadRequestState,\n}",
+        "line": 7
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FormMessage,\n  Input,\n  Select,\n  Textarea,\n}",
+        "line": 11
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/ledger-entry-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "@/app/actions/ledger",
+        "symbols": "{\n  updateLedgerEntryAction,\n  type LedgerActionState,\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FormActions,\n  FormMessage,\n  Input,\n  Textarea,\n}",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/password-reset-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ ArrowRight, LoaderCircle }",
+        "line": 4
+      },
+      {
+        "module": "@/app/actions/auth",
+        "symbols": "{\n  requestPasswordReset,\n  type AuthActionState,\n}",
+        "line": 6
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ Button, FieldError, FormMessage }",
+        "line": 10
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/public-page-shell.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "next/link",
+        "symbols": "Link",
+        "line": 1
+      },
+      {
+        "module": "@/components/brand-logo",
+        "symbols": "{ BrandLogo }",
+        "line": 3
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/status-chip.tsx",
+    "client": false,
+    "imports": [
+      {
+        "module": "@/lib/utils",
+        "symbols": "{ cn }",
+        "line": 1
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/transaction-review-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ useActionState }",
+        "line": 3
+      },
+      {
+        "module": "@/app/actions/review",
+        "symbols": "{\n  updateTransactionAction,\n  type ReviewActionState,\n}",
+        "line": 5
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{\n  Button,\n  FieldError,\n  FieldLabel,\n  FormActions,\n  FormMessage,\n  Input,\n  Select,\n  Textarea,\n}",
+        "line": 9
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useActionState"
+    ],
+    "boundaries": []
+  },
+  {
+    "file": "src/components/update-password-form.tsx",
+    "client": true,
+    "imports": [
+      {
+        "module": "react",
+        "symbols": "{ FormEvent, useState }",
+        "line": 3
+      },
+      {
+        "module": "lucide-react",
+        "symbols": "{ CheckCircle2, Eye, EyeOff, LoaderCircle }",
+        "line": 4
+      },
+      {
+        "module": "@/components/design-system",
+        "symbols": "{ Button }",
+        "line": 6
+      },
+      {
+        "module": "@/lib/supabase/client",
+        "symbols": "{ createClient }",
+        "line": 7
+      }
+    ],
+    "tables": [],
+    "rpcs": [],
+    "stateHooks": [
+      "useState"
+    ],
+    "boundaries": []
+  }
+]

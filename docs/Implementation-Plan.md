@@ -4,6 +4,28 @@
 
 Build KhataOne in vertical slices. Start with the landing page and project foundation, then build the CA dashboard shell, then connect real data workflows from client setup to WhatsApp ingestion to AI extraction to review to GST summary and export.
 
+## UI/UX Remediation Workstream
+
+The [UI/UX Remediation Plan](UI-UX-Remediation-Plan.md) maps the September 13 audit's
+27 findings into scoped correctness, accessibility, investigation and visual
+refinement packages. It supplements the feature build sequence below. Planning
+is complete; R01, the password-reset outcome correction, R02A-R02B calendar
+boundary correction, R03 complete filtered results, R04A-R04E review
+action/role/outcome-feedback/return-context fixes, R05A unavailable-state fixes,
+and R06A-R06B original-evidence/GST-provenance fixes are locally verified with
+mocked or synthetic checks.
+R03 requires migration `20260913110000_complete_dashboard_filtered_results.sql` before
+hosted verification. R02B Audit timestamp filtering now uses Asia/Kolkata
+calendar-day UTC boundaries, consistent with displayed audit times. R07A responsive
+containment and shell target-size source/build fixes are verified, with authenticated browser-width verification still pending isolated fixtures. R08A shared accessibility source/build and public auth browser checks are verified; remaining authenticated accessibility checks need isolated fixtures. R09A export visibility and bounded history access is locally verified for source/build behavior; live worker-state and pagination-boundary checks need isolated fixtures. R10A safe investigation detail is locally verified with allowlisted audit detail, internal entity links and sanitized wrapping Operations errors. R11A truthful identity/public claims is locally verified with public/auth browser checks. R12A deliberate density and hierarchy is locally verified for named shared hierarchy tokens, modest table density, auth CTA alignment and D07 guardrails. Broader visual-density changes still need visual approval and isolated authenticated fixtures.
+Financial mutations, private storage and role integration checks require the
+isolated fixtures specified in that plan; existing live access remains read-only.
+The isolated fixture and hosted-verification package is now documented in
+[ISOLATED_VERIFICATION_PLAN.md](audits/ui-ux/2026-09-13-diagnosis/ISOLATED_VERIFICATION_PLAN.md),
+covering all 27 findings, fixture groups, viewport/accessibility checks and
+release gates. `npm.cmd run prepare:ui-ux-evidence` initializes blank sanitized
+evidence templates for an isolated verification run.
+
 ## Phase 0: Project Foundation
 
 - Initialize Next.js App Router project with TypeScript.
@@ -424,3 +446,12 @@ tenant-isolation behavior.
 5. Build one phase at a time.
 6. Update `docs/Tracker.md` after every meaningful change.
 7. Do not skip auditability, firm isolation, or review states.
+
+UI/UX remediation update (2026-09-13): R06A-R06B original evidence and GST provenance is locally verified. Review detail now signs supported private `whatsapp-media-raw` evidence after firm-scoped transaction access and renders image/PDF/text/audio previews or precise fallbacks beside extracted text. GST period detail now separates saved generated totals from live current-period transaction rows and current blockers without changing accounting calculations or source-query semantics. Hosted closure still needs isolated storage/GST fixtures.
+UI/UX remediation update (2026-09-13): R07A responsive containment source/build fixes are verified. Review Queue filter density now starts at `2xl`, GST detail table sections have shrink containment before horizontal scrolling, shared `DataTable` regions are max-width constrained, and the mobile sign-out control has a 44px minimum width. Full authenticated browser width verification remains gated on isolated fixtures.
+
+UI/UX remediation update (2026-09-13): Added the isolated browser-matrix verification runner for public landing/auth routes and authenticated dashboard routes. `npm.cmd run verify:ui-ux-browser-matrix` records sanitized viewport measurements, blocked reasons and redacted console entries under the isolated evidence directory; authenticated routes require a disposable Playwright storage state and fixture IDs, and the runner does not consume live credentials.
+
+UI/UX remediation update (2026-09-13): Browser-matrix follow-up fixed remaining public mobile touch targets caught by the new runner. Landing mobile navigation/footer links, auth logo/back links and the login forgot-password link now meet the 44px mobile target while retaining compact desktop density. Local `verify:ui-ux-browser-matrix` passed public `/`, `/login`, `/signup`, `/forgot-password` and `/reset-password` at 390px and 1440px with zero failures; 105 authenticated dashboard route/viewport checks are correctly recorded as blocked until an isolated storage state and fixture IDs exist.
+
+UI/UX remediation update (2026-09-13): Added `npm.cmd run create:ui-ux-auth-state` to capture a Playwright storage state only for a disposable local/staging account. The helper requires `KHATAONE_UI_UX_ISOLATED_AUTH=1`, writes to ignored `.codex-tmp/` by default, refuses ambiguous non-isolated hosts unless explicitly allowed, stores sanitized metadata beside the state file, and keeps live dashboard credential variables out of the UI/UX browser-matrix path.

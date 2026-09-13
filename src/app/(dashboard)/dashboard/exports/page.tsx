@@ -6,10 +6,13 @@ import {
   type ExportPeriodOption,
 } from "@/components/export-form";
 import {
+  ActionLink,
   DataTable,
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
+  PermissionNotice,
   QueryError,
   RecordCount,
   SectionCard,
@@ -26,14 +29,17 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import {
   formatDisplayDateRange,
   formatDisplayDateTime,
 } from "@/lib/format";
+import { canCreateExports, readOnlyRoleMessage } from "@/lib/permissions";
 
 export const dynamic = "force-dynamic";
+const pageSize = 50;
 
 function statusTone(status: string) {
   switch (status) {
@@ -64,7 +70,24 @@ function exportLabel(type: string) {
   }
 }
 
-export default async function ExportsPage() {
+function fileStateLabel(status: string) {
+  switch (status) {
+    case "queued":
+      return "Queued for generation";
+    case "processing":
+      return "Generating file";
+    case "failed":
+      return "Generation failed";
+    default:
+      return "Unavailable";
+  }
+}
+
+export default async function ExportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables, migrations, and private storage buckets before generating exports." />
@@ -80,6 +103,13 @@ export default async function ExportsPage() {
   }
 
   const { firm, supabase } = context;
+  const filters = await searchParams;
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  const historyHref = page > 1
+    ? `/dashboard/exports?page=${page}`
+    : "/dashboard/exports";
   const clientsPromise = (async () => {
     const { data } = await supabase
       .from("clients")
@@ -108,7 +138,8 @@ export default async function ExportsPage() {
       )
       .eq("firm_id", firm.id)
       .order("created_at", { ascending: false })
-      .limit(80))();
+      .order("id", { ascending: false })
+      .range(rangeFrom, rangeTo))();
 
   const [clients, periods, exportsResult] = await Promise.all([
     clientsPromise,
@@ -116,6 +147,9 @@ export default async function ExportsPage() {
     exportsPromise,
   ]);
   const { data: exports, error } = exportsResult;
+  const pageExports = (exports ?? []).slice(0, pageSize);
+  const hasNextPage = (exports?.length ?? 0) > pageSize;
+  const canQueueExports = canCreateExports(firm.role);
 
   return (
     <div>
@@ -123,17 +157,29 @@ export default async function ExportsPage() {
         eyebrow="Exports"
         title="Export jobs"
         description="Queue and download audited CSV or PDF files from approved records."
+        actions={
+          <ActionLink href={historyHref}>
+            Refresh history
+          </ActionLink>
+        }
       />
 
       <PageBody>
-        <ExportForm
-          clients={(clients ?? []) as ExportClientOption[]}
-          periods={(periods ?? []) as ExportPeriodOption[]}
-        />
+        {canQueueExports ? (
+          <ExportForm
+            clients={(clients ?? []) as ExportClientOption[]}
+            periods={(periods ?? []) as ExportPeriodOption[]}
+          />
+        ) : (
+          <SectionCard title="Read-only access">
+            <PermissionNotice message={readOnlyRoleMessage} />
+          </SectionCard>
+        )}
 
       <SectionCard
         title="Export history"
-        actions={<RecordCount value={exports?.length ?? 0} />}
+        description="Newest export jobs are shown first. Use refresh after queueing an export or when a worker is processing a file."
+        actions={<RecordCount value={pageExports.length} />}
         bodyClassName="p-0"
       >
 
@@ -149,6 +195,7 @@ export default async function ExportsPage() {
         )}
 
         {!error && exports && exports.length > 0 && (
+          <>
           <DataTable minWidth={980} ariaLabel="Export history">
               <thead className={tableHeaderClass}>
                 <tr>
@@ -161,7 +208,7 @@ export default async function ExportsPage() {
                 </tr>
               </thead>
               <tbody>
-                {exports.map((exportRecord) => {
+                {pageExports.map((exportRecord) => {
                   const client = Array.isArray(exportRecord.clients)
                     ? exportRecord.clients[0]
                     : exportRecord.clients;
@@ -213,6 +260,11 @@ export default async function ExportsPage() {
                             {String(metadata.error)}
                           </p>
                         )}
+                        {["queued", "processing"].includes(exportRecord.status) && (
+                          <p className={`mt-1 max-w-xs ${tableSecondaryTextClass}`}>
+                            Refresh history to check whether the private file is ready.
+                          </p>
+                        )}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {formatDisplayDateTime(exportRecord.created_at)}
@@ -228,7 +280,9 @@ export default async function ExportsPage() {
                             Download
                           </TextLink>
                         ) : (
-                          <span className={tableSecondaryTextClass}>Unavailable</span>
+                          <span className={tableSecondaryTextClass}>
+                            {fileStateLabel(exportRecord.status)}
+                          </span>
                         )}
                       </td>
                     </tr>
@@ -236,6 +290,14 @@ export default async function ExportsPage() {
                 })}
               </tbody>
           </DataTable>
+          <PaginationControls
+            basePath="/dashboard/exports"
+            page={page}
+            hasNext={hasNextPage}
+            searchParams={filters}
+            label="export jobs"
+          />
+          </>
         )}
       </SectionCard>
       </PageBody>

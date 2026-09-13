@@ -54,7 +54,7 @@ export default async function DashboardLayout({
                 type="submit"
                 variant="ghost"
                 size="sm"
-                className="gap-2 px-2 sm:px-3"
+                className="min-w-11 gap-2 px-2 sm:px-3 md:min-w-9"
                 aria-label="Sign out"
               >
                 <LogOut className="size-4" aria-hidden="true" />

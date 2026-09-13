@@ -15,7 +15,7 @@ const initialState: AuthActionState = {
 };
 
 const fieldClass =
-  "mt-1.5 h-9 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
+  "mt-1.5 h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
 
 export function PasswordResetForm() {
   const [state, formAction, pending] = useActionState(

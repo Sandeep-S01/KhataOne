@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import {
   updateTransactionAction,
@@ -47,17 +47,37 @@ function numberValue(value: number | null) {
 
 export function TransactionReviewForm({
   transaction,
+  onDirtyChange,
+  returnContext = "",
 }: {
   transaction: TransactionReviewValues;
+  onDirtyChange?: (isDirty: boolean) => void;
+  returnContext?: string;
 }) {
   const [state, formAction, pending] = useActionState(
     updateTransactionAction,
     initialState,
   );
+  const fieldError = (name: string) => state.fieldErrors?.[name];
+  const errorId = (name: string) =>
+    fieldError(name) ? `transaction-${name.replaceAll("_", "-")}-error` : undefined;
+
+  useEffect(() => {
+    if (state.status === "success") {
+      onDirtyChange?.(false);
+    }
+  }, [onDirtyChange, state.status]);
+
+  function markDirty() {
+    onDirtyChange?.(true);
+  }
 
   return (
-    <form action={formAction} className="k-card p-5">
+    <form action={formAction} className="k-card p-5" onChange={markDirty}>
       <input type="hidden" name="transaction_id" value={transaction.id} />
+      {returnContext && (
+        <input type="hidden" name="return_context" value={returnContext} />
+      )}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <label className="block">
@@ -66,6 +86,8 @@ export function TransactionReviewForm({
           </FieldLabel>
           <Select
             name="transaction_type"
+            aria-invalid={Boolean(fieldError("transaction_type"))}
+            aria-describedby={errorId("transaction_type")}
             defaultValue={transaction.transaction_type}
             className="mt-1"
           >
@@ -76,7 +98,7 @@ export function TransactionReviewForm({
             <option value="receipt">Receipt</option>
             <option value="unclear">Unclear</option>
           </Select>
-          <FieldError message={state.fieldErrors?.transaction_type} />
+          <FieldError id={errorId("transaction_type")} message={fieldError("transaction_type")} />
         </label>
 
         <label className="block">
@@ -180,6 +202,8 @@ export function TransactionReviewForm({
             <Input
               name={name}
               type="number"
+              aria-invalid={Boolean(fieldError(name))}
+              aria-describedby={errorId(name)}
               step="0.01"
               defaultValue={numberValue(
                 transaction[name as keyof TransactionReviewValues] as
@@ -188,7 +212,7 @@ export function TransactionReviewForm({
               )}
               className="num mt-1 text-right"
             />
-            <FieldError message={state.fieldErrors?.[name]} />
+            <FieldError id={errorId(name)} message={fieldError(name)} />
           </label>
         ))}
       </div>

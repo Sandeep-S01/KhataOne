@@ -9,9 +9,12 @@ import {
   EmptyState,
   FieldLabel,
   FilterBar,
+  FormMessage,
   InlineAlert,
   PageBody,
   PageHeader,
+  PaginationControls,
+  PermissionNotice,
   QueryError,
   RecordCount,
   SectionCard,
@@ -31,20 +34,31 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 import {
   runExportGenerationJobNowAction,
   runExtractionJobNowAction,
 } from "@/app/actions/operations";
 import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import {
+  attentionToneForCount,
+  countHint,
+  countOrUnavailable,
+  displayCount,
+} from "@/lib/availability";
 import { formatDisplayDateTime } from "@/lib/format";
 import {
   evaluatePipelineAlerts,
   getPipelineHealthSnapshot,
   type PipelineHealthRow,
 } from "@/lib/jobs/worker-observability";
+import { normalizePage } from "@/lib/dashboard-query";
+import { canRunOperationsJobs, readOnlyRoleMessage } from "@/lib/permissions";
+import { safeOperationsErrorMessage } from "@/lib/audit-display";
 
 export const dynamic = "force-dynamic";
+const pageSize = 50;
 
 function statusTone(status: string) {
   switch (status) {
@@ -62,14 +76,6 @@ function statusTone(status: string) {
 
 function readParam(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
-}
-
-function canRunJobs(role: string) {
-  return ["owner", "admin", "staff"].includes(role);
-}
-
-function safeErrorMessage(message: string) {
-  return message.length > 140 ? `${message.slice(0, 140)}...` : message;
 }
 
 function configuredPositiveInteger(key: string, fallback: number) {
@@ -127,6 +133,58 @@ function durationLabel(value: number | null) {
   }
 
   return value < 1000 ? `${Math.round(value)} ms` : `${(value / 1000).toFixed(1)} s`;
+}
+
+function operationResultMessage(result: string) {
+  switch (result) {
+    case "manual-completed":
+      return {
+        tone: "success" as const,
+        message: "Manual job run completed. The affected dashboard data has been refreshed.",
+      };
+    case "manual-retrying":
+      return {
+        tone: "info" as const,
+        message: "Manual job run finished and the job remains queued for retry.",
+      };
+    case "manual-skipped":
+      return {
+        tone: "info" as const,
+        message: "Manual job run was skipped because the job was no longer runnable.",
+      };
+    case "manual-processed":
+      return {
+        tone: "success" as const,
+        message: "Manual job run finished. Review the job row for its current status.",
+      };
+    case "manual-failed":
+      return {
+        tone: "danger" as const,
+        message: "Manual job run failed. The failed-jobs filter is shown for follow-up.",
+      };
+    case "manual-request-failed":
+      return {
+        tone: "danger" as const,
+        message: "Could not prepare the manual run. The job may no longer be queued or failed.",
+      };
+    case "manual-forbidden":
+      return {
+        tone: "danger" as const,
+        message: "Your workspace role cannot run jobs manually.",
+      };
+    case "manual-invalid":
+      return {
+        tone: "danger" as const,
+        message: "Manual run could not start because the job id was missing.",
+      };
+    case "manual-unavailable":
+      return {
+        tone: "danger" as const,
+        message: "Manual job runs are unavailable until the workspace and database are configured.",
+      };
+    default:
+      return null;
+  }
 }
 
 function queueLabel(queueName: PipelineHealthRow["queue_name"]) {
@@ -216,6 +274,29 @@ export default async function OperationsPage({
   const params = await searchParams;
   const status = readParam(params.status)?.trim() ?? "";
   const jobType = readParam(params.job_type)?.trim() ?? "";
+  const page = normalizePage(readParam(params.page));
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
+  const currentQuery = new URLSearchParams();
+
+  if (status) {
+    currentQuery.set("status", status);
+  }
+
+  if (jobType) {
+    currentQuery.set("job_type", jobType);
+  }
+
+  if (page > 1) {
+    currentQuery.set("page", String(page));
+  }
+
+  const currentOperationsHref = currentQuery.size > 0
+    ? (`/dashboard/operations?${currentQuery.toString()}` as Route)
+    : ("/dashboard/operations" as Route);
+  const operationMessage = operationResultMessage(
+    readParam(params.result)?.trim() ?? "",
+  );
 
   if (!hasSupabaseConfig()) {
     return (
@@ -232,13 +313,14 @@ export default async function OperationsPage({
   }
 
   const { firm, supabase } = context;
-  const canRunExtractionJobs = canRunJobs(firm.role);
+  const canRunExtractionJobs = canRunOperationsJobs(firm.role);
   let query = supabase
     .from("processing_jobs")
     .select("id, client_id, job_type, entity_type, entity_id, status, attempt_count, last_error, scheduled_at, completed_at, created_at, clients(business_name)")
     .eq("firm_id", firm.id)
     .order("created_at", { ascending: false })
-    .limit(100);
+    .order("id", { ascending: false })
+    .range(rangeFrom, rangeTo);
 
   if (status) {
     query = query.eq("status", status);
@@ -249,26 +331,17 @@ export default async function OperationsPage({
   }
 
   const jobsPromise = (async () => await query)();
-  const failedCountPromise = (async () => {
-    const { count } = await supabase
+  const failedCountPromise = supabase
       .from("processing_jobs")
       .select("id", { count: "exact", head: true })
       .eq("firm_id", firm.id)
       .eq("status", "failed");
-
-    return count;
-  })().catch(() => null);
-  const queuedCountPromise = (async () => {
-    const { count } = await supabase
+  const queuedCountPromise = supabase
       .from("processing_jobs")
       .select("id", { count: "exact", head: true })
       .eq("firm_id", firm.id)
       .in("status", ["queued", "processing"]);
-
-    return count;
-  })().catch(() => null);
-  const oldestQueuedPromise = (async () => {
-    const { data } = await supabase
+  const oldestQueuedPromise = supabase
       .from("processing_jobs")
       .select("created_at")
       .eq("firm_id", firm.id)
@@ -276,33 +349,30 @@ export default async function OperationsPage({
       .order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle();
-
-    return data?.created_at ?? null;
-  })().catch(() => null);
-  const jobTypesPromise = (async () => {
-    const { data } = await supabase
+  const jobTypesPromise = supabase
       .from("processing_jobs")
       .select("job_type")
       .eq("firm_id", firm.id)
       .order("job_type");
-
-    return (data ?? []) as Array<{ job_type: string | null }>;
-  })().catch(() => [] as Array<{ job_type: string | null }>);
-  const jobHealthPromise = (async () => {
-    const { data } = await supabase
+  const jobHealthPromise = supabase
       .from("processing_jobs")
       .select("job_type, status, created_at")
       .eq("firm_id", firm.id)
       .order("created_at", { ascending: false })
       .limit(1000);
-
-    return (data ?? []) as JobHealthRow[];
-  })().catch(() => [] as JobHealthRow[]);
   const pipelineHealthPromise = canRunExtractionJobs
     ? getPipelineHealthSnapshot()
     : Promise.resolve({ rows: [] as PipelineHealthRow[], error: undefined });
 
-  const [jobsResult, failedCount, queuedCount, oldestQueued, jobTypes, jobHealthRows, pipelineHealth] =
+  const [
+    jobsResult,
+    failedCountResult,
+    queuedCountResult,
+    oldestQueuedResult,
+    jobTypesResult,
+    jobHealthResult,
+    pipelineHealth,
+  ] =
     await Promise.all([
     jobsPromise,
     failedCountPromise,
@@ -313,10 +383,24 @@ export default async function OperationsPage({
     pipelineHealthPromise,
   ]);
   const { data: jobs, error } = jobsResult;
+  const pageJobs = (jobs ?? []).slice(0, pageSize);
+  const hasNextPage = (jobs?.length ?? 0) > pageSize;
   const staleJobWarningMinutes = configuredPositiveInteger(
     "OPERATIONS_ACTIVE_JOB_WARNING_MINUTES",
     15,
   );
+  const failedCount = countOrUnavailable(failedCountResult);
+  const queuedCount = countOrUnavailable(queuedCountResult);
+  const oldestQueuedUnavailable = Boolean(oldestQueuedResult.error);
+  const oldestQueued = oldestQueuedUnavailable
+    ? null
+    : oldestQueuedResult.data?.created_at ?? null;
+  const jobTypes = jobTypesResult.error
+    ? []
+    : (jobTypesResult.data ?? []) as Array<{ job_type: string | null }>;
+  const jobHealthRows = jobHealthResult.error
+    ? []
+    : (jobHealthResult.data ?? []) as JobHealthRow[];
   const jobHealth = summarizeJobHealth(jobHealthRows);
   const pipelineAlerts = evaluatePipelineAlerts({ rows: pipelineHealth.rows });
   const inboundHealth = pipelineHealth.rows.find(
@@ -342,7 +426,7 @@ export default async function OperationsPage({
         description="Monitor WhatsApp ingestion, extraction, export jobs, and recovery workers."
         actions={
         <ActionLink
-          href={"/dashboard/operations" as Route}
+          href={currentOperationsHref}
         >
           <RefreshCw className="size-4" />
           Refresh
@@ -351,25 +435,59 @@ export default async function OperationsPage({
       />
 
       <PageBody>
+      {(failedCount === null || queuedCount === null || oldestQueuedUnavailable) && (
+        <QueryError message="One or more operations summary reads could not be loaded. Refresh to retry." />
+      )}
+
+      {operationMessage && (
+        <FormMessage
+          tone={operationMessage.tone}
+          message={operationMessage.message}
+        />
+      )}
+
+      {!canRunExtractionJobs && (
+        <SectionCard title="Read-only access">
+          <PermissionNotice message={readOnlyRoleMessage} />
+        </SectionCard>
+      )}
+
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        <StatTile label="Queued or processing" value={queuedCount ?? 0} tone="warning" />
+        <StatTile
+          label="Queued or processing"
+          value={displayCount(queuedCount)}
+          tone={attentionToneForCount(queuedCount)}
+          hint={countHint(queuedCount, "Queued or processing jobs.")}
+        />
         <Link
           href="/dashboard/operations?status=failed"
           className="rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-          aria-label={`View ${failedCount ?? 0} failed jobs`}
+          aria-label={
+            failedCount === null
+              ? "Failed jobs count unavailable"
+              : `View ${failedCount} failed jobs`
+          }
         >
           <StatTile
             label="Failed jobs"
-            value={failedCount ?? 0}
-            tone="danger"
-            hint="View failed jobs"
+            value={displayCount(failedCount)}
+            tone={failedCount === null ? "danger" : failedCount > 0 ? "danger" : "neutral"}
+            hint={countHint(failedCount, "View failed jobs")}
           />
         </Link>
         <StatTile
           label="Oldest active job"
-          value={ageLabel(oldestQueued, "No active jobs")}
-          tone="info"
-          hint="Queued or processing age"
+          value={
+            oldestQueuedUnavailable
+              ? "Unavailable"
+              : ageLabel(oldestQueued, "No active jobs")
+          }
+          tone={oldestQueuedUnavailable ? "danger" : "info"}
+          hint={
+            oldestQueuedUnavailable
+              ? "Could not load active job age. Refresh to retry."
+              : "Queued or processing age"
+          }
         />
       </div>
 
@@ -529,6 +647,12 @@ export default async function OperationsPage({
         </SectionCard>
       )}
 
+      {jobHealthResult.error && (
+        <SectionCard title="Queue health by job type">
+          <QueryError message="Queue health by job type could not be loaded. Refresh to retry." />
+        </SectionCard>
+      )}
+
       <FilterBar action="/dashboard/operations" className="md:grid-cols-[1fr_1fr_auto]">
         <label className="block">
           <FieldLabel>
@@ -578,12 +702,13 @@ export default async function OperationsPage({
 
       <SectionCard
         title="Processing jobs"
-        actions={<RecordCount value={jobs?.length ?? 0} />}
+        description="Newest matching jobs are shown first. Use pagination to reach older processing history."
+        actions={<RecordCount value={pageJobs.length} />}
         bodyClassName="p-0"
       >
 
         {error && (
-          <QueryError message={error.message} />
+          <QueryError message="Processing jobs could not be loaded. Refresh to retry." />
         )}
 
         {!error && (!jobs || jobs.length === 0) && (
@@ -594,6 +719,7 @@ export default async function OperationsPage({
         )}
 
         {!error && jobs && jobs.length > 0 && (
+          <>
           <DataTable minWidth={1080} ariaLabel="Processing jobs">
               <thead className={tableHeaderClass}>
                 <tr>
@@ -607,7 +733,7 @@ export default async function OperationsPage({
                 </tr>
               </thead>
               <tbody>
-                {jobs.map((job) => {
+                {pageJobs.map((job) => {
                   const client = Array.isArray(job.clients)
                     ? job.clients[0]
                     : job.clients;
@@ -633,8 +759,8 @@ export default async function OperationsPage({
                       </td>
                       <td className={tableCellClass}>
                         {job.last_error ? (
-                          <InlineAlert className="max-w-md">
-                            {safeErrorMessage(job.last_error)}
+                          <InlineAlert className="max-w-md items-start" truncate={false}>
+                            {safeOperationsErrorMessage(job.last_error)}
                           </InlineAlert>
                         ) : (
                           <span className={tableSecondaryTextClass}>None</span>
@@ -655,9 +781,13 @@ export default async function OperationsPage({
                           return action ? (
                             <form action={action}>
                               <input type="hidden" name="job_id" value={job.id} />
-                              <Button type="submit" variant="outline" size="sm">
+                              <PendingSubmitButton
+                                variant="outline"
+                                size="sm"
+                                pendingLabel="Running..."
+                              >
                                 Run now
-                              </Button>
+                              </PendingSubmitButton>
                             </form>
                           ) : (
                             <span className={tableSecondaryTextClass}>No action</span>
@@ -669,6 +799,18 @@ export default async function OperationsPage({
                 })}
               </tbody>
           </DataTable>
+          <PaginationControls
+            basePath="/dashboard/operations"
+            page={page}
+            hasNext={hasNextPage}
+            searchParams={{
+              status,
+              job_type: jobType,
+              page: String(page),
+            }}
+            label="processing jobs"
+          />
+          </>
         )}
       </SectionCard>
       </PageBody>

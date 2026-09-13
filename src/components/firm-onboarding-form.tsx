@@ -23,6 +23,9 @@ export function FirmOnboardingForm({ userEmail }: { userEmail?: string }) {
     initialState,
   );
 
+  const errorId = (name: string) =>
+    state.fieldErrors?.[name] ? `firm-${name.replaceAll("_", "-")}-error` : undefined;
+
   return (
     <form action={formAction} className="grid gap-4">
       <label className="block">
@@ -31,11 +34,13 @@ export function FirmOnboardingForm({ userEmail }: { userEmail?: string }) {
         </FieldLabel>
         <Input
           name="firm_name"
+          aria-invalid={Boolean(state.fieldErrors?.firm_name)}
+          aria-describedby={errorId("firm_name")}
           type="text"
           autoComplete="organization"
           className="mt-1"
         />
-        <FieldError message={state.fieldErrors?.firm_name} />
+        <FieldError id={errorId("firm_name")} message={state.fieldErrors?.firm_name} />
       </label>
 
       <label className="block">
@@ -44,12 +49,14 @@ export function FirmOnboardingForm({ userEmail }: { userEmail?: string }) {
         </FieldLabel>
         <Input
           name="email"
+          aria-invalid={Boolean(state.fieldErrors?.email)}
+          aria-describedby={errorId("email")}
           type="email"
           defaultValue={userEmail}
           autoComplete="email"
           className="mt-1"
         />
-        <FieldError message={state.fieldErrors?.email} />
+        <FieldError id={errorId("email")} message={state.fieldErrors?.email} />
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">

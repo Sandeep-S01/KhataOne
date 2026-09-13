@@ -64,6 +64,16 @@ const inboxStatusOptions = [
 
 const pageSize = 50;
 
+type InboxRow = {
+  id: string;
+  client_id: string | null;
+  sender_phone: string;
+  message_type: string;
+  processing_status: string;
+  received_at: string;
+  client_business_name: string | null;
+};
+
 function triageLabel(status: string) {
   switch (status) {
     case "unmatched":
@@ -111,20 +121,13 @@ export default async function InboxPage({
   const search = normalizeSearch(filters.q);
   const page = normalizePage(filters.page);
   const rangeFrom = (page - 1) * pageSize;
-  const rangeTo = rangeFrom + pageSize;
-  let query = supabase
-    .from("whatsapp_messages")
-    .select(
-      "id, client_id, sender_phone, message_type, processing_status, received_at, clients(business_name)",
-    )
-    .eq("firm_id", firm.id)
-    .order("received_at", { ascending: false })
-    .order("id", { ascending: false })
-    .range(rangeFrom, rangeTo);
-
-  if (selectedStatus !== "all") {
-    query = query.eq("processing_status", selectedStatus);
-  }
+  const query = supabase.rpc("search_whatsapp_inbox", {
+    target_firm_id: firm.id,
+    target_status: selectedStatus === "all" ? null : selectedStatus,
+    target_search: search || null,
+    page_limit: pageSize + 1,
+    page_offset: rangeFrom,
+  });
 
   const { data: messages, error } = await withServerTiming(
     "dashboard.inbox.query",
@@ -133,23 +136,11 @@ export default async function InboxPage({
       page,
       has_status_filter: selectedStatus !== "all",
       has_search_filter: Boolean(search),
-      search_applied_after_page: Boolean(search),
+      filters_applied_before_page: true,
     },
   );
-  const pageMessages = (messages ?? []).slice(0, pageSize);
+  const pageMessages = ((messages ?? []) as InboxRow[]).slice(0, pageSize);
   const hasNextPage = (messages?.length ?? 0) > pageSize;
-  const filteredMessages = pageMessages.filter((message) => {
-    const client = Array.isArray(message.clients)
-      ? message.clients[0]
-      : message.clients;
-    const matchesSearch =
-      !search ||
-      [client?.business_name, message.sender_phone, message.message_type]
-        .filter(Boolean)
-        .some((value) => value!.toLowerCase().includes(search));
-
-    return matchesSearch;
-  });
 
   return (
     <div>
@@ -208,7 +199,7 @@ export default async function InboxPage({
 
         <SectionCard
           title="Inbound messages"
-          actions={<RecordCount value={filteredMessages.length} label="shown" />}
+          actions={<RecordCount value={pageMessages.length} label="shown" />}
           bodyClassName="p-0"
         >
 
@@ -223,7 +214,7 @@ export default async function InboxPage({
           />
         )}
 
-        {!error && messages && messages.length > 0 && filteredMessages.length === 0 && (
+        {!error && messages && messages.length > 0 && pageMessages.length === 0 && (
           <EmptyState
             title="No messages match these filters"
             message="Adjust the search or status filter to return inbound WhatsApp records."
@@ -231,7 +222,7 @@ export default async function InboxPage({
           />
         )}
 
-        {!error && filteredMessages.length > 0 && (
+        {!error && pageMessages.length > 0 && (
           <>
             <DataTable minWidth={860} ariaLabel="WhatsApp inbox records">
               <thead className={tableHeaderClass}>
@@ -245,15 +236,11 @@ export default async function InboxPage({
                 </tr>
               </thead>
               <tbody>
-                {filteredMessages.map((message) => {
-                  const client = Array.isArray(message.clients)
-                    ? message.clients[0]
-                    : message.clients;
-
+                {pageMessages.map((message) => {
                   return (
                     <tr key={message.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
-                        {client?.business_name ?? "Unmatched sender"}
+                        {message.client_business_name ?? "Unmatched sender"}
                       </td>
                       <td className={`${tableCellClass} ${tableMonoTextClass}`}>
                         {message.sender_phone}

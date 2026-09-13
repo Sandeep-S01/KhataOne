@@ -22,6 +22,14 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import {
+  attentionToneForCount,
+  countHint,
+  countOrUnavailable,
+  displayCount,
+  formatNullablePercent,
+  positiveToneForCount,
+} from "@/lib/availability";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { withServerTiming } from "@/lib/request-performance";
@@ -56,14 +64,6 @@ function statusTone(status: string) {
     default:
       return "neutral";
   }
-}
-
-function attentionTone(count: number): "warning" | "neutral" {
-  return count > 0 ? "warning" : "neutral";
-}
-
-function positiveTone(count: number): "success" | "neutral" {
-  return count > 0 ? "success" : "neutral";
 }
 
 export default async function DashboardPage() {
@@ -144,36 +144,50 @@ export default async function DashboardPage() {
     withServerTiming("dashboard.review_snapshot", () => reviewItemsPromise),
   ]);
   const { data: reviewItems, error: reviewItemsError } = reviewItemsResult;
+  const pendingReviewCount = countOrUnavailable(pendingReview);
+  const gstReadyCount = countOrUnavailable(gstReady);
+  const gstBlockedCount = countOrUnavailable(gstBlocked);
+  const intakeAttentionCount = countOrUnavailable(intakeAttention);
+  const exportsAttentionCount = countOrUnavailable(exportsAttention);
+  const exportsThisMonthCount = countOrUnavailable(exportsThisMonth);
+  const hasUnavailableOverviewCount = [
+    pendingReviewCount,
+    gstReadyCount,
+    gstBlockedCount,
+    intakeAttentionCount,
+    exportsAttentionCount,
+    exportsThisMonthCount,
+  ].some((value) => value === null);
   const priorityItems = [
     {
       label: "Review extracted transactions",
-      count: pendingReview.count ?? 0,
+      count: pendingReviewCount,
       href: "/dashboard/review-queue",
-      tone: attentionTone(pendingReview.count ?? 0),
+      tone: attentionToneForCount(pendingReviewCount),
       description: "Draft, needs-review, and duplicate-risk records waiting for CA decision.",
       actionLabel: "Review transactions",
     },
     {
       label: "Triage WhatsApp intake",
-      count: intakeAttention.count ?? 0,
+      count: intakeAttentionCount,
       href: "/dashboard/inbox",
-      tone: attentionTone(intakeAttention.count ?? 0),
-      description: "Unmatched, received, failed, or media-failed inbound messages.",
+      tone: attentionToneForCount(intakeAttentionCount),
+      description: "Received, unmatched, failed, or media-failed inbound messages.",
       actionLabel: "Open WhatsApp inbox",
     },
     {
       label: "Resolve GST blockers",
-      count: gstBlocked.count ?? 0,
+      count: gstBlockedCount,
       href: "/dashboard/gst-summary",
-      tone: attentionTone(gstBlocked.count ?? 0),
+      tone: attentionToneForCount(gstBlockedCount),
       description: "Periods blocked by missing documents, mismatches, or pending review.",
       actionLabel: "View GST periods",
     },
     {
       label: "Check export jobs",
-      count: exportsAttention.count ?? 0,
+      count: exportsAttentionCount,
       href: "/dashboard/exports",
-      tone: attentionTone(exportsAttention.count ?? 0),
+      tone: attentionToneForCount(exportsAttentionCount),
       description: "Queued, processing, or failed private export jobs.",
       actionLabel: "View export jobs",
     },
@@ -197,30 +211,46 @@ export default async function DashboardPage() {
       />
 
       <PageBody>
+        {hasUnavailableOverviewCount && (
+          <QueryError message="One or more overview counts could not be loaded. Refresh to retry." />
+        )}
+
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <StatTile
             label="Pending review"
-            value={pendingReview.count ?? 0}
-            tone={attentionTone(pendingReview.count ?? 0)}
-            hint="Draft, needs-review, and duplicate-risk transactions."
+            value={displayCount(pendingReviewCount)}
+            tone={attentionToneForCount(pendingReviewCount)}
+            hint={countHint(
+              pendingReviewCount,
+              "Draft, needs-review, and duplicate-risk transactions.",
+            )}
           />
           <StatTile
             label="Intake attention"
-            value={intakeAttention.count ?? 0}
-            tone={attentionTone(intakeAttention.count ?? 0)}
-            hint="Unmatched or failed WhatsApp intake records."
+            value={displayCount(intakeAttentionCount)}
+            tone={attentionToneForCount(intakeAttentionCount)}
+            hint={countHint(
+              intakeAttentionCount,
+              "Received, unmatched, failed, or media-failed WhatsApp intake records.",
+            )}
           />
           <StatTile
             label="GST ready periods"
-            value={gstReady.count ?? 0}
-            tone={positiveTone(gstReady.count ?? 0)}
-            hint="Generated periods marked ready for review/export."
+            value={displayCount(gstReadyCount)}
+            tone={positiveToneForCount(gstReadyCount)}
+            hint={countHint(
+              gstReadyCount,
+              "Generated periods marked ready for review/export.",
+            )}
           />
           <StatTile
             label="Exports this month"
-            value={exportsThisMonth.count ?? 0}
-            tone="neutral"
-            hint="Completed files created from approved records."
+            value={displayCount(exportsThisMonthCount)}
+            tone={positiveToneForCount(exportsThisMonthCount)}
+            hint={countHint(
+              exportsThisMonthCount,
+              "Completed files created this month from approved records.",
+            )}
           />
         </div>
 
@@ -238,7 +268,9 @@ export default async function DashboardPage() {
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusChip tone={item.tone}>
-                      {item.count} open
+                      {item.count === null
+                        ? "Unavailable"
+                        : `${item.count} open`}
                     </StatusChip>
                     <h2 className="text-sm font-semibold text-khata-ink">
                       {item.label}
@@ -320,7 +352,7 @@ export default async function DashboardPage() {
                     </StatusChip>
                   </td>
                   <td className={tableNumericCellClass}>
-                    {Math.round((item.confidence_score ?? 0) * 100)}%
+                    {formatNullablePercent(item.confidence_score)}
                   </td>
                   <td className={tableNumericCellClass}>
                     {formatCurrency(item.total_amount)}

@@ -7,6 +7,14 @@ import { redirect } from "next/navigation";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { captureOperationalError } from "@/lib/observability";
+import { canReviewTransactions } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  dashboardReturnHref,
+  reviewQueueReturnKeys,
+  sanitizeReturnContext,
+  withQueryParam,
+} from "@/lib/return-context";
 import { sendWhatsAppText } from "@/lib/whatsapp/client";
 
 export type ReviewActionState = {
@@ -96,24 +104,32 @@ async function requireReviewContext(transactionId: string) {
   };
 }
 
-function canReview(role: string) {
-  return ["owner", "admin", "staff"].includes(role);
-}
-
 function isPosted(status: string) {
   return ["approved", "exported"].includes(status);
 }
 
-function redirectWithReviewError(transactionId: string, message: string): never {
+function reviewDetailHref(transactionId: string, returnContext: string) {
+  return appendReturnContext(`/dashboard/review-queue/${transactionId}`, returnContext);
+}
+
+function reviewQueueHref(returnContext: string) {
+  return dashboardReturnHref(
+    "/dashboard/review-queue",
+    returnContext,
+    reviewQueueReturnKeys,
+  );
+}
+
+function redirectWithReviewError(
+  transactionId: string,
+  message: string,
+  returnContext = "",
+): never {
   if (!transactionId) {
-    redirect("/dashboard/review-queue");
+    redirect(reviewQueueHref(returnContext));
   }
 
-  redirect(
-    `/dashboard/review-queue/${transactionId}?error=${encodeURIComponent(
-      message,
-    )}` as Route,
-  );
+  redirect(withQueryParam(reviewDetailHref(transactionId, returnContext), "error", message));
 }
 
 export async function updateTransactionAction(
@@ -121,6 +137,10 @@ export async function updateTransactionAction(
   formData: FormData,
 ): Promise<ReviewActionState> {
   const transactionId = readString(formData, "transaction_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    reviewQueueReturnKeys,
+  );
   const fieldErrors: Record<string, string> = {};
 
   if (!transactionId) {
@@ -177,7 +197,7 @@ export async function updateTransactionAction(
     };
   }
 
-  if (!canReview(context.firm.role)) {
+  if (!canReviewTransactions(context.firm.role)) {
     return {
       status: "error",
       message: "Your workspace role cannot edit transactions.",
@@ -221,21 +241,26 @@ export async function updateTransactionAction(
     };
   }
 
-  redirect(`/dashboard/review-queue/${transactionId}` as Route);
+  redirect(reviewDetailHref(transactionId, returnContext));
 }
 
 export async function approveTransactionAction(formData: FormData) {
   const transactionId = readString(formData, "transaction_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    reviewQueueReturnKeys,
+  );
   const context = await requireReviewContext(transactionId);
 
   if ("error" in context) {
-    redirect("/dashboard/review-queue");
+    redirect(reviewQueueHref(returnContext));
   }
 
-  if (!canReview(context.firm.role)) {
+  if (!canReviewTransactions(context.firm.role)) {
     redirectWithReviewError(
       transactionId,
       "Your workspace role cannot approve transactions.",
+      returnContext,
     );
   }
 
@@ -258,7 +283,7 @@ export async function approveTransactionAction(formData: FormData) {
       },
     });
 
-    redirectWithReviewError(transactionId, message);
+    redirectWithReviewError(transactionId, message, returnContext);
   }
 
   revalidatePath("/dashboard/review-queue");
@@ -288,17 +313,22 @@ async function markTransactionDecision({
   status: "rejected" | "duplicate";
 }) {
   const transactionId = readString(formData, "transaction_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    reviewQueueReturnKeys,
+  );
   const note = readString(formData, "review_note");
   const context = await requireReviewContext(transactionId);
 
   if ("error" in context) {
-    redirect("/dashboard/review-queue");
+    redirect(reviewQueueHref(returnContext));
   }
 
-  if (!canReview(context.firm.role)) {
+  if (!canReviewTransactions(context.firm.role)) {
     redirectWithReviewError(
       transactionId,
       "Your workspace role cannot make review decisions.",
+      returnContext,
     );
   }
 
@@ -306,6 +336,7 @@ async function markTransactionDecision({
     redirectWithReviewError(
       transactionId,
       "Posted transactions require a reversal before another review decision.",
+      returnContext,
     );
   }
 
@@ -323,30 +354,40 @@ async function markTransactionDecision({
     redirectWithReviewError(
       transactionId,
       "Could not save the review decision. Please retry or contact your workspace administrator.",
+      returnContext,
     );
   }
 
   revalidatePath("/dashboard/review-queue");
-  redirect("/dashboard/review-queue");
+  redirect(reviewQueueHref(returnContext));
 }
 
 export async function requestClarificationAction(formData: FormData) {
   const transactionId = readString(formData, "transaction_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    reviewQueueReturnKeys,
+  );
   const note = readString(formData, "clarification_note");
   const context = await requireReviewContext(transactionId);
 
   if ("error" in context) {
-    redirect("/dashboard/review-queue");
+    redirect(reviewQueueHref(returnContext));
   }
 
-  if (!canReview(context.firm.role)) {
-    redirectWithReviewError(transactionId, "Your workspace role cannot request clarification.");
+  if (!canReviewTransactions(context.firm.role)) {
+    redirectWithReviewError(
+      transactionId,
+      "Your workspace role cannot request clarification.",
+      returnContext,
+    );
   }
 
   if (isPosted(context.transaction.status)) {
     redirectWithReviewError(
       transactionId,
       "Posted transactions require a reversal before requesting clarification.",
+      returnContext,
     );
   }
 
@@ -354,6 +395,7 @@ export async function requestClarificationAction(formData: FormData) {
     redirectWithReviewError(
       transactionId,
       "Enter a clarification note of 2,000 characters or fewer.",
+      returnContext,
     );
   }
 
@@ -374,6 +416,7 @@ export async function requestClarificationAction(formData: FormData) {
     redirectWithReviewError(
       transactionId,
       "Could not record the clarification request. Please retry or contact your workspace administrator.",
+      returnContext,
     );
   }
 
@@ -417,7 +460,8 @@ export async function requestClarificationAction(formData: FormData) {
     redirectWithReviewError(
       transactionId,
       "Clarification was recorded, but the WhatsApp message could not be sent.",
+      returnContext,
     );
   }
-  redirect(`/dashboard/review-queue/${transactionId}` as Route);
+  redirect(reviewDetailHref(transactionId, returnContext));
 }

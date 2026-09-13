@@ -28,7 +28,7 @@ const initialState: AuthActionState = {
 const labelClass = "text-sm font-medium leading-none text-khata-ink";
 const fieldGroupClass = "grid gap-1.5";
 const fieldClass =
-  "h-9 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus:ring-destructive disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
+  "h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus:ring-destructive disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
 
 type AuthValues = Record<AuthFieldName, string>;
 
@@ -44,7 +44,7 @@ function InlineFieldError({ id, message }: { id: string; message?: string }) {
     <span
       id={id}
       aria-live="polite"
-      className="min-h-4 text-right text-xs font-medium leading-4 text-destructive"
+      className="min-h-4 text-right text-xs font-medium leading-4 text-destructive-foreground"
     >
       {message}
     </span>
@@ -183,7 +183,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           {mode === "login" && (
             <Link
               href={forgotPasswordHref}
-              className="text-xs font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+              className="inline-flex min-h-11 items-center rounded-md text-xs font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
             >
               Forgot password?
             </Link>
@@ -207,13 +207,13 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
                   ? "login-password-error"
                   : undefined
             }
-            className={`${fieldClass} pr-10`}
+            className={`${fieldClass} pr-12 md:pr-10`}
           />
           <button
             type="button"
             onClick={() => setShowPassword((value) => !value)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute right-1 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9"
           >
             {showPassword ? (
               <EyeOff className="size-4" aria-hidden="true" />
@@ -227,7 +227,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             id={passwordHelpId}
             aria-live="polite"
             className={`text-xs font-medium leading-4 ${
-              passwordError ? "text-destructive" : "text-khata-muted"
+              passwordError ? "text-destructive-foreground" : "text-khata-muted"
             }`}
           >
             {passwordError ?? "Use at least 8 characters."}

@@ -46,7 +46,7 @@ const workflowSteps = [
   },
   {
     icon: FileSpreadsheet,
-    title: "Books stay ready",
+    title: "Records stay export-ready",
     body: "Approval creates a reviewed record, audit trail and export-ready accounting data.",
   },
 ];
@@ -59,8 +59,8 @@ const featureItems = [
   },
   {
     icon: Sparkles,
-    title: "Explainable extraction",
-    body: "Every extracted field shows source context and confidence so reviewers correct rather than retype.",
+    title: "Reviewable extraction",
+    body: "Each AI draft keeps record-level confidence, risk flags and source evidence so reviewers can verify before approval.",
   },
   {
     icon: ShieldCheck,
@@ -166,7 +166,10 @@ function ReviewQueuePreview() {
   return (
     <div className="k-card k-elevated p-5">
       <div className="flex items-center justify-between border-b border-khata-border pb-3">
-        <h2 className="text-sm font-semibold">Review queue</h2>
+        <div>
+          <p className="k-eyebrow text-khata-muted">Illustrative sample</p>
+          <h2 className="mt-1 text-sm font-semibold">Review queue</h2>
+        </div>
         <StatusChip tone="warning">7 awaiting review</StatusChip>
       </div>
 
@@ -453,7 +456,7 @@ export default function Home() {
               <Link
                 href="/"
                 aria-label="KhataOne home"
-                className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+                className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
               >
                 <BrandLogo />
               </Link>
@@ -462,9 +465,9 @@ export default function Home() {
                 preparation workflow built specifically for Indian CA firms.
               </p>
               <div className="flex items-center gap-2 pt-1 text-xs text-khata-muted">
-                <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
+                  <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
                   <span className="size-1.5 rounded-full bg-khata-green" />
-                  India GST Ready
+                  GST prep only
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
                   CA Controlled
@@ -479,7 +482,7 @@ export default function Home() {
                   <li>
                     <a
                       href="#how"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       How it works
                     </a>
@@ -487,7 +490,7 @@ export default function Home() {
                   <li>
                     <a
                       href="#features"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Features
                     </a>
@@ -495,7 +498,7 @@ export default function Home() {
                   <li>
                     <a
                       href="#demo"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Book a demo
                     </a>
@@ -503,7 +506,7 @@ export default function Home() {
                   <li>
                     <a
                       href="#faq"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       FAQ
                     </a>
@@ -517,7 +520,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/login"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Firm Sign in
                     </Link>
@@ -525,7 +528,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/signup"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Create account
                     </Link>
@@ -533,7 +536,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/forgot-password"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Reset password
                     </Link>
@@ -547,7 +550,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/privacy"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Privacy Policy
                     </Link>
@@ -555,7 +558,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/terms"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Terms of Service
                     </Link>
@@ -563,7 +566,7 @@ export default function Home() {
                   <li>
                     <Link
                       href="/contact"
-                      className="transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                      className="inline-flex min-h-11 items-center rounded-md transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0"
                     >
                       Contact Us
                     </Link>

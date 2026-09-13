@@ -7,31 +7,60 @@ import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { runAiExtractionJobNow } from "@/lib/ai/extraction-worker";
 import { runExportGenerationJobNow } from "@/lib/exports/worker";
+import { canRunOperationsJobs } from "@/lib/permissions";
 
 function readString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value.trim() : "";
 }
 
-function canRunJobs(role: string) {
-  return ["owner", "admin", "staff"].includes(role);
+function redirectWithOperationsResult(result: string, status?: string): never {
+  const params = new URLSearchParams({ result });
+
+  if (status) {
+    params.set("status", status);
+  }
+
+  redirect(`/dashboard/operations?${params.toString()}`);
+}
+
+function manualRunResultCode(result: {
+  ok: boolean;
+  completed: number;
+  failed: number;
+  skipped?: number;
+  retrying?: number;
+}) {
+  if (result.completed > 0) {
+    return "manual-completed";
+  }
+
+  if ((result.retrying ?? 0) > 0) {
+    return "manual-retrying";
+  }
+
+  if ((result.skipped ?? 0) > 0) {
+    return "manual-skipped";
+  }
+
+  return result.ok && result.failed === 0 ? "manual-processed" : "manual-failed";
 }
 
 export async function runExtractionJobNowAction(formData: FormData) {
   if (!hasSupabaseConfig()) {
-    redirect("/dashboard/operations?status=failed");
+    redirectWithOperationsResult("manual-unavailable", "failed");
   }
 
   const jobId = readString(formData, "job_id");
 
   if (!jobId) {
-    redirect("/dashboard/operations?status=failed");
+    redirectWithOperationsResult("manual-invalid", "failed");
   }
 
   const context = await getFirmContext();
 
-  if (!context || !canRunJobs(context.firm.role)) {
-    redirect("/dashboard/operations?status=failed");
+  if (!context || !canRunOperationsJobs(context.firm.role)) {
+    redirectWithOperationsResult("manual-forbidden", "failed");
   }
 
   const { firm, supabase, userId: actorUserId } = context;
@@ -44,34 +73,43 @@ export async function runExtractionJobNowAction(formData: FormData) {
   const job = jobData as { id?: string } | null;
 
   if (error || !job?.id) {
-    redirect("/dashboard/operations");
+    redirectWithOperationsResult("manual-request-failed", "failed");
   }
 
-  await runAiExtractionJobNow({
+  const result = await runAiExtractionJobNow({
     jobId: job.id,
     workerId: `manual-${actorUserId ?? "unknown"}-${Date.now()}`,
-  });
+  }).catch(() => ({
+    ok: false,
+    completed: 0,
+    failed: 1,
+    skipped: 0,
+    retrying: 0,
+  }));
 
   revalidatePath("/dashboard/operations");
   revalidatePath("/dashboard/review-queue");
-  redirect("/dashboard/operations");
+  redirectWithOperationsResult(
+    manualRunResultCode(result),
+    result.ok ? undefined : "failed",
+  );
 }
 
 export async function runExportGenerationJobNowAction(formData: FormData) {
   if (!hasSupabaseConfig()) {
-    redirect("/dashboard/operations?status=failed");
+    redirectWithOperationsResult("manual-unavailable", "failed");
   }
 
   const jobId = readString(formData, "job_id");
 
   if (!jobId) {
-    redirect("/dashboard/operations?status=failed");
+    redirectWithOperationsResult("manual-invalid", "failed");
   }
 
   const context = await getFirmContext();
 
-  if (!context || !canRunJobs(context.firm.role)) {
-    redirect("/dashboard/operations?status=failed");
+  if (!context || !canRunOperationsJobs(context.firm.role)) {
+    redirectWithOperationsResult("manual-forbidden", "failed");
   }
 
   const { firm, supabase, userId: actorUserId } = context;
@@ -84,16 +122,23 @@ export async function runExportGenerationJobNowAction(formData: FormData) {
   const job = jobData as { id?: string } | null;
 
   if (error || !job?.id) {
-    redirect("/dashboard/operations");
+    redirectWithOperationsResult("manual-request-failed", "failed");
   }
 
-  await runExportGenerationJobNow({
+  const result = await runExportGenerationJobNow({
     jobId: job.id,
     workerId: `manual-export-${actorUserId ?? "unknown"}-${Date.now()}`,
-  });
+  }).catch(() => ({
+    ok: false,
+    completed: 0,
+    failed: 1,
+  }));
 
   revalidatePath("/dashboard/operations");
   revalidatePath("/dashboard/exports");
   revalidatePath("/dashboard/reports");
-  redirect("/dashboard/operations");
+  redirectWithOperationsResult(
+    manualRunResultCode(result),
+    result.ok ? undefined : "failed",
+  );
 }

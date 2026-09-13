@@ -17,7 +17,7 @@ import {
   Input,
   Select,
 } from "@/components/design-system";
-import { formatDisplayDateRange } from "@/lib/format";
+import { currentMonthDateRange, formatDisplayDateRange } from "@/lib/format";
 
 export type ExportClientOption = {
   id: string;
@@ -47,20 +47,6 @@ const initialState: ExportActionState = {
   message: "",
 };
 
-function monthStart() {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), 1)
-    .toISOString()
-    .slice(0, 10);
-}
-
-function monthEnd() {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth() + 1, 0)
-    .toISOString()
-    .slice(0, 10);
-}
-
 function clientName(period: ExportPeriodOption) {
   const client = Array.isArray(period.clients)
     ? period.clients[0]
@@ -82,6 +68,9 @@ export function ExportForm({
   );
   const [exportType, setExportType] = useState<ExportType>("csv_transactions");
   const isTransactionExport = exportType === "csv_transactions";
+  const defaultPeriod = currentMonthDateRange();
+  const errorId = (name: string) =>
+    state.fieldErrors?.[name] ? `export-${name.replaceAll("_", "-")}-error` : undefined;
 
   return (
     <FilterBar
@@ -103,19 +92,27 @@ export function ExportForm({
             className="mt-1"
             value={exportType}
             onChange={(event) => setExportType(event.target.value as ExportType)}
+            aria-invalid={Boolean(state.fieldErrors?.export_type)}
+            aria-describedby={errorId("export_type")}
           >
             <option value="csv_transactions">Transactions CSV</option>
             <option value="gst_summary">GST summary CSV</option>
             <option value="pdf_summary">GST summary PDF</option>
           </Select>
-          <FieldError message={state.fieldErrors?.export_type} />
+          <FieldError id={errorId("export_type")} message={state.fieldErrors?.export_type} />
         </label>
 
         {isTransactionExport ? (
           <>
             <label className="block">
               <FieldLabel>Client</FieldLabel>
-              <Select name="client_id" className="mt-1" defaultValue="">
+              <Select
+                name="client_id"
+                className="mt-1"
+                defaultValue=""
+                aria-invalid={Boolean(state.fieldErrors?.client_id)}
+                aria-describedby={errorId("client_id")}
+              >
                 <option value="">Select client</option>
                 {clients.map((client) => (
                   <option key={client.id} value={client.id}>
@@ -123,7 +120,7 @@ export function ExportForm({
                   </option>
                 ))}
               </Select>
-              <FieldError message={state.fieldErrors?.client_id} />
+              <FieldError id={errorId("client_id")} message={state.fieldErrors?.client_id} />
             </label>
 
             <label className="block">
@@ -131,10 +128,12 @@ export function ExportForm({
               <Input
                 name="period_start"
                 type="date"
-                defaultValue={monthStart()}
+                defaultValue={defaultPeriod.start}
                 className="mt-1"
+                aria-invalid={Boolean(state.fieldErrors?.period_start)}
+                aria-describedby={errorId("period_start")}
               />
-              <FieldError message={state.fieldErrors?.period_start} />
+              <FieldError id={errorId("period_start")} message={state.fieldErrors?.period_start} />
             </label>
 
             <label className="block">
@@ -142,16 +141,24 @@ export function ExportForm({
               <Input
                 name="period_end"
                 type="date"
-                defaultValue={monthEnd()}
+                defaultValue={defaultPeriod.end}
                 className="mt-1"
+                aria-invalid={Boolean(state.fieldErrors?.period_end)}
+                aria-describedby={errorId("period_end")}
               />
-              <FieldError message={state.fieldErrors?.period_end} />
+              <FieldError id={errorId("period_end")} message={state.fieldErrors?.period_end} />
             </label>
           </>
         ) : (
           <label className="block">
             <FieldLabel>Generated GST period</FieldLabel>
-            <Select name="gst_period_id" className="mt-1" defaultValue="">
+            <Select
+              name="gst_period_id"
+              className="mt-1"
+              defaultValue=""
+              aria-invalid={Boolean(state.fieldErrors?.gst_period_id)}
+              aria-describedby={errorId("gst_period_id")}
+            >
               <option value="">Select generated GST period</option>
               {periods.map((period) => (
                 <option key={period.id} value={period.id}>
@@ -161,7 +168,7 @@ export function ExportForm({
                 </option>
               ))}
             </Select>
-            <FieldError message={state.fieldErrors?.gst_period_id} />
+            <FieldError id={errorId("gst_period_id")} message={state.fieldErrors?.gst_period_id} />
           </label>
         )}
 

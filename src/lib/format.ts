@@ -1,4 +1,5 @@
 const indiaTimeZone = "Asia/Kolkata";
+const indiaOffsetMinutes = 5 * 60 + 30;
 
 const dateFormatter = new Intl.DateTimeFormat("en-IN", {
   day: "2-digit",
@@ -16,26 +17,74 @@ const dateTimeFormatter = new Intl.DateTimeFormat("en-IN", {
   timeZone: indiaTimeZone,
 });
 
-function parseDateOnly(value: string) {
+function formatDateOnlyParts(year: number, month: number, day: number) {
+  return [
+    String(year).padStart(4, "0"),
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0"),
+  ].join("-");
+}
+
+function parseDateOnlyParts(value: string) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
 
   if (!match) {
     return null;
   }
 
-  const date = new Date(
-    Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])),
-  );
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
 
   if (
-    date.getUTCFullYear() !== Number(match[1])
-    || date.getUTCMonth() !== Number(match[2]) - 1
-    || date.getUTCDate() !== Number(match[3])
+    date.getUTCFullYear() !== year
+    || date.getUTCMonth() !== month - 1
+    || date.getUTCDate() !== day
   ) {
     return null;
   }
 
+  return { year, month, day };
+}
+
+function parseDateOnly(value: string) {
+  const parts = parseDateOnlyParts(value);
+
+  if (!parts) {
+    return null;
+  }
+
+  const date = new Date(Date.UTC(parts.year, parts.month - 1, parts.day));
   return date;
+}
+
+export function currentMonthDateRange(now = new Date()) {
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const end = new Date(year, month + 1, 0);
+
+  return {
+    start: formatDateOnlyParts(year, month + 1, 1),
+    end: formatDateOnlyParts(year, month + 1, end.getDate()),
+  };
+}
+
+export function auditDateOnlyToIndiaUtcRange(value: string) {
+  const parts = parseDateOnlyParts(value);
+
+  if (!parts) {
+    return null;
+  }
+
+  const startUtcMs =
+    Date.UTC(parts.year, parts.month - 1, parts.day) - indiaOffsetMinutes * 60_000;
+  const endUtcMs = startUtcMs + 24 * 60 * 60 * 1000 - 1;
+
+  return {
+    start: new Date(startUtcMs).toISOString(),
+    end: new Date(endUtcMs).toISOString(),
+  };
 }
 
 export function formatDisplayDate(

@@ -15,6 +15,7 @@ import {
   Input,
   Select,
 } from "@/components/design-system";
+import { currentMonthDateRange } from "@/lib/format";
 
 export type GstClientOption = {
   id: string;
@@ -27,25 +28,14 @@ const initialState: GstActionState = {
   message: "",
 };
 
-function monthStart() {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), 1)
-    .toISOString()
-    .slice(0, 10);
-}
-
-function monthEnd() {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth() + 1, 0)
-    .toISOString()
-    .slice(0, 10);
-}
-
 export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
   const [state, formAction, pending] = useActionState(
     generateGstSummaryAction,
     initialState,
   );
+  const defaultPeriod = currentMonthDateRange();
+  const errorId = (name: string) =>
+    state.fieldErrors?.[name] ? `gst-${name.replaceAll("_", "-")}-error` : undefined;
 
   return (
     <FilterBar
@@ -60,6 +50,8 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
           name="client_id"
           className="mt-1"
           defaultValue=""
+          aria-invalid={Boolean(state.fieldErrors?.client_id)}
+          aria-describedby={errorId("client_id")}
         >
           <option value="">Select client</option>
           {clients.map((client) => (
@@ -68,7 +60,7 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
             </option>
           ))}
         </Select>
-        <FieldError message={state.fieldErrors?.client_id} />
+        <FieldError id={errorId("client_id")} message={state.fieldErrors?.client_id} />
       </label>
 
       <label className="block">
@@ -78,10 +70,12 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
         <Input
           name="period_start"
           type="date"
-          defaultValue={monthStart()}
+          defaultValue={defaultPeriod.start}
           className="mt-1"
+          aria-invalid={Boolean(state.fieldErrors?.period_start)}
+          aria-describedby={errorId("period_start")}
         />
-        <FieldError message={state.fieldErrors?.period_start} />
+        <FieldError id={errorId("period_start")} message={state.fieldErrors?.period_start} />
       </label>
 
       <label className="block">
@@ -91,10 +85,12 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
         <Input
           name="period_end"
           type="date"
-          defaultValue={monthEnd()}
+          defaultValue={defaultPeriod.end}
           className="mt-1"
+          aria-invalid={Boolean(state.fieldErrors?.period_end)}
+          aria-describedby={errorId("period_end")}
         />
-        <FieldError message={state.fieldErrors?.period_end} />
+        <FieldError id={errorId("period_end")} message={state.fieldErrors?.period_end} />
       </label>
 
       <label className="block">
@@ -105,12 +101,14 @@ export function GstSummaryForm({ clients }: { clients: GstClientOption[] }) {
           name="filing_type"
           defaultValue="monthly"
           className="mt-1"
+          aria-invalid={Boolean(state.fieldErrors?.filing_type)}
+          aria-describedby={errorId("filing_type")}
         >
           <option value="monthly">Monthly</option>
           <option value="quarterly">Quarterly</option>
           <option value="annual">Annual</option>
         </Select>
-        <FieldError message={state.fieldErrors?.filing_type} />
+        <FieldError id={errorId("filing_type")} message={state.fieldErrors?.filing_type} />
       </label>
 
       <div className="flex items-end">

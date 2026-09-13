@@ -9,12 +9,19 @@ import {
   DetailList,
   PageBody,
   PageHeader,
+  PermissionNotice,
   SectionCard,
   SetupRequired,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate } from "@/lib/format";
+import { canCorrectLedgerEntries, readOnlyRoleMessage } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  ledgerReturnKeys,
+  sanitizeReturnContext,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -28,10 +35,14 @@ function formatCurrency(value: number | null) {
 
 export default async function EditLedgerEntryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ entryId: string }>;
+  searchParams: Promise<{ return_to?: string }>;
 }) {
   const { entryId } = await params;
+  const { return_to: rawReturnContext } = await searchParams;
+  const returnContext = sanitizeReturnContext(rawReturnContext, ledgerReturnKeys);
 
   if (!hasSupabaseConfig()) {
     return (
@@ -57,6 +68,8 @@ export default async function EditLedgerEntryPage({
     notFound();
   }
 
+  const canCorrectEntry = canCorrectLedgerEntries(firm.role);
+
   return (
     <div>
       <PageHeader
@@ -64,7 +77,12 @@ export default async function EditLedgerEntryPage({
         title="Correct handoff entry"
         description="Corrections update the ledger handoff entry only. The source transaction and AI extraction history remain traceable."
         actions={
-          <ActionLink href={`/dashboard/ledger/${entry.id}`}>
+          <ActionLink
+            href={appendReturnContext(
+              `/dashboard/ledger/${entry.id}`,
+              returnContext,
+            )}
+          >
             Back to ledger entry
           </ActionLink>
         }
@@ -84,7 +102,16 @@ export default async function EditLedgerEntryPage({
             ]}
           />
         </SectionCard>
-        <LedgerEntryForm entry={entry as LedgerEntryValues} />
+        {canCorrectEntry ? (
+          <LedgerEntryForm
+            entry={entry as LedgerEntryValues}
+            returnContext={returnContext}
+          />
+        ) : (
+          <SectionCard title="Read-only access">
+            <PermissionNotice message={readOnlyRoleMessage} />
+          </SectionCard>
+        )}
       </PageBody>
     </div>
   );

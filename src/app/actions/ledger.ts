@@ -1,11 +1,16 @@
 "use server";
 
-import type { Route } from "next";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
+import { canCorrectLedgerEntries } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  ledgerReturnKeys,
+  sanitizeReturnContext,
+} from "@/lib/return-context";
 
 export type LedgerActionState = {
   status: "idle" | "success" | "error";
@@ -51,7 +56,7 @@ async function requireLedgerContext() {
     return { error: "Supabase is not configured yet." as const };
   }
 
-  if (!["owner", "admin", "staff"].includes(context.firm.role)) {
+  if (!canCorrectLedgerEntries(context.firm.role)) {
     return { error: "Your workspace role cannot correct ledger entries." };
   }
   return context;
@@ -62,6 +67,10 @@ export async function updateLedgerEntryAction(
   formData: FormData,
 ): Promise<LedgerActionState> {
   const entryId = readString(formData, "entry_id");
+  const returnContext = sanitizeReturnContext(
+    readString(formData, "return_context"),
+    ledgerReturnKeys,
+  );
   const accountName = readString(formData, "account_name");
   const entryDate = normalizeDate(readString(formData, "entry_date"));
   const debitAmount = parseAmount(readString(formData, "debit_amount"));
@@ -132,5 +141,5 @@ export async function updateLedgerEntryAction(
   }
 
   revalidatePath("/dashboard/ledger");
-  redirect(`/dashboard/ledger/${entryId}` as Route);
+  redirect(appendReturnContext(`/dashboard/ledger/${entryId}`, returnContext));
 }

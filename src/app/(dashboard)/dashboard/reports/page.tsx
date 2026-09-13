@@ -6,6 +6,7 @@ import {
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -24,19 +25,19 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import {
+  countHint,
+  countOrUnavailable,
+  displayCount,
+  formatNullableCurrency,
+} from "@/lib/availability";
+import { normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDateRange } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
-
-function formatCurrency(value: number | null) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2,
-  }).format(value ?? 0);
-}
+const pageSize = 50;
 
 function statusTone(status: string) {
   switch (status) {
@@ -51,7 +52,11 @@ function statusTone(status: string) {
   }
 }
 
-export default async function ReportsPage() {
+export default async function ReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables and migrations before viewing CA reports." />
@@ -67,6 +72,10 @@ export default async function ReportsPage() {
   }
 
   const { firm, supabase } = context;
+  const filters = await searchParams;
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * pageSize;
+  const rangeTo = rangeFrom + pageSize;
   const periodsPromise = (async () =>
     await supabase
       .from("gst_periods")
@@ -75,36 +84,25 @@ export default async function ReportsPage() {
       )
       .eq("firm_id", firm.id)
       .order("period_start", { ascending: false })
-      .limit(50))();
-  const approvedCountPromise = (async () => {
-    const { count } = await supabase
+      .order("id", { ascending: false })
+      .range(rangeFrom, rangeTo))();
+  const approvedCountPromise = supabase
       .from("transactions")
       .select("id", { count: "exact", head: true })
       .eq("firm_id", firm.id)
       .eq("status", "approved");
-
-    return count;
-  })().catch(() => null);
-  const reviewCountPromise = (async () => {
-    const { count } = await supabase
+  const reviewCountPromise = supabase
       .from("transactions")
       .select("id", { count: "exact", head: true })
       .eq("firm_id", firm.id)
       .in("status", ["draft", "needs_review"]);
-
-    return count;
-  })().catch(() => null);
-  const exportCountPromise = (async () => {
-    const { count } = await supabase
+  const exportCountPromise = supabase
       .from("exports")
       .select("id", { count: "exact", head: true })
       .eq("firm_id", firm.id)
       .eq("status", "completed");
 
-    return count;
-  })().catch(() => null);
-
-  const [periodsResult, approvedCount, reviewCount, exportCount] =
+  const [periodsResult, approvedCountResult, reviewCountResult, exportCountResult] =
     await Promise.all([
       periodsPromise,
       approvedCountPromise,
@@ -112,6 +110,16 @@ export default async function ReportsPage() {
       exportCountPromise,
     ]);
   const { data: periods, error } = periodsResult;
+  const approvedCount = countOrUnavailable(approvedCountResult);
+  const reviewCount = countOrUnavailable(reviewCountResult);
+  const exportCount = countOrUnavailable(exportCountResult);
+  const hasUnavailableReportCount = [
+    approvedCount,
+    reviewCount,
+    exportCount,
+  ].some((value) => value === null);
+  const pagePeriods = (periods ?? []).slice(0, pageSize);
+  const hasNextPage = (periods?.length ?? 0) > pageSize;
 
   return (
     <div>
@@ -131,26 +139,47 @@ export default async function ReportsPage() {
       />
 
       <PageBody>
+      {hasUnavailableReportCount && (
+        <QueryError message="One or more report counts could not be loaded. Refresh to retry." />
+      )}
+
       <div className="grid gap-3 md:grid-cols-3">
         {[
-          ["Approved transactions", approvedCount ?? 0, "success"],
-          ["Draft/review items", reviewCount ?? 0, "warning"],
-          ["Completed exports", exportCount ?? 0, "brand"],
-        ].map(([label, value, tone]) => (
+          [
+            "Approved transactions",
+            approvedCount,
+            approvedCount === null ? "danger" : approvedCount > 0 ? "success" : "neutral",
+            "Approved transaction count.",
+          ],
+          [
+            "Draft/review items",
+            reviewCount,
+            reviewCount === null ? "danger" : reviewCount > 0 ? "warning" : "neutral",
+            "Draft and needs-review transaction count.",
+          ],
+          [
+            "Completed exports",
+            exportCount,
+            exportCount === null ? "danger" : exportCount > 0 ? "brand" : "neutral",
+            "Completed private export count.",
+          ],
+        ].map(([label, value, tone, hint]) => (
           <StatTile
             key={label}
             label={label as string}
-            value={value as number}
-            tone={tone as "success" | "warning" | "brand"}
+            value={displayCount(value as number | null)}
+            tone={tone as "success" | "warning" | "brand" | "neutral" | "danger"}
+            hint={countHint(value as number | null, hint as string)}
           />
         ))}
       </div>
 
       <SectionCard
         title="GST readiness report"
+        description="Newest matching periods are shown first. Use pagination to reach older GST readiness rows."
         actions={
           <RecordCount
-            value={periods?.length ?? 0}
+            value={pagePeriods.length}
             label="periods"
             singularLabel="period"
           />
@@ -159,7 +188,7 @@ export default async function ReportsPage() {
       >
 
         {error && (
-          <QueryError message={error.message} />
+          <QueryError message="GST readiness report could not be loaded. Refresh to retry." />
         )}
 
         {!error && (!periods || periods.length === 0) && (
@@ -170,6 +199,7 @@ export default async function ReportsPage() {
         )}
 
         {!error && periods && periods.length > 0 && (
+          <>
           <DataTable minWidth={1040} ariaLabel="GST readiness report">
               <thead className={tableHeaderClass}>
                 <tr>
@@ -184,7 +214,7 @@ export default async function ReportsPage() {
                 </tr>
               </thead>
               <tbody>
-                {periods.map((period) => {
+                {pagePeriods.map((period) => {
                   const client = Array.isArray(period.clients)
                     ? period.clients[0]
                     : period.clients;
@@ -212,13 +242,13 @@ export default async function ReportsPage() {
                         </StatusChip>
                       </td>
                       <td className={tableNumericCellClass}>
-                        {summary?.mismatch_count ?? 0}
+                        {summary?.mismatch_count ?? "Unavailable"}
                       </td>
                       <td className={tableNumericCellClass}>
-                        {summary?.missing_document_count ?? 0}
+                        {summary?.missing_document_count ?? "Unavailable"}
                       </td>
                       <td className={tableNumericCellClass}>
-                        {formatCurrency(summary?.net_tax_payable ?? 0)}
+                        {formatNullableCurrency(summary?.net_tax_payable)}
                       </td>
                       <td className={tableActionCellClass}>
                         <TextLink
@@ -234,6 +264,14 @@ export default async function ReportsPage() {
                 })}
               </tbody>
           </DataTable>
+          <PaginationControls
+            basePath="/dashboard/reports"
+            page={page}
+            hasNext={hasNextPage}
+            searchParams={filters}
+            label="report periods"
+          />
+          </>
         )}
       </SectionCard>
       </PageBody>

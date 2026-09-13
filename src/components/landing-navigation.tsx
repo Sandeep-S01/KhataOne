@@ -58,7 +58,7 @@ export function LandingNavigation() {
         <Link
           href="/"
           aria-label="KhataOne home"
-          className="rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+          className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
         >
           <BrandLogo />
         </Link>
@@ -105,7 +105,7 @@ export function LandingNavigation() {
       </div>
 
       <details ref={detailsRef} className="group relative md:hidden">
-        <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-khata-border bg-white text-khata-ink shadow-sm transition hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
+        <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg border border-khata-border bg-white text-khata-ink shadow-sm transition hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
           <span className="sr-only">Open navigation menu</span>
           <Menu className="h-5 w-5" />
         </summary>
@@ -116,7 +116,7 @@ export function LandingNavigation() {
                 key={item.href}
                 href={item.href}
                 onClick={closeMobileMenu}
-                className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   activeId === item.id
                     ? "bg-khata-green/10 font-semibold text-khata-green"
                     : "text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink"
@@ -128,14 +128,14 @@ export function LandingNavigation() {
             <div className="my-1.5 h-px bg-khata-border" />
             <Link
               href="/login"
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink"
+              className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-medium text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink"
             >
               Sign in
             </Link>
             <a
               href="#demo"
               onClick={closeMobileMenu}
-              className="mt-1 inline-flex h-10 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark"
+              className="mt-1 inline-flex h-11 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark"
             >
               <span>Book a demo</span>
               <ArrowRight className="size-4" aria-hidden="true" />

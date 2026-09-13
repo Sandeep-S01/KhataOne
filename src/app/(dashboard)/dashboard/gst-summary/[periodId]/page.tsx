@@ -5,8 +5,10 @@ import {
   DataTable,
   DetailList,
   EmptyState,
+  InfoNote,
   PageBody,
   PageHeader,
+  QueryError,
   SectionCard,
   SetupRequired,
   StatTile,
@@ -27,12 +29,14 @@ import {
   formatDisplayDateRange,
   formatDisplayDateTime,
 } from "@/lib/format";
+import { formatNullableCurrency } from "@/lib/availability";
 
 export const dynamic = "force-dynamic";
 
 function statusTone(status: string) {
   switch (status) {
     case "ready":
+    case "approved":
     case "exported":
       return "success";
     case "missing_documents":
@@ -44,11 +48,29 @@ function statusTone(status: string) {
 }
 
 function formatCurrency(value: number | null) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2,
-  }).format(value ?? 0);
+  return formatNullableCurrency(value);
+}
+
+function formatTaxTotal(transaction: {
+  cgst_amount: number | null;
+  sgst_amount: number | null;
+  igst_amount: number | null;
+}) {
+  const values = [
+    transaction.cgst_amount,
+    transaction.sgst_amount,
+    transaction.igst_amount,
+  ];
+
+  if (values.every((value) => value === null || value === undefined)) {
+    return "Unavailable";
+  }
+
+  return formatNullableCurrency(
+    Number(transaction.cgst_amount ?? 0) +
+      Number(transaction.sgst_amount ?? 0) +
+      Number(transaction.igst_amount ?? 0),
+  );
 }
 
 export default async function GstPeriodPage({
@@ -90,7 +112,7 @@ export default async function GstPeriodPage({
   const summary = Array.isArray(period.gst_summaries)
     ? period.gst_summaries[0]
     : period.gst_summaries;
-  const { data: sourceTransactions } = await supabase
+  const { data: sourceTransactions, error: sourceTransactionsError } = await supabase
     .from("transactions")
     .select(
       "id, transaction_type, transaction_date, party_name, invoice_number, taxable_amount, cgst_amount, sgst_amount, igst_amount, total_amount, status",
@@ -100,7 +122,12 @@ export default async function GstPeriodPage({
     .gte("transaction_date", period.period_start)
     .lte("transaction_date", period.period_end)
     .order("transaction_date", { ascending: false });
-  const { data: audits } = await supabase
+  const currentBlockerCount = sourceTransactions?.filter(
+    (transaction) => transaction.status !== "approved" && transaction.status !== "exported",
+  ).length;
+  const generationTime = formatDisplayDateTime(summary?.generated_at);
+
+  const { data: audits, error: auditsError } = await supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, created_at")
     .eq("firm_id", firm.id)
@@ -127,8 +154,8 @@ export default async function GstPeriodPage({
         }
       />
 
-      <PageBody className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
-        <SectionCard title="Period details">
+      <PageBody className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <SectionCard title="Period details" className="min-w-0">
           <DetailList
             items={[
               { label: "Client", value: client?.business_name ?? "Unknown client" },
@@ -148,8 +175,15 @@ export default async function GstPeriodPage({
           />
         </SectionCard>
 
-        <SectionCard title="Tax summary">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionCard
+          className="min-w-0"
+          title="Saved GST summary"
+          description="These totals are the saved generated summary, not a live recalculation of the rows below."
+        >
+          <InfoNote>
+            Generated {generationTime}. The current-period transaction list below is live and may include later edits or unresolved records.
+          </InfoNote>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["Sales taxable", summary?.sales_taxable_amount, "neutral"],
               ["Purchase taxable", summary?.purchase_taxable_amount, "neutral"],
@@ -164,28 +198,65 @@ export default async function GstPeriodPage({
               <StatTile
                 key={label}
                 label={label as string}
-                value={formatCurrency(Number(value ?? 0))}
+                value={formatNullableCurrency(value as number | null | undefined)}
                 tone={tone as "neutral" | "brand" | "success" | "warning"}
                 className="bg-khata-paper"
               />
             ))}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            <StatusChip tone={Number(summary?.mismatch_count ?? 0) > 0 ? "warning" : "success"}>
-              {summary?.mismatch_count ?? 0} mismatches
-            </StatusChip>
-            <StatusChip tone={Number(summary?.missing_document_count ?? 0) > 0 ? "warning" : "success"}>
-              {summary?.missing_document_count ?? 0} missing docs
-            </StatusChip>
+            {summary ? (
+              <>
+                <StatusChip
+                  tone={
+                    summary.mismatch_count === null ||
+                    summary.mismatch_count === undefined
+                      ? "neutral"
+                      : Number(summary.mismatch_count) > 0
+                        ? "warning"
+                        : "success"
+                  }
+                >
+                  {summary.mismatch_count ?? "Unavailable"} mismatches
+                </StatusChip>
+                <StatusChip
+                  tone={
+                    summary.missing_document_count === null ||
+                    summary.missing_document_count === undefined
+                      ? "neutral"
+                      : Number(summary.missing_document_count) > 0
+                        ? "warning"
+                        : "success"
+                  }
+                >
+                  {summary.missing_document_count ?? "Unavailable"} missing docs
+                </StatusChip>
+              </>
+            ) : (
+              <StatusChip tone="neutral">Summary unavailable</StatusChip>
+            )}
           </div>
         </SectionCard>
 
-      <div className="xl:col-span-2">
-      <SectionCard title="Source transactions" bodyClassName="p-0">
-        {!sourceTransactions || sourceTransactions.length === 0 ? (
+      <div className="min-w-0 xl:col-span-2">
+      <SectionCard
+        title="Current period transactions"
+        description="Live transactions currently in this client and date range. Their statuses explain blockers; this list is not a persisted generation snapshot."
+        bodyClassName="p-0"
+        actions={
+          typeof currentBlockerCount === "number" ? (
+            <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
+              {currentBlockerCount} current blockers
+            </StatusChip>
+          ) : undefined
+        }
+      >
+        {sourceTransactionsError ? (
+          <QueryError message="Source transactions could not be loaded. Refresh to retry." />
+        ) : !sourceTransactions || sourceTransactions.length === 0 ? (
           <EmptyState
-            title="No source transactions in this period"
-            message="Approved transactions within the period range will appear here."
+            title="No current transactions in this period"
+            message="Live transactions in this client and date range will appear here."
           />
         ) : (
           <DataTable minWidth={980} ariaLabel="GST period source transactions">
@@ -225,11 +296,7 @@ export default async function GstPeriodPage({
                       {formatCurrency(transaction.taxable_amount)}
                     </td>
                     <td className={tableNumericCellClass}>
-                      {formatCurrency(
-                        Number(transaction.cgst_amount ?? 0) +
-                          Number(transaction.sgst_amount ?? 0) +
-                          Number(transaction.igst_amount ?? 0),
-                      )}
+                      {formatTaxTotal(transaction)}
                     </td>
                     <td className={tableNumericCellClass}>
                       {formatCurrency(transaction.total_amount)}
@@ -242,9 +309,11 @@ export default async function GstPeriodPage({
       </SectionCard>
       </div>
 
-      <div className="xl:col-span-2">
+      <div className="min-w-0 xl:col-span-2">
       <SectionCard title="Generation audit" bodyClassName="p-0">
-        {!audits || audits.length === 0 ? (
+        {auditsError ? (
+          <QueryError message="Generation audit could not be loaded. Refresh to retry." />
+        ) : !audits || audits.length === 0 ? (
           <EmptyState
             title="No GST summary audit entries yet"
             message="Generation and export activity for this period will appear here."

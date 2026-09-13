@@ -1,0 +1,1110 @@
+{
+  "status": "blocked",
+  "checked_at": "2026-09-13T11:27:56.689Z",
+  "base_url": "http://127.0.0.1:3000",
+  "browser": "chromium",
+  "browser_version": "153.0.8010.12",
+  "authenticated_checks": "blocked-missing-isolated-storage-state",
+  "production_data_used": false,
+  "live_credentials_used": false,
+  "route_count": 115,
+  "passed": 10,
+  "failed": 0,
+  "blocked": 105,
+  "public_routes": [
+    "/",
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password"
+  ],
+  "authenticated_routes": [
+    "/dashboard",
+    "/dashboard/inbox",
+    "/dashboard/review-queue",
+    "/dashboard/review-queue/[transactionId]",
+    "/dashboard/clients",
+    "/dashboard/clients/[clientId]",
+    "/dashboard/ledger",
+    "/dashboard/ledger/[entryId]",
+    "/dashboard/gst-summary",
+    "/dashboard/gst-summary/[periodId]",
+    "/dashboard/reports",
+    "/dashboard/exports",
+    "/dashboard/audit-logs",
+    "/dashboard/operations",
+    "/dashboard/settings"
+  ],
+  "viewports": [
+    320,
+    390,
+    768,
+    1024,
+    1280,
+    1440,
+    1920
+  ],
+  "results": [
+    {
+      "route": "/",
+      "resolvedRoute": "/",
+      "viewport": 390,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/",
+      "measurements": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [
+          {
+            "id": "no-direct-gst-ready-claim",
+            "passed": true
+          },
+          {
+            "id": "gst-prep-boundary-present",
+            "passed": true
+          },
+          {
+            "id": "record-level-confidence-present",
+            "passed": true
+          }
+        ],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/",
+      "resolvedRoute": "/",
+      "viewport": 1440,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/",
+      "measurements": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [
+          {
+            "id": "no-direct-gst-ready-claim",
+            "passed": true
+          },
+          {
+            "id": "gst-prep-boundary-present",
+            "passed": true
+          },
+          {
+            "id": "record-level-confidence-present",
+            "passed": true
+          }
+        ],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/login",
+      "resolvedRoute": "/login",
+      "viewport": 390,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/login",
+      "measurements": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/login",
+      "resolvedRoute": "/login",
+      "viewport": 1440,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/login",
+      "measurements": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/signup",
+      "resolvedRoute": "/signup",
+      "viewport": 390,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/signup",
+      "measurements": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/signup",
+      "resolvedRoute": "/signup",
+      "viewport": 1440,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/signup",
+      "measurements": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/forgot-password",
+      "resolvedRoute": "/forgot-password",
+      "viewport": 390,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/forgot-password",
+      "measurements": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/forgot-password",
+      "resolvedRoute": "/forgot-password",
+      "viewport": 1440,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/forgot-password",
+      "measurements": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/reset-password",
+      "resolvedRoute": "/reset-password",
+      "viewport": 390,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/reset-password",
+      "measurements": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/reset-password",
+      "resolvedRoute": "/reset-password",
+      "viewport": 1440,
+      "authRequired": false,
+      "status": "pass",
+      "statusCode": 200,
+      "finalPath": "/reset-password",
+      "measurements": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "unnamedInteractiveControls": [],
+        "controlsBelow44px": [],
+        "publicClaims": [],
+        "headingCount": 1
+      },
+      "notes": []
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard",
+      "resolvedRoute": "/dashboard",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/inbox",
+      "resolvedRoute": "/dashboard/inbox",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "resolvedRoute": "/dashboard/review-queue",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/review-queue/[transactionId]",
+      "resolvedRoute": null,
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients",
+      "resolvedRoute": "/dashboard/clients",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/clients/[clientId]",
+      "resolvedRoute": null,
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger",
+      "resolvedRoute": "/dashboard/ledger",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/ledger/[entryId]",
+      "resolvedRoute": null,
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "resolvedRoute": "/dashboard/gst-summary",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/gst-summary/[periodId]",
+      "resolvedRoute": null,
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/reports",
+      "resolvedRoute": "/dashboard/reports",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/exports",
+      "resolvedRoute": "/dashboard/exports",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/audit-logs",
+      "resolvedRoute": "/dashboard/audit-logs",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/operations",
+      "resolvedRoute": "/dashboard/operations",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 320,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 390,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 768,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 1024,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 1280,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 1440,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    },
+    {
+      "route": "/dashboard/settings",
+      "resolvedRoute": "/dashboard/settings",
+      "viewport": 1920,
+      "authRequired": true,
+      "status": "blocked",
+      "blockedReason": "Missing KHATAONE_UI_UX_STORAGE_STATE for an isolated authenticated workspace. Live credentials are not used by this runner."
+    }
+  ],
+  "safety_notes": [
+    "This runner records measurements, counts and redacted console messages only.",
+    "Authenticated checks require a Playwright storage-state file from an isolated workspace.",
+    "Do not pass live user credentials or production fixture identifiers to this script."
+  ]
+}

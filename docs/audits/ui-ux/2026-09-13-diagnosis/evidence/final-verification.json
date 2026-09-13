@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-09-12T20:10:42.078Z",
+  "branch": "main",
+  "commit": "59b903fa696622dc81e5cfb4df9d37042c46fc7d",
+  "initialStatus": "M docs/Tracker.md\n?? docs/design-reviews/\n?? khataone_overview_refined.png",
+  "finalStatus": "M docs/Tracker.md\n?? docs/audits/\n?? docs/design-reviews/\n?? khataone_overview_refined.png",
+  "baselineFiles": 341,
+  "changedExistingFiles": [],
+  "unexpectedOutsideAuditAdditions": [],
+  "applicationSourceChangeCount": 0,
+  "secretValueMatchFiles": [],
+  "findingsCount": 27,
+  "markdownAndCsvIdsMatch": true,
+  "csvConsistentColumns": true,
+  "invalidSourceLocations": [],
+  "reports": [
+    {
+      "file": "README.md",
+      "bytes": 9150
+    },
+    {
+      "file": "SYSTEM_UI_MAP.md",
+      "bytes": 12782
+    },
+    {
+      "file": "COMPONENT_DESIGN_SYSTEM_AUDIT.md",
+      "bytes": 14857
+    },
+    {
+      "file": "UI_UX_FLOW_AUDIT.md",
+      "bytes": 9149
+    },
+    {
+      "file": "RESPONSIVE_ACCESSIBILITY_AUDIT.md",
+      "bytes": 6690
+    },
+    {
+      "file": "PERFORMANCE_UX_BASELINE.md",
+      "bytes": 7242
+    },
+    {
+      "file": "FINDINGS.md",
+      "bytes": 69233
+    },
+    {
+      "file": "IMPLEMENTATION_INPUTS.md",
+      "bytes": 6575
+    }
+  ],
+  "evidencePolicy": "No raw HAR, cookie/session state, live source documents or financial payloads captured; hosted screenshots masked before capture. Authentication only; all business writes blocked.",
+  "pass": true
+}

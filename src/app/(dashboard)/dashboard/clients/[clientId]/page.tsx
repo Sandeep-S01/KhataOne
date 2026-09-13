@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import { archiveClientAction } from "@/app/actions/clients";
 import {
   ActionLink,
-  Button,
   DataTable,
   DetailList,
   EmptyState,
   PageBody,
   PageHeader,
+  PermissionNotice,
+  QueryError,
   RecordCount,
   SectionCard,
   SetupRequired,
@@ -27,12 +28,27 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
+import {
+  attentionToneForCount,
+  countHint,
+  countOrUnavailable,
+  displayCount,
+  formatNullableCurrency,
+} from "@/lib/availability";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import {
   formatDisplayDateRange,
   formatDisplayDateTime,
 } from "@/lib/format";
+import { canManageClients, readOnlyRoleMessage } from "@/lib/permissions";
+import {
+  appendReturnContext,
+  clientReturnKeys,
+  dashboardReturnHref,
+  sanitizeReturnContext,
+} from "@/lib/return-context";
 
 export const dynamic = "force-dynamic";
 
@@ -51,20 +67,22 @@ function statusTone(status: string) {
   }
 }
 
-function formatCurrency(value: number | null) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2,
-  }).format(value ?? 0);
-}
 
 export default async function ClientDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ clientId: string }>;
+  searchParams: Promise<{ return_to?: string }>;
 }) {
   const { clientId } = await params;
+  const { return_to: rawReturnContext } = await searchParams;
+  const returnContext = sanitizeReturnContext(rawReturnContext, clientReturnKeys);
+  const clientsHref = dashboardReturnHref(
+    "/dashboard/clients",
+    returnContext,
+    clientReturnKeys,
+  );
 
   if (!hasSupabaseConfig()) {
     return (
@@ -79,15 +97,21 @@ export default async function ClientDetailPage({
   }
 
   const { firm, supabase } = context;
-  const { data: client } = await supabase
+  const { data: client, error: clientError } = await supabase
     .from("clients")
     .select("*")
     .eq("id", clientId)
     .eq("firm_id", firm.id)
     .single();
 
-  if (!client) {
+  if (!client && clientError?.code === "PGRST116") {
     notFound();
+  }
+
+  if (!client) {
+    return (
+      <QueryError message="Client details could not be loaded. Refresh to retry." />
+    );
   }
 
   const documentsPromise = supabase
@@ -141,6 +165,9 @@ export default async function ClientDetailPage({
   const recentDocuments = documentsResult.data ?? [];
   const gstPeriods = gstPeriodsResult.data ?? [];
   const audits = auditsResult.data ?? [];
+  const canManageClientRecords = canManageClients(firm.role);
+  const reviewCount = countOrUnavailable(reviewCountResult);
+  const approvedCount = countOrUnavailable(approvedCountResult);
 
   return (
     <div>
@@ -156,21 +183,33 @@ export default async function ClientDetailPage({
         actions={
           <>
           <ActionLink
-            href="/dashboard/clients"
+            href={clientsHref}
           >
             Back to clients
           </ActionLink>
-          <ActionLink
-            href={`/dashboard/clients/${client.id}/edit`}
-          >
-            Edit
-          </ActionLink>
-          {client.status !== "archived" && (
+          {canManageClientRecords && (
+            <ActionLink
+              href={appendReturnContext(
+                `/dashboard/clients/${client.id}/edit`,
+                returnContext,
+              )}
+            >
+              Edit
+            </ActionLink>
+          )}
+          {canManageClientRecords && client.status !== "archived" && (
             <form action={archiveClientAction}>
               <input type="hidden" name="client_id" value={client.id} />
-              <Button type="submit" variant="danger" size="sm">
+              {returnContext && (
+                <input type="hidden" name="return_context" value={returnContext} />
+              )}
+              <PendingSubmitButton
+                variant="danger"
+                size="sm"
+                pendingLabel="Archiving..."
+              >
                 Archive
-              </Button>
+              </PendingSubmitButton>
             </form>
           )}
           </>
@@ -178,21 +217,40 @@ export default async function ClientDetailPage({
       />
 
       <PageBody>
+        {!canManageClientRecords && (
+          <SectionCard title="Read-only access">
+            <PermissionNotice message={readOnlyRoleMessage} />
+          </SectionCard>
+        )}
+
         <div className="grid gap-3 md:grid-cols-3">
           <StatTile
             label="Pending review"
-            value={reviewCountResult.count ?? 0}
-            tone={(reviewCountResult.count ?? 0) > 0 ? "warning" : "success"}
+            value={displayCount(reviewCount)}
+            tone={attentionToneForCount(reviewCount)}
+            hint={countHint(reviewCount, "Draft, needs-review, and duplicate-risk records.")}
           />
           <StatTile
             label="Approved records"
-            value={approvedCountResult.count ?? 0}
-            tone="success"
+            value={displayCount(approvedCount)}
+            tone={approvedCount === null ? "danger" : approvedCount > 0 ? "success" : "neutral"}
+            hint={countHint(approvedCount, "Approved transaction records.")}
           />
           <StatTile
             label="Recent documents"
-            value={recentDocuments.length}
-            tone="brand"
+            value={documentsResult.error ? "Unavailable" : recentDocuments.length}
+            tone={
+              documentsResult.error
+                ? "danger"
+                : recentDocuments.length > 0
+                  ? "brand"
+                  : "neutral"
+            }
+            hint={
+              documentsResult.error
+                ? "Could not load recent documents. Refresh to retry."
+                : "Latest linked document records."
+            }
           />
         </div>
 
@@ -217,7 +275,9 @@ export default async function ClientDetailPage({
           actions={<RecordCount value={recentDocuments.length} label="latest" />}
           bodyClassName="p-0"
         >
-          {recentDocuments.length === 0 ? (
+          {documentsResult.error ? (
+            <QueryError message="Recent documents could not be loaded. Refresh to retry." />
+          ) : recentDocuments.length === 0 ? (
             <EmptyState
               title="No documents received"
               message="Recent WhatsApp documents and text notes for this client will appear here."
@@ -263,14 +323,16 @@ export default async function ClientDetailPage({
           title="GST readiness"
           actions={
             <RecordCount
-              value={gstPeriods.length}
+              value={gstPeriodsResult.error ? 0 : gstPeriods.length}
               label="periods"
               singularLabel="period"
             />
           }
           bodyClassName="p-0"
         >
-          {gstPeriods.length === 0 ? (
+          {gstPeriodsResult.error ? (
+            <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
+          ) : gstPeriods.length === 0 ? (
             <EmptyState
               title="No GST periods generated"
               message="Generate a GST summary after transactions are approved for this client."
@@ -291,9 +353,10 @@ export default async function ClientDetailPage({
                   const summary = Array.isArray(period.gst_summaries)
                     ? period.gst_summaries[0]
                     : period.gst_summaries;
-                  const issueCount =
-                    Number(summary?.mismatch_count ?? 0) +
-                    Number(summary?.missing_document_count ?? 0);
+                  const issueCount = summary
+                    ? Number(summary.mismatch_count ?? 0) +
+                      Number(summary.missing_document_count ?? 0)
+                    : null;
 
                   return (
                     <tr key={period.id} className={tableRowClass}>
@@ -311,9 +374,11 @@ export default async function ClientDetailPage({
                           {period.status.replaceAll("_", " ")}
                         </StatusChip>
                       </td>
-                      <td className={tableNumericCellClass}>{issueCount}</td>
                       <td className={tableNumericCellClass}>
-                        {formatCurrency(summary?.net_tax_payable ?? 0)}
+                        {issueCount ?? "Unavailable"}
+                      </td>
+                      <td className={tableNumericCellClass}>
+                        {formatNullableCurrency(summary?.net_tax_payable)}
                       </td>
                       <td className={tableActionCellClass}>
                         <TextLink
@@ -332,7 +397,9 @@ export default async function ClientDetailPage({
         </SectionCard>
 
         <SectionCard title="Audit history" bodyClassName="p-0">
-          {!audits || audits.length === 0 ? (
+          {auditsResult.error ? (
+            <QueryError message="Client audit history could not be loaded. Refresh to retry." />
+          ) : !audits || audits.length === 0 ? (
             <EmptyState
               title="No audit entries yet"
               message="Client changes and sensitive workflow actions will appear here."

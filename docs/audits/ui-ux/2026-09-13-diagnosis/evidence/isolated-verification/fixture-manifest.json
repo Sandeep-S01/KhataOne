@@ -1,0 +1,61 @@
+{
+  "status": "pending",
+  "firms": [
+    "Firm A",
+    "Firm B"
+  ],
+  "roles": [
+    "owner",
+    "admin",
+    "staff",
+    "viewer",
+    "revoked"
+  ],
+  "fixture_groups": [
+    {
+      "name": "review-inbox-pagination",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "review-decision-safety",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "private-evidence",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "unavailable-versus-zero",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "role-affordances",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "export-job-history",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "audit-trail",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "date-boundaries",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "name": "responsive-stress",
+      "status": "pending",
+      "notes": ""
+    }
+  ]
+}

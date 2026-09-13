@@ -22,7 +22,7 @@ export default function ResetPasswordPage() {
           <Link
             href="/"
             aria-label="KhataOne home"
-            className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
           >
             <BrandLogo />
           </Link>
@@ -39,7 +39,7 @@ export default function ResetPasswordPage() {
 
           <Link
             href="/login"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
             Back to sign in
