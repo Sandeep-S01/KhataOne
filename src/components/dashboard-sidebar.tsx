@@ -77,7 +77,7 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "sticky top-4 hidden h-[calc(100vh-2rem)] shrink-0 select-none overflow-hidden rounded-[1.375rem] border border-khata-border/80 bg-white shadow-lg transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
+        "sticky top-0 hidden h-screen shrink-0 select-none overflow-hidden border-r border-khata-border/80 bg-white shadow-sm transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
         isCollapsed ? "w-[76px]" : "w-[280px]",
       )}
     >

@@ -16,8 +16,10 @@ assert.ok(!layout.includes("Draft AI outputs require CA approval before ledger i
 
 assert.equal((sidebar.match(/onClick=\{toggleSidebar\}/g) ?? []).length, 1);
 assert.match(sidebar, /isCollapsed && "mx-auto"/);
-assert.match(sidebar, /rounded-[1.375rem]/);
-assert.match(sidebar, /shadow-lg/);
+assert.match(sidebar, /sticky top-0 hidden h-screen/);
+assert.match(sidebar, /border-r border-khata-border\/80/);
+assert.ok(!sidebar.includes("rounded-[1.375rem]"));
+assert.match(sidebar, /shadow-sm/);
 assert.match(sidebar, /DashboardUtilityNav/);
 assert.ok(!sidebar.includes('isCollapsed && "mx-auto mt-2 hidden"'));
 assert.match(sidebar, /isCollapsed \? "w-\[76px\]" : "w-\[280px\]"/);
@@ -39,7 +41,8 @@ assert.match(mobileMenu, /onCancel=/);
 assert.match(mobileMenu, /event\.target === event\.currentTarget/);
 assert.match(mobileMenu, /triggerRef\.current\?\.focus\(\)/);
 assert.match(mobileMenu, /DashboardUtilityNav onNavigate=\{closeMenu\}/);
-assert.match(mobileMenu, /rounded-\[1\.375rem\]/);
+assert.match(mobileMenu, /absolute left-0 top-0 flex h-dvh/);
+assert.ok(!mobileMenu.includes("rounded-[1.375rem]"));
 assert.match(mobileMenu, /aria-expanded=\{isOpen\}/);
 assert.match(mobileMenu, /aria-label="Close workspace navigation"/);
 

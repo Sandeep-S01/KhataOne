@@ -35,10 +35,10 @@ export default async function DashboardLayout({
       >
         Skip to dashboard content
       </a>
-      <div className="flex min-h-screen gap-4 p-0 lg:p-4">
+      <div className="flex min-h-screen gap-4 p-0 lg:pr-4">
         <DashboardSidebar firmName={firmName} roleLabel={roleLabel} />
 
-        <section className="flex min-w-0 flex-1 flex-col lg:gap-4">
+        <section className="flex min-w-0 flex-1 flex-col lg:gap-4 lg:py-4">
           <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-khata-border bg-white/90 px-3 backdrop-blur-md md:px-4 lg:top-4 lg:rounded-2xl lg:border lg:shadow-xs">
             <DashboardMobileMenu />
 
