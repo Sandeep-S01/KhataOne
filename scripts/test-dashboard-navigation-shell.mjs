@@ -10,9 +10,13 @@ const sidebar = read("src/components/dashboard-sidebar.tsx");
 const navigation = read("src/components/dashboard-nav.tsx");
 const mobileMenu = read("src/components/dashboard-mobile-menu.tsx");
 
-assert.match(layout, /header className="sticky top-0 z-20 flex min-h-14/);
+assert.match(layout, /header className="sticky top-0 z-20 flex min-h-\[76px\]/);
 assert.ok(!layout.includes("lg:top-4"));
 assert.ok(!layout.includes("lg:rounded-2xl lg:border lg:shadow-xs"));
+assert.match(layout, /className="flex min-h-screen p-0"/);
+assert.ok(!layout.includes("gap-4 p-0"));
+assert.ok(!layout.includes("lg:pr-4"));
+assert.match(layout, /className="min-w-0 flex-1 scroll-mt-\[76px\] outline-none"/);
 assert.match(layout, /<Search className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
 assert.match(layout, /<Bell className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
 assert.match(layout, /const userEmail = context\?\.user\.email \?\? "CA user"/);
