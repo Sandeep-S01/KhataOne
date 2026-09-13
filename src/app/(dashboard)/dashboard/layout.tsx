@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bell, LogOut, Search, UserRound } from "lucide-react";
+import { Bell, LogOut, Search } from "lucide-react";
 
 import { signOut } from "@/app/actions/auth";
 import { DashboardMobileMenu } from "@/components/dashboard-mobile-menu";
@@ -51,10 +51,10 @@ export default async function DashboardLayout({
               </p>
             </div>
 
-            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 type="button"
-                className="inline-flex h-9 items-center justify-center gap-2 border border-khata-border bg-white px-2.5 text-sm font-medium text-khata-ink transition-colors hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:px-3"
+                className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-khata-border bg-khata-paperMuted/70 px-2.5 text-sm font-medium text-khata-muted shadow-sm transition-colors hover:border-khata-green/30 hover:bg-white hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:px-3"
                 aria-label="Search workspace"
                 title="Search workspace"
               >
@@ -64,19 +64,19 @@ export default async function DashboardLayout({
 
               <button
                 type="button"
-                className="relative inline-flex size-9 items-center justify-center border border-khata-border bg-white text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                className="relative inline-flex size-9 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted/70 text-khata-muted shadow-sm transition-colors hover:border-khata-green/30 hover:bg-white hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
                 aria-label="Activity alerts"
                 title="Activity alerts"
               >
                 <Bell className="size-4" aria-hidden="true" />
-                <span className="absolute right-2 top-2 size-1.5 bg-khata-green" aria-hidden="true" />
+                <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green" aria-hidden="true" />
               </button>
 
               <div
-                className="hidden h-9 min-w-0 items-center gap-2 border border-khata-border bg-white px-2.5 sm:flex"
+                className="hidden h-9 min-w-0 items-center gap-2 rounded-md border border-khata-border bg-white px-2.5 shadow-sm sm:flex"
                 title={userEmail}
               >
-                <span className="flex size-6 shrink-0 items-center justify-center bg-khata-ink text-[11px] font-semibold text-white">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-khata-ink text-[11px] font-semibold text-white">
                   {profileInitial}
                 </span>
                 <span className="hidden min-w-0 flex-col leading-none lg:flex">
@@ -87,7 +87,6 @@ export default async function DashboardLayout({
                     {roleLabel}
                   </span>
                 </span>
-                <UserRound className="size-4 shrink-0 text-khata-muted lg:hidden" aria-hidden="true" />
               </div>
 
               <form action={signOut} className="shrink-0">
@@ -95,7 +94,7 @@ export default async function DashboardLayout({
                   type="submit"
                   variant="ghost"
                   size="sm"
-                  className="h-9 min-w-9 gap-2 rounded-none border border-khata-border bg-white px-2 text-khata-ink hover:bg-khata-paperMuted sm:px-3"
+                  className="h-9 min-w-9 gap-2 rounded-md border border-khata-border bg-white px-2 text-khata-muted shadow-sm hover:border-khata-green/30 hover:bg-khata-paperMuted hover:text-khata-ink sm:px-3"
                   aria-label="Sign out"
                 >
                   <LogOut className="size-4" aria-hidden="true" />

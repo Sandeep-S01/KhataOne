@@ -608,3 +608,5 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-13 | Refined the dashboard sidebar into a rectangular flush-left shell per product direction, removing outer sidebar corner radius on desktop and mobile drawer while preserving shared navigation components and backend behavior. |
 
 | 2026-09-13 | Refined the dashboard header into a square-edged top-attached shell with right-aligned search, activity alert, profile context, and logout controls. This is a shared UI shell change only; backend behavior was not changed. |
+
+| 2026-09-13 | Refined the dashboard header controls back into the existing KhataOne rounded-md visual system with softer borders, muted surfaces, compact spacing, and unchanged sidebar sizing. |

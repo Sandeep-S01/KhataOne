@@ -15,9 +15,10 @@ assert.ok(!layout.includes("lg:top-4"));
 assert.ok(!layout.includes("lg:rounded-2xl lg:border lg:shadow-xs"));
 assert.match(layout, /<Search className="size-4" aria-hidden="true" \/>/);
 assert.match(layout, /<Bell className="size-4" aria-hidden="true" \/>/);
-assert.match(layout, /<UserRound className="size-4 shrink-0 text-khata-muted lg:hidden" aria-hidden="true" \/>/);
 assert.match(layout, /const userEmail = context\?\.user\.email \?\? "CA user"/);
-assert.match(layout, /rounded-none border border-khata-border bg-white/);
+assert.match(layout, /rounded-md border border-khata-border bg-khata-paperMuted\/70/);
+assert.match(layout, /rounded-md border border-khata-border bg-white px-2\.5 shadow-sm/);
+assert.match(layout, /rounded-md border border-khata-border bg-white px-2 text-khata-muted shadow-sm/);
 assert.match(layout, /AI drafts require CA approval\./);
 assert.ok(!layout.includes("Draft AI outputs require CA approval before ledger impact."));
 
