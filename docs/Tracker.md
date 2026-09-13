@@ -600,3 +600,5 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-13 | Ran the new UI/UX browser matrix locally after fixing public mobile touch targets. Public landing/login/signup/forgot-password/reset-password routes passed at 390px and 1440px with zero failures; 105 authenticated dashboard checks remain blocked pending isolated Playwright storage state and fixture IDs. |
 
 | 2026-09-13 | Added an isolated UI/UX auth-state capture helper and contract test. The helper requires explicit disposable-workspace confirmation, writes storage state under ignored `.codex-tmp/`, and documents the fixture-ID handoff needed before authenticated dashboard browser checks can move from blocked to pass/fail. |
+
+| 2026-09-13 | Added a production compatibility hotfix for Review Queue and Inbox so missing `search_review_queue` / `search_whatsapp_inbox` RPCs fall back to firm-scoped read-only table queries and no longer expose raw schema-cache errors in the UI. |

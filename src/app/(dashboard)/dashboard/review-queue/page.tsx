@@ -102,6 +102,150 @@ type ReviewQueueRow = {
   extraction_model: string | null;
 };
 
+type ReviewQueueFallbackRow = Omit<
+  ReviewQueueRow,
+  "client_business_name" | "document_file_name" | "document_type" | "extraction_model" | "risk_flags"
+> & {
+  clients:
+    | { business_name: string | null }
+    | Array<{ business_name: string | null }>
+    | null;
+  documents:
+    | { document_type: string | null; file_name: string | null }
+    | Array<{ document_type: string | null; file_name: string | null }>
+    | null;
+  ai_extractions:
+    | { risk_flags: string[] | null; model: string | null }
+    | Array<{ risk_flags: string[] | null; model: string | null }>
+    | null;
+};
+
+function isMissingRpcError(error: { code?: string; message?: string } | null) {
+  return (
+    error?.code === "PGRST202" ||
+    /schema cache|search_review_queue/i.test(error?.message ?? "")
+  );
+}
+
+async function fallbackReviewQueueQuery({
+  firmId,
+  filters,
+  page,
+  search,
+  selectedDocumentType,
+  selectedRisk,
+  selectedStatus,
+  supabase,
+}: {
+  firmId: string;
+  filters: {
+    client?: string;
+    from?: string;
+    to?: string;
+  };
+  page: number;
+  search: string;
+  selectedDocumentType: string;
+  selectedRisk: string;
+  selectedStatus: string;
+  supabase: NonNullable<Awaited<ReturnType<typeof getFirmContext>>>["supabase"];
+}) {
+  const rangeFrom = (page - 1) * pageSize;
+  let fallbackQuery = supabase
+    .from("transactions")
+    .select(
+      [
+        "id",
+        "client_id",
+        "transaction_type",
+        "status",
+        "transaction_date",
+        "party_name",
+        "invoice_number",
+        "total_amount",
+        "confidence_score",
+        "created_at",
+        "clients!inner(business_name)",
+        "documents(document_type, file_name)",
+        "ai_extractions(risk_flags, model)",
+      ].join(", "),
+    )
+    .eq("firm_id", firmId)
+    .in("status", ["draft", "needs_review", "duplicate"])
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(rangeFrom, rangeFrom + pageSize);
+
+  if (filters.client) {
+    fallbackQuery = fallbackQuery.eq("client_id", filters.client);
+  }
+
+  if (selectedStatus !== "all") {
+    fallbackQuery = fallbackQuery.eq("status", selectedStatus);
+  }
+
+  if (filters.from) {
+    fallbackQuery = fallbackQuery.gte("transaction_date", filters.from);
+  }
+
+  if (filters.to) {
+    fallbackQuery = fallbackQuery.lte("transaction_date", filters.to);
+  }
+
+  if (selectedDocumentType !== "all") {
+    fallbackQuery = fallbackQuery.eq("documents.document_type", selectedDocumentType);
+  }
+
+  if (selectedRisk === "low_confidence") {
+    fallbackQuery = fallbackQuery.lt("confidence_score", 0.7);
+  } else if (selectedRisk === "risk") {
+    fallbackQuery = fallbackQuery.not("ai_extractions.risk_flags", "eq", "{}");
+  }
+
+  if (search) {
+    const escapedSearch = search.replaceAll("%", "\\%").replaceAll("_", "\\_");
+    fallbackQuery = fallbackQuery.or(
+      `party_name.ilike.%${escapedSearch}%,invoice_number.ilike.%${escapedSearch}%,transaction_type.ilike.%${escapedSearch}%`,
+    );
+  }
+
+  const result = await fallbackQuery;
+
+  return {
+    data:
+      ((result.data ?? []) as unknown as ReviewQueueFallbackRow[]).map((transaction) => {
+        const client = Array.isArray(transaction.clients)
+          ? transaction.clients[0]
+          : transaction.clients;
+        const document = Array.isArray(transaction.documents)
+          ? transaction.documents[0]
+          : transaction.documents;
+        const extraction = Array.isArray(transaction.ai_extractions)
+          ? transaction.ai_extractions[0]
+          : transaction.ai_extractions;
+
+        return {
+          id: transaction.id,
+          client_id: transaction.client_id,
+          transaction_type: transaction.transaction_type,
+          status: transaction.status,
+          transaction_date: transaction.transaction_date,
+          party_name: transaction.party_name,
+          invoice_number: transaction.invoice_number,
+          total_amount: transaction.total_amount,
+          confidence_score: transaction.confidence_score,
+          created_at: transaction.created_at,
+          client_business_name: client?.business_name ?? null,
+          document_type: document?.document_type ?? null,
+          document_file_name: document?.file_name ?? null,
+          risk_flags: extraction?.risk_flags ?? null,
+          extraction_model: extraction?.model ?? null,
+        };
+      }),
+    error: result.error,
+  };
+}
+
 function extractionSource(model?: string | null) {
   return model === "rule_based_text_v1" ? "Rule-based extraction" : "AI extraction";
 }
@@ -198,7 +342,37 @@ export default async function ReviewQueuePage({
       page,
     }),
   ]);
-  const { data: transactions, error } = transactionsResult;
+  let { data: transactions, error } = transactionsResult;
+
+  if (isMissingRpcError(error)) {
+    const fallbackResult = await withServerTiming(
+      "dashboard.review_queue.compat_query",
+      () =>
+        fallbackReviewQueueQuery({
+          firmId: firm.id,
+          filters,
+          page,
+          search,
+          selectedDocumentType,
+          selectedRisk,
+          selectedStatus,
+          supabase,
+        }),
+      {
+        page,
+        has_client_filter: Boolean(filters.client),
+        has_status_filter: selectedStatus !== "all",
+        has_date_filter: Boolean(filters.from || filters.to),
+        has_search_filter: Boolean(search),
+        has_document_filter: selectedDocumentType !== "all",
+        has_low_confidence_filter: selectedRisk === "low_confidence",
+        compatibility_fallback: true,
+      },
+    );
+    transactions = fallbackResult.data;
+    error = fallbackResult.error;
+  }
+
   const clients = clientsResult.data ?? [];
   const pageTransactions = ((transactions ?? []) as ReviewQueueRow[]).slice(
     0,
@@ -354,7 +528,7 @@ export default async function ReviewQueuePage({
         >
 
         {error && (
-          <QueryError message={error.message} />
+          <QueryError message="Review queue records could not be loaded. Please retry." />
         )}
 
         {!error && (!transactions || transactions.length === 0) && (

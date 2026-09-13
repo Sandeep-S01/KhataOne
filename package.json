@@ -72,7 +72,8 @@
     "test:ui-ux-verification-plan": "node scripts/test-ui-ux-isolated-verification-plan.mjs",
     "verify:ui-ux-browser-matrix": "node scripts/check-ui-ux-browser-matrix.mjs",
     "create:ui-ux-auth-state": "node scripts/create-ui-ux-isolated-auth-state.mjs",
-    "test:ui-ux-auth-state": "node scripts/test-ui-ux-isolated-auth-state.mjs"
+    "test:ui-ux-auth-state": "node scripts/test-ui-ux-isolated-auth-state.mjs",
+    "test:dashboard-rpc-compatibility": "node scripts/test-dashboard-rpc-compatibility.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "latest",

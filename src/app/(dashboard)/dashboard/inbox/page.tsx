@@ -74,6 +74,71 @@ type InboxRow = {
   client_business_name: string | null;
 };
 
+type InboxFallbackRow = Omit<InboxRow, "client_business_name"> & {
+  clients: { business_name: string | null } | Array<{ business_name: string | null }> | null;
+};
+
+function isMissingRpcError(error: { code?: string; message?: string } | null) {
+  return (
+    error?.code === "PGRST202" ||
+    /schema cache|search_whatsapp_inbox/i.test(error?.message ?? "")
+  );
+}
+
+async function fallbackInboxQuery({
+  firmId,
+  page,
+  selectedStatus,
+  search,
+  supabase,
+}: {
+  firmId: string;
+  page: number;
+  selectedStatus: string;
+  search: string;
+  supabase: NonNullable<Awaited<ReturnType<typeof getFirmContext>>>["supabase"];
+}) {
+  const rangeFrom = (page - 1) * pageSize;
+  let fallbackQuery = supabase
+    .from("whatsapp_messages")
+    .select(
+      "id, client_id, sender_phone, message_type, processing_status, received_at, clients(business_name)",
+    )
+    .eq("firm_id", firmId)
+    .order("received_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(rangeFrom, rangeFrom + pageSize);
+
+  if (selectedStatus !== "all") {
+    fallbackQuery = fallbackQuery.eq("processing_status", selectedStatus);
+  }
+
+  if (search) {
+    const escapedSearch = search.replaceAll("%", "\\%").replaceAll("_", "\\_");
+    fallbackQuery = fallbackQuery.or(
+      `sender_phone.ilike.%${escapedSearch}%,message_type.ilike.%${escapedSearch}%`,
+    );
+  }
+
+  const result = await fallbackQuery;
+
+  return {
+    data:
+      ((result.data ?? []) as InboxFallbackRow[]).map((message) => ({
+        id: message.id,
+        client_id: message.client_id,
+        sender_phone: message.sender_phone,
+        message_type: message.message_type,
+        processing_status: message.processing_status,
+        received_at: message.received_at,
+        client_business_name: Array.isArray(message.clients)
+          ? message.clients[0]?.business_name ?? null
+          : message.clients?.business_name ?? null,
+      })),
+    error: result.error,
+  };
+}
+
 function triageLabel(status: string) {
   switch (status) {
     case "unmatched":
@@ -129,7 +194,7 @@ export default async function InboxPage({
     page_offset: rangeFrom,
   });
 
-  const { data: messages, error } = await withServerTiming(
+  let { data: messages, error } = await withServerTiming(
     "dashboard.inbox.query",
     () => query,
     {
@@ -139,6 +204,29 @@ export default async function InboxPage({
       filters_applied_before_page: true,
     },
   );
+
+  if (isMissingRpcError(error)) {
+    const fallbackResult = await withServerTiming(
+      "dashboard.inbox.compat_query",
+      () =>
+        fallbackInboxQuery({
+          firmId: firm.id,
+          page,
+          selectedStatus,
+          search,
+          supabase,
+        }),
+      {
+        page,
+        has_status_filter: selectedStatus !== "all",
+        has_search_filter: Boolean(search),
+        compatibility_fallback: true,
+      },
+    );
+    messages = fallbackResult.data;
+    error = fallbackResult.error;
+  }
+
   const pageMessages = ((messages ?? []) as InboxRow[]).slice(0, pageSize);
   const hasNextPage = (messages?.length ?? 0) > pageSize;
 
@@ -204,7 +292,7 @@ export default async function InboxPage({
         >
 
         {error && (
-          <QueryError message={error.message} />
+          <QueryError message="Inbound messages could not be loaded. Please retry." />
         )}
 
         {!error && (!messages || messages.length === 0) && (
