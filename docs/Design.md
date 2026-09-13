@@ -34,7 +34,7 @@ KhataOne should feel like a modern digital khata for CA firms: compact, precise,
 ### Dashboard
 
 - Persistent left sidebar attached to the left edge with a rectangular desktop panel and compact icon-only collapsed state.
-- Compact topbar with firm/client context and account actions.
+- Rectangular top-attached dashboard header with firm context, search access, activity alert icon, profile context, and logout action.
 - Main content optimized for tables, filters, split panes, and review workflows.
 - Avoid nested cards.
 - Use cards only for repeated items, compact stat tiles, and modals.
@@ -124,3 +124,7 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 ## Sidebar layout update
 
 The dashboard sidebar follows the approved reference direction while staying aligned to the product shell: a white rectangular panel attached to the left edge on desktop, an icon-only collapsed rail, a warm firm-context card near the top, grouped operational navigation, and bottom utility links. KhataOne-specific labels, route order, dense accounting workflow surfaces, keyboard focus behavior, and mobile dialog navigation remain preserved.
+
+## Dashboard header layout update
+
+The dashboard header is a square-edged, top-attached shell surface. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons, preserving the existing sign-out server action and avoiding backend changes.

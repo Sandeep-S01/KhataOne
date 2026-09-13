@@ -48,7 +48,9 @@ assert(
 );
 
 assert(
-  dashboardLayout.includes("h-14") &&
+  dashboardLayout.includes("min-h-14") &&
+    !dashboardLayout.includes("lg:top-4") &&
+    !dashboardLayout.includes("lg:rounded-2xl lg:border lg:shadow-xs") &&
     sidebar.includes('isCollapsed ? "w-[76px]" : "w-[280px]"') &&
     sidebar.includes("sticky top-0 hidden h-screen") &&
     !sidebar.includes("rounded-[1.375rem]") &&
