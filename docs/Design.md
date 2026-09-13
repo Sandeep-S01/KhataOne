@@ -127,4 +127,4 @@ The dashboard sidebar follows the approved reference direction while staying ali
 
 ## Dashboard header layout update
 
-The dashboard header is a square-edged, top-attached shell surface. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons. Header controls follow the existing KhataOne rounded-md control rhythm, soft borders, muted surfaces, and compact spacing while preserving the existing sign-out server action and avoiding backend changes.
+The dashboard header is a square-edged, top-attached shell surface. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons. Header controls use a lightweight layout rhythm inspired by the reference: icon-first search and activity controls, a compact rounded profile pill, a subtle divider, and the existing sign-out action. Styling remains within KhataOne tokens, muted surfaces, compact spacing, and accessible focus states while avoiding backend changes.

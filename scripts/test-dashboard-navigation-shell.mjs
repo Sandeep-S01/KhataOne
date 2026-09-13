@@ -13,12 +13,13 @@ const mobileMenu = read("src/components/dashboard-mobile-menu.tsx");
 assert.match(layout, /header className="sticky top-0 z-20 flex min-h-14/);
 assert.ok(!layout.includes("lg:top-4"));
 assert.ok(!layout.includes("lg:rounded-2xl lg:border lg:shadow-xs"));
-assert.match(layout, /<Search className="size-4" aria-hidden="true" \/>/);
-assert.match(layout, /<Bell className="size-4" aria-hidden="true" \/>/);
+assert.match(layout, /<Search className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
+assert.match(layout, /<Bell className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
 assert.match(layout, /const userEmail = context\?\.user\.email \?\? "CA user"/);
-assert.match(layout, /rounded-md border border-khata-border bg-khata-paperMuted\/70/);
-assert.match(layout, /rounded-md border border-khata-border bg-white px-2\.5 shadow-sm/);
-assert.match(layout, /rounded-md border border-khata-border bg-white px-2 text-khata-muted shadow-sm/);
+assert.match(layout, /inline-flex size-9 items-center justify-center rounded-md text-khata-muted/);
+assert.match(layout, /rounded-full bg-khata-paperMuted\/70 px-2 py-1/);
+assert.match(layout, /hidden h-6 w-px bg-khata-border md:block/);
+assert.match(layout, /className="h-9 min-w-9 gap-2 px-2 text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink sm:px-3"/);
 assert.match(layout, /AI drafts require CA approval\./);
 assert.ok(!layout.includes("Draft AI outputs require CA approval before ledger impact."));
 
