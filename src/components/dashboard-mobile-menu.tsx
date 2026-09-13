@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 
 import { BrandLogo } from "@/components/brand-logo";
-import { DashboardNav } from "@/components/dashboard-nav";
+import { DashboardNav, DashboardUtilityNav } from "@/components/dashboard-nav";
 
 export function DashboardMobileMenu() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -58,8 +58,8 @@ export function DashboardMobileMenu() {
         }}
         className="m-0 h-dvh max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-khata-ink/25 lg:hidden"
       >
-        <div className="absolute left-3 top-14 flex max-h-[calc(100dvh-4.25rem)] w-[min(18rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-md border border-khata-border bg-white shadow-lg">
-          <div className="flex items-center justify-between gap-3 border-b border-khata-border px-3 py-2">
+        <div className="absolute left-3 top-14 flex max-h-[calc(100dvh-4.25rem)] w-[min(19rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[1.375rem] border border-khata-border/80 bg-white shadow-lg">
+          <div className="flex items-center justify-between gap-3 border-b border-khata-border/80 px-4 py-3">
             <Link
               href="/dashboard"
               onClick={closeMenu}
@@ -78,6 +78,7 @@ export function DashboardMobileMenu() {
             </button>
           </div>
           <DashboardNav onNavigate={closeMenu} />
+          <DashboardUtilityNav onNavigate={closeMenu} />
         </div>
       </dialog>
     </div>

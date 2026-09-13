@@ -49,8 +49,10 @@ assert(
 
 assert(
   dashboardLayout.includes("h-14") &&
-    sidebar.includes('isCollapsed ? "w-[68px]" : "w-64"'),
-  "D07 requires the current 56px shell and 256/68px sidebar baseline to remain in this slice.",
+    sidebar.includes('isCollapsed ? "w-[76px]" : "w-[280px]"') &&
+    sidebar.includes("rounded-[1.375rem]") &&
+    sidebar.includes("DashboardUtilityNav"),
+  "The approved reference-inspired shell should retain the 56px topbar while using the shared rounded 280/76px sidebar baseline.",
 );
 
 for (const source of [login, signup]) {

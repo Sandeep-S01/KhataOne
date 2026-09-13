@@ -602,3 +602,5 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-13 | Added an isolated UI/UX auth-state capture helper and contract test. The helper requires explicit disposable-workspace confirmation, writes storage state under ignored `.codex-tmp/`, and documents the fixture-ID handoff needed before authenticated dashboard browser checks can move from blocked to pass/fail. |
 
 | 2026-09-13 | Added a production compatibility hotfix for Review Queue and Inbox so missing `search_review_queue` / `search_whatsapp_inbox` RPCs fall back to firm-scoped read-only table queries and no longer expose raw schema-cache errors in the UI. |
+
+| 2026-09-13 | Implemented the approved reference-inspired dashboard sidebar layout through shared shell components only: rounded floating desktop panel, 280px expanded / 76px collapsed rail, firm-context card, grouped navigation, and bottom Settings/Help utilities. Backend code and dashboard data/actions were not changed. |

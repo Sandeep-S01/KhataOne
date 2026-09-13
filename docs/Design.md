@@ -33,8 +33,8 @@ KhataOne should feel like a modern digital khata for CA firms: compact, precise,
 
 ### Dashboard
 
-- Persistent left sidebar.
-- Compact topbar with firm/client context, search, notifications, and user menu.
+- Persistent left sidebar with a rounded floating desktop panel and compact icon-only collapsed state.
+- Compact topbar with firm/client context and account actions.
 - Main content optimized for tables, filters, split panes, and review workflows.
 - Avoid nested cards.
 - Use cards only for repeated items, compact stat tiles, and modals.
@@ -120,3 +120,7 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 - Hidden filters.
 - Unclear AI confidence states.
 - Approve actions without traceability.
+
+## Sidebar layout update
+
+The dashboard sidebar now follows the approved reference direction: a white rounded floating panel on desktop, an icon-only collapsed rail, a warm firm-context card near the top, grouped operational navigation, and bottom utility links. KhataOne-specific labels, route order, dense accounting workflow surfaces, keyboard focus behavior, and mobile dialog navigation remain preserved.

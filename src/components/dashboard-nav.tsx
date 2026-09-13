@@ -5,6 +5,7 @@ import {
   FileText,
   Inbox,
   LayoutDashboard,
+  LifeBuoy,
   ListChecks,
   Receipt,
   ScrollText,
@@ -15,6 +16,7 @@ import {
   PanelsTopLeft,
   type LucideIcon,
 } from "lucide-react";
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
@@ -36,6 +38,7 @@ const iconByHref: Record<string, LucideIcon> = {
   "/dashboard/operations": Wrench,
   "/dashboard/platform": PanelsTopLeft,
   "/dashboard/settings": Settings,
+  "/contact": LifeBuoy,
 };
 
 const groups = [
@@ -57,16 +60,17 @@ const groups = [
   },
   {
     title: "Administration",
-    items: [
-      "/dashboard/audit-logs",
-      "/dashboard/operations",
-      "/dashboard/settings",
-    ],
+    items: ["/dashboard/audit-logs", "/dashboard/operations"],
   },
   {
     title: "Planned",
     items: ["/dashboard/platform"],
   },
+];
+
+const utilityItems = [
+  { label: "Settings", href: "/dashboard/settings" as Route },
+  { label: "Help", href: "/contact" as Route },
 ];
 
 type DashboardNavItem = (typeof dashboardNavItems)[number];
@@ -164,11 +168,11 @@ function DashboardNavLink({
         className={cn(
           "flex items-center rounded-lg text-xs font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
           collapsed
-            ? "mx-auto size-9 justify-center"
-            : "min-h-11 gap-2.5 px-2.5 py-2 lg:min-h-9",
+            ? "mx-auto size-10 justify-center"
+            : "min-h-11 gap-3 px-3 py-2 lg:min-h-10",
           isActive
-            ? "bg-khata-green/10 font-semibold text-khata-green shadow-sm"
-            : "text-khata-ink/80 hover:bg-khata-paperMuted hover:text-khata-ink",
+            ? "bg-khata-green/10 font-semibold text-khata-green shadow-sm ring-1 ring-khata-green/10"
+            : "text-khata-ink/75 hover:bg-khata-paperMuted hover:text-khata-ink",
         )}
       >
         <Icon className="size-4 shrink-0" aria-hidden="true" />
@@ -207,8 +211,8 @@ export function DashboardNav({
   return (
     <nav
       className={cn(
-        "min-h-0 flex-1 overflow-y-auto k-scrollbar py-3",
-        collapsed ? "px-2 space-y-4" : "px-2.5",
+        "min-h-0 flex-1 overflow-y-auto k-scrollbar",
+        collapsed ? "space-y-5 px-2 py-3" : "px-3 py-4",
       )}
       aria-label="Workspace"
     >
@@ -222,7 +226,7 @@ export function DashboardNav({
         return (
           <div key={group.title} className={collapsed ? "space-y-1" : "mb-4 last:mb-0"}>
             {!collapsed && (
-              <p className="px-2 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-khata-muted/80">
+              <p className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-khata-muted/80">
                 {group.title}
               </p>
             )}
@@ -251,6 +255,49 @@ export function DashboardNav({
           </div>
         );
       })}
+    </nav>
+  );
+}
+
+export function DashboardUtilityNav({
+  onNavigate,
+  collapsed = false,
+}: {
+  onNavigate?: () => void;
+  collapsed?: boolean;
+}) {
+  const pathname = usePathname();
+
+  return (
+    <nav
+      aria-label="Workspace utilities"
+      className={cn(
+        "border-t border-khata-border/80",
+        collapsed ? "px-2 py-3" : "px-3 py-4",
+      )}
+    >
+      <ul className="space-y-1">
+        {utilityItems.map((item) => {
+          const href = item.href as string;
+          const Icon = iconByHref[href] ?? Settings;
+          const isActive =
+            pathname === href ||
+            (href !== "/contact" && pathname.startsWith(`${href}/`));
+
+          return (
+            <li key={href}>
+              <DashboardNavLink
+                item={item}
+                icon={Icon}
+                isActive={isActive}
+                collapsed={collapsed}
+                pathname={pathname}
+                onNavigate={onNavigate}
+              />
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }
