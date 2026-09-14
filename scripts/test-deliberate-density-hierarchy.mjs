@@ -48,16 +48,16 @@ assert(
 );
 
 assert(
-  dashboardLayout.includes("min-h-[76px]") &&
+  dashboardLayout.includes("min-h-16") &&
     dashboardLayout.includes('className="flex min-h-screen p-0"') &&
-    dashboardLayout.includes('className="min-w-0 flex-1 scroll-mt-[76px] outline-none"') &&
+    dashboardLayout.includes('className="min-w-0 flex-1 scroll-mt-16 outline-none"') &&
     !dashboardLayout.includes("lg:top-4") &&
     !dashboardLayout.includes("lg:rounded-2xl lg:border lg:shadow-xs") &&
     sidebar.includes('isCollapsed ? "w-[76px]" : "w-[280px]"') &&
     sidebar.includes("sticky top-0 hidden h-screen") &&
     !sidebar.includes("rounded-[1.375rem]") &&
     sidebar.includes("DashboardUtilityNav"),
-  "The approved shell should align the dashboard header to the 76px sidebar logo area while using the shared rectangular flush-left 280/76px sidebar baseline.",
+  "The approved shell should align the dashboard header to the compact 64px sidebar logo area while using the shared rectangular flush-left 280/76px sidebar width baseline.",
 );
 
 for (const source of [login, signup]) {

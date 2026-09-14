@@ -41,7 +41,7 @@ export default async function DashboardLayout({
         <DashboardSidebar firmName={firmName} roleLabel={roleLabel} />
 
         <section className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-20 flex min-h-[76px] items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-6">
+          <header className="sticky top-0 z-20 flex min-h-16 items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-6">
             <DashboardMobileMenu />
 
             <div className="min-w-0 flex-1 pr-1">
@@ -107,7 +107,7 @@ export default async function DashboardLayout({
           <div
             id="dashboard-content"
             tabIndex={-1}
-            className="min-w-0 flex-1 scroll-mt-[76px] outline-none"
+            className="min-w-0 flex-1 scroll-mt-16 outline-none"
           >
             {children}
           </div>

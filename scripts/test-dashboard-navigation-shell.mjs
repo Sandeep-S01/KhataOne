@@ -10,13 +10,13 @@ const sidebar = read("src/components/dashboard-sidebar.tsx");
 const navigation = read("src/components/dashboard-nav.tsx");
 const mobileMenu = read("src/components/dashboard-mobile-menu.tsx");
 
-assert.match(layout, /header className="sticky top-0 z-20 flex min-h-\[76px\]/);
+assert.match(layout, /header className="sticky top-0 z-20 flex min-h-16/);
 assert.ok(!layout.includes("lg:top-4"));
 assert.ok(!layout.includes("lg:rounded-2xl lg:border lg:shadow-xs"));
 assert.match(layout, /className="flex min-h-screen p-0"/);
 assert.ok(!layout.includes("gap-4 p-0"));
 assert.ok(!layout.includes("lg:pr-4"));
-assert.match(layout, /className="min-w-0 flex-1 scroll-mt-\[76px\] outline-none"/);
+assert.match(layout, /className="min-w-0 flex-1 scroll-mt-16 outline-none"/);
 assert.match(layout, /<Search className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
 assert.match(layout, /<Bell className="size-5 stroke-\[1\.8\]" aria-hidden="true" \/>/);
 assert.match(layout, /const userEmail = context\?\.user\.email \?\? "CA user"/);
@@ -36,6 +36,7 @@ assert.match(sidebar, /shadow-sm/);
 assert.match(sidebar, /DashboardUtilityNav/);
 assert.ok(!sidebar.includes('isCollapsed && "mx-auto mt-2 hidden"'));
 assert.match(sidebar, /isCollapsed \? "w-\[76px\]" : "w-\[280px\]"/);
+assert.match(sidebar, /: "h-16 justify-between px-5"/);
 
 assert.match(navigation, /"min-h-0 flex-1 overflow-y-auto/);
 assert.match(navigation, /export function DashboardUtilityNav/);

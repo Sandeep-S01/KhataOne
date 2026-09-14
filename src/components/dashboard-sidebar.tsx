@@ -86,7 +86,7 @@ export function DashboardSidebar({
           "flex items-center border-b border-khata-border/80",
           isCollapsed
             ? "h-[116px] flex-col justify-center gap-2 px-3"
-            : "h-[76px] justify-between px-5",
+            : "h-16 justify-between px-5",
         )}
       >
         {isCollapsed ? (
