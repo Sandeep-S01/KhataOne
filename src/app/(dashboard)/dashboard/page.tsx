@@ -66,6 +66,10 @@ function statusTone(status: string) {
   }
 }
 
+function openCountLabel(value: number | null) {
+  return value === null ? "Unavailable" : `${value} Open`;
+}
+
 export default async function DashboardPage() {
   if (!hasSupabaseConfig()) {
     return (
@@ -224,6 +228,12 @@ export default async function DashboardPage() {
               pendingReviewCount,
               "Draft, needs-review, and duplicate-risk transactions.",
             )}
+            tags={[
+              { label: openCountLabel(pendingReviewCount), tone: attentionToneForCount(pendingReviewCount) },
+              { label: "CA decision", tone: "neutral" },
+            ]}
+            href="/dashboard/review-queue"
+            actionLabel="View review queue"
           />
           <StatTile
             label="Intake attention"
@@ -233,6 +243,12 @@ export default async function DashboardPage() {
               intakeAttentionCount,
               "Received, unmatched, failed, or media-failed WhatsApp intake records.",
             )}
+            tags={[
+              { label: openCountLabel(intakeAttentionCount), tone: attentionToneForCount(intakeAttentionCount) },
+              { label: "WhatsApp intake", tone: "brand" },
+            ]}
+            href="/dashboard/inbox"
+            actionLabel="Open intake queue"
           />
           <StatTile
             label="GST ready periods"
@@ -242,6 +258,12 @@ export default async function DashboardPage() {
               gstReadyCount,
               "Generated periods marked ready for review/export.",
             )}
+            tags={[
+              { label: openCountLabel(gstBlockedCount), tone: attentionToneForCount(gstBlockedCount) },
+              { label: "GST prep only", tone: "info" },
+            ]}
+            href="/dashboard/gst-summary"
+            actionLabel="Go to GST summary"
           />
           <StatTile
             label="Exports this month"
@@ -251,6 +273,12 @@ export default async function DashboardPage() {
               exportsThisMonthCount,
               "Completed files created this month from approved records.",
             )}
+            tags={[
+              { label: openCountLabel(exportsAttentionCount), tone: attentionToneForCount(exportsAttentionCount) },
+              { label: "CSV/PDF ready", tone: "neutral" },
+            ]}
+            href="/dashboard/exports"
+            actionLabel="View exports"
           />
         </div>
 
@@ -263,19 +291,15 @@ export default async function DashboardPage() {
             {priorityItems.map((item) => (
               <div
                 key={item.label}
-                className="grid gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                className="grid gap-3 px-4 py-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
               >
+                <StatusChip tone={item.tone}>
+                  {openCountLabel(item.count)}
+                </StatusChip>
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <StatusChip tone={item.tone}>
-                      {item.count === null
-                        ? "Unavailable"
-                        : `${item.count} open`}
-                    </StatusChip>
-                    <h2 className="text-sm font-semibold text-khata-ink">
-                      {item.label}
-                    </h2>
-                  </div>
+                  <h2 className="text-sm font-semibold text-khata-ink">
+                    {item.label}
+                  </h2>
                   <p className="mt-1 text-xs leading-5 text-khata-muted">
                     {item.description}
                   </p>

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { AlertTriangle, ClipboardList, Info, LockKeyhole, RefreshCw } from "lucide-react";
+import { AlertTriangle, ArrowRight, ClipboardList, Info, LockKeyhole, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
 export const functionalIconClassName = "size-4 shrink-0";
 export const functionalIconStrokeWidth = 2;
 export const RetryIcon = RefreshCw;
-export const tinyLabelClassName = "text-[11px] font-semibold uppercase tracking-normal";
-export const sidebarSectionLabelClassName = `${tinyLabelClassName} px-3 pb-1.5 text-khata-muted/80`;
+export const tinyLabelClassName = "text-[11px] font-semibold uppercase tracking-[0.06em]";
+export const sidebarSectionLabelClassName = "px-3 pb-1.5 text-[10px] font-bold uppercase leading-[14px] tracking-[0.08em] text-khata-muted";
 export const dashboardMetricValueClassName = "num mt-1 text-lg font-semibold text-khata-ink";
 export const dashboardMetaNumericClassName = "num mt-1 text-[11px] text-khata-muted";
-export const dashboardStatValueClassName = "num mt-2 text-[26px] font-semibold leading-none text-khata-ink";
+export const dashboardStatValueClassName = "num mt-2 text-4xl font-bold leading-10 tracking-[-0.03em] text-khata-ink";
 export const topbarIconButtonClassName = "inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green";
 export const profilePillClassName = "hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex";
-export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg";
+export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-khata-surface shadow-lg";
 export const commandInputClassName = "h-10 w-full border-0 bg-transparent text-base text-khata-ink outline-none placeholder:text-khata-muted md:text-sm";
 export const commandSelectedBadgeClassName = `${tinyLabelClassName} rounded-full bg-khata-surface px-2 py-0.5 text-khata-green`;
 export const mutedPanelClassName = "rounded-md border border-khata-border bg-khata-paperMuted px-3 py-3 text-sm leading-6 text-khata-muted";
@@ -125,7 +125,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex max-w-full items-center truncate rounded-full border px-2 py-1 text-[11px] font-medium",
+        "inline-flex max-w-full items-center truncate rounded-full border px-2 py-0.5 text-[11px] font-semibold leading-4",
         statusBadgeToneClasses[tone],
         className,
       )}
@@ -451,17 +451,17 @@ type PageHeaderProps = {
 };
 
 export const pageHeaderClassName =
-  "flex flex-col gap-3 border-b border-khata-border bg-white px-4 py-5 md:px-6 lg:flex-row lg:items-center lg:justify-between";
+  "flex flex-col gap-3 border-b border-khata-border bg-white px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between";
 export const pageTitleClassName =
-  "text-xl font-semibold leading-7 tracking-normal text-khata-ink md:text-[1.625rem] md:leading-8";
+  "text-[1.375rem] font-bold leading-7 tracking-[-0.02em] text-khata-ink";
 export const pageDescriptionClassName =
-  "mt-2 max-w-3xl text-sm leading-6 text-khata-muted";
+  "mt-2 max-w-3xl text-[13px] leading-[18px] text-khata-muted";
 export const panelTitleClassName =
   "text-xl font-semibold leading-7 tracking-normal text-khata-ink";
 export const sectionCardHeaderClassName =
   "flex flex-col justify-between gap-2 border-b border-khata-border bg-khata-paperMuted/60 px-4 py-3 sm:flex-row sm:items-center";
 export const sectionCardTitleClassName =
-  "text-sm font-semibold leading-5 tracking-normal text-khata-ink";
+  "text-[15px] font-semibold leading-5 tracking-[-0.01em] text-khata-ink";
 export const sectionCardDescriptionClassName =
   "mt-0.5 text-xs leading-5 text-khata-muted";
 
@@ -505,7 +505,7 @@ export function PageBody({
   className?: string;
 }) {
   return (
-    <div className={cn("space-y-4 p-4 md:p-6", className)}>
+    <div className={cn("space-y-6 p-4 md:p-6 lg:px-8", className)}>
       {children}
     </div>
   );
@@ -664,6 +664,12 @@ type StatTileProps = {
   label: string;
   value: React.ReactNode;
   hint?: string;
+  tags?: Array<{
+    label: React.ReactNode;
+    tone?: StatusBadgeTone;
+  }>;
+  href?: ComponentPropsWithoutRef<typeof Link>["href"] | string;
+  actionLabel?: string;
   tone?: "neutral" | "success" | "warning" | "danger" | "info" | "brand";
   className?: string;
   onClick?: () => void;
@@ -682,6 +688,9 @@ export function StatTile({
   label,
   value,
   hint,
+  tags = [],
+  href,
+  actionLabel,
   tone = "neutral",
   className,
   onClick,
@@ -692,7 +701,7 @@ export function StatTile({
     <Comp
       {...(onClick ? { onClick, type: "button" as const } : {})}
       className={cn(
-        "k-card relative w-full overflow-hidden p-4 pl-5 text-left before:absolute before:inset-y-0 before:left-0 before:w-1",
+        "k-card relative flex min-h-[164px] w-full flex-col overflow-hidden p-5 pl-6 text-left before:absolute before:inset-y-0 before:left-0 before:w-1",
         onClick && "k-card-hover cursor-pointer",
         statToneClasses[tone],
         className,
@@ -700,7 +709,33 @@ export function StatTile({
     >
       <p className="k-eyebrow text-khata-muted">{label}</p>
       <p className={dashboardStatValueClassName}>{value}</p>
-      {hint && <p className="mt-2 text-xs leading-5 text-khata-muted">{hint}</p>}
+      {hint && <p className="mt-2 text-[13px] leading-[18px] text-khata-muted">{hint}</p>}
+      {(tags.length > 0 || (href && actionLabel)) && (
+        <div className="mt-auto pt-4">
+          {tags.length > 0 && (
+            <div className="mb-3 flex flex-wrap gap-1.5">
+              {tags.map((tag, index) => (
+                <StatusBadge key={index} tone={tag.tone ?? "neutral"}>
+                  {tag.label}
+                </StatusBadge>
+              ))}
+            </div>
+          )}
+          {href && actionLabel && (
+            <TextLink
+              href={href}
+              className="min-h-0 w-full justify-between text-xs font-semibold"
+            >
+              <span>{actionLabel}</span>
+              <ArrowRight
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
+            </TextLink>
+          )}
+        </div>
+      )}
     </Comp>
   );
 }
@@ -972,7 +1007,7 @@ export function DataTable({
       tabIndex={0}
     >
       <table
-        className="w-full border-collapse text-left text-sm"
+        className="w-full border-collapse text-left text-[13px]"
         style={{ minWidth }}
       >
         {children}
@@ -982,8 +1017,8 @@ export function DataTable({
 }
 
 export const tableHeaderClass =
-  "sticky top-0 z-10 bg-khata-paperMuted/95 text-xs text-khata-muted";
-export const tableHeadCellClass = "px-4 py-2.5 font-medium";
+  "sticky top-0 z-10 h-9 bg-khata-paperMuted/95 text-[11px] uppercase tracking-[0.04em] text-khata-muted";
+export const tableHeadCellClass = "px-4 py-2.5 font-semibold leading-4";
 export const tableNumericHeadCellClass = `${tableHeadCellClass} text-right`;
 export const tableActionHeadCellClass = tableNumericHeadCellClass;
 export const tableRowClass =
@@ -993,4 +1028,4 @@ export const tableNumericCellClass = `${tableCellClass} num text-right`;
 export const tableActionCellClass = `${tableCellClass} text-right`;
 export const tablePrimaryTextClass = "font-medium text-khata-ink";
 export const tableSecondaryTextClass = "text-xs text-khata-muted";
-export const tableNumericTextClass = "num text-xs";
+export const tableNumericTextClass = "num text-[13px] font-medium";

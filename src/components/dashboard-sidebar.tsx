@@ -81,23 +81,23 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "sticky top-0 hidden h-screen shrink-0 select-none overflow-hidden border-r border-khata-border/80 bg-white shadow-sm transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
-        isCollapsed ? "w-[76px]" : "w-[280px]",
+        "sticky top-0 hidden h-screen shrink-0 select-none overflow-hidden border-r border-khata-border bg-white shadow-sm transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
+        isCollapsed ? "w-16" : "w-[240px]",
       )}
     >
       <div
         className={cn(
           "flex items-center border-b border-khata-border/80",
           isCollapsed
-            ? "h-[116px] flex-col justify-center gap-2 px-3"
-            : "h-16 justify-between px-5",
+            ? "h-24 flex-col justify-center gap-2 px-2"
+            : "h-14 justify-between px-4",
         )}
       >
         {isCollapsed ? (
           <Link
             href="/dashboard"
             prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
-            className="flex size-11 items-center justify-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="flex size-10 items-center justify-center rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             aria-label="KhataOne dashboard"
           >
             <BrandLogo compact />
@@ -106,7 +106,7 @@ export function DashboardSidebar({
           <Link
             href="/dashboard"
             prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
-            className="flex h-8 min-w-0 flex-1 items-center rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="flex h-10 min-w-0 flex-1 items-center rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             aria-label="KhataOne dashboard"
           >
             <BrandLogo />
@@ -119,7 +119,7 @@ export function DashboardSidebar({
           aria-label={isCollapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
           title={isCollapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
           className={cn(
-            "flex size-9 shrink-0 items-center justify-center rounded-xl text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+            "flex size-9 shrink-0 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
             isCollapsed && "mx-auto",
           )}
         >
@@ -139,14 +139,14 @@ export function DashboardSidebar({
         </button>
       </div>
 
-      <div className="border-b border-khata-border/80 p-3">
+      <div className="border-b border-khata-border p-3">
         {!isCollapsed ? (
           <div
-            className="flex cursor-default items-center gap-3 rounded-xl border border-khata-saffron/20 bg-khata-saffron/20 p-2.5"
+            className="flex cursor-default items-center gap-2.5 rounded-xl border border-warning/25 bg-warning/10 p-2.5"
             title={`${firmName} (${roleLabel})`}
           >
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-khata-ink text-xs font-bold text-white shadow-sm">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-khata-ink text-sm font-bold text-white shadow-sm">
                 {firmInitial}
               </div>
               <div className="min-w-0 flex-1">
@@ -161,7 +161,7 @@ export function DashboardSidebar({
           </div>
         ) : (
           <div
-            className="mx-auto flex size-11 cursor-default items-center justify-center rounded-xl bg-khata-ink text-xs font-bold text-white shadow-sm"
+            className="mx-auto flex size-9 cursor-default items-center justify-center rounded-[10px] bg-khata-ink text-sm font-bold text-white shadow-sm"
             title={`${firmName} (${roleLabel})`}
           >
             {firmInitial}

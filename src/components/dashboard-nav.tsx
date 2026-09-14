@@ -171,7 +171,7 @@ function DashboardNavLink({
         aria-label={collapsed ? item.label : undefined}
         aria-describedby={collapsed && tooltipVisible ? tooltipId : undefined}
         className={cn(
-          "flex items-center rounded-lg text-xs font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+          "flex items-center rounded-lg text-[13px] font-medium leading-[18px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
           collapsed
             ? "mx-auto size-10 justify-center"
             : "min-h-11 gap-3 px-3 py-2 lg:min-h-10",

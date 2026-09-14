@@ -58,31 +58,34 @@ for (const primitive of [
 }
 
 assert(
-  designSystem.includes("md:text-[1.625rem]") &&
+  designSystem.includes("text-[1.375rem]") &&
+    designSystem.includes("tracking-[-0.02em]") &&
     !designSystem.includes("md:text-[1.75rem]") &&
     !designSystem.includes("md:text-3xl"),
-  "Dashboard page title hierarchy should use the recorded compact 26px desktop step, not an unapproved 28px+ jump.",
+  "Dashboard page title hierarchy should use the pasted 22px compact operations-console step.",
 );
 
 assert(
-    designSystem.includes('export const tableHeadCellClass = "px-4 py-2.5 font-medium"') &&
+    designSystem.includes('export const tableHeaderClass =') &&
+    designSystem.includes("h-9 bg-khata-paperMuted/95 text-[11px] uppercase") &&
+    designSystem.includes('export const tableHeadCellClass = "px-4 py-2.5 font-semibold leading-4"') &&
     designSystem.includes('export const tableCellClass = "px-4 py-2.5 align-middle"') &&
     designSystem.includes("k-row") &&
-    globals.includes("min-height: 46px"),
-  "Table density should be deliberate while preserving row containment.",
+    globals.includes("min-height: 44px"),
+  "Table density should follow the pasted 36px header and 44px row rhythm.",
 );
 
 assert(
-  dashboardLayout.includes("min-h-16") &&
+  dashboardLayout.includes("min-h-14") &&
     dashboardLayout.includes('className="flex min-h-screen p-0"') &&
-    dashboardLayout.includes('className="min-w-0 flex-1 scroll-mt-16 outline-none"') &&
+    dashboardLayout.includes('className="min-w-0 flex-1 scroll-mt-14 outline-none"') &&
     !dashboardLayout.includes("lg:top-4") &&
     !dashboardLayout.includes("lg:rounded-2xl lg:border lg:shadow-xs") &&
-    sidebar.includes('isCollapsed ? "w-[76px]" : "w-[280px]"') &&
+    sidebar.includes('isCollapsed ? "w-16" : "w-[240px]"') &&
     sidebar.includes("sticky top-0 hidden h-screen") &&
     !sidebar.includes("rounded-[1.375rem]") &&
     sidebar.includes("DashboardUtilityNav"),
-  "The approved shell should align the dashboard header to the compact 64px sidebar logo area while using the shared rectangular flush-left 280/76px sidebar width baseline.",
+  "The approved shell should use the pasted 56px header and rectangular flush-left 240/64px sidebar width baseline.",
 );
 
 for (const source of [login, signup]) {

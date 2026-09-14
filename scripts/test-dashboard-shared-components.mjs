@@ -54,7 +54,12 @@ assert.doesNotMatch(documentEvidencePanel, /rounded-md border border-khata-borde
 assert.match(operations, /<RetryIcon[\s\S]*functionalIconClassName[\s\S]*functionalIconStrokeWidth/);
 assert.doesNotMatch(operations, /RefreshCw className="size-4"/);
 assert.doesNotMatch(designSystem, /MonoClassName/);
-assert.match(globalStyles, /\.k-card \{[\s\S]*border-radius: 0\.5rem;/);
+assert.match(globalStyles, /\.k-card \{[\s\S]*border-radius: 0\.75rem;/);
+assert.match(globalStyles, /--background: #f8fafc/);
+assert.match(globalStyles, /--primary: #0a5c36/);
+assert.match(overview, /tags=\{\[/);
+assert.match(overview, /actionLabel="View review queue"/);
+assert.match(overview, /sm:grid-cols-\[auto_minmax\(0,1fr\)_auto\]/);
 assert.match(overview, /aria-label=\{item\.actionLabel\}/);
 assert.ok(!clientDetail.includes('|| "Pending"'));
 assert.match(operations, /return "No samples"/);

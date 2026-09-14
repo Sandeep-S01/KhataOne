@@ -126,7 +126,7 @@ Do not expose complex accounting language to SMB users unless necessary.
 ## Component Style
 
 - Compact rows and controls.
-- 8px or smaller border radius unless component library defaults require otherwise.
+- 6px controls, 8px navigation pills, and 12px cards/panels unless a documented shell exception requires square edges.
 - Soft borders, limited shadows.
 - Shared numeric role for amounts, invoice numbers, GSTINs, and tabular financial values, using the primary interface font with tabular numerals.
 - Clear status chips.
@@ -137,6 +137,7 @@ Do not expose complex accounting language to SMB users unless necessary.
 
 - Landing page must work fully on mobile.
 - Dashboard should remain usable on tablet and desktop.
+- Desktop dashboard shell uses a 240px sidebar, 64px collapsed rail, and 56px topbar; overview metrics use 4 columns on wide screens and 2 columns on tablet widths.
 - Mobile dashboard can prioritize read/review basics; heavy ledger operations may be desktop-first.
 
 ## UX Copy Guidelines

@@ -44,22 +44,22 @@ KhataOne should feel like a modern digital khata for CA firms: compact, precise,
 
 Recommended palette:
 
-- Background: `#F7F5EF`
+- Background: `#F8FAFC`
 - Surface: `#FFFFFF`
-- Surface muted: `#F1EEE6`
-- Text primary: `#1F2A24`
-- Text secondary: `#5F6B63`
-- Border: `#D8D2C4`
-- Brand green: `#146B43`
-- Brand green dark: `#0D4B31`
-- Accent saffron: `#D98A1F`
-- Accent ink: `#27323A`
+- Surface muted: `#F1F5F9`
+- Text primary: `#0F172A`
+- Text secondary: `#64748B`
+- Border: `#E2E8F0`
+- Brand green: `#0A5C36`
+- Brand green dark: `#05361F`
+- Accent saffron: `#D97706`
+- Accent ink: `#0F172A`
 - Success: `#168A4A`
-- Warning: `#B7791F`
-- Danger: `#B42318`
+- Warning: `#D97706`
+- Danger: `#DC2626`
 - Info: `#2563A8`
 
-Use green as the brand anchor, saffron as a controlled accent, and neutral ledger-paper tones for surfaces. Avoid making the product overwhelmingly green or beige.
+Use green as the brand anchor, amber as a controlled attention accent, and slate neutrals for dashboard surfaces. Avoid making the product overwhelmingly green or beige.
 
 ## Typography
 
@@ -125,12 +125,14 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 
 ## Sidebar layout update
 
-The dashboard sidebar follows the approved reference direction while staying aligned to the product shell: a white rectangular panel attached to the left edge on desktop, an icon-only collapsed rail, a warm firm-context card near the top, grouped operational navigation, and bottom utility links. KhataOne-specific labels, route order, dense accounting workflow surfaces, keyboard focus behavior, and mobile dialog navigation remain preserved.
+The dashboard sidebar follows the approved reference direction while staying aligned to the product shell: a white rectangular 240px panel attached to the left edge on desktop, a 64px icon-only collapsed rail, a warm firm-context card near the top, grouped operational navigation, and bottom utility links. KhataOne-specific labels, route order, dense accounting workflow surfaces, keyboard focus behavior, and mobile dialog navigation remain preserved.
 
 ## Dashboard header layout update
 
-The dashboard header is a square-edged, top-attached shell surface aligned to the compact sidebar logo area height, with no outer dashboard gutters or rounded main-content shell. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons. Header controls use a lightweight layout rhythm inspired by the reference: icon-first search and activity controls, a compact rounded profile pill, a subtle divider, and the existing sign-out action. Styling remains within KhataOne tokens, muted surfaces, compact spacing, and accessible focus states while avoiding backend changes.
+The dashboard header is a square-edged, top-attached 56px shell surface aligned to the sidebar logo area, with no outer dashboard gutters or rounded main-content shell. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons. Header controls use a lightweight layout rhythm inspired by the reference: icon-first search and activity controls, a compact rounded profile pill, a subtle divider, and the existing sign-out action. Styling remains within KhataOne tokens, muted surfaces, compact spacing, and accessible focus states while avoiding backend changes.
 
 Search and activity controls are implemented as interactive header controls: search opens a keyboard-friendly dialog that routes into existing searchable dashboard pages, while activity opens a compact menu of existing operational destinations. The activity menu uses the same themed shell surface language, supports Escape focus return and Arrow/Home/End item movement, and keeps destination icons aligned with the sidebar. These controls do not introduce new backend claims or unimplemented data sources.
 
 The search dialog uses a light overlay and compact command-panel structure with a focused input row, close icon, selected target state, and concise footer action.
+
+The overview dashboard follows the reference three-tier hierarchy: metric KPI cards first, then a compact priority worklist, then a dense review queue snapshot table. KPI cards use a 4-column desktop grid, left urgency bars, large tabular counts, compact status tags, and direct text links into existing destinations. Worklist rows use a count pill, task description, and right-aligned action. Tables use 11px uppercase headers, 44px row containment, right-aligned numeric values, and contained horizontal scrolling.
