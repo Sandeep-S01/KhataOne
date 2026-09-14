@@ -18,7 +18,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -290,7 +290,7 @@ export default async function AuditLogsPage({
                         ) : (
                           <span className={tablePrimaryTextClass}>{log.entity_type}</span>
                         )}
-                        <p className={`mt-1 ${tableMonoTextClass} text-khata-muted`}>
+                        <p className={`mt-1 ${tableNumericTextClass} text-khata-muted`}>
                           {log.entity_id ?? "No entity id"}
                         </p>
                       </td>
@@ -302,11 +302,11 @@ export default async function AuditLogsPage({
                                 {changeEntries.slice(0, 4).map((entry) => (
                                   <p key={entry.label} className="text-khata-muted">
                                     <span className="font-medium text-khata-ink">{entry.label}:</span>{" "}
-                                    <span className={entry.mono ? tableMonoTextClass : undefined}>
+                                    <span className={entry.mono ? tableNumericTextClass : undefined}>
                                       {entry.before}
                                     </span>{" "}
                                     <span aria-hidden="true">→</span>{" "}
-                                    <span className={entry.mono ? tableMonoTextClass : undefined}>
+                                    <span className={entry.mono ? tableNumericTextClass : undefined}>
                                       {entry.after}
                                     </span>
                                   </p>
@@ -323,7 +323,7 @@ export default async function AuditLogsPage({
                                     key={entry.label}
                                   >
                                     <span className="font-medium text-khata-ink">{entry.label}:</span>{" "}
-                                    <span className={entry.mono ? tableMonoTextClass : undefined}>
+                                    <span className={entry.mono ? tableNumericTextClass : undefined}>
                                       {entry.value}
                                     </span>
                                   </StatusBadge>
@@ -335,7 +335,7 @@ export default async function AuditLogsPage({
                           <span className={tableSecondaryTextClass}>No safe details</span>
                         )}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {log.actor_user_id ?? "system"}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>

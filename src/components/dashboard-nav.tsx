@@ -23,7 +23,11 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { dashboardNavItems } from "@/lib/dashboard/nav";
-import { sidebarSectionLabelClassName } from "@/components/design-system";
+import {
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+  sidebarSectionLabelClassName,
+} from "@/components/design-system";
 import { cn } from "@/lib/utils";
 
 const iconByHref: Record<string, LucideIcon> = {
@@ -176,7 +180,11 @@ function DashboardNavLink({
             : "text-khata-ink/75 hover:bg-khata-paperMuted hover:text-khata-ink",
         )}
       >
-        <Icon className="size-4 shrink-0" aria-hidden="true" />
+        <Icon
+          className={functionalIconClassName}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
         {!collapsed && (
           <span className="min-w-0 flex-1 truncate">{item.label}</span>
         )}

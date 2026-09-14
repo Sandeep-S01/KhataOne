@@ -1,26 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Manrope, Sora } from "next/font/google";
+import { Manrope } from "next/font/google";
 
 import { getPublicAppUrl } from "@/lib/env";
 
 import "./globals.css";
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "600", "700"],
-});
-
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["400", "500", "600", "700"],
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -64,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sora.variable} ${manrope.variable} ${jetBrainsMono.variable} font-sans antialiased`}
+        className={`${manrope.variable} font-sans antialiased`}
       >
         {children}
       </body>

@@ -1,5 +1,4 @@
 import type { Route } from "next";
-import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -10,6 +9,8 @@ import {
   FieldLabel,
   FilterBar,
   FormMessage,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
   InlineAlert,
   PageBody,
   PageHeader,
@@ -17,18 +18,19 @@ import {
   PermissionNotice,
   QueryError,
   RecordCount,
+  RetryIcon,
   SectionCard,
   Select,
   SetupRequired,
   StatTile,
-  dashboardMetaMonoClassName,
+  dashboardMetaNumericClassName,
   dashboardMetricValueClassName,
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -430,7 +432,11 @@ export default async function OperationsPage({
         <ActionLink
           href={currentOperationsHref}
         >
-          <RefreshCw className="size-4" />
+          <RetryIcon
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
           Refresh
         </ActionLink>
         }
@@ -561,16 +567,16 @@ export default async function OperationsPage({
                         <td className={tableNumericCellClass}>{row.queued_count}</td>
                         <td className={tableNumericCellClass}>{row.retrying_count}</td>
                         <td className={tableNumericCellClass}>{row.terminal_failure_count}</td>
-                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                        <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                           {durationLabel(row.p95_claim_delay_ms)}
                         </td>
-                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                        <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                           {durationLabel(row.p95_ack_delay_ms)}
                         </td>
-                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                        <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                           {ageLabel(row.last_worker_completed_at, "No completed run")}
                         </td>
-                        <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                        <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                           {ageLabel(row.last_worker_success_at, "No successful run")}
                         </td>
                         <td className={tableCellClass}>
@@ -626,7 +632,7 @@ export default async function OperationsPage({
                     <td className={tableNumericCellClass}>{summary.failed}</td>
                     <td className={tableNumericCellClass}>{summary.completed}</td>
                     <td className={tableCellClass}>
-                      <span className={tableMonoTextClass}>
+                      <span className={tableNumericTextClass}>
                         {ageLabel(summary.oldestActive, "No active jobs")}
                       </span>
                     </td>
@@ -744,7 +750,7 @@ export default async function OperationsPage({
                     <tr key={job.id} className={tableRowClass}>
                       <td className={tableCellClass}>
                         <span className={tablePrimaryTextClass}>{job.job_type}</span>
-                        <p className={`mt-1 ${tableMonoTextClass} text-khata-muted`}>
+                        <p className={`mt-1 ${tableNumericTextClass} text-khata-muted`}>
                           {job.entity_type}:{job.entity_id}
                         </p>
                       </td>
@@ -770,7 +776,7 @@ export default async function OperationsPage({
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
                         <span>{formatDisplayDateTime(job.created_at)}</span>
-                        <p className={dashboardMetaMonoClassName}>
+                        <p className={dashboardMetaNumericClassName}>
                           Age {ageLabel(job.created_at)}
                         </p>
                       </td>

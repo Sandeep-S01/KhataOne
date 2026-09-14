@@ -1,8 +1,12 @@
 "use client";
 
-import { RotateCw } from "lucide-react";
-
-import { Button, PageBody } from "@/components/design-system";
+import {
+  Button,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+  PageBody,
+  RetryIcon,
+} from "@/components/design-system";
 
 export default function WorkspaceError({ retry }: { retry: () => void }) {
   return (
@@ -14,7 +18,11 @@ export default function WorkspaceError({ retry }: { retry: () => void }) {
             The workspace could not be loaded. Please try again.
           </p>
           <Button onClick={() => retry()} className="min-h-11">
-            <RotateCw aria-hidden="true" />
+            <RetryIcon
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
             Try again
           </Button>
         </div>

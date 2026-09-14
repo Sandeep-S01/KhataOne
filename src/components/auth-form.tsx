@@ -14,7 +14,15 @@ import {
   signUp,
   type AuthActionState,
 } from "@/app/actions/auth";
-import { Button, FieldError, FormMessage } from "@/components/design-system";
+import {
+  Button,
+  FieldError,
+  FormMessage,
+  authControlClassName,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+} from "@/components/design-system";
+import { cn } from "@/lib/utils";
 import {
   type AuthFieldName,
   validateAuthField,
@@ -27,8 +35,6 @@ const initialState: AuthActionState = {
 
 const labelClass = "text-sm font-medium leading-none text-khata-ink";
 const fieldGroupClass = "grid gap-1.5";
-const fieldClass =
-  "h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus:ring-destructive disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
 
 type AuthValues = Record<AuthFieldName, string>;
 
@@ -123,7 +129,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               aria-describedby={
                 fullNameError ? "signup-full-name-error" : undefined
               }
-              className={fieldClass}
+              className={authControlClassName}
             />
           </label>
 
@@ -146,7 +152,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               aria-describedby={
                 firmNameError ? "signup-firm-name-error" : undefined
               }
-              className={fieldClass}
+              className={authControlClassName}
             />
           </label>
         </>
@@ -168,7 +174,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           onChange={updateField("email")}
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? `${mode}-email-error` : undefined}
-          className={fieldClass}
+          className={authControlClassName}
         />
         {mode === "login" && (
           <FieldError id="login-email-error" message={emailError} />
@@ -207,7 +213,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
                   ? "login-password-error"
                   : undefined
             }
-            className={`${fieldClass} pr-12 md:pr-10`}
+            className={cn(authControlClassName, "pr-12 md:pr-10")}
           />
           <button
             type="button"
@@ -216,9 +222,17 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             className="absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9"
           >
             {showPassword ? (
-              <EyeOff className="size-4" aria-hidden="true" />
+              <EyeOff
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             ) : (
-              <Eye className="size-4" aria-hidden="true" />
+              <Eye
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             )}
           </button>
         </span>

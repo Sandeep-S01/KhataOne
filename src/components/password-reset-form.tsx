@@ -7,15 +7,18 @@ import {
   requestPasswordReset,
   type AuthActionState,
 } from "@/app/actions/auth";
-import { Button, FieldError, FormMessage } from "@/components/design-system";
+import {
+  Button,
+  FieldError,
+  FormMessage,
+  authControlClassName,
+} from "@/components/design-system";
+import { cn } from "@/lib/utils";
 
 const initialState: AuthActionState = {
   status: "idle",
   message: "",
 };
-
-const fieldClass =
-  "mt-1.5 h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
 
 export function PasswordResetForm() {
   const [state, formAction, pending] = useActionState(
@@ -38,7 +41,7 @@ export function PasswordResetForm() {
           aria-describedby={
             state.fieldErrors?.email ? "password-reset-email-error" : undefined
           }
-          className={fieldClass}
+          className={cn(authControlClassName, "mt-1.5")}
         />
         <FieldError
           id="password-reset-email-error"

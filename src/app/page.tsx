@@ -15,7 +15,12 @@ import {
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
-import { ActionLink } from "@/components/design-system";
+import {
+  ActionLink,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+  publicBrandHomeLinkClassName,
+} from "@/components/design-system";
 import { LandingNavigation } from "@/components/landing-navigation";
 import { LeadCaptureForm } from "@/components/lead-capture-form";
 import { StatusChip } from "@/components/status-chip";
@@ -219,7 +224,11 @@ function WorkflowCard({
         Step {String(index + 1).padStart(2, "0")}
       </span>
       <span className="mt-4 flex size-10 items-center justify-center rounded-lg bg-khata-green/10">
-        <Icon className="size-5 text-khata-green" aria-hidden="true" />
+        <Icon
+          className={`${functionalIconClassName} text-khata-green`}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       </span>
       <h3 className="mt-4 text-sm font-semibold text-khata-ink">{title}</h3>
       <p className="mt-1.5 text-sm leading-relaxed text-khata-muted">{body}</p>
@@ -239,7 +248,11 @@ function FeatureCard({
   return (
     <article className="k-card k-card-hover p-6">
       <span className="flex size-10 items-center justify-center rounded-lg bg-khata-green/10">
-        <Icon className="size-5 text-khata-green" aria-hidden="true" />
+        <Icon
+          className={`${functionalIconClassName} text-khata-green`}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       </span>
       <h3 className="mt-4 text-sm font-semibold text-khata-ink">{title}</h3>
       <p className="mt-1.5 text-sm leading-relaxed text-khata-muted">{body}</p>
@@ -252,7 +265,11 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
     <details className="group border-b border-khata-border">
       <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 py-3 text-left text-sm font-semibold text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
         {question}
-        <ChevronRight className="size-4 shrink-0 text-khata-muted transition group-open:rotate-90" />
+        <ChevronRight
+          className={`${functionalIconClassName} text-khata-muted transition group-open:rotate-90`}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       </summary>
       <p className="pb-4 text-sm leading-6 text-khata-muted">{answer}</p>
     </details>
@@ -293,7 +310,12 @@ export default function Home() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <ActionLink href="#demo" variant="primary" size="lg">
-                  Book a demo <ArrowRight className="size-4" />
+                  Book a demo
+                  <ArrowRight
+                    className={functionalIconClassName}
+                    strokeWidth={functionalIconStrokeWidth}
+                    aria-hidden="true"
+                  />
                 </ActionLink>
                 <ActionLink href="#how" variant="outline" size="lg">
                   See how it works
@@ -374,7 +396,8 @@ export default function Home() {
                     }}
                   >
                     <ShieldCheck
-                      className="size-5 text-khata-green"
+                      className={`${functionalIconClassName} text-khata-green`}
+                      strokeWidth={functionalIconStrokeWidth}
                       aria-hidden="true"
                     />
                     <p className="mt-3 text-sm leading-6 text-khata-muted">
@@ -406,7 +429,11 @@ export default function Home() {
                   "Plan GST summaries and export files",
                 ].map((item) => (
                   <span key={item} className="inline-flex items-center gap-2">
-                    <Check className="size-4 text-khata-green" />
+                    <Check
+                      className={`${functionalIconClassName} text-khata-green`}
+                      strokeWidth={functionalIconStrokeWidth}
+                      aria-hidden="true"
+                    />
                     {item}
                   </span>
                 ))}
@@ -443,7 +470,12 @@ export default function Home() {
               </p>
             </div>
             <ActionLink href="#demo" variant="secondary" size="lg">
-              Book a demo <ArrowRight className="size-4" />
+              Book a demo
+              <ArrowRight
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             </ActionLink>
           </div>
         </section>
@@ -456,7 +488,7 @@ export default function Home() {
               <Link
                 href="/"
                 aria-label="KhataOne home"
-                className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
+                className={publicBrandHomeLinkClassName}
               >
                 <BrandLogo />
               </Link>
@@ -465,11 +497,11 @@ export default function Home() {
                 preparation workflow built specifically for Indian CA firms.
               </p>
               <div className="flex items-center gap-2 pt-1 text-xs text-khata-muted">
-                  <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
+                  <span className="num inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 text-[11px] text-khata-ink">
                   <span className="size-1.5 rounded-full bg-khata-green" />
                   GST prep only
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 font-mono text-[11px] text-khata-ink">
+                <span className="num inline-flex items-center gap-1.5 rounded-md border border-khata-border bg-khata-paper px-2 py-1 text-[11px] text-khata-ink">
                   CA Controlled
                 </span>
               </div>

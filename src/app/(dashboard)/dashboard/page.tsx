@@ -15,7 +15,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -340,7 +340,7 @@ export default async function DashboardPage() {
                   <td className={tableCellClass}>
                     {item.party_name ?? "Not provided"}
                   </td>
-                  <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                  <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                     {item.invoice_number ?? "Not provided"}
                   </td>
                   <td className={`${tableCellClass} capitalize`}>

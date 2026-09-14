@@ -38,7 +38,7 @@ assert.match(gstDetail, /className="min-w-0"\s+title="Saved GST summary"/, "GST 
 assert.equal((gstDetail.match(/<div className="min-w-0 xl:col-span-2">/g) ?? []).length, 2, "GST table sections are shrinkable full-width grid children");
 assert.match(designSystem, /className="max-w-full overflow-x-auto k-scrollbar"/, "DataTable constrains horizontal scrolling to the table region");
 
-assert.match(layout, /className="min-w-11 gap-2 px-2 sm:px-3 md:min-w-9"/, "mobile sign-out control has at least 44px width as well as height");
+assert.match(layout, /className="[^"]*min-w-11 gap-2 px-2[^"]*sm:px-3[^"]*md:min-w-9[^"]*"/, "mobile sign-out control has at least 44px width as well as height");
 assert.match(layout, /aria-label="Sign out"/, "sign-out control keeps its accessible name when text is hidden");
 
 assert.equal(packageJson.scripts["test:responsive-containment"], "node scripts/test-responsive-containment.mjs", "package exposes the responsive containment test script");

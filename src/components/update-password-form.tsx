@@ -3,7 +3,14 @@
 import { FormEvent, useState } from "react";
 import { CheckCircle2, Eye, EyeOff, LoaderCircle } from "lucide-react";
 
-import { Button } from "@/components/design-system";
+import {
+  Button,
+  authControlClassName,
+  feedbackToneClassName,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+} from "@/components/design-system";
+import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 
 type Status = "idle" | "success" | "error";
@@ -72,8 +79,8 @@ export function UpdatePasswordForm() {
 
   const messageTone =
     status === "success"
-      ? "border-success/35 bg-success/10 text-success-foreground"
-      : "border-destructive/35 bg-destructive/10 text-destructive-foreground";
+      ? feedbackToneClassName.success
+      : feedbackToneClassName.danger;
   const passwordErrorId = errorField === "password" ? "update-password-error" : undefined;
   const confirmPasswordErrorId =
     errorField === "confirm_password" ? "update-password-error" : undefined;
@@ -94,7 +101,7 @@ export function UpdatePasswordForm() {
             minLength={8}
             aria-invalid={errorField === "password"}
             aria-describedby={passwordErrorId}
-            className="h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 pr-12 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:pr-10 md:text-sm"
+            className={cn(authControlClassName, "pr-12 md:pr-10")}
           />
           <button
             type="button"
@@ -104,9 +111,17 @@ export function UpdatePasswordForm() {
             className="absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9"
           >
             {showPassword ? (
-              <EyeOff className="size-4" aria-hidden="true" />
+              <EyeOff
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             ) : (
-              <Eye className="size-4" aria-hidden="true" />
+              <Eye
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             )}
           </button>
         </span>
@@ -125,7 +140,7 @@ export function UpdatePasswordForm() {
           minLength={8}
           aria-invalid={errorField === "confirm_password"}
           aria-describedby={confirmPasswordErrorId || "confirm-password-help"}
-          className="mt-1.5 h-11 w-full rounded-md border border-khata-border bg-transparent px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/55 focus:border-khata-green focus:bg-white focus:ring-1 focus:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm"
+          className={cn(authControlClassName, "mt-1.5")}
         />
         <p id="confirm-password-help" className="mt-1 text-xs leading-5 text-khata-muted">
           Use at least 8 characters.
@@ -139,7 +154,11 @@ export function UpdatePasswordForm() {
           className={`flex items-start gap-2 rounded-md border px-3 py-2 text-sm ${messageTone}`}
         >
           {status === "success" && (
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+            <CheckCircle2
+              className={`mt-0.5 ${functionalIconClassName}`}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
           )}
           <p>{message}</p>
         </div>

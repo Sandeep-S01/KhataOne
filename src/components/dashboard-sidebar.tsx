@@ -6,6 +6,10 @@ import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { DashboardNav, DashboardUtilityNav } from "@/components/dashboard-nav";
+import {
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+} from "@/components/design-system";
 import { cn } from "@/lib/utils";
 
 const SIDEBAR_STORAGE_KEY = "khataone_sidebar_collapsed";
@@ -120,9 +124,17 @@ export function DashboardSidebar({
           )}
         >
           {isCollapsed ? (
-            <PanelLeft className="size-4" aria-hidden="true" />
+            <PanelLeft
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
           ) : (
-            <PanelLeftClose className="size-4" aria-hidden="true" />
+            <PanelLeftClose
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
           )}
         </button>
       </div>

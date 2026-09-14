@@ -20,7 +20,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -360,7 +360,7 @@ export default async function ClientDetailPage({
 
                   return (
                     <tr key={period.id} className={tableRowClass}>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDateRange(
                           period.period_start,
                           period.period_end,
@@ -417,7 +417,7 @@ export default async function ClientDetailPage({
                   {audits.map((audit) => (
                     <tr key={audit.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {audit.actor_user_id || "system"}
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>

@@ -46,8 +46,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Sora", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
+        display: ["var(--font-display)", "var(--font-sans)", "Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "var(--font-sans)", "Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       borderRadius: {
         sm: "0.25rem",

@@ -12,7 +12,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -211,7 +211,7 @@ export default async function PlatformPage() {
                   ].map((item) => (
                     <tr key={item.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{item.type}</td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {item.provider}
                       </td>
                       <td className={tableCellClass}>

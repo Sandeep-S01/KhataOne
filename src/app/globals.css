@@ -80,6 +80,8 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-sans);
   font-feature-settings: "cv02", "cv03";
 }
 
@@ -93,7 +95,7 @@ body {
   h2,
   h3,
   h4 {
-    font-family: var(--font-display), Sora, ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans), Manrope, ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: 0;
   }
@@ -106,7 +108,7 @@ body {
 
 @layer utilities {
   .num {
-    font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-sans), Manrope, ui-sans-serif, system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0;
   }

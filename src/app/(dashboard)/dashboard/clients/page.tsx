@@ -21,10 +21,11 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tablePrimaryTextClass,
   tableSecondaryTextClass,
   tableRowClass,
+  fieldLabelClassName,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import {
@@ -204,7 +205,7 @@ export default async function ClientsPage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="client-search"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Search
               </label>
@@ -218,7 +219,7 @@ export default async function ClientsPage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="client-status"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Status
               </label>
@@ -302,10 +303,10 @@ export default async function ClientsPage({
                         {client.contact_name || client.phone || "Not provided"}
                       </p>
                     </td>
-                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                       {client.whatsapp_phone || "Not linked"}
                     </td>
-                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                       {client.gstin || "Not provided"}
                     </td>
                     <td className={`${tableCellClass} capitalize`}>

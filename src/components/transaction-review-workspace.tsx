@@ -176,13 +176,12 @@ export function TransactionReviewWorkspace({
             {reviewError && <FormMessage message={reviewError} />}
 
             {hasUnsavedChanges && (
-              <div
+              <FormMessage
                 id={dirtyDescriptionId}
+                message={unsavedDecisionMessage}
+                tone="warning"
                 role="status"
-                className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-sm leading-6 text-warning"
-              >
-                {unsavedDecisionMessage}
-              </div>
+              />
             )}
 
             <form action={approveTransactionAction}>

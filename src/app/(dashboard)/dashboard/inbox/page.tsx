@@ -16,9 +16,10 @@ import {
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
+  fieldLabelClassName,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericHeadCellClass,
   tableNumericCellClass,
   tablePrimaryTextClass,
@@ -244,7 +245,7 @@ export default async function InboxPage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="inbox-search"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Search
               </label>
@@ -258,7 +259,7 @@ export default async function InboxPage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="inbox-status"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Status
               </label>
@@ -330,7 +331,7 @@ export default async function InboxPage({
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {message.client_business_name ?? "Unmatched sender"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {message.sender_phone}
                       </td>
                       <td className={`${tableCellClass} capitalize`}>

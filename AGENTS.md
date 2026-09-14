@@ -123,7 +123,7 @@ When working in this repository:
 - Landing page comes first in the build sequence.
 - Dashboard must feel like a dense professional CA operations console.
 - Use compact tables, filters, split panes, clear status chips, and right-aligned numeric values.
-- Use monospace styling for amounts, invoice numbers, GSTINs, and ledger-like values.
+- Use the shared numeric typography role for amounts, invoice numbers, GSTINs, and ledger-like values: one primary interface font with tabular numerals and right-aligned financial values where appropriate.
 - Use lucide-react icons for icon buttons.
 - Do not build generic decorative SaaS card dashboards.
 - Do not add feature-explainer text inside operational app screens.

@@ -25,6 +25,7 @@ assert.match(evidencePanel, /Original evidence PDF:/, "PDF previews have a title
 assert.match(evidencePanel, /Original audio evidence:/, "audio previews have an aria label");
 assert.match(evidencePanel, /short-lived signed URL/, "UI explains signed URL expiry without exposing storage internals");
 assert.match(evidencePanel, /Extracted source text/, "original preview remains paired with extracted source text");
+assert.match(evidencePanel, /mutedPanelClassName/, "evidence fallback panels reuse the shared muted surface recipe");
 
 assert.match(reviewPage, /getDocumentEvidence\(\{ document, supabase \}\)/, "review detail obtains evidence after firm-scoped transaction load");
 assert.match(reviewPage, /DocumentEvidencePanel evidence=\{evidence\} sourceText=\{sourceText\}/, "read-only review detail renders the evidence panel");

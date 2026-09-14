@@ -1,10 +1,18 @@
 "use client";
 
-import { Bell, Inbox, ListChecks, Search, Settings, X, type LucideIcon } from "lucide-react";
+import { Bell, Inbox, ListChecks, Search, Wrench, X, type LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useId, useRef, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
 import {
   CommandOption,
@@ -13,6 +21,8 @@ import {
   TopbarIconButton,
   commandDialogPanelClassName,
   commandInputClassName,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
 } from "@/components/design-system";
 
 const searchTargets: Array<{ label: string; href: Route; helper: string }> = [
@@ -55,7 +65,7 @@ const activityLinks: Array<{
     label: "Operations",
     href: "/dashboard/operations",
     description: "Review processing health and job status.",
-    icon: Settings,
+    icon: Wrench,
   },
 ];
 
@@ -81,12 +91,140 @@ export function DashboardTopbarActions({
   const router = useRouter();
   const searchDialogId = useId();
   const activityPanelId = useId();
+  const activityButtonId = useId();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchPanelRef = useRef<HTMLDivElement>(null);
+  const searchReturnFocusRef = useRef<HTMLElement | null>(null);
   const activityRef = useRef<HTMLDivElement>(null);
+  const activityItemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activityOpen, setActivityOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [targetHref, setTargetHref] = useState<Route>("/dashboard/review-queue");
+
+  const activityButton = useCallback(
+    () => document.getElementById(activityButtonId),
+    [activityButtonId],
+  );
+
+  const openSearch = useCallback(() => {
+    const activeElement =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    searchReturnFocusRef.current =
+      activeElement && activityRef.current?.contains(activeElement)
+        ? activityButton()
+        : activeElement;
+    setSearchOpen(true);
+    setActivityOpen(false);
+  }, [activityButton]);
+
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+    requestAnimationFrame(() => searchReturnFocusRef.current?.focus());
+  }, []);
+
+  const activityItems = useCallback(
+    () =>
+      activityItemRefs.current.filter(
+        (item): item is HTMLAnchorElement => Boolean(item),
+      ),
+    [],
+  );
+
+  const focusActivityItem = useCallback(
+    (index: number) => {
+      const items = activityItems();
+
+      if (items.length === 0) {
+        return;
+      }
+
+      const nextIndex = (index + items.length) % items.length;
+      items[nextIndex]?.focus();
+    },
+    [activityItems],
+  );
+
+  const closeActivity = useCallback((restoreFocus = true) => {
+    setActivityOpen(false);
+
+    if (restoreFocus) {
+      requestAnimationFrame(() => activityButton()?.focus());
+    }
+  }, [activityButton]);
+
+  const openActivity = useCallback(
+    (focusFirstItem = false) => {
+      setActivityOpen(true);
+      setSearchOpen(false);
+
+      if (focusFirstItem) {
+        requestAnimationFrame(() => focusActivityItem(0));
+      }
+    },
+    [focusActivityItem],
+  );
+
+  const toggleActivity = useCallback(() => {
+    setActivityOpen((value) => {
+      const nextValue = !value;
+
+      if (nextValue) {
+        setSearchOpen(false);
+      }
+
+      return nextValue;
+    });
+  }, []);
+
+  const handleActivityButtonKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        openActivity(true);
+      }
+    },
+    [openActivity],
+  );
+
+  const handleActivityMenuKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      const items = activityItems();
+      const currentIndex = items.findIndex((item) => item === document.activeElement);
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeActivity();
+        return;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        focusActivityItem(currentIndex + 1);
+        return;
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        focusActivityItem(currentIndex - 1);
+        return;
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        focusActivityItem(0);
+        return;
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        focusActivityItem(items.length - 1);
+      }
+    },
+    [activityItems, closeActivity, focusActivityItem],
+  );
 
   useEffect(() => {
     if (!searchOpen) {
@@ -95,25 +233,70 @@ export function DashboardTopbarActions({
 
     const frame = requestAnimationFrame(() => searchInputRef.current?.focus());
     return () => cancelAnimationFrame(frame);
-  }, [searchOpen]);
+  }, [closeSearch, openSearch, searchOpen]);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = searchPanelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      const first = focusable?.[0];
+      const last = focusable?.[focusable.length - 1];
+
+      if (!first || !last) {
+        event.preventDefault();
+        searchPanelRef.current?.focus();
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeSearch, openSearch, searchOpen]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSearchOpen(false);
-        setActivityOpen(false);
+        if (searchOpen) {
+          closeSearch();
+        }
+        if (activityOpen) {
+          closeActivity();
+        }
       }
 
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
-        setSearchOpen(true);
-        setActivityOpen(false);
+        openSearch();
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [activityOpen, closeActivity, closeSearch, openSearch, searchOpen]);
 
   useEffect(() => {
     if (!activityOpen) {
@@ -126,17 +309,17 @@ export function DashboardTopbarActions({
         event.target instanceof Node &&
         !activityRef.current.contains(event.target)
       ) {
-        setActivityOpen(false);
+        closeActivity(false);
       }
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [activityOpen]);
+  }, [activityOpen, closeActivity]);
 
   const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearchOpen(false);
+    closeSearch();
     router.push(buildSearchHref(targetHref, query));
   };
 
@@ -145,23 +328,25 @@ export function DashboardTopbarActions({
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
         <TopbarIconButton
           onClick={() => {
-            setSearchOpen(true);
-            setActivityOpen(false);
+            openSearch();
           }}
           aria-label="Search workspace"
           aria-haspopup="dialog"
           aria-controls={searchDialogId}
           title="Search workspace"
         >
-          <Search className="size-5 stroke-[1.8]" aria-hidden="true" />
+          <Search
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
         </TopbarIconButton>
 
         <div ref={activityRef} className="relative">
           <TopbarIconButton
-            onClick={() => {
-              setActivityOpen((value) => !value);
-              setSearchOpen(false);
-            }}
+            id={activityButtonId}
+            onClick={toggleActivity}
+            onKeyDown={handleActivityButtonKeyDown}
             className="relative"
             aria-label="Open activity center"
             aria-haspopup="menu"
@@ -169,7 +354,11 @@ export function DashboardTopbarActions({
             aria-controls={activityPanelId}
             title="Activity center"
           >
-            <Bell className="size-5 stroke-[1.8]" aria-hidden="true" />
+            <Bell
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
             <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-white" aria-hidden="true" />
           </TopbarIconButton>
 
@@ -177,8 +366,9 @@ export function DashboardTopbarActions({
             <div
               id={activityPanelId}
               role="menu"
-              aria-label="Activity center"
-              className="absolute right-0 top-11 z-40 w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-xl border border-khata-border bg-white shadow-lg"
+              aria-labelledby={activityButtonId}
+              onKeyDown={handleActivityMenuKeyDown}
+              className="absolute right-0 top-11 z-40 w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg"
             >
               <div className="border-b border-khata-border bg-khata-paperMuted/50 px-4 py-3">
                 <p className="text-sm font-semibold text-khata-ink">Activity center</p>
@@ -187,15 +377,18 @@ export function DashboardTopbarActions({
                 </p>
               </div>
               <div className="p-2">
-                {activityLinks.map((item) => {
+                {activityLinks.map((item, index) => {
                   const Icon = item.icon;
 
                   return (
                     <Link
                       key={item.href}
+                      ref={(node) => {
+                        activityItemRefs.current[index] = node;
+                      }}
                       href={item.href}
                       role="menuitem"
-                      onClick={() => setActivityOpen(false)}
+                      onClick={() => closeActivity(false)}
                       className="flex gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
                     >
                       <IconBadge icon={Icon} />
@@ -228,20 +421,26 @@ export function DashboardTopbarActions({
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
-              setSearchOpen(false);
+              closeSearch();
             }
           }}
         >
           <div
+            ref={searchPanelRef}
             id={searchDialogId}
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${searchDialogId}-title`}
             className={commandDialogPanelClassName}
+            tabIndex={-1}
           >
             <form onSubmit={submitSearch}>
               <div className="flex items-center gap-3 border-b border-khata-border px-4 py-2.5">
-                <Search className="size-5 shrink-0 text-khata-muted" aria-hidden="true" />
+                <Search
+                  className={`${functionalIconClassName} text-khata-muted`}
+                  strokeWidth={functionalIconStrokeWidth}
+                  aria-hidden="true"
+                />
                 <div className="min-w-0 flex-1">
                   <label id={`${searchDialogId}-title`} htmlFor={`${searchDialogId}-input`} className="sr-only">
                     Search workspace
@@ -257,12 +456,16 @@ export function DashboardTopbarActions({
                 </div>
                 <button
                   type="button"
-                  onClick={() => setSearchOpen(false)}
+                  onClick={closeSearch}
                   className="inline-flex size-8 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
                   aria-label="Close search"
                   title="Close search"
                 >
-                  <X className="size-4" aria-hidden="true" />
+                  <X
+                    className={functionalIconClassName}
+                    strokeWidth={functionalIconStrokeWidth}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
 

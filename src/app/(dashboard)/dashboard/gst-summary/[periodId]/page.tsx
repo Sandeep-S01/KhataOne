@@ -15,7 +15,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -275,7 +275,7 @@ export default async function GstPeriodPage({
               <tbody>
                 {sourceTransactions.map((transaction) => (
                   <tr key={transaction.id} className={tableRowClass}>
-                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                       {formatDisplayDate(transaction.transaction_date)}
                     </td>
                     <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
@@ -331,7 +331,7 @@ export default async function GstPeriodPage({
                 {audits.map((audit) => (
                   <tr key={audit.id} className={tableRowClass}>
                     <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
-                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                       {audit.actor_user_id ?? "system"}
                     </td>
                     <td className={`${tableNumericCellClass} text-xs`}>

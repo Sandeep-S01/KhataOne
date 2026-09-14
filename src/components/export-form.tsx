@@ -13,6 +13,8 @@ import {
   FieldLabel,
   FilterBar,
   FormMessage,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
   InfoNote,
   Input,
   Select,
@@ -180,12 +182,20 @@ export function ExportForm({
           >
             {pending ? (
               <>
-                <Download className="size-4" />
+                <Download
+                  className={functionalIconClassName}
+                  strokeWidth={functionalIconStrokeWidth}
+                  aria-hidden="true"
+                />
                 Queueing
               </>
             ) : (
               <>
-                <FileSpreadsheet className="size-4" />
+                <FileSpreadsheet
+                  className={functionalIconClassName}
+                  strokeWidth={functionalIconStrokeWidth}
+                  aria-hidden="true"
+                />
                 Queue export
               </>
             )}
@@ -195,11 +205,19 @@ export function ExportForm({
 
       <div className="mt-3 flex flex-wrap gap-2 text-xs text-khata-muted">
         <span className="inline-flex items-center gap-1">
-          <FileSpreadsheet className="size-3.5" />
+          <FileSpreadsheet
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
           CSV uses approved transactions only.
         </span>
         <span className="inline-flex items-center gap-1">
-          <FileText className="size-3.5" />
+          <FileText
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
           PDF is a review summary, not GST filing proof.
         </span>
       </div>

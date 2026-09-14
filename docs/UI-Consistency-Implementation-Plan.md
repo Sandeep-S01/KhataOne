@@ -1,258 +1,115 @@
 # UI Consistency Implementation Plan
 
-Date: 2026-09-14
-Scope: Typography, theme color, icon treatment, and shared-component usage consistency across KhataOne UI.
+Updated: 2026-09-14.
+Basis: [UI consistency audit](UI_CONSISTENCY_AUDIT.md).
+Status: **Implementation in progress. Shared typography/icon, fields/feedback, shell overlay and Phase 6 consumer-cleanup slices are locally verified. Phase 7 public rendered browser verification passed; authenticated dashboard browser evidence is explicitly blocked until an isolated local test user/storage state is available.**
 
-## Goal
+## Objective and scope
 
-Make the application feel like one polished product by removing visual differences caused by one-off typography, color, icon, and control styles. The work should strengthen the existing KhataOne design system instead of redesigning the product from scratch.
+Standardize typography, functional icons, theme usage and interaction states through KhataOne's existing shared design system. Preserve the brand, professional CA workflows, page structure and responsive layout.
 
-This plan is focused on shared UI consistency only. It should not change backend logic, Supabase queries, server actions, accounting workflows, auth behavior, or data models.
+This document replaces the earlier version of this plan. Existing shared primitives remain useful foundations, but their previous implementation does not close the new audit. Earlier three-interface-font and context-dependent functional-icon-size recommendations are superseded for this workstream.
 
-## Current Finding
+Cover all 28 routes discovered in the audit: public pages, authentication, onboarding, dashboard lists/details, create/edit forms, navigation, tables, cards, footers and every implemented overlay/state. Rediscover routes before implementation to account for subsequent changes.
 
-KhataOne already has a good design system:
+Backend code, Supabase queries/schema/RLS, server actions, permissions, financial calculations, auth behavior and search destinations are outside the change scope. No new libraries, palette, dark mode, toast system or confirmation workflow is required.
 
-- Sora for headings/display.
-- Manrope for UI and body text.
-- JetBrains Mono for numbers, GSTINs, invoice numbers, dates, and ledger-like values.
-- Color tokens in `src/app/globals.css` and `tailwind.config.ts`.
-- Dashboard primitives in `src/components/design-system.tsx`.
-- Icons from `lucide-react`.
+## Target standards
 
-The inconsistency comes from some areas still using local one-off classes instead of shared primitives. This is most visible in the dashboard shell, sidebar, topbar, command/search dialog, status chips, and a few operations/audit details.
+| Area | Implementation direction | Preserve / exception |
+| --- | --- | --- |
+| Primary typography | Existing Manrope for app-owned headings, body, controls, navigation, tables and metadata | Current brand wordmark; external documents and generated outputs are separate surfaces |
+| Numeric typography | Manrope with tabular numerals for numeric roles | Right alignment, Indian formatting, precision and identifier copy/paste behavior |
+| Type scale | Named shared roles based on the audit's scale; explicit size, line-height, weight, tracking and casing | Current hierarchy and 16px mobile inputs; review readability of small secondary labels |
+| Weight/style | 400 body, 500 controls/emphasis, 600 headings, restricted named 700 emphasis; normal style and zero tracking by default | Necessary glyph fallback for unsupported scripts; no unsupported multilingual claims |
+| Functional icons | Existing Lucide outline, shared 16px glyph and strokeWidth 2; consistent action mapping | Brand assets, external illustrations and browser-native controls; decorative exceptions documented |
+| Control targets | Shared accessible icon controls; 44px mobile/touch targets | Compact desktop rhythm; glyph size is independent of hit area |
+| Theme | Existing globals.css palette, Tailwind mappings and shared component recipes | Green/paper/saffron palette and semantic status distinctions |
+| Layout | Retain sidebar widths, header height, square outer shell and existing breakpoints | Record current profile/brand/overlay radius exceptions |
 
-## Principles
+The audit holds the detailed typography scale and evidence. This plan defines sequencing and completion gates rather than duplicating the inventory.
 
-1. Preserve KhataOne’s existing product identity.
-2. Prefer shared components and named class constants over one-off Tailwind strings.
-3. Keep dashboard UI dense, professional, and operational.
-4. Do not introduce new colors, fonts, icon libraries, or decorative styles.
-5. Keep all financial/accounting behavior unchanged.
-6. Verify with source contracts and build checks after every phase.
+## Implementation approach
 
-## Phase 1: Define Shared Visual Primitives
+Before each phase, inspect the current implementation and trace the complete affected flow: route/layout, component consumers, styles, state transitions, keyboard behavior and existing tests. Confirm the smallest correct integration point; do not assume the audit baseline is unchanged.
 
-Create or extend shared primitives in `src/components/design-system.tsx` and small shell-specific components where needed.
+Extend existing primitives rather than creating parallel systems. Keep interactive client boundaries narrow when extracting dialog/disclosure behavior. Migrate consumers in reviewable groups with meaningful regression checks. Avoid universal SVG selectors, blanket overrides, extensive !important rules and duplicated page-specific fixes.
 
-Recommended additions:
+## Phases and completion gates
 
-- `TopbarIconButton`
-- `ProfilePill`
-- `CommandDialog`
-- `CommandOption`
-- `StatusBadge`
-- `SidebarSectionLabel` or shared sidebar label class
-- `IconBadge` or `StatusIconBadge`
+| Phase | Work and integration points | Audit IDs | Exit gate |
+| --- | --- | --- | --- |
+| 1. Align standards and baseline | Reconcile Design.md, UI-UX-Design-Brief.md, rules.md and relevant AGENTS.md typography guidance with the latest direction. Confirm routes, existing primitives, baseline screenshots and exceptions. | T01, T02, T03, I01, H03 | One recorded standard; no conflicting active monospace/icon instructions; missing verification clearly recorded |
+| 2. Shared typography foundation | Update root font usage, globals.css, tailwind.config.ts and design-system.tsx text recipes. Migrate headings, .num, table metadata, counts and labels to named Manrope roles. Keep brand typography separate. | T01, T02, T03 | Representative consumers use shared roles; numeric alignment, glyph fallback and layout bounds verified |
+| 3. Shared icons and controls | Add or extend a Lucide Icon adapter and icon-button primitives. Normalize size/stroke, names, decorative handling, focus, disabled treatment and targets. Reuse a presentation-only action/destination icon map. | I01, I02, A02 | Functional icons match the standard; targets, destinations and accessible names preserved |
+| 4. Shared theme, fields and feedback | Centralize semantic surfaces, focus, elevation and placeholder styles. Extend Input/Select/Textarea, FieldError and FormMessage; migrate auth/recovery duplication. Share badge/alert tone definitions with explicit variants. | H01, H02, H03, H04 | Consistent invalid/focused/disabled/pending feedback; normal-size text and placeholders meet 4.5:1 contrast on actual surfaces |
+| 5. Existing overlays and shell interactions | Reuse the mobile menu's native-dialog pattern for a shared dialog boundary. Integrate search; normalize activity disclosure/menu semantics, selection announcement, tooltip portal styling and focus return. | A01, A02, H03 | Search contains focus, makes background inert and handles short screens; dismissal restores focus; activity and portals are keyboard-usable and themed |
+| 6. Complete migration and cleanup | Apply shared foundations to remaining routes and states. Remove proven unused style recipes and obsolete font consumers/imports after reference checks. | T03, I01, H01, H02, H03, C01 | Every route accounted for; no unexplained local overrides; required assets/output fonts preserved |
+| 7. Regression verification and handoff | Run relevant tests, lint/typecheck/build and full browser matrix with route/state/role evidence. Separate code completion from hosted/manual verification. | V01 and all findings | Each finding has evidence or explicit gaps; no whole-app pass from source checks alone |
 
-Recommended shared class constants:
+Phases 2-5 build foundations and migrate representative consumers. Phase 6 completes coverage rather than repeating those refactors. Address contrast and accessibility defects within their owning phases before final visual sign-off. Check isolated fixture availability in Phase 1 without blocking independent source work.
 
-- `tinyLabelClassName`
-- `statusBadgeClassName`
-- `topbarMetaClassName`
-- `commandInputClassName`
-- `commandOptionTitleClassName`
-- `commandOptionDescriptionClassName`
-- `dashboardStatValueClassName`
+## Consumer migration order
 
-Exit criteria:
+1. **Shared foundations and persistent shell:** text/theme tokens, buttons/fields, sidebar, topbar, search, activity, mobile drawer and collapsed-nav tooltips.
+2. **Public and account flows:** landing, contact, privacy, terms, login, signup, forgot/reset password and onboarding; include navigation, footer, FAQ and validation states.
+3. **Operational lists:** overview, inbox, review queue, clients, ledger, GST summary, reports, exports, audit logs, operations, settings and platform.
+4. **Details and forms:** client create/detail/edit, review workspace, ledger detail/edit, GST period detail, export/GST forms and evidence wrappers.
+5. **Cross-cutting states:** loading, empty, filtered-empty, error, read-only, selected, disabled, pending and success/warning feedback.
 
-- Shared primitives exist.
-- No product behavior has changed.
-- Typecheck and lint pass.
+Use compatible exports or temporary adapters where they reduce migration risk; remove them once references are migrated. Keep the brand image asset separate from app typography. Do not claim performance improvements without measurement.
 
-## Phase 2: Normalize Typography
+## Verification strategy
 
-Replace dashboard one-off text sizes with shared typography classes.
+| Layer | Required checks |
+| --- | --- |
+| Source/integration | All routes and consumers inventoried; imports resolve; no backend/action/schema changes; explicit exceptions |
+| Typography/glyphs | Computed and actual fonts after loading; rupee, punctuation, long identifiers, supported-script samples and tabular alignment; no failed-font fallback |
+| Icons/accessibility | 16px/2 stroke functional glyphs; mobile targets; accessible names, decorative handling, focus, disabled appearance and selection announcements |
+| Theme/states | Composited contrast, semantic statuses, fields/validation, portals, hover/focus/active/selected/pending/error/success |
+| Responsive | 1440x900, 834x900, 390x844; 320px and 200% zoom stress; short landscape/virtual-keyboard overlays; contained table scrolling |
+| Behavior | Navigation/search/filter routing, password visibility, validation timing, sidebar persistence, dialog dismissal/focus return and permission affordances |
+| Browser coverage | Chromium plus Firefox/WebKit where available; record native date/select/media limitations and real-device gaps |
 
-Known targets:
+Reuse existing verification tools and add focused behavioral tests when shared interaction logic changes. Run applicable checks after each code phase; final local validation includes:
 
-- `src/components/dashboard-topbar-actions.tsx`
-- `src/components/dashboard-nav.tsx`
-- `src/app/(dashboard)/dashboard/audit-logs/page.tsx`
-- `src/app/(dashboard)/dashboard/operations/page.tsx`
-- shared stat value styling in `src/components/design-system.tsx`
-
-Rules:
-
-- Use Sora only for page titles, brand/display, and headings.
-- Use Manrope for sidebar, topbar, forms, filters, table labels, and body copy.
-- Use JetBrains Mono only for numbers, IDs, GSTINs, invoices, dates, and ledger-like values.
-- Avoid new arbitrary text sizes unless they become named shared tokens.
-
-Exit criteria:
-
-- Dashboard shell/sidebar/topbar typography uses shared classes.
-- Remaining arbitrary sizes are either removed or documented as approved shared tokens.
-
-## Phase 3: Normalize Theme Color Usage
-
-Keep the current KhataOne palette, but ensure components consume it through tokens.
-
-Rules:
-
-- Use `khata-*`, semantic Tailwind aliases, or existing CSS variables.
-- Avoid raw hex values in UI components.
-- Raw hex values remain acceptable inside token definitions, OpenGraph image generation, and PDF export generation.
-- Avoid creating new color shades without adding them to the token system.
-
-Known targets:
-
-- Command/search dialog selected states.
-- Sidebar firm card and active nav treatment.
-- Status chips in audit/operations pages.
-- Inline badges and small pills.
-
-Exit criteria:
-
-- UI components use tokenized colors.
-- Repeated color patterns are represented by shared components/classes.
-
-## Phase 4: Normalize Icon Treatment
-
-The app already uses `lucide-react`, so this phase is about sizing, stroke feel, containers, and interaction states.
-
-Rules:
-
-- Use lucide icons for interface icons.
-- Use brand image only for KhataOne logo/mark.
-- Use document images only for evidence previews.
-- Standardize icon sizes by context:
-  - Topbar icon button: `size-5` icon inside `size-9` button.
-  - Sidebar nav icon: `size-4` icon in nav row/rail.
-  - Status/icon badge: shared `IconBadge` or `StatusIconBadge`.
-  - Empty state icon: shared `EmptyState` treatment.
-
-Known targets:
-
-- `DashboardTopbarActions`
-- `DashboardNav`
-- `DashboardSidebar`
-- status and operation cards
-- settings/platform icon panels
-
-Exit criteria:
-
-- Topbar, sidebar, and main dashboard icon treatments feel visually related.
-- No new icon library or SVG icon set is introduced.
-
-## Phase 5: Migrate Shell Components
-
-Apply the new shared primitives to the persistent shell first because it appears on every dashboard screen.
-
-Targets:
-
-- `src/components/dashboard-topbar-actions.tsx`
-- `src/components/dashboard-sidebar.tsx`
-- `src/components/dashboard-nav.tsx`
-- `src/components/dashboard-mobile-menu.tsx`
-- `src/app/(dashboard)/dashboard/layout.tsx`
-
-Work items:
-
-- Replace local topbar icon button classes with `TopbarIconButton`.
-- Replace profile pill local styling with `ProfilePill`.
-- Replace search dialog local structure with `CommandDialog` and `CommandOption`.
-- Normalize sidebar section labels and nav icon rhythm.
-- Preserve current sidebar widths and current header height unless explicitly changed later.
-
-Exit criteria:
-
-- Shell looks consistent between sidebar, topbar, and command dialog.
-- Navigation, search routing, activity menu, profile display, logout, and mobile menu still work.
-
-## Phase 6: Migrate Dashboard Content Components
-
-Apply shared typography/color/icon primitives to dashboard content where one-off styling remains.
-
-Targets:
-
-- Audit log badges/details.
-- Operations metrics and job metadata.
-- Status chips and small pills.
-- Any page-level one-off text or badge styling that duplicates shared patterns.
-
-Exit criteria:
-
-- Main dashboard content visually matches shell typography and icon treatment.
-- Status and metadata styling is consistent across pages.
-
-## Phase 7: Source Contracts And Regression Checks
-
-Add or update lightweight source-level checks so future edits do not reintroduce inconsistency.
-
-Recommended checks:
-
-- Shared topbar controls are used instead of repeated local icon-button classes.
-- Command dialog uses shared command primitives.
-- Dashboard arbitrary text sizes are either absent or allowlisted in shared tokens.
-- Dashboard UI components do not use raw hex colors.
-- Interface icons continue to come from `lucide-react`.
-
-Existing related checks:
-
-- `test:dashboard-navigation-shell`
-- `test:deliberate-density`
-- `test:dashboard-responsive-harness`
-
-Exit criteria:
-
-- New/updated checks pass locally.
-- Checks protect the shared-component direction without blocking legitimate landing-page hero typography.
-
-## Phase 8: Visual Verification
-
-Run local verification after implementation.
-
-Minimum checks:
-
-- Dashboard overview at desktop width.
-- Inbox page with search dialog open.
-- Review Queue page.
-- Clients page.
-- Operations page.
-- Sidebar expanded and collapsed.
-- Mobile navigation/menu basics.
-
-If authenticated browser state is unavailable, mark authenticated visual checks as blocked and let the user perform manual production review.
-
-Exit criteria:
-
-- No obvious typography mismatch between sidebar, topbar, and main content.
-- Topbar/search/sidebar icon treatments feel consistent.
-- Colors use the same paper/green/muted/border language.
-- No horizontal overflow or clipped labels.
-
-## Recommended Execution Order
-
-1. Build shared primitives and class constants.
-2. Refactor topbar/search/profile first.
-3. Refactor sidebar/nav second.
-4. Refactor status badges and small dashboard metadata third.
-5. Add source contracts.
-6. Run full validation.
-7. Push once all checks pass.
-
-## Validation Commands
-
-Run at minimum:
-
-```bash
-npm run typecheck
+```text
+npm run test:dashboard-shared-components
 npm run test:dashboard-navigation-shell
 npm run test:deliberate-density
 npm run test:dashboard-responsive-harness
+npm run test:accessibility-contracts
+npm run test:responsive-containment
+npm run typecheck
 npm run lint
-git diff --check
 npm run build
+git diff --check
 ```
 
-## Non-Goals
+Inspect tests before updating them: some may encode superseded font/icon rules. Update those contracts without weakening unrelated guards. Include relevant auth, role, action-outcome and review-workspace checks when affected. Command success does not establish visual or hosted correctness.
 
-- No backend changes.
-- No database changes.
-- No Supabase query changes.
-- No accounting workflow changes.
-- No new design direction.
-- No new icon library.
-- No large landing-page redesign in this pass.
+Authenticated verification requires an authorized isolated workspace and fixture IDs for detail routes and owner/admin/staff/viewer states. Exercise account or financial mutations only with disposable fixtures. Without fixtures, continue independent implementation/public verification and mark authenticated checks **UNVERIFIED**. Manual production review can supply visual evidence; it does not prove untested roles or workflow states.
+
+## Tracking and delivery
+
+Deliver small phase-based changes explaining what changed, why and how it was verified. Update Tracker.md after meaningful work and maintain finding-level closure evidence against the audit IDs. Preserve the original audit as the diagnosis baseline.
+
+| Phase | Current status |
+| --- | --- |
+| 1. Standards and baseline alignment | Locally implemented. Rules, design brief and agent guidance now match the one-primary-font/numeric-role decision. |
+| 2. Typography | Partially implemented and locally verified. Root font loading uses Manrope only and shared numeric roles preserve tabular figures; remaining route-level copy/style drift belongs to Phase 6. |
+| 3. Icons and controls | Partially implemented and locally verified. Shared functional icon constants are in place and representative shell/public consumers migrated; remaining page-level action icons belong to Phase 6. |
+| 4. Theme, fields and feedback | Partially implemented and locally verified. Placeholder contrast, shared command surface, shared invalid control states, auth/recovery control recipes, shared feedback tones, query-error alert presentation, review dirty-state warning and shared status badge tones are tightened; broader alert cleanup remains open for Phase 6. |
+| 5. Overlays | Locally implemented for the shared shell. Topbar search focus return, Tab containment, background scroll lock and selected-target state are fixed; activity menu now has labeled menu semantics, Escape focus return, Arrow/Home/End item movement, themed surface styling and the Operations icon aligned with the sidebar. Authenticated browser evidence remains open. |
+| 6. Consumer migration and cleanup | Source cleanup for known small shared-component drift is locally verified. Export helper icons, retry/refresh actions, landing CTA arrows, auth visibility/back/check icons, public home-logo links, document-evidence external links/fallback panels, auth side-panel surfaces, numeric class names, landing demo panel title, status chips, ledger active-filter badges and review dirty-state warnings now reuse shared recipes. Broader rendered route/state coverage remains open for Phase 7. |
+| 7. Verification and handoff | Started with local and live rendered browser evidence. Public landing/auth routes passed the Chromium matrix at 390px and 1440px with zero failures and zero console errors against both the local candidate and `https://khataone.vercel.app`; 105 authenticated dashboard route/viewport checks remain recorded as blocked because no isolated auth storage state/test user is available in this workspace. Evidence: `docs/audits/ui-ux/2026-09-13-diagnosis/evidence/isolated-verification/browser-matrix.json` and `docs/audits/ui-ux/2026-09-13-diagnosis/evidence/live-public-readiness/browser-matrix.json`. |
+
+Track **implementation complete**, **locally verified** and **hosted/manually verified** separately. Code changes can finish while external verification remains open; do not report that phase as fully verified.
+
+Keep each phase focused on shared presentation and its consumers so it is reviewable and reversible. If a regression appears, revert the affected phase change and investigate its shared integration point rather than adding isolated page overrides. Publishing/deployment is a separate execution step, not part of creating this plan.
+
+## Final acceptance
+
+All app-owned text uses the agreed primary family and role scale; functional icons follow one standard; shared theme/state recipes cover every discovered consumer. Keyboard accessibility, numeric readability, glyph support and responsive layouts pass the audit's regression criteria. All 13 audit IDs have a resolution and verification record, including explicit exceptions and any remaining inaccessible areas. Unverified cases prevent an unconditional whole-application consistency claim.
+
+This document remains the implementation and verification tracker for the UI consistency workstream as shared slices move from planned to locally verified.

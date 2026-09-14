@@ -20,7 +20,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -169,7 +169,7 @@ export default async function GstSummaryPage({
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDateRange(
                           period.period_start,
                           period.period_end,

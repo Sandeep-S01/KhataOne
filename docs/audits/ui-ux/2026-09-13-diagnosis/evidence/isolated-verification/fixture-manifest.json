@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "blocked",
   "firms": [
     "Firm A",
     "Firm B"
@@ -14,48 +14,50 @@
   "fixture_groups": [
     {
       "name": "review-inbox-pagination",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "review-decision-safety",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "private-evidence",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "unavailable-versus-zero",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "role-affordances",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "export-job-history",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "audit-trail",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "date-boundaries",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     },
     {
       "name": "responsive-stress",
-      "status": "pending",
-      "notes": ""
+      "status": "blocked",
+      "notes": "Requires isolated authenticated workspace fixtures before rendered dashboard verification can run."
     }
-  ]
+  ],
+  "updated_at": "2026-09-14T17:33:04.081Z",
+  "blocked_reason": "No isolated authenticated local test user/storage-state was available."
 }

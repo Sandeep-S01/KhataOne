@@ -63,7 +63,8 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 
 ## Typography
 
-- Implemented app typography: Sora for display/headings, Manrope for UI/body copy, and JetBrains Mono for amounts, GSTINs, invoice numbers, and tabular values.
+- Implemented app typography: Manrope is the primary interface family for headings, body copy, controls, tables, and numeric/accounting values.
+- Numeric/accounting values use the shared `num` role for tabular figures, alignment, and scan consistency without introducing a separate monospace family.
 - Dashboard headings should be compact and functional.
 - Landing page headings may be larger but should remain direct.
 - Letter spacing should remain normal.
@@ -73,6 +74,7 @@ Use green as the brand anchor, saffron as a controlled accent, and neutral ledge
 - Global CSS tokens live in `src/app/globals.css` and are mapped into Tailwind in `tailwind.config.ts`.
 - Existing `khata-*` Tailwind color aliases remain supported and now resolve to the shared token system.
 - Shared app utilities include `k-card`, `k-card-hover`, `k-elevated`, `k-hero`, `k-brand-gradient`, `k-eyebrow`, `k-row`, and `num`.
+- Functional UI icons use lucide-react at a shared 16px glyph size with stroke width 2. Touch targets remain larger than the glyph where required.
 - Shared UI primitives for dashboard migration live in `src/components/design-system.tsx`.
 
 ## Component Guidelines
@@ -129,6 +131,6 @@ The dashboard sidebar follows the approved reference direction while staying ali
 
 The dashboard header is a square-edged, top-attached shell surface aligned to the compact sidebar logo area height, with no outer dashboard gutters or rounded main-content shell. It keeps firm context on the left and places search access, activity alerts, profile context, and sign-out controls on the right with lucide-react icons. Header controls use a lightweight layout rhythm inspired by the reference: icon-first search and activity controls, a compact rounded profile pill, a subtle divider, and the existing sign-out action. Styling remains within KhataOne tokens, muted surfaces, compact spacing, and accessible focus states while avoiding backend changes.
 
-Search and activity controls are implemented as interactive header controls: search opens a keyboard-friendly dialog that routes into existing searchable dashboard pages, while activity opens a compact menu of existing operational destinations. These controls do not introduce new backend claims or unimplemented data sources.
+Search and activity controls are implemented as interactive header controls: search opens a keyboard-friendly dialog that routes into existing searchable dashboard pages, while activity opens a compact menu of existing operational destinations. The activity menu uses the same themed shell surface language, supports Escape focus return and Arrow/Home/End item movement, and keeps destination icons aligned with the sidebar. These controls do not introduce new backend claims or unimplemented data sources.
 
 The search dialog uses a light overlay and compact command-panel structure with a focused input row, close icon, selected target state, and concise footer action.

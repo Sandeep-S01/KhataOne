@@ -14,6 +14,7 @@ import {
   SectionCard,
   Select,
   SetupRequired,
+  StatusBadge,
   StatTile,
   TextLink,
   tableActionCellClass,
@@ -21,7 +22,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -225,12 +226,13 @@ export default async function LedgerPage({
             <FieldLabel>Active filters</FieldLabel>
             <div className="mt-2 flex flex-wrap gap-2">
               {activeFilters.map((filter) => (
-                <span
+                <StatusBadge
                   key={filter}
-                  className="rounded-md border border-khata-border bg-khata-paperMuted px-2 py-1 text-xs font-medium text-khata-muted"
+                  tone="neutral"
+                  className="capitalize"
                 >
                   {filter}
-                </span>
+                </StatusBadge>
               ))}
             </div>
           </div>
@@ -303,7 +305,7 @@ export default async function LedgerPage({
 
                   return (
                     <tr key={entry.id} className={tableRowClass}>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDate(entry.entry_date)}
                       </td>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
@@ -311,7 +313,7 @@ export default async function LedgerPage({
                       </td>
                       <td className={tableCellClass}>{entry.account_name}</td>
                       <td className={tableCellClass}>
-                        <p className={tableMonoTextClass}>
+                        <p className={tableNumericTextClass}>
                           {transaction?.invoice_number ?? "Invoice not provided"}
                         </p>
                         <p className={tableSecondaryTextClass}>

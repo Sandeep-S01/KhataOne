@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { publicBrandHomeLinkClassName } from "@/components/design-system";
 
 export function PublicPageShell({
   eyebrow,
@@ -20,7 +21,7 @@ export function PublicPageShell({
           <Link
             href="/"
             aria-label="KhataOne home"
-            className="rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green"
+            className={publicBrandHomeLinkClassName}
           >
             <BrandLogo />
           </Link>

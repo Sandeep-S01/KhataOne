@@ -5,6 +5,11 @@ import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import {
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+  publicBrandHomeLinkClassName,
+} from "@/components/design-system";
 
 const navItems = [
   { label: "How it works", href: "#how", id: "how" },
@@ -58,7 +63,7 @@ export function LandingNavigation() {
         <Link
           href="/"
           aria-label="KhataOne home"
-          className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
+          className={publicBrandHomeLinkClassName}
         >
           <BrandLogo />
         </Link>
@@ -100,16 +105,24 @@ export function LandingNavigation() {
           className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-xs font-semibold text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green active:scale-[0.98]"
         >
           <span>Book a demo</span>
-          <ArrowRight className="size-3.5" aria-hidden="true" />
+          <ArrowRight
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
         </a>
       </div>
 
       <details ref={detailsRef} className="group relative md:hidden">
         <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg border border-khata-border bg-white text-khata-ink shadow-sm transition hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
           <span className="sr-only">Open navigation menu</span>
-          <Menu className="h-5 w-5" />
+          <Menu
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
         </summary>
-        <div className="absolute right-0 top-12 w-[min(21rem,calc(100vw-2rem))] rounded-xl border border-khata-border bg-white p-2.5 shadow-xl">
+        <div className="absolute right-0 top-12 w-[min(21rem,calc(100vw-2rem))] rounded-lg border border-khata-border bg-white p-2.5 shadow-lg">
           <nav aria-label="Mobile primary" className="grid gap-1">
             {navItems.map((item) => (
               <a
@@ -138,7 +151,11 @@ export function LandingNavigation() {
               className="mt-1 inline-flex h-11 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark"
             >
               <span>Book a demo</span>
-              <ArrowRight className="size-4" aria-hidden="true" />
+              <ArrowRight
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             </a>
           </nav>
         </div>

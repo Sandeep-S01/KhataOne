@@ -6,6 +6,10 @@ import { useRef, useState } from "react";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { DashboardNav, DashboardUtilityNav } from "@/components/dashboard-nav";
+import {
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+} from "@/components/design-system";
 
 export function DashboardMobileMenu() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -37,7 +41,11 @@ export function DashboardMobileMenu() {
         className="flex size-11 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:size-9"
       >
         <span className="sr-only">Open workspace navigation</span>
-        <Menu className="size-5" aria-hidden="true" />
+        <Menu
+          className={functionalIconClassName}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       </button>
       <dialog
         ref={dialogRef}
@@ -74,7 +82,11 @@ export function DashboardMobileMenu() {
               aria-label="Close workspace navigation"
               className="flex size-11 shrink-0 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:size-9"
             >
-              <X className="size-5" aria-hidden="true" />
+              <X
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
             </button>
           </div>
           <DashboardNav onNavigate={closeMenu} />

@@ -18,7 +18,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -227,10 +227,10 @@ export default async function ReportsPage({
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
                         {client?.business_name ?? "Unknown client"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {client?.gstin ?? "Not provided"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDateRange(
                           period.period_start,
                           period.period_end,

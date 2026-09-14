@@ -27,7 +27,7 @@
 - Use real workflow visuals on the landing page.
 - Do not build decorative dashboards full of generic cards.
 - Use clear approval states: draft, needs review, approved, rejected, exported.
-- Use monospace styling for amounts, GSTINs, invoice numbers, and tabular financial data.
+- Use the shared numeric typography role for amounts, GSTINs, invoice numbers, and tabular financial data: one primary interface font with tabular numerals and right alignment where appropriate.
 - Use icons from lucide-react when icons are needed.
 - Keep controls accessible and keyboard-friendly.
 

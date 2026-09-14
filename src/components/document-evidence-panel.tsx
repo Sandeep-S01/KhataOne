@@ -1,10 +1,15 @@
-import { FieldLabel, InfoNote } from "@/components/design-system";
+import {
+  externalActionLinkClassName,
+  FieldLabel,
+  InfoNote,
+  mutedPanelClassName,
+} from "@/components/design-system";
 import type { DocumentEvidence } from "@/lib/document-evidence";
 
 function EvidencePreview({ evidence }: { evidence: DocumentEvidence }) {
   if (!evidence.signedUrl) {
     return (
-      <div className="rounded-md border border-khata-border bg-khata-paperMuted px-3 py-3 text-sm leading-6 text-khata-muted">
+      <div className={mutedPanelClassName}>
         {evidence.fallback}
       </div>
     );
@@ -31,7 +36,7 @@ function EvidencePreview({ evidence }: { evidence: DocumentEvidence }) {
         title={`Original evidence PDF: ${evidence.fileName}`}
         className="h-80 w-full rounded-md border border-khata-border bg-khata-paper"
       >
-        <div className="rounded-md border border-khata-border bg-khata-paperMuted px-3 py-3 text-sm leading-6 text-khata-muted">
+        <div className={mutedPanelClassName}>
           PDF preview is unavailable in this browser.
         </div>
       </object>
@@ -55,7 +60,7 @@ function EvidencePreview({ evidence }: { evidence: DocumentEvidence }) {
       href={evidence.signedUrl}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex min-h-11 items-center rounded-md border border-khata-border bg-white px-3 text-sm font-medium text-khata-green shadow-sm transition hover:border-khata-green/40 hover:bg-khata-green/5 focus:outline-none focus:ring-2 focus:ring-khata-green/40"
+      className={externalActionLinkClassName}
     >
       Open original text file
     </a>

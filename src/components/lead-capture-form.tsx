@@ -14,8 +14,11 @@ import {
   FieldLabel,
   FormMessage,
   Input,
+  panelTitleClassName,
   Select,
   Textarea,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
 } from "@/components/design-system";
 
 const initialState: LeadRequestState = {
@@ -33,10 +36,20 @@ function SubmitButton() {
       className="w-full"
     >
       {pending && (
-        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+        <LoaderCircle
+          className={`mr-2 animate-spin ${functionalIconClassName}`}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       )}
       {pending ? "Sending request..." : "Request demo"}
-      {!pending && <ArrowRight className="ml-2 h-4 w-4" />}
+      {!pending && (
+        <ArrowRight
+          className={`ml-2 ${functionalIconClassName}`}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
+      )}
     </Button>
   );
 }
@@ -50,7 +63,7 @@ export function LeadCaptureForm() {
       className="k-card p-5"
     >
       <div className="mb-5">
-        <p className="font-display text-xl font-semibold tracking-normal text-khata-ink">
+        <p className={panelTitleClassName}>
           Book a KhataOne demo
         </p>
         <p className="mt-2 text-sm leading-6 text-khata-muted">

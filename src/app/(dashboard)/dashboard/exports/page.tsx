@@ -23,7 +23,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tablePrimaryTextClass,
   tableSecondaryTextClass,
   tableRowClass,
@@ -248,7 +248,7 @@ export default async function ExportsPage({
                       <td className={tableCellClass}>
                         {client?.business_name ?? "Not linked"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {periodText}
                       </td>
                       <td className={tableCellClass}>
@@ -266,7 +266,7 @@ export default async function ExportsPage({
                           </p>
                         )}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDateTime(exportRecord.created_at)}
                       </td>
                       <td className={tableActionCellClass}>

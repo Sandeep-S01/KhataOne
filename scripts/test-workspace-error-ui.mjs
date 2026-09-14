@@ -21,6 +21,11 @@ function load(file, dependencies = {}) {
 const designSystem = load("src/components/design-system.tsx", {
   "@/lib/utils": load("src/lib/utils.ts"),
 });
+const errorSource = readFileSync("src/app/(dashboard)/error.tsx", "utf8");
+assert.match(errorSource, /RetryIcon/);
+assert.match(errorSource, /functionalIconClassName/);
+assert.match(errorSource, /functionalIconStrokeWidth/);
+assert.doesNotMatch(errorSource, /RotateCw/);
 const ErrorView = load("src/app/(dashboard)/error.tsx", { "@/components/design-system": designSystem }).default;
 let retries = 0;
 const props = { retry: () => retries++, error: new Error("PRIVATE workspace data") };

@@ -39,6 +39,13 @@ const dashboardNav = read("src/components/dashboard-nav.tsx");
 const authForm = read("src/components/auth-form.tsx");
 const passwordReset = read("src/components/password-reset-form.tsx");
 const updatePassword = read("src/components/update-password-form.tsx");
+const loginPage = read("src/app/(auth)/login/page.tsx");
+const signupPage = read("src/app/(auth)/signup/page.tsx");
+const forgotPasswordPage = read("src/app/(auth)/forgot-password/page.tsx");
+const resetPasswordPage = read("src/app/(auth)/reset-password/page.tsx");
+const landingNavigation = read("src/components/landing-navigation.tsx");
+const publicPageShell = read("src/components/public-page-shell.tsx");
+const landingPage = read("src/app/page.tsx");
 const clientForm = read("src/components/client-form.tsx");
 const ledgerForm = read("src/components/ledger-entry-form.tsx");
 const reviewForm = read("src/components/transaction-review-form.tsx");
@@ -59,25 +66,66 @@ for (const [name, approximateBackground] of [
   assert.match(tailwind, new RegExp(`"${name}-foreground"|${name}-foreground`), `${name} foreground token is available to Tailwind`);
 }
 
-assert.match(statusChip, /text-success-foreground/, "success StatusChip uses the accessible foreground token");
-assert.match(statusChip, /text-warning-foreground/, "warning StatusChip uses the accessible foreground token");
-assert.match(statusChip, /text-destructive-foreground/, "danger StatusChip uses the accessible foreground token");
-assert.match(statusChip, /text-info-foreground/, "info StatusChip uses the accessible foreground token");
+assert.match(statusChip, /StatusBadge/, "StatusChip reuses the shared badge recipe");
+assert.match(designSystem, /success: "border-success\/30 bg-success\/10 text-success-foreground"/, "success badges use the accessible foreground token");
+assert.match(designSystem, /warning: "border-warning\/35 bg-warning\/10 text-warning-foreground"/, "warning badges use the accessible foreground token");
+assert.match(designSystem, /danger: "border-destructive\/30 bg-destructive\/10 text-destructive-foreground"/, "danger badges use the accessible foreground token");
+assert.match(designSystem, /info: "border-info\/35 bg-info\/10 text-info-foreground"/, "info badges use the accessible foreground token");
+assert.match(designSystem, /brand: "border-khata-green\/30 bg-khata-green\/10 text-khata-green"/, "brand badges use the KhataOne theme tokens");
 assert.match(designSystem, /role="status"/, "FieldError announces inline validation changes");
 assert.match(designSystem, /text-destructive-foreground/, "FieldError and danger feedback use the accessible foreground token");
 assert.match(designSystem, /text-success-foreground/, "success feedback uses the accessible foreground token");
 assert.match(designSystem, /text-info-foreground/, "info feedback uses the accessible foreground token");
 assert.match(designSystem, /text-warning-foreground/, "warning inline alerts use the accessible foreground token");
+assert.match(designSystem, /export const authControlClassName = cn\(controlClassName, "bg-transparent"\)/, "auth forms reuse the shared control recipe");
+assert.match(designSystem, /export const authSidePanelSurfaceClassName =/, "auth side panels reuse a shared surface recipe");
+assert.match(designSystem, /export const publicBrandHomeLinkClassName =/, "public logo links reuse a shared focus/touch recipe");
+assert.match(designSystem, /export const authBackLinkClassName =/, "auth back links reuse a shared focus/touch recipe");
+assert.match(designSystem, /aria-\[invalid=true\]:border-destructive/, "shared controls expose a visible invalid state");
+assert.match(designSystem, /role="alert"/, "query errors use alert semantics");
+assert.match(designSystem, /feedbackToneClassName\[tone\]/, "form messages use the shared feedback tone recipe");
+assert.match(designSystem, /tone\?: keyof typeof feedbackToneClassName/, "form messages accept every shared feedback tone");
+assert.match(designSystem, /role=\{role\}/, "form messages can preserve caller-owned status semantics");
 
 assert.match(dashboardNav, /document\.addEventListener\("keydown", handleKeyDown\)/, "collapsed dashboard tooltip listens for Escape globally while visible");
 assert.match(dashboardNav, /event\.key === "Escape"/, "collapsed dashboard tooltip handles Escape");
 assert.match(dashboardNav, /setTooltipVisible\(false\)/, "collapsed dashboard tooltip can be dismissed without moving focus");
 
-assert.match(authForm, /h-11 w-full/, "login/signup inputs use 44px height on mobile");
+assert.match(authForm, /authControlClassName/, "login/signup inputs use the shared auth control recipe");
+assert.match(authForm, /functionalIconClassName/, "login/signup password visibility icons use the shared icon size");
+assert.match(authForm, /functionalIconStrokeWidth/, "login/signup password visibility icons use the shared icon stroke");
+assert.doesNotMatch(authForm, /className="size-4"/, "login/signup password visibility icons avoid local size recipes");
 assert.match(authForm, /size-11/, "login/signup password toggle uses 44px touch target on mobile");
 assert.match(authForm, /pr-12 md:pr-10/, "login/signup password input reserves space for the larger mobile toggle");
 assert.match(authForm, /text-destructive-foreground/, "login/signup inline validation uses accessible error foreground");
-assert.match(passwordReset, /h-11 w-full/, "forgot-password email input uses 44px height on mobile");
+for (const [label, source] of [
+  ["login", loginPage],
+  ["signup", signupPage],
+  ["forgot-password", forgotPasswordPage],
+  ["reset-password", resetPasswordPage],
+]) {
+  assert.match(source, /publicBrandHomeLinkClassName/, `${label} home logo link uses the shared public link recipe`);
+  assert.match(source, /authBackLinkClassName/, `${label} back link uses the shared auth link recipe`);
+  assert.match(source, /functionalIconClassName/, `${label} auth page icons use the shared functional icon size`);
+  assert.match(source, /functionalIconStrokeWidth/, `${label} auth page icons use the shared functional icon stroke`);
+  assert.doesNotMatch(source, /mt-8 rounded-md border border-khata-border bg-white p-4 shadow-sm/, `${label} does not duplicate the auth side-panel surface recipe`);
+  assert.doesNotMatch(source, /className="size-4"/, `${label} does not use local icon sizing for auth page icons`);
+}
+assert.match(loginPage, /authSidePanelSurfaceClassName/, "login side panel uses the shared auth surface recipe");
+assert.match(signupPage, /authSidePanelSurfaceClassName/, "signup side panel uses the shared auth surface recipe");
+for (const [label, source] of [
+  ["landing navigation", landingNavigation],
+  ["public page shell", publicPageShell],
+  ["landing footer", landingPage],
+]) {
+  assert.match(source, /publicBrandHomeLinkClassName/, `${label} uses the shared public home-link recipe`);
+}
+assert.match(passwordReset, /authControlClassName/, "forgot-password email input uses the shared auth control recipe");
+assert.match(updatePassword, /authControlClassName/, "update-password inputs use the shared auth control recipe");
+assert.match(updatePassword, /feedbackToneClassName/, "update-password feedback uses the shared tone recipe");
+assert.match(updatePassword, /functionalIconClassName/, "update-password icons use the shared icon size");
+assert.match(updatePassword, /functionalIconStrokeWidth/, "update-password icons use the shared icon stroke");
+assert.doesNotMatch(updatePassword, /className="size-4"/, "update-password visibility icons avoid local size recipes");
 assert.match(updatePassword, /size-11/, "update-password visibility toggle uses 44px touch target on mobile");
 assert.match(updatePassword, /aria-invalid=\{errorField === "password"\}/, "update-password length error is associated with the new-password field");
 assert.match(updatePassword, /aria-invalid=\{errorField === "confirm_password"\}/, "update-password mismatch error is associated with the confirm-password field");

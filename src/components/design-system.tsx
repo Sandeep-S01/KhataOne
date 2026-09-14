@@ -1,21 +1,33 @@
 import type { LucideIcon } from "lucide-react";
-import { AlertTriangle, ClipboardList, Info, LockKeyhole } from "lucide-react";
+import { AlertTriangle, ClipboardList, Info, LockKeyhole, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
 import { cn } from "@/lib/utils";
 
-export const tinyLabelClassName = "text-[10px] font-semibold uppercase tracking-wide";
+export const functionalIconClassName = "size-4 shrink-0";
+export const functionalIconStrokeWidth = 2;
+export const RetryIcon = RefreshCw;
+export const tinyLabelClassName = "text-[11px] font-semibold uppercase tracking-normal";
 export const sidebarSectionLabelClassName = `${tinyLabelClassName} px-3 pb-1.5 text-khata-muted/80`;
 export const dashboardMetricValueClassName = "num mt-1 text-lg font-semibold text-khata-ink";
-export const dashboardMetaMonoClassName = "num mt-1 text-[11px] text-khata-muted";
+export const dashboardMetaNumericClassName = "num mt-1 text-[11px] text-khata-muted";
 export const dashboardStatValueClassName = "num mt-2 text-[26px] font-semibold leading-none text-khata-ink";
 export const topbarIconButtonClassName = "inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green";
 export const profilePillClassName = "hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex";
-export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-white shadow-xl";
-export const commandInputClassName = "h-10 w-full border-0 bg-transparent text-[15px] text-khata-ink outline-none placeholder:text-khata-muted/70";
-export const commandSelectedBadgeClassName = `${tinyLabelClassName} rounded-full bg-white px-2 py-0.5 text-khata-green`;
-export const statusBadgeClassName = "inline-flex items-center rounded-full border border-khata-border bg-khata-paperMuted px-2 py-1 text-[11px] text-khata-muted";
+export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg";
+export const commandInputClassName = "h-10 w-full border-0 bg-transparent text-base text-khata-ink outline-none placeholder:text-khata-muted md:text-sm";
+export const commandSelectedBadgeClassName = `${tinyLabelClassName} rounded-full bg-khata-surface px-2 py-0.5 text-khata-green`;
+export const mutedPanelClassName = "rounded-md border border-khata-border bg-khata-paperMuted px-3 py-3 text-sm leading-6 text-khata-muted";
+export const authSidePanelSurfaceClassName = "mt-8 rounded-md border border-khata-border bg-khata-surface p-4 shadow-sm";
+export const publicBrandHomeLinkClassName = "inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0";
+export const authBackLinkClassName = "mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0";
+export const feedbackToneClassName = {
+  success: "border-success/35 bg-success/10 text-success-foreground",
+  danger: "border-destructive/35 bg-destructive/10 text-destructive-foreground",
+  info: "border-info/35 bg-info/10 text-info-foreground",
+  warning: "border-warning/40 bg-warning/10 text-warning-foreground",
+} as const;
 
 type TopbarIconButtonProps = ComponentPropsWithoutRef<"button">;
 
@@ -83,14 +95,16 @@ export function IconBadge({
         className,
       )}
     >
-      <Icon className="size-4" aria-hidden="true" />
+      <Icon
+        className={functionalIconClassName}
+        strokeWidth={functionalIconStrokeWidth}
+        aria-hidden="true"
+      />
     </span>
   );
 }
 
-type StatusBadgeProps = ComponentPropsWithoutRef<"span"> & {
-  tone?: "neutral" | "success" | "warning" | "danger" | "info";
-};
+export type StatusBadgeTone = keyof typeof statusBadgeToneClasses;
 
 const statusBadgeToneClasses = {
   neutral: "border-khata-border bg-khata-paperMuted text-khata-muted",
@@ -98,17 +112,20 @@ const statusBadgeToneClasses = {
   warning: "border-warning/35 bg-warning/10 text-warning-foreground",
   danger: "border-destructive/30 bg-destructive/10 text-destructive-foreground",
   info: "border-info/35 bg-info/10 text-info-foreground",
+  brand: "border-khata-green/30 bg-khata-green/10 text-khata-green",
 };
 
 export function StatusBadge({
   tone = "neutral",
   className,
   ...props
-}: StatusBadgeProps) {
+}: ComponentPropsWithoutRef<"span"> & {
+  tone?: StatusBadgeTone;
+}) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border px-2 py-1 text-[11px]",
+        "inline-flex max-w-full items-center truncate rounded-full border px-2 py-1 text-[11px] font-medium",
         statusBadgeToneClasses[tone],
         className,
       )}
@@ -134,6 +151,7 @@ export function CommandOption({
   return (
     <button
       type={type}
+      aria-pressed={selected}
       className={cn(
         "rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
         selected
@@ -179,6 +197,12 @@ const buttonSizes = {
   icon: "h-11 w-11 p-0 md:h-9 md:w-9",
 };
 
+export const externalActionLinkClassName = cn(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:stroke-2",
+  buttonVariants.outline,
+  buttonSizes.md,
+);
+
 export function Button({
   variant = "primary",
   size = "md",
@@ -190,7 +214,7 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:stroke-2",
         buttonVariants[variant],
         buttonSizes[size],
         className,
@@ -219,7 +243,7 @@ export function ActionLink({
     <Link
       href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
       className={cn(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green [&_svg]:size-4 [&_svg]:shrink-0",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:stroke-2",
         buttonVariants[variant],
         buttonSizes[size],
         className,
@@ -244,7 +268,7 @@ export function TextLink({
     <Link
       href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
       className={cn(
-        "inline-flex min-h-11 items-center justify-end gap-1.5 text-sm font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0 [&_svg]:size-4 [&_svg]:shrink-0",
+        "inline-flex min-h-11 items-center justify-end gap-1.5 text-sm font-semibold text-khata-green transition hover:text-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:min-h-0 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:stroke-2",
         className,
       )}
       {...props}
@@ -257,7 +281,11 @@ export function TextLink({
 type InputProps = ComponentPropsWithoutRef<"input">;
 
 export const controlClassName =
-  "flex h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm";
+  cn(
+    "flex h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm",
+    "aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:ring-destructive",
+  );
+export const authControlClassName = cn(controlClassName, "bg-transparent");
 
 export function Input({ className, type, ...props }: InputProps) {
   return (
@@ -283,7 +311,8 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "flex min-h-24 w-full resize-y rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted/65 focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "flex min-h-24 w-full resize-y rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:ring-destructive",
         className,
       )}
       {...props}
@@ -327,7 +356,7 @@ export function Field({
     <div className={cn("grid gap-1.5", className)}>
       <Label>{label}</Label>
       {children}
-      {error && <p className="text-xs font-medium text-destructive">{error}</p>}
+      {error && <p className="text-xs font-medium text-destructive-foreground">{error}</p>}
     </div>
   );
 }
@@ -358,30 +387,27 @@ export function FormMessage({
   message,
   tone = "danger",
   className,
+  role,
+  ...props
 }: {
   message?: string;
-  tone?: "success" | "danger" | "info";
+  tone?: keyof typeof feedbackToneClassName;
   className?: string;
-}) {
+} & Omit<ComponentPropsWithoutRef<"div">, "children" | "className">) {
   if (!message) {
     return null;
   }
 
-  const toneClasses = {
-    success: "border-success/35 bg-success/10 text-success-foreground",
-    danger:
-      "border-destructive/35 bg-destructive/10 text-destructive-foreground",
-    info: "border-info/35 bg-info/10 text-info-foreground",
-  };
-
   return (
     <div
+      role={role}
       aria-live="polite"
       className={cn(
         "rounded-md border px-3 py-2 text-sm leading-6",
-        toneClasses[tone],
+        feedbackToneClassName[tone],
         className,
       )}
+      {...props}
     >
       {message}
     </div>
@@ -430,6 +456,8 @@ export const pageTitleClassName =
   "text-xl font-semibold leading-7 tracking-normal text-khata-ink md:text-[1.625rem] md:leading-8";
 export const pageDescriptionClassName =
   "mt-2 max-w-3xl text-sm leading-6 text-khata-muted";
+export const panelTitleClassName =
+  "text-xl font-semibold leading-7 tracking-normal text-khata-ink";
 export const sectionCardHeaderClassName =
   "flex flex-col justify-between gap-2 border-b border-khata-border bg-khata-paperMuted/60 px-4 py-3 sm:flex-row sm:items-center";
 export const sectionCardTitleClassName =
@@ -532,7 +560,7 @@ export function RecordCount({
   const resolvedLabel = value === 1 && singularLabel ? singularLabel : label;
 
   return (
-    <span className="font-mono text-xs text-khata-muted">
+    <span className="num text-xs text-khata-muted">
       {value} {resolvedLabel}
     </span>
   );
@@ -576,7 +604,7 @@ export function PaginationControls({
 
   return (
     <div className="flex flex-col gap-2 border-t border-khata-border bg-khata-paperMuted/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-      <span className="font-mono text-xs text-khata-muted">
+      <span className="num text-xs text-khata-muted">
         Page {page} - {label}
       </span>
       <div className="flex items-center gap-2">
@@ -623,7 +651,10 @@ export function FilterBar({
 
 export function QueryError({ message }: { message: string }) {
   return (
-    <div className="p-4 text-sm font-medium text-destructive">
+    <div
+      role="alert"
+      className="border-t border-destructive/20 bg-destructive/5 p-4 text-sm font-medium leading-6 text-destructive-foreground"
+    >
       {message}
     </div>
   );
@@ -707,7 +738,11 @@ export function IconPanel({
             iconPanelToneClasses[tone],
           )}
         >
-          <Icon className="h-[18px] w-[18px]" />
+          <Icon
+            className={functionalIconClassName}
+            strokeWidth={functionalIconStrokeWidth}
+            aria-hidden="true"
+          />
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -737,7 +772,11 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center px-6 py-10 text-center md:py-12">
       <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted text-khata-green">
-        <Icon className="h-5 w-5" />
+        <Icon
+          className={functionalIconClassName}
+          strokeWidth={functionalIconStrokeWidth}
+          aria-hidden="true"
+        />
       </div>
       <h3 className="text-sm font-semibold text-khata-ink">{title}</h3>
       <p className="mt-2 max-w-xl text-sm leading-6 text-khata-muted">
@@ -760,7 +799,11 @@ export function SetupRequired({
       <SectionCard bodyClassName="p-5">
         <div className="flex gap-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-khata-border bg-khata-paperMuted text-khata-green">
-            <LockKeyhole className="h-5 w-5" />
+            <LockKeyhole
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
           </div>
           <div className="min-w-0">
             <h1 className="text-xl font-semibold tracking-normal text-khata-ink md:text-2xl">
@@ -796,7 +839,11 @@ export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 export function InfoNote({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex gap-3 rounded-md border border-info/35 bg-info/10 px-3 py-2 text-sm leading-6 text-info-foreground">
-      <Info className="mt-0.5 h-4 w-4 shrink-0" />
+      <Info
+        className={`mt-0.5 ${functionalIconClassName}`}
+        strokeWidth={functionalIconStrokeWidth}
+        aria-hidden="true"
+      />
       <div>{children}</div>
     </div>
   );
@@ -826,7 +873,11 @@ export function InlineAlert({
         className,
       )}
     >
-      <AlertTriangle className="size-3.5 shrink-0" />
+      <AlertTriangle
+        className={functionalIconClassName}
+        strokeWidth={functionalIconStrokeWidth}
+        aria-hidden="true"
+      />
       <span className={truncate ? "truncate" : "min-w-0 whitespace-normal break-words leading-5"}>
         {children}
       </span>
@@ -837,7 +888,11 @@ export function InlineAlert({
 export function PermissionNotice({ message }: { message: string }) {
   return (
     <div className="flex gap-3 rounded-md border border-khata-border bg-khata-paperMuted px-3 py-2 text-sm leading-6 text-khata-muted">
-      <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0" />
+      <LockKeyhole
+        className={`mt-0.5 ${functionalIconClassName}`}
+        strokeWidth={functionalIconStrokeWidth}
+        aria-hidden="true"
+      />
       <p>{message}</p>
     </div>
   );
@@ -938,4 +993,4 @@ export const tableNumericCellClass = `${tableCellClass} num text-right`;
 export const tableActionCellClass = `${tableCellClass} text-right`;
 export const tablePrimaryTextClass = "font-medium text-khata-ink";
 export const tableSecondaryTextClass = "text-xs text-khata-muted";
-export const tableMonoTextClass = "num text-xs";
+export const tableNumericTextClass = "num text-xs";

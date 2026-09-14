@@ -128,10 +128,10 @@ Do not expose complex accounting language to SMB users unless necessary.
 - Compact rows and controls.
 - 8px or smaller border radius unless component library defaults require otherwise.
 - Soft borders, limited shadows.
-- Monospace numbers.
+- Shared numeric role for amounts, invoice numbers, GSTINs, and tabular financial values, using the primary interface font with tabular numerals.
 - Clear status chips.
 - Tooltips for icon-only actions.
-- Icons from lucide-react.
+- Icons from lucide-react with a shared functional glyph size and stroke treatment.
 
 ## Responsive Behavior
 

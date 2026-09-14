@@ -4,7 +4,14 @@ import Link from "next/link";
 
 import { AuthForm } from "@/components/auth-form";
 import { BrandLogo } from "@/components/brand-logo";
-import { ActionLink } from "@/components/design-system";
+import {
+  ActionLink,
+  authBackLinkClassName,
+  authSidePanelSurfaceClassName,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
+  publicBrandHomeLinkClassName,
+} from "@/components/design-system";
 
 const assurances = [
   "Client documents arrive on WhatsApp and stay preserved as the source.",
@@ -37,7 +44,7 @@ export default function LoginPage() {
           <Link
             href="/"
             aria-label="KhataOne home"
-            className="inline-flex min-h-11 items-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
+            className={publicBrandHomeLinkClassName}
           >
             <BrandLogo />
           </Link>
@@ -68,9 +75,13 @@ export default function LoginPage() {
 
           <Link
             href="/"
-            className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm text-khata-muted transition hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green md:min-h-0"
+            className={authBackLinkClassName}
           >
-            <ArrowLeft className="size-4" aria-hidden="true" />
+            <ArrowLeft
+              className={functionalIconClassName}
+              strokeWidth={functionalIconStrokeWidth}
+              aria-hidden="true"
+            />
             Back to website
           </Link>
         </div>
@@ -86,7 +97,8 @@ export default function LoginPage() {
             {assurances.map((item) => (
               <div key={item} className="flex items-start gap-2.5">
                 <ShieldCheck
-                  className="mt-0.5 size-4 shrink-0 text-khata-green"
+                  className={`mt-0.5 ${functionalIconClassName} text-khata-green`}
+                  strokeWidth={functionalIconStrokeWidth}
                   aria-hidden="true"
                 />
                 <p className="leading-5">{item}</p>
@@ -94,7 +106,7 @@ export default function LoginPage() {
             ))}
           </div>
 
-          <div className="mt-8 rounded-md border border-khata-border bg-white p-4 shadow-sm">
+          <div className={authSidePanelSurfaceClassName}>
             <p className="k-eyebrow text-khata-muted">Workspace controls</p>
             <dl className="mt-2 grid gap-1 text-sm">
               {controlItems.map(([title, description]) => (

@@ -64,6 +64,18 @@ function loadUpdatePasswordForm(createClient) {
       if (name === "@/components/design-system") {
         return {
           Button: (props) => require("react/jsx-runtime").jsx("button", props),
+          authControlClassName: "shared-auth-control",
+          feedbackToneClassName: {
+            success: "shared-success-feedback",
+            danger: "shared-danger-feedback",
+          },
+          functionalIconClassName: "size-4 shrink-0",
+          functionalIconStrokeWidth: 2,
+        };
+      }
+      if (name === "@/lib/utils") {
+        return {
+          cn: (...inputs) => inputs.filter(Boolean).join(" "),
         };
       }
       if (name === "@/lib/supabase/client") {

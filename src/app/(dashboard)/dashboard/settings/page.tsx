@@ -13,7 +13,7 @@ import {
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tableRowClass,
@@ -149,7 +149,7 @@ export default async function SettingsPage() {
             />
           }
         >
-          <p className="mt-2 font-mono text-xs text-khata-muted">
+          <p className="num mt-2 text-xs text-khata-muted">
             Configured AI order: {getExtractionProviderOrder().join(", ")}
           </p>
           <div className="mt-3">
@@ -193,7 +193,7 @@ export default async function SettingsPage() {
               <tbody>
                 {members.map((member) => (
                   <tr key={member.id} className={tableRowClass}>
-                    <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                       {member.user_id}
                     </td>
                     <td className={`${tableCellClass} capitalize`}>{member.role}</td>

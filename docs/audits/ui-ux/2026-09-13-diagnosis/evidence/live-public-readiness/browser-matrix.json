@@ -1,7 +1,7 @@
 {
   "status": "blocked",
-  "checked_at": "2026-09-14T17:33:04.081Z",
-  "base_url": "http://127.0.0.1:3000",
+  "checked_at": "2026-09-14T17:42:35.343Z",
+  "base_url": "https://khataone.vercel.app",
   "browser": "chromium",
   "browser_version": "153.0.8010.12",
   "authenticated_checks": "blocked-missing-isolated-storage-state",

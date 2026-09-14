@@ -19,9 +19,10 @@ import {
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
+  fieldLabelClassName,
   tableHeadCellClass,
   tableHeaderClass,
-  tableMonoTextClass,
+  tableNumericTextClass,
   tableNumericCellClass,
   tableNumericHeadCellClass,
   tablePrimaryTextClass,
@@ -396,7 +397,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-search"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Search
               </label>
@@ -410,7 +411,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-client"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Client
               </label>
@@ -430,7 +431,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-status"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Status
               </label>
@@ -449,7 +450,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-risk"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Risk
               </label>
@@ -466,7 +467,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-document-type"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 Document
               </label>
@@ -485,7 +486,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-from"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 From
               </label>
@@ -499,7 +500,7 @@ export default async function ReviewQueuePage({
             <div className="grid gap-1.5">
               <label
                 htmlFor="review-to"
-                className="text-xs font-semibold uppercase tracking-wider text-khata-muted"
+                className={fieldLabelClassName}
               >
                 To
               </label>
@@ -597,14 +598,14 @@ export default async function ReviewQueuePage({
                           {transaction.document_type?.replaceAll("_", " ") ??
                             "Not provided"}
                         </p>
-                        <p className={`${tableMonoTextClass} text-khata-muted`}>
+                        <p className={`${tableNumericTextClass} text-khata-muted`}>
                           {transaction.document_file_name ?? "No file"}
                         </p>
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {transaction.invoice_number ?? "Not provided"}
                       </td>
-                      <td className={`${tableCellClass} ${tableMonoTextClass}`}>
+                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                         {formatDisplayDate(transaction.transaction_date)}
                       </td>
                       <td className={`${tableCellClass} capitalize`}>

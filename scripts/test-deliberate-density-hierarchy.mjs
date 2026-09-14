@@ -28,12 +28,15 @@ for (const token of [
   "tinyLabelClassName",
   "sidebarSectionLabelClassName",
   "dashboardMetricValueClassName",
-  "dashboardMetaMonoClassName",
+  "dashboardMetaNumericClassName",
   "dashboardStatValueClassName",
   "topbarIconButtonClassName",
   "profilePillClassName",
   "commandInputClassName",
-  "statusBadgeClassName",
+  "functionalIconClassName",
+  "functionalIconStrokeWidth",
+  "publicBrandHomeLinkClassName",
+  "authBackLinkClassName",
 ]) {
   assert(
     designSystem.includes(`export const ${token}`),
