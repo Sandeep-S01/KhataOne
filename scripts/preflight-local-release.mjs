@@ -150,8 +150,6 @@ const conflicts = run("rg", [
   "supabase",
   ".github",
   "docs",
-  "--glob",
-  "!docs/performance/*.json",
 ]);
 if (conflicts.status === 0) {
   process.stderr.write(conflicts.stdout);

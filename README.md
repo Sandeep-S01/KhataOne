@@ -84,12 +84,18 @@ npm run seed:demo
 
 Important project docs live in `docs/`:
 
+- `rules.md`
+- `PRD.md`
+- `TRD.md`
 - `Implementation-Plan.md`
 - `Backend-Schema.md`
+- `Design.md`
+- `UI-UX-Design-Brief.md`
+- `UI-UX-Remediation-Plan.md`
+- `UI-Consistency-Implementation-Plan.md`
 - `Production-Runbook.md`
-- `Production-Smoke-Test-Checklist.md`
-- `RLS-Verification-Plan.md`
-- `Platform-Extensions-Roadmap.md`
+- `security-hardening-plan.md`
+- `Tracker.md`
 
 ## Security
 

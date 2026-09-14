@@ -8,7 +8,7 @@ Do not mark KhataOne production-ready until all of these pass:
 - `npm run verify:release-local` for the complete local hardening suite
 - `npm run smoke:local` against the running deployment or preview URL
 - Supabase migrations applied successfully
-- `docs/Production-Smoke-Test-Checklist.md` completed against live credentials
+- Production smoke testing completed against live credentials
 - Export files reviewed by a practicing CA
 - Monitoring/log forwarding configured
 - Backup and rollback process confirmed

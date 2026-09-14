@@ -7,7 +7,7 @@ Status: Planning complete; R01, R02A-R02B, R03, R04A-R04E, R05A, R06A-R06B, R08A
 
 Resolve the audited workflow, accessibility, responsive and presentation defects in small verified slices. Preserve KhataOne's WhatsApp-first intake, CA-controlled review, ledger handoff, GST preparation and private export workflow.
 
-This plan follows the [September 13 diagnosis](audits/ui-ux/2026-09-13-diagnosis/README.md). The [canonical findings](audits/ui-ux/2026-09-13-diagnosis/FINDINGS.md), [CSV](audits/ui-ux/2026-09-13-diagnosis/FINDINGS.csv) and [implementation inputs](audits/ui-ux/2026-09-13-diagnosis/IMPLEMENTATION_INPUTS.md) remain evidence; do not rewrite them to claim fixes. Track implementation status separately here and in [Tracker.md](Tracker.md).
+This plan is the canonical summary of the September 13 diagnosis findings and remediation packages. Historical generated audit reports and bulky evidence captures were removed during docs cleanup; active isolated verification templates remain under [ISOLATED_VERIFICATION_PLAN.md](audits/ui-ux/2026-09-13-diagnosis/ISOLATED_VERIFICATION_PLAN.md). Track implementation status separately here and in [Tracker.md](Tracker.md).
 
 The user authorized creation of this plan. This document does not claim implementation, authorize production financial mutations, or approve deployments. Existing live-account authorization supports read-only inspection. No new paid integration, framework, database or styling system is proposed.
 

@@ -6,6 +6,13 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-14 docs cleanup completed locally: removed superseded standalone planning
+  docs, old design-review proposals, historical performance trace/report dumps, and
+  generated UI audit evidence artifacts that are no longer active implementation inputs.
+  Preserved core source-of-truth docs, active production/security docs, current UI plans,
+  and isolated UI/UX verification templates used by npm scripts. Updated README, runbook,
+  TRD, UI remediation plan and tracker references so the remaining docs point to current
+  sources instead of deleted artifacts.
 - 2026-09-14 UI consistency implementation slice locally verified: shared
   dashboard primitives now live in `src/components/design-system.tsx` for topbar
   icon buttons, profile pills, command search options, icon badges, status
@@ -223,15 +230,10 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
   implemented. Documentation-only change; existing audit evidence and Overview
   concepts preserved. Finding coverage, references and diff checks passed.
 
-- 2026-09-13 Overview concept 2: prepared `docs/design-reviews/overview/overview-proposal-v2.png`
-  and `layout-v2.md` from the user's additional layout reference. Proposed one header firm
-  context, simpler navigation, a unified summary band, and compact review surfaces.
-  Static visual approval remains pending; no application or backend changes.
-
-- 2026-09-13 Overview screenshot review: prepared a page-specific visual audit and
-  PNG approval concept in `docs/design-reviews/overview/`. Proposal improves density,
-  worklist alignment, table wrapping, and visual hierarchy using the supplied records.
-  Awaiting visual approval; no application code, backend, or other pages changed.
+- 2026-09-13 Overview screenshot review/concepts were superseded by later dashboard
+  shell and design-system implementation work. The generated proposal files were removed
+  during docs cleanup; current UI direction lives in `docs/Design.md`,
+  `docs/UI-UX-Design-Brief.md`, and `docs/UI-Consistency-Implementation-Plan.md`.
 
 - 2026-09-12 WA-LAT recovery scheduling follow-up: production deployment and CI for commit
   `943a2d1` passed, but no recovery heartbeat appeared at the expected GitHub schedule slot.
@@ -332,7 +334,7 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 - Post-release next-step review: re-read the pending firm-loader/middleware recovery changes and reran firm-context, session/cookie/deadline and visible-row-probe tests; all passed. No additional runtime changes or deployment made. Recovery behavior is not a demonstrated navigation-speed fix. Requested a user-side private-window and mobile-hotspot Clients-to-Ledger comparison on the updated live site to distinguish the previously observed pre-send stalls from application latency; independent-network evidence remains pending.
 
-- Post-push public-domain smoke: existing-account Clients/Ledger/Review Queue checks passed on the Git-triggered Tokyo deployment; click samples 885/885/863 ms, with populated rows and hnd1/private-no-store responses. Evidence: docs/performance/region-release-main-smoke.json. One sample each, not p95 certification.
+- Post-push public-domain smoke: existing-account Clients/Ledger/Review Queue checks passed on the Git-triggered Tokyo deployment; click samples 885/885/863 ms, with populated rows and hnd1/private-no-store responses. One sample each, not p95 certification. Historical raw performance evidence files were removed during docs cleanup.
 
 - 2026-09-12 GitHub integration complete: Fast-forwarded main to the tested region-only commit c62e3ef and pushed origin/main; remote SHA verified. Other pending edits were preserved and excluded. Git-triggered production deployment dpl_jkyuKGWc8XiDEyELvAcdefJzsMF9 is READY; public khataone.vercel.app resolves to it and API metadata confirms the exact GitHub SHA and hnd1 region. This supersedes the integration-pending status below. Documentation remains local with the other pending performance work.
 
@@ -346,16 +348,16 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 - 2026-09-12 exact-request follow-up: Inspected sidebar, middleware, cached firm loader, queue/ledger queries and review action flow before editing. Changed only diagnostic scripts to correlate client responses, trial phases, optional Clients-source navigation and cancelled-request timing. Ten real-account Clients-to-Ledger/Queue trials reproduced 6527 ms Ledger click and 4941 ms queue hard-load outliers; exact matching auth/data spans were each under 50 ms. Saved browser and per-route trace evidence; no app runtime changes or new deployment. Build/lint/typecheck and diagnostic/query/session tests passed. Remaining work is outside measured auth/data spans, plus the separately identified server firm-loader error recovery issue and authorized security integration fixtures. Production and financial records unchanged.
 
-- 2026-09-12 auth resilience: Added five-second middleware auth deadline with transport cancellation and private fail-closed 503 for transient failures; invalid sessions still redirect. Local fault/cookie/cancellation tests, build, lint/typecheck, query/tracing and phase 1/2/3 hardening checks passed. Verified protected hnd1 preview using the existing real account: ten trials per mode each for queue and ledger; click medians 896/892 ms, maxima 2927/915 ms. Queue targets remain unmet; auth stall did not recur in the partial 87-span log window, which is not proof of resolution. Saved sanitized evidence in docs/performance. Production unchanged; no financial mutations or password changes.
+- 2026-09-12 auth resilience: Added five-second middleware auth deadline with transport cancellation and private fail-closed 503 for transient failures; invalid sessions still redirect. Local fault/cookie/cancellation tests, build, lint/typecheck, query/tracing and phase 1/2/3 hardening checks passed. Verified protected hnd1 preview using the existing real account: ten trials per mode each for queue and ledger; click medians 896/892 ms, maxima 2927/915 ms. Queue targets remain unmet; auth stall did not recur in the partial 87-span log window, which is not proof of resolution. Production unchanged; no financial mutations or password changes.
 
 - 2026-09-12 tail investigation: Ledger follow-up recorded a 25-second browser request wait and concurrent ~40-second Edge auth spans. Tested the same auth guard under supported Node proxy in a separate hnd1 preview (30 queue trials); queue p95 was 2427 ms, so the runtime change was not retained. Selected local configuration remains original middleware plus hnd1. Added build-manifest auth-matcher regression coverage. Intermittent stalls and p95 targets remain open; no production promotion.
 
 - 2026-09-12 Tokyo comparison: User Infrastructure screenshot confirmed Supabase ap-northeast-1. Deployed and verified hnd1 preview; 30 review-queue trials per mode reduced median click-to-rows from 1905 to 913 ms and p95 from 1949 to 1419 ms. Prepared vercel.json region with cron jobs unchanged. All p95 targets remain unmet; three-route checks found a 5519 ms Ledger outlier despite fast server spans, now under targeted browser/network follow-up. Production remains unchanged.
 
-- 2026-09-12 continuation: Deployed protected instrumentation and selective-prefetch previews. The real-account baseline completed 30 hard navigations and 30 queue clicks; click p95 was 1949 ms and hard-navigation-to-rows p95 was 2596 ms. Sanitized browser/trace artifacts are in docs/performance. Database region confirmation and the colocation experiment remain pending; production is unchanged.
+- 2026-09-12 continuation: Deployed protected instrumentation and selective-prefetch previews. The real-account baseline completed 30 hard navigations and 30 queue clicks; click p95 was 1949 ms and hard-navigation-to-rows p95 was 2596 ms. Database region confirmation and the colocation experiment remain pending; production is unchanged.
 - 2026-09-12 comparison complete: The selective-prefetch preview also completed 30 trials per mode. Tracked requests fell from 511 to 462, but click p95 rose to 2435 ms; the experiment remains disabled by default. Captured a separate sanitized 995-event Chrome CPU timeline and corrected final-response timing for Early Hints. Local lint/typecheck/build and session/tracing checks passed. Region confirmation, colocation testing and remaining authorization/workflow integration states are still outstanding.
 
-- 2026-09-12: Implemented correlated dashboard latency diagnostics, tested auth cookie propagation and an opt-in prefetch experiment, corrected browser readiness measurement, and verified production functions execute in iad1. Local checks passed; database region and authenticated preview latency/security comparisons remain unverified. See `docs/performance/dashboard-latency-results.md`.
+- 2026-09-12: Implemented correlated dashboard latency diagnostics, tested auth cookie propagation and an opt-in prefetch experiment, corrected browser readiness measurement, and verified production functions execute in iad1. Local checks passed; database region and authenticated preview latency/security comparisons remained unverified at that point. Historical raw performance reports were removed during docs cleanup.
 
 - Plan and execute dashboard UI/UX audit improvements across the protected CA console, mirroring the public-site audit process while preserving dense operational workflows, RLS assumptions, and CA-controlled accounting decisions.
 - Deploy and visually verify the September 8, 2026 live website UI/UX audit polish on desktop, tablet, and mobile, including social previews and Supabase password recovery redirects.
@@ -423,12 +425,12 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
   canaries.
 - Run image, PDF, and audio production canaries for WA-LAT-3, confirming one acknowledgment, one document/job/extraction where applicable, bounded queue wait, and no duplicate side effects.
 - Do not automatically replay the existing failed AI backlog; classify and reconcile those failures separately.
-- Manual testing by product owner: authenticated desktop/tablet/mobile visual verification for `docs/Dashboard-UI-UX-Audit-Implementation-Plan.md` using seeded or live dashboard data.
+- Manual testing by product owner: authenticated desktop/tablet/mobile visual verification for the current dashboard UI using seeded or live dashboard data.
 - Deploy the live website UI/UX audit polish and validate metadata previews for Open Graph, Twitter/X, LinkedIn, and WhatsApp sharing.
 - Verify Supabase password reset email links redirect to `/reset-password` and successfully update passwords in production.
 - Visually verify the landing, login, signup, forgot-password, reset-password, privacy, terms, and contact pages at desktop, tablet, and mobile widths.
 - Deploy and visually verify the new conversion-focused landing page redesign against the production URL on desktop, tablet, and mobile widths.
-- Deploy and verify the safe WhatsApp greeting/help menu responder from `docs/WhatsApp-Help-Menu-Plan.md` with matched and unmatched sender tests.
+- Deploy and verify the safe WhatsApp greeting/help menu responder with matched and unmatched sender tests.
 - Apply `supabase/migrations/20260812090000_normalize_transactions_nullable_fields.sql` in Supabase if Operations "Run now" reports any not-null violation on draft transaction fields such as `date`, `amount`, or `category`.
 - Apply `supabase/migrations/20260812103000_normalize_transaction_lifecycle_constraints.sql` in Supabase if approving a transaction reports `transactions_status_check`.
 - Deploy AI extraction fallback layer and set `AI_EXTRACTION_PROVIDER_ORDER=rule_based_text` in Vercel for no-credit testing.
@@ -461,8 +463,8 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 - Connect structured operational logs to Sentry or chosen monitoring provider.
 - Run `npm run verify` and `SMOKE_BASE_URL=<deployment-url> npm run smoke:local` in deployment pipeline.
 - Run `npm run seed:demo` after live Supabase migrations and at least one Auth user exist.
-- Complete `docs/RLS-Verification-Plan.md` with two live test firms.
-- Review `docs/Platform-Extensions-Roadmap.md` before implementing GST filing, GSTR comparison, bank reconciliation, reminders, sync, billing, analytics, or admin console features.
+- Complete firm-isolation/RLS verification with two live test firms.
+- Review product and technical requirements before implementing GST filing, GSTR comparison, bank reconciliation, reminders, sync, billing, analytics, or admin console features.
 - Replace the planned GST provider boundary only after verifying an approved provider contract/docs and adding production smoke checks.
 - Validate export formats with a practicing CA before marking production-ready.
 - Add first end-to-end demo path with seeded data.
@@ -500,8 +502,8 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-11 | Added configurable endpoint rate-limit thresholds and readiness visibility for shared platform/edge/store rate-limit enforcement, while keeping process-local limiting as a local guard. |
 | 2026-09-11 | Hardened rate-limit client key derivation so forwarded IP headers are ignored unless `TRUST_FORWARDED_IP_HEADERS=true` is explicitly configured behind a trusted proxy, with readiness visibility for the setting. |
 | 2026-09-10 | Implemented the safe dashboard performance pass with opt-in sanitized server timing, browser timing harness scaffolding, Clients database-side search before pagination, Review Queue low-confidence query filtering, deterministic pagination tie-breakers, health check duration reporting, prepared Supabase search/tie-break indexes, and local validation via `test:performance`, typecheck, lint, and build. |
-| 2026-09-10 | Completed a diagnosis-only performance audit package with `docs/performance/PERFORMANCE_DIAGNOSIS.md` and `docs/performance/PERFORMANCE_BASELINE.json`, covering verified architecture, measured unauthenticated local/live baselines, code-confirmed bottlenecks, blocked authenticated/index evidence, and ranked next-phase recommendations. |
-| 2026-09-10 | Added `docs/Performance-Architecture-Brief.md` as a copy-ready architecture/workflow/performance context package for independent ChatGPT diagnosis of authenticated dashboard navigation latency. |
+| 2026-09-10 | Completed a diagnosis-only performance audit package. Historical raw performance report files were removed during docs cleanup after the relevant decisions were summarized in TRD and Tracker. |
+| 2026-09-10 | Added a copy-ready performance context package for independent dashboard latency diagnosis. The standalone brief was removed during docs cleanup after the relevant decision was captured in current docs. |
 | 2026-09-10 | Linked the local checkout to the Vercel `khata-one` project and verified Vercel env names without exposing secret values; `SUPABASE_ACCESS_TOKEN` is not present in any listed Vercel environment, so production Supabase migration remains blocked on a Supabase CLI access token or database password. Renamed authenticated timing tooling to `perf:live-dashboard` with normal live dashboard credential env names. |
 | 2026-09-09 | Added authenticated live dashboard performance smoke coverage using Supabase SSR sign-in cookies and timed requests for dashboard, Clients, Ledger, Review Queue, Inbox, and GST Summary routes; production index application remains gated on Supabase CLI/database credentials. |
 | 2026-09-09 | Implemented dashboard performance pass 3 by narrowing middleware matching to dashboard/onboarding/auth routes only, removing unnecessary Supabase auth refresh work from public pages and API endpoints while keeping protected route checks in place. |
