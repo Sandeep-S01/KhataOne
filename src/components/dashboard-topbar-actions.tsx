@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Inbox, ListChecks, Search, Settings, type LucideIcon } from "lucide-react";
+import { Bell, Inbox, ListChecks, Search, Settings, X, type LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -196,7 +196,7 @@ export function DashboardTopbarActions({
                         <Icon className="size-4" aria-hidden="true" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-sm font-semibold text-khata-ink">
+                        <span className="flex items-center justify-between gap-3 text-sm font-semibold text-khata-ink">
                           {item.label}
                         </span>
                         <span className="mt-0.5 block text-xs leading-5 text-khata-muted">
@@ -231,7 +231,7 @@ export function DashboardTopbarActions({
 
       {searchOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-khata-ink/30 px-4 pt-20 backdrop-blur-sm sm:pt-24"
+          className="fixed inset-0 z-50 flex items-start justify-center bg-khata-ink/20 px-3 pt-[76px] sm:px-4"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
@@ -244,10 +244,10 @@ export function DashboardTopbarActions({
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${searchDialogId}-title`}
-            className="w-full max-w-xl overflow-hidden rounded-2xl border border-khata-border bg-white shadow-2xl"
+            className="w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-white shadow-xl"
           >
             <form onSubmit={submitSearch}>
-              <div className="flex items-center gap-3 border-b border-khata-border px-4 py-3">
+              <div className="flex items-center gap-3 border-b border-khata-border px-4 py-2.5">
                 <Search className="size-5 shrink-0 text-khata-muted" aria-hidden="true" />
                 <div className="min-w-0 flex-1">
                   <label id={`${searchDialogId}-title`} htmlFor={`${searchDialogId}-input`} className="sr-only">
@@ -258,44 +258,51 @@ export function DashboardTopbarActions({
                     id={`${searchDialogId}-input`}
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
-                    className="h-10 w-full border-0 bg-transparent text-base text-khata-ink outline-none placeholder:text-khata-muted/70"
+                    className="h-10 w-full border-0 bg-transparent text-[15px] text-khata-ink outline-none placeholder:text-khata-muted/70"
                     placeholder="Search clients, inbox, or review queue"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => setSearchOpen(false)}
-                  className="rounded-md px-2 py-1 text-xs font-medium text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                  className="inline-flex size-8 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                  aria-label="Close search"
+                  title="Close search"
                 >
-                  Esc
+                  <X className="size-4" aria-hidden="true" />
                 </button>
               </div>
 
-              <div className="grid gap-2 p-3">
+              <div className="grid gap-1.5 p-2">
                 {searchTargets.map((target) => (
                   <button
                     key={target.href}
                     type="button"
                     onClick={() => setTargetHref(target.href)}
-                    className={`rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green ${
+                    className={`rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green ${
                       targetHref === target.href
-                        ? "border-khata-green/40 bg-khata-green/10"
+                        ? "border-khata-green/35 bg-khata-green/10 shadow-sm"
                         : "border-transparent hover:bg-khata-paperMuted"
                     }`}
                   >
-                    <span className="block text-sm font-semibold text-khata-ink">
+                    <span className="flex items-center justify-between gap-3 text-sm font-semibold text-khata-ink">
                       {target.label}
+                      {targetHref === target.href && (
+                        <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-khata-green">
+                          Selected
+                        </span>
+                      )}
                     </span>
-                    <span className="mt-0.5 block text-xs text-khata-muted">
+                    <span className="mt-1 block text-xs leading-5 text-khata-muted">
                       {target.helper}
                     </span>
                   </button>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between gap-3 border-t border-khata-border bg-khata-paperMuted/50 px-4 py-3">
+              <div className="flex items-center justify-between gap-3 border-t border-khata-border bg-khata-paperMuted/45 px-4 py-2.5">
                 <p className="text-xs text-khata-muted">
-                  Searches open existing filtered dashboard pages.
+                  Press Enter to search the selected workspace area.
                 </p>
                 <button
                   type="submit"
