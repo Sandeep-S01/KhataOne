@@ -616,3 +616,5 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-13 | Removed the remaining dashboard shell gutters and rounded main-content shell, then raised the top header to the 76px sidebar-logo rhythm while keeping left sidebar width and backend behavior unchanged. |
 
 | 2026-09-14 | Reduced the shared dashboard top band to 64px and aligned the sidebar logo row, header scroll offset, and shell contracts while preserving sidebar widths and backend behavior. |
+
+| 2026-09-14 | Added functional dashboard topbar search and activity controls through a focused client component. Search now opens an accessible dialog and routes to existing filtered pages; activity opens existing operational destinations. Logout, sidebar sizing, and backend behavior remain unchanged. |

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Bell, LogOut, Search } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { signOut } from "@/app/actions/auth";
 import { DashboardMobileMenu } from "@/components/dashboard-mobile-menu";
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
+import { DashboardTopbarActions } from "@/components/dashboard-topbar-actions";
 import { Button } from "@/components/design-system";
 import { getFirmContext } from "@/lib/firms";
 
@@ -52,41 +53,11 @@ export default async function DashboardLayout({
             </div>
 
             <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
-              <button
-                type="button"
-                className="inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-                aria-label="Search workspace"
-                title="Search workspace"
-              >
-                <Search className="size-5 stroke-[1.8]" aria-hidden="true" />
-              </button>
-
-              <button
-                type="button"
-                className="relative inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-                aria-label="Activity alerts"
-                title="Activity alerts"
-              >
-                <Bell className="size-5 stroke-[1.8]" aria-hidden="true" />
-                <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-white" aria-hidden="true" />
-              </button>
-
-              <div
-                className="hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex"
-                title={userEmail}
-              >
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-khata-ink text-[11px] font-semibold text-white shadow-sm">
-                  {profileInitial}
-                </span>
-                <span className="hidden min-w-0 items-baseline gap-1.5 lg:flex">
-                  <span className="max-w-32 truncate text-sm font-semibold text-khata-ink">
-                    {userEmail}
-                  </span>
-                  <span className="max-w-20 truncate text-xs capitalize text-khata-muted">
-                    {roleLabel}
-                  </span>
-                </span>
-              </div>
+              <DashboardTopbarActions
+                userEmail={userEmail}
+                roleLabel={roleLabel}
+                profileInitial={profileInitial}
+              />
 
               <div className="hidden h-6 w-px bg-khata-border md:block" aria-hidden="true" />
 
