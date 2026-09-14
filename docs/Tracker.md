@@ -6,6 +6,18 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-14 UI consistency implementation slice locally verified: shared
+  dashboard primitives now live in `src/components/design-system.tsx` for topbar
+  icon buttons, profile pills, command search options, icon badges, status
+  badges, sidebar section labels, dashboard stat values and operations metric
+  text. The dashboard topbar search/activity controls, sidebar group labels,
+  Audit Logs metadata chips and Operations pipeline metrics now reuse those
+  primitives without changing routes, queries, sign-out, Supabase, accounting or
+  worker behavior. Updated source contracts in
+  `scripts/test-dashboard-navigation-shell.mjs` and
+  `scripts/test-deliberate-density-hierarchy.mjs`; dashboard-navigation-shell,
+  deliberate-density, dashboard-responsive-harness, typecheck, lint, build and
+  diff checks passed.
 - 2026-09-13 UI/UX isolated verification package prepared:
   [ISOLATED_VERIFICATION_PLAN.md](audits/ui-ux/2026-09-13-diagnosis/ISOLATED_VERIFICATION_PLAN.md)
   now defines the disposable two-firm workspace, role set, fixture groups,

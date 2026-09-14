@@ -14,6 +14,7 @@ import {
   SectionCard,
   Select,
   SetupRequired,
+  StatusBadge,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -318,15 +319,14 @@ export default async function AuditLogsPage({
                             {metadataEntries.length > 0 && (
                               <div className="flex flex-wrap gap-1.5">
                                 {metadataEntries.slice(0, 5).map((entry) => (
-                                  <span
+                                  <StatusBadge
                                     key={entry.label}
-                                    className="rounded-full border border-khata-border bg-khata-paperMuted px-2 py-1 text-[11px] text-khata-muted"
                                   >
                                     <span className="font-medium text-khata-ink">{entry.label}:</span>{" "}
                                     <span className={entry.mono ? tableMonoTextClass : undefined}>
                                       {entry.value}
                                     </span>
-                                  </span>
+                                  </StatusBadge>
                                 ))}
                               </div>
                             )}

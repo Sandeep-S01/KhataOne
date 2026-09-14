@@ -25,10 +25,32 @@ for (const token of [
   "sectionCardHeaderClassName",
   "sectionCardTitleClassName",
   "sectionCardDescriptionClassName",
+  "tinyLabelClassName",
+  "sidebarSectionLabelClassName",
+  "dashboardMetricValueClassName",
+  "dashboardMetaMonoClassName",
+  "dashboardStatValueClassName",
+  "topbarIconButtonClassName",
+  "profilePillClassName",
+  "commandInputClassName",
+  "statusBadgeClassName",
 ]) {
   assert(
     designSystem.includes(`export const ${token}`),
     `Shared hierarchy token is missing: ${token}.`,
+  );
+}
+
+for (const primitive of [
+  "TopbarIconButton",
+  "ProfilePill",
+  "IconBadge",
+  "StatusBadge",
+  "CommandOption",
+]) {
+  assert(
+    designSystem.includes(`export function ${primitive}`),
+    `Shared UI primitive is missing: ${primitive}.`,
   );
 }
 

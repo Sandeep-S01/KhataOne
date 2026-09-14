@@ -5,6 +5,157 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
 import { cn } from "@/lib/utils";
 
+export const tinyLabelClassName = "text-[10px] font-semibold uppercase tracking-wide";
+export const sidebarSectionLabelClassName = `${tinyLabelClassName} px-3 pb-1.5 text-khata-muted/80`;
+export const dashboardMetricValueClassName = "num mt-1 text-lg font-semibold text-khata-ink";
+export const dashboardMetaMonoClassName = "num mt-1 text-[11px] text-khata-muted";
+export const dashboardStatValueClassName = "num mt-2 text-[26px] font-semibold leading-none text-khata-ink";
+export const topbarIconButtonClassName = "inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green";
+export const profilePillClassName = "hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex";
+export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-white shadow-xl";
+export const commandInputClassName = "h-10 w-full border-0 bg-transparent text-[15px] text-khata-ink outline-none placeholder:text-khata-muted/70";
+export const commandSelectedBadgeClassName = `${tinyLabelClassName} rounded-full bg-white px-2 py-0.5 text-khata-green`;
+export const statusBadgeClassName = "inline-flex items-center rounded-full border border-khata-border bg-khata-paperMuted px-2 py-1 text-[11px] text-khata-muted";
+
+type TopbarIconButtonProps = ComponentPropsWithoutRef<"button">;
+
+export function TopbarIconButton({
+  className,
+  type = "button",
+  ...props
+}: TopbarIconButtonProps) {
+  return (
+    <button
+      type={type}
+      className={cn(topbarIconButtonClassName, className)}
+      {...props}
+    />
+  );
+}
+
+type ProfilePillProps = {
+  email: string;
+  roleLabel: string;
+  initial: string;
+  className?: string;
+};
+
+export function ProfilePill({ email, roleLabel, initial, className }: ProfilePillProps) {
+  return (
+    <div className={cn(profilePillClassName, className)} title={email}>
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-khata-ink text-[11px] font-semibold text-white shadow-sm">
+        {initial}
+      </span>
+      <span className="hidden min-w-0 items-baseline gap-1.5 lg:flex">
+        <span className="max-w-32 truncate text-sm font-semibold text-khata-ink">
+          {email}
+        </span>
+        <span className="max-w-20 truncate text-xs capitalize text-khata-muted">
+          {roleLabel}
+        </span>
+      </span>
+    </div>
+  );
+}
+
+const iconBadgeToneClasses = {
+  brand: "bg-khata-green/10 text-khata-green",
+  neutral: "bg-khata-paperMuted text-khata-muted",
+  warning: "bg-warning/10 text-warning",
+  danger: "bg-destructive/10 text-destructive",
+  info: "bg-info/10 text-info",
+};
+
+export function IconBadge({
+  icon: Icon,
+  tone = "brand",
+  className,
+}: {
+  icon: LucideIcon;
+  tone?: keyof typeof iconBadgeToneClasses;
+  className?: string;
+}) {
+  return (
+    <span
+      className={cn(
+        "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md",
+        iconBadgeToneClasses[tone],
+        className,
+      )}
+    >
+      <Icon className="size-4" aria-hidden="true" />
+    </span>
+  );
+}
+
+type StatusBadgeProps = ComponentPropsWithoutRef<"span"> & {
+  tone?: "neutral" | "success" | "warning" | "danger" | "info";
+};
+
+const statusBadgeToneClasses = {
+  neutral: "border-khata-border bg-khata-paperMuted text-khata-muted",
+  success: "border-success/30 bg-success/10 text-success-foreground",
+  warning: "border-warning/35 bg-warning/10 text-warning-foreground",
+  danger: "border-destructive/30 bg-destructive/10 text-destructive-foreground",
+  info: "border-info/35 bg-info/10 text-info-foreground",
+};
+
+export function StatusBadge({
+  tone = "neutral",
+  className,
+  ...props
+}: StatusBadgeProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full border px-2 py-1 text-[11px]",
+        statusBadgeToneClasses[tone],
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+type CommandOptionProps = ComponentPropsWithoutRef<"button"> & {
+  title: string;
+  description: string;
+  selected?: boolean;
+};
+
+export function CommandOption({
+  title,
+  description,
+  selected = false,
+  className,
+  type = "button",
+  ...props
+}: CommandOptionProps) {
+  return (
+    <button
+      type={type}
+      className={cn(
+        "rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+        selected
+          ? "border-khata-green/35 bg-khata-green/10 shadow-sm"
+          : "border-transparent hover:bg-khata-paperMuted",
+        className,
+      )}
+      {...props}
+    >
+      <span className="flex items-center justify-between gap-3 text-sm font-semibold text-khata-ink">
+        {title}
+        {selected && (
+          <span className={commandSelectedBadgeClassName}>Selected</span>
+        )}
+      </span>
+      <span className="mt-1 block text-xs leading-5 text-khata-muted">
+        {description}
+      </span>
+    </button>
+  );
+}
+
 type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: "primary" | "outline" | "ghost" | "secondary" | "danger";
   size?: "sm" | "md" | "lg" | "icon";
@@ -517,9 +668,7 @@ export function StatTile({
       )}
     >
       <p className="k-eyebrow text-khata-muted">{label}</p>
-      <p className="num mt-2 text-[26px] font-semibold leading-none text-khata-ink">
-        {value}
-      </p>
+      <p className={dashboardStatValueClassName}>{value}</p>
       {hint && <p className="mt-2 text-xs leading-5 text-khata-muted">{hint}</p>}
     </Comp>
   );

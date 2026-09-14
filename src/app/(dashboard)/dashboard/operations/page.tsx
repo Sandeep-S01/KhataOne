@@ -21,6 +21,8 @@ import {
   Select,
   SetupRequired,
   StatTile,
+  dashboardMetaMonoClassName,
+  dashboardMetricValueClassName,
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
@@ -504,7 +506,7 @@ export default async function OperationsPage({
               <div className="grid gap-3 border-b border-khata-border p-4 md:grid-cols-2 xl:grid-cols-4">
                 <div className="min-w-0">
                   <p className={tableSecondaryTextClass}>Oldest due inbound</p>
-                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                  <p className={dashboardMetricValueClassName}>
                     {ageLabel(
                       inboundHealth?.oldest_queued_at ?? null,
                       "No queued events",
@@ -513,21 +515,21 @@ export default async function OperationsPage({
                 </div>
                 <div className="min-w-0">
                   <p className={tableSecondaryTextClass}>Inbound claim p95</p>
-                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                  <p className={dashboardMetricValueClassName}>
                     {durationLabel(inboundHealth?.p95_claim_delay_ms ?? null)}
                   </p>
                   <p className="mt-1 text-xs text-khata-muted">Last 24 hours</p>
                 </div>
                 <div className="min-w-0">
                   <p className={tableSecondaryTextClass}>Acknowledgment p95</p>
-                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                  <p className={dashboardMetricValueClassName}>
                     {durationLabel(inboundHealth?.p95_ack_delay_ms ?? null)}
                   </p>
                   <p className="mt-1 text-xs text-khata-muted">Last 24 hours</p>
                 </div>
                 <div className="min-w-0">
                   <p className={tableSecondaryTextClass}>Stale ordering leases</p>
-                  <p className="mt-1 font-mono text-lg font-semibold text-khata-ink">
+                  <p className={dashboardMetricValueClassName}>
                     {stalePipelineLeases}
                   </p>
                 </div>
@@ -768,7 +770,7 @@ export default async function OperationsPage({
                       </td>
                       <td className={`${tableNumericCellClass} text-xs`}>
                         <span>{formatDisplayDateTime(job.created_at)}</span>
-                        <p className="mt-1 font-mono text-[11px] text-khata-muted">
+                        <p className={dashboardMetaMonoClassName}>
                           Age {ageLabel(job.created_at)}
                         </p>
                       </td>

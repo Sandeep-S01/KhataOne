@@ -6,6 +6,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 
+import {
+  CommandOption,
+  IconBadge,
+  ProfilePill,
+  TopbarIconButton,
+  commandDialogPanelClassName,
+  commandInputClassName,
+} from "@/components/design-system";
+
 const searchTargets: Array<{ label: string; href: Route; helper: string }> = [
   {
     label: "Review queue",
@@ -134,29 +143,26 @@ export function DashboardTopbarActions({
   return (
     <>
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
-        <button
-          type="button"
+        <TopbarIconButton
           onClick={() => {
             setSearchOpen(true);
             setActivityOpen(false);
           }}
-          className="inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
           aria-label="Search workspace"
           aria-haspopup="dialog"
           aria-controls={searchDialogId}
           title="Search workspace"
         >
           <Search className="size-5 stroke-[1.8]" aria-hidden="true" />
-        </button>
+        </TopbarIconButton>
 
         <div ref={activityRef} className="relative">
-          <button
-            type="button"
+          <TopbarIconButton
             onClick={() => {
               setActivityOpen((value) => !value);
               setSearchOpen(false);
             }}
-            className="relative inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="relative"
             aria-label="Open activity center"
             aria-haspopup="menu"
             aria-expanded={activityOpen}
@@ -165,7 +171,7 @@ export function DashboardTopbarActions({
           >
             <Bell className="size-5 stroke-[1.8]" aria-hidden="true" />
             <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-white" aria-hidden="true" />
-          </button>
+          </TopbarIconButton>
 
           {activityOpen && (
             <div
@@ -192,9 +198,7 @@ export function DashboardTopbarActions({
                       onClick={() => setActivityOpen(false)}
                       className="flex gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
                     >
-                      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-khata-green/10 text-khata-green">
-                        <Icon className="size-4" aria-hidden="true" />
-                      </span>
+                      <IconBadge icon={Icon} />
                       <span className="min-w-0">
                         <span className="flex items-center justify-between gap-3 text-sm font-semibold text-khata-ink">
                           {item.label}
@@ -211,22 +215,11 @@ export function DashboardTopbarActions({
           )}
         </div>
 
-        <div
-          className="hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex"
-          title={userEmail}
-        >
-          <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-khata-ink text-[11px] font-semibold text-white shadow-sm">
-            {profileInitial}
-          </span>
-          <span className="hidden min-w-0 items-baseline gap-1.5 lg:flex">
-            <span className="max-w-32 truncate text-sm font-semibold text-khata-ink">
-              {userEmail}
-            </span>
-            <span className="max-w-20 truncate text-xs capitalize text-khata-muted">
-              {roleLabel}
-            </span>
-          </span>
-        </div>
+        <ProfilePill
+          email={userEmail}
+          roleLabel={roleLabel}
+          initial={profileInitial}
+        />
       </div>
 
       {searchOpen && (
@@ -244,7 +237,7 @@ export function DashboardTopbarActions({
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${searchDialogId}-title`}
-            className="w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-white shadow-xl"
+            className={commandDialogPanelClassName}
           >
             <form onSubmit={submitSearch}>
               <div className="flex items-center gap-3 border-b border-khata-border px-4 py-2.5">
@@ -258,7 +251,7 @@ export function DashboardTopbarActions({
                     id={`${searchDialogId}-input`}
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
-                    className="h-10 w-full border-0 bg-transparent text-[15px] text-khata-ink outline-none placeholder:text-khata-muted/70"
+                    className={commandInputClassName}
                     placeholder="Search clients, inbox, or review queue"
                   />
                 </div>
@@ -275,28 +268,13 @@ export function DashboardTopbarActions({
 
               <div className="grid gap-1.5 p-2">
                 {searchTargets.map((target) => (
-                  <button
+                  <CommandOption
                     key={target.href}
-                    type="button"
                     onClick={() => setTargetHref(target.href)}
-                    className={`rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green ${
-                      targetHref === target.href
-                        ? "border-khata-green/35 bg-khata-green/10 shadow-sm"
-                        : "border-transparent hover:bg-khata-paperMuted"
-                    }`}
-                  >
-                    <span className="flex items-center justify-between gap-3 text-sm font-semibold text-khata-ink">
-                      {target.label}
-                      {targetHref === target.href && (
-                        <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-khata-green">
-                          Selected
-                        </span>
-                      )}
-                    </span>
-                    <span className="mt-1 block text-xs leading-5 text-khata-muted">
-                      {target.helper}
-                    </span>
-                  </button>
+                    selected={targetHref === target.href}
+                    title={target.label}
+                    description={target.helper}
+                  />
                 ))}
               </div>
 

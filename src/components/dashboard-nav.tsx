@@ -23,6 +23,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { dashboardNavItems } from "@/lib/dashboard/nav";
+import { sidebarSectionLabelClassName } from "@/components/design-system";
 import { cn } from "@/lib/utils";
 
 const iconByHref: Record<string, LucideIcon> = {
@@ -226,7 +227,7 @@ export function DashboardNav({
         return (
           <div key={group.title} className={collapsed ? "space-y-1" : "mb-4 last:mb-0"}>
             {!collapsed && (
-              <p className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-khata-muted/80">
+              <p className={sidebarSectionLabelClassName}>
                 {group.title}
               </p>
             )}
