@@ -79,6 +79,9 @@ Recommended for production:
 
 - Immediate ingestion and exact-job AI wake-up are the normal path. Supabase Cron invokes
   each protected recovery route every minute as the authoritative recovery safety net.
+- GitHub Actions recovery schedules are gated by repository variable
+  `ENABLE_GITHUB_RECOVERY_SCHEDULERS=true`. Leave it unset or false while Supabase Cron is
+  the active recovery path; use manual workflow dispatch for one-off diagnostics.
 - Keep GitHub Actions enabled only through the initial Supabase cadence observation window;
   overlapping invocations are protected by skip-locked claims and ordering leases. Disable
   the GitHub schedules after the Supabase jobs and recovery canary are proven.

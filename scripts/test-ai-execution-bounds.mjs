@@ -74,6 +74,10 @@ assert.match(schedulerSource, /cron: "2-57\/5 \* \* \* \*"/);
 assert.match(schedulerSource, /secrets\.CRON_SECRET/);
 assert.match(
   schedulerSource,
+  /vars\.ENABLE_GITHUB_RECOVERY_SCHEDULERS == 'true'/,
+);
+assert.match(
+  schedulerSource,
   /api\/jobs\/ai-extraction\/run-queued\?batch_size=10/,
 );
 assert.match(schedulerSource, /Authorization: Bearer \$\{CRON_SECRET\}/);
@@ -84,6 +88,10 @@ const whatsappSchedulerSource = readFileSync(
   "utf8",
 );
 assert.match(whatsappSchedulerSource, /cron: "2-57\/5 \* \* \* \*"/);
+assert.match(
+  whatsappSchedulerSource,
+  /vars\.ENABLE_GITHUB_RECOVERY_SCHEDULERS == 'true'/,
+);
 assert.match(whatsappSchedulerSource, /jq -e '\.ok == true'/);
 
 console.log(
