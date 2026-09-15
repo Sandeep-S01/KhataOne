@@ -1,4 +1,4 @@
-import { FileDown } from "lucide-react";
+import { FileDown, Filter, List, SlidersHorizontal } from "lucide-react";
 
 import { StatusChip } from "@/components/status-chip";
 import {
@@ -10,6 +10,7 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  FilterPresetLink,
   InlineAlert,
   Input,
   InputWithIcon,
@@ -23,6 +24,8 @@ import {
   SetupRequired,
   TableToolbar,
   TextLink,
+  functionalIconClassName,
+  functionalIconStrokeWidth,
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
@@ -38,7 +41,7 @@ import {
 import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
-import { formatDisplayDate } from "@/lib/format";
+import { currentMonthDateRange, formatDisplayDate } from "@/lib/format";
 import { withServerTiming } from "@/lib/request-performance";
 import {
   appendReturnContext,
@@ -79,6 +82,10 @@ function formatCurrency(value: number | null) {
 const reviewStatusOptions = ["all", "draft", "needs_review", "duplicate"];
 const reviewRiskOptions = ["all", "risk", "low_confidence"];
 const pageSize = 50;
+const fy27Q2DateRange = {
+  start: "2026-07-01",
+  end: "2026-09-30",
+};
 const documentTypeOptions = [
   "all",
   "purchase_invoice",
@@ -125,6 +132,17 @@ type ReviewQueueFallbackRow = Omit<
     | { risk_flags: string[] | null; model: string | null }
     | Array<{ risk_flags: string[] | null; model: string | null }>
     | null;
+};
+
+type ReviewQueueSearchParams = {
+  client?: string;
+  document_type?: string;
+  from?: string;
+  risk?: string;
+  q?: string;
+  page?: string;
+  status?: string;
+  to?: string;
 };
 
 function isMissingRpcError(error: { code?: string; message?: string } | null) {
@@ -272,19 +290,66 @@ function formatAge(value: string) {
   return `${Math.floor(diffHours / 24)}d`;
 }
 
+const indiaDatePartsFormatter = new Intl.DateTimeFormat("en-CA", {
+  day: "2-digit",
+  month: "2-digit",
+  timeZone: "Asia/Kolkata",
+  year: "numeric",
+});
+
+function currentIndiaDateOnly(now = new Date()) {
+  const parts = Object.fromEntries(
+    indiaDatePartsFormatter
+      .formatToParts(now)
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, part.value]),
+  );
+
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function reviewQueueHref(
+  filters: ReviewQueueSearchParams,
+  overrides: Partial<Record<keyof ReviewQueueSearchParams, string | null>> = {},
+) {
+  const params = new URLSearchParams();
+  const keys: Array<keyof ReviewQueueSearchParams> = [
+    "q",
+    "client",
+    "document_type",
+    "from",
+    "risk",
+    "status",
+    "to",
+  ];
+
+  for (const key of keys) {
+    const value = Object.prototype.hasOwnProperty.call(overrides, key)
+      ? overrides[key]
+      : filters[key];
+
+    if (!value || value === "all") {
+      continue;
+    }
+
+    params.set(key, value);
+  }
+
+  const query = params.toString();
+  return query ? `/dashboard/review-queue?${query}` : "/dashboard/review-queue";
+}
+
+function datePresetIsActive(
+  filters: ReviewQueueSearchParams,
+  range: { start: string; end: string },
+) {
+  return filters.from === range.start && filters.to === range.end;
+}
+
 export default async function ReviewQueuePage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    client?: string;
-    document_type?: string;
-    from?: string;
-    risk?: string;
-    q?: string;
-    page?: string;
-    status?: string;
-    to?: string;
-  }>;
+  searchParams: Promise<ReviewQueueSearchParams>;
 }) {
   if (!hasSupabaseConfig()) {
     return (
@@ -320,6 +385,19 @@ export default async function ReviewQueuePage({
     .eq("firm_id", firm.id)
     .neq("status", "archived")
     .order("business_name");
+  const reviewCountQuery = (status?: string) => {
+    let countQuery = supabase
+      .from("transactions")
+      .select("id", { count: "exact", head: true })
+      .eq("firm_id", firm.id)
+      .in("status", ["draft", "needs_review", "duplicate"]);
+
+    if (status) {
+      countQuery = countQuery.eq("status", status);
+    }
+
+    return countQuery;
+  };
   const query = supabase.rpc("search_review_queue", {
     target_firm_id: firm.id,
     target_client_id: filters.client || null,
@@ -334,7 +412,14 @@ export default async function ReviewQueuePage({
     page_offset: rangeFrom,
   });
 
-  const [transactionsResult, clientsResult] = await Promise.all([
+  const [
+    transactionsResult,
+    clientsResult,
+    allCountResult,
+    needsReviewCountResult,
+    duplicateCountResult,
+    draftCountResult,
+  ] = await Promise.all([
     withServerTiming("dashboard.review_queue.query", () => query, {
       page,
       has_client_filter: Boolean(filters.client),
@@ -348,6 +433,24 @@ export default async function ReviewQueuePage({
     withServerTiming("dashboard.review_queue.clients_query", () => clientsPromise, {
       page,
     }),
+    withServerTiming("dashboard.review_queue.count.all", () => reviewCountQuery(), {
+      page,
+    }),
+    withServerTiming(
+      "dashboard.review_queue.count.needs_review",
+      () => reviewCountQuery("needs_review"),
+      { page },
+    ),
+    withServerTiming(
+      "dashboard.review_queue.count.duplicate",
+      () => reviewCountQuery("duplicate"),
+      { page },
+    ),
+    withServerTiming(
+      "dashboard.review_queue.count.draft",
+      () => reviewCountQuery("draft"),
+      { page },
+    ),
   ]);
   let { data: transactions, error } = transactionsResult;
 
@@ -387,6 +490,20 @@ export default async function ReviewQueuePage({
   );
   const hasNextPage = (transactions?.length ?? 0) > pageSize;
   const returnContext = buildReturnContext(filters, reviewQueueReturnKeys);
+  const todayDate = currentIndiaDateOnly();
+  const todayRange = {
+    start: todayDate,
+    end: todayDate,
+  };
+  const monthRange = currentMonthDateRange();
+  const reviewCounts = {
+    all: allCountResult.error ? null : allCountResult.count ?? 0,
+    needsReview: needsReviewCountResult.error
+      ? null
+      : needsReviewCountResult.count ?? 0,
+    duplicate: duplicateCountResult.error ? null : duplicateCountResult.count ?? 0,
+    draft: draftCountResult.error ? null : draftCountResult.count ?? 0,
+  };
 
   return (
     <div>
@@ -395,7 +512,7 @@ export default async function ReviewQueuePage({
         title="AI extraction review"
         description="Review AI-created draft and needs-review transactions before approval."
         actions={
-          <ActionLink href="/dashboard/exports" size="md">
+          <ActionLink href="/dashboard/exports" size="md" className="min-w-36">
             <FileDown aria-hidden="true" />
             Open exports
           </ActionLink>
@@ -404,96 +521,171 @@ export default async function ReviewQueuePage({
 
       <PageBody>
         {clientsResult.error && <QueryError message="Client filters could not be loaded. Please retry." />}
-        <FilterBar action="/dashboard/review-queue">
-          <FilterGrid className="xl:grid-cols-[minmax(260px,1fr)_180px_160px_160px_160px_160px]">
+        <FilterBar action="/dashboard/review-queue" className="gap-0 overflow-hidden p-0">
+          <div className="flex flex-col gap-3 border-b border-khata-border bg-khata-paperMuted/40 px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-wrap items-center gap-2">
+              <FilterPresetLink
+                href={reviewQueueHref(filters, { risk: null, status: null })}
+                active={selectedStatus === "all" && selectedRisk === "all"}
+                count={reviewCounts.all}
+              >
+                All
+              </FilterPresetLink>
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  risk: null,
+                  status: "needs_review",
+                })}
+                active={selectedStatus === "needs_review"}
+                count={reviewCounts.needsReview}
+                dotTone="warning"
+              >
+                Needs Review
+              </FilterPresetLink>
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  risk: null,
+                  status: "duplicate",
+                })}
+                active={selectedStatus === "duplicate"}
+                count={reviewCounts.duplicate}
+                dotTone="danger"
+              >
+                Duplicate Risk
+              </FilterPresetLink>
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  risk: null,
+                  status: "draft",
+                })}
+                active={selectedStatus === "draft"}
+                count={reviewCounts.draft}
+                dotTone="brand"
+              >
+                AI Draft
+              </FilterPresetLink>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  from: todayRange.start,
+                  to: todayRange.end,
+                })}
+                active={datePresetIsActive(filters, todayRange)}
+              >
+                Today
+              </FilterPresetLink>
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  from: monthRange.start,
+                  to: monthRange.end,
+                })}
+                active={datePresetIsActive(filters, monthRange)}
+              >
+                This Month
+              </FilterPresetLink>
+              <FilterPresetLink
+                href={reviewQueueHref(filters, {
+                  from: fy27Q2DateRange.start,
+                  to: fy27Q2DateRange.end,
+                })}
+                active={datePresetIsActive(filters, fy27Q2DateRange)}
+              >
+                Q2 FY27
+              </FilterPresetLink>
+              <ActionLink
+                href="/dashboard/review-queue"
+                size="md"
+                variant="ghost"
+                className="rounded-full px-3 text-khata-muted"
+              >
+                Reset all
+              </ActionLink>
+            </div>
+          </div>
+
+          <div className="grid gap-4 p-4">
+            {selectedStatus !== "all" && (
+              <input type="hidden" name="status" value={selectedStatus} />
+            )}
             <FilterField label="Search" htmlFor="review-search">
               <InputWithIcon
                 id="review-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
-                placeholder="Client, party, invoice"
+                placeholder="Search client, party, invoice, file, or type"
               />
             </FilterField>
-            <FilterField label="Client" htmlFor="review-client">
-              <Select
-                id="review-client"
-                name="client"
-                defaultValue={filters.client ?? ""}
-              >
-                <option value="">All clients</option>
-                {clients.map((client) => (
-                  <option key={client.id} value={client.id}>
-                    {client.business_name}
-                  </option>
-                ))}
-              </Select>
-            </FilterField>
-            <FilterField label="Status" htmlFor="review-status">
-              <Select
-                id="review-status"
-                name="status"
-                defaultValue={selectedStatus}
-              >
-                {reviewStatusOptions.map((status) => (
-                  <option key={status} value={status}>
-                    {status.replaceAll("_", " ")}
-                  </option>
-                ))}
-              </Select>
-            </FilterField>
-            <FilterField label="Risk" htmlFor="review-risk">
-              <Select
-                id="review-risk"
-                name="risk"
-                defaultValue={selectedRisk}
-              >
-                <option value="all">All</option>
-                <option value="risk">Risk flags</option>
-                <option value="low_confidence">Low confidence</option>
-              </Select>
-            </FilterField>
-            <FilterField label="From" htmlFor="review-from">
-              <Input
-                id="review-from"
-                name="from"
-                type="date"
-                defaultValue={filters.from ?? ""}
-              />
-            </FilterField>
-            <FilterField label="To" htmlFor="review-to">
-              <Input
-                id="review-to"
-                name="to"
-                type="date"
-                defaultValue={filters.to ?? ""}
-              />
-            </FilterField>
-          </FilterGrid>
 
-          <FilterGrid className="border-t border-khata-border/70 pt-3 lg:grid-cols-[minmax(220px,24rem)_minmax(0,1fr)_auto]">
-            <FilterField label="Document" htmlFor="review-document-type">
-              <Select
-                id="review-document-type"
-                name="document_type"
-                defaultValue={selectedDocumentType}
-              >
-                {documentTypeOptions.map((type) => (
-                  <option key={type} value={type}>
-                    {type.replaceAll("_", " ")}
-                  </option>
-                ))}
-              </Select>
-            </FilterField>
-            <div aria-hidden="true" className="hidden lg:block" />
-            <FilterActions className="lg:justify-end">
-              <Button type="submit" size="md" className="min-w-24">
-                Apply
-              </Button>
-              <ActionLink href="/dashboard/review-queue" size="md" className="min-w-20">
-                Clear
-              </ActionLink>
-            </FilterActions>
-          </FilterGrid>
+            <FilterGrid className="md:grid-cols-2 xl:grid-cols-[220px_220px_200px_160px_160px_auto]">
+              <FilterField label="Client" htmlFor="review-client">
+                <Select
+                  id="review-client"
+                  name="client"
+                  defaultValue={filters.client ?? ""}
+                >
+                  <option value="">All clients</option>
+                  {clients.map((client) => (
+                    <option key={client.id} value={client.id}>
+                      {client.business_name}
+                    </option>
+                  ))}
+                </Select>
+              </FilterField>
+
+              <FilterField label="Document" htmlFor="review-document-type">
+                <Select
+                  id="review-document-type"
+                  name="document_type"
+                  defaultValue={selectedDocumentType}
+                >
+                  {documentTypeOptions.map((type) => (
+                    <option key={type} value={type}>
+                      {type.replaceAll("_", " ")}
+                    </option>
+                  ))}
+                </Select>
+              </FilterField>
+              <FilterField label="Risk" htmlFor="review-risk">
+                <Select
+                  id="review-risk"
+                  name="risk"
+                  defaultValue={selectedRisk}
+                >
+                  <option value="all">All</option>
+                  <option value="risk">Risk flags</option>
+                  <option value="low_confidence">Low confidence</option>
+                </Select>
+              </FilterField>
+              <FilterField label="From" htmlFor="review-from">
+                <Input
+                  id="review-from"
+                  name="from"
+                  type="date"
+                  defaultValue={filters.from ?? ""}
+                />
+              </FilterField>
+              <FilterField label="To" htmlFor="review-to">
+                <Input
+                  id="review-to"
+                  name="to"
+                  type="date"
+                  defaultValue={filters.to ?? ""}
+                />
+              </FilterField>
+
+              <FilterActions className="xl:justify-end">
+                <Button type="submit" size="md" className="min-w-24">
+                  <Filter aria-hidden="true" />
+                  Apply
+                </Button>
+                <ActionLink href="/dashboard/review-queue" size="md" className="min-w-20">
+                  Clear
+                </ActionLink>
+              </FilterActions>
+            </FilterGrid>
+          </div>
         </FilterBar>
 
         <SectionCard
@@ -502,6 +694,27 @@ export default async function ReviewQueuePage({
         <TableToolbar
           title="Extracted transactions"
           meta={<RecordCount value={pageTransactions.length} label="shown" />}
+          actions={
+            <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-khata-muted">
+              <span className="inline-flex items-center gap-1.5">
+                <List
+                  className={functionalIconClassName}
+                  strokeWidth={functionalIconStrokeWidth}
+                  aria-hidden="true"
+                />
+                Compact rows
+              </span>
+              <span className="size-1 rounded-full bg-khata-border" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5">
+                <SlidersHorizontal
+                  className={functionalIconClassName}
+                  strokeWidth={functionalIconStrokeWidth}
+                  aria-hidden="true"
+                />
+                Fixed columns
+              </span>
+            </div>
+          }
         />
 
         {error && (

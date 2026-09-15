@@ -729,6 +729,77 @@ export function FilterActions({
   );
 }
 
+type FilterPresetLinkProps = Omit<
+  ComponentPropsWithoutRef<typeof Link>,
+  "href" | "className"
+> & {
+  href: ComponentPropsWithoutRef<typeof Link>["href"] | string;
+  active?: boolean;
+  count?: number | null;
+  dotTone?: "brand" | "warning" | "danger" | "info";
+  className?: string;
+};
+
+const filterPresetDotToneClasses = {
+  brand: "bg-khata-green",
+  warning: "bg-warning",
+  danger: "bg-destructive",
+  info: "bg-info",
+};
+
+const filterPresetCountToneClasses = {
+  brand: "bg-khata-green/10 text-khata-green",
+  warning: "bg-warning/15 text-warning-foreground",
+  danger: "bg-destructive/10 text-destructive-foreground",
+  info: "bg-info/10 text-info-foreground",
+};
+
+export function FilterPresetLink({
+  href,
+  active = false,
+  count,
+  dotTone,
+  children,
+  className,
+  ...props
+}: FilterPresetLinkProps) {
+  const countTone = dotTone ?? "brand";
+
+  return (
+    <Link
+      href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
+      className={cn(
+        "inline-flex h-9 max-w-full items-center gap-2 rounded-full border px-3 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+        active
+          ? "border-khata-green bg-khata-green text-white shadow-sm hover:bg-khata-greenDark"
+          : "border-khata-border bg-white text-khata-ink hover:border-khata-green/40 hover:bg-khata-paperMuted",
+        className,
+      )}
+      {...props}
+    >
+      {dotTone && !active && (
+        <span
+          aria-hidden="true"
+          className={cn("size-2 rounded-full", filterPresetDotToneClasses[dotTone])}
+        />
+      )}
+      <span className="truncate">{children}</span>
+      {count !== undefined && (
+        <span
+          className={cn(
+            "num inline-flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 text-xs font-semibold",
+            active
+              ? "bg-white/20 text-white"
+              : filterPresetCountToneClasses[countTone],
+          )}
+        >
+          {count === null ? "n/a" : count}
+        </span>
+      )}
+    </Link>
+  );
+}
+
 export function TableToolbar({
   title,
   description,

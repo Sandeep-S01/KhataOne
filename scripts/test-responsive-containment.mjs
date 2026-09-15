@@ -9,17 +9,17 @@ const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 
 assert.match(
   reviewQueue,
-  /<FilterGrid className="xl:grid-cols-\[minmax\(260px,1fr\)_180px_160px_160px_160px_160px\]">/,
-  "review primary filters keep a contained six-column layout at wide screens",
+  /<FilterBar action="\/dashboard\/review-queue" className="gap-0 overflow-hidden p-0">/,
+  "review filters use the contained stacked reference-style filter surface",
 );
 assert.match(
   reviewQueue,
-  /<FilterGrid className="border-t border-khata-border\/70 pt-3 lg:grid-cols-\[minmax\(220px,24rem\)_minmax\(0,1fr\)_auto\]">/,
-  "review secondary filters and actions stay on a controlled wrapped row",
+  /<FilterGrid className="md:grid-cols-2 xl:grid-cols-\[220px_220px_200px_160px_160px_auto\]">/,
+  "review secondary filters stay controlled and wrap before wide desktop",
 );
 assert.match(
   reviewQueue,
-  /<FilterActions className="lg:justify-end">/,
+  /<FilterActions className="xl:justify-end">/,
   "review filter actions use the shared right-aligned action group",
 );
 assert.doesNotMatch(
