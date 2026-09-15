@@ -10,8 +10,8 @@ const clients = read("src/app/(dashboard)/dashboard/clients/page.tsx");
 const ledger = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
 const platform = read("src/app/(dashboard)/dashboard/platform/page.tsx");
 
-assert.match(overview, /function attentionTone\(count: number\): "warning" \| "neutral"/);
-assert.match(overview, /function positiveTone\(count: number\): "success" \| "neutral"/);
+assert.match(overview, /attentionToneForCount/);
+assert.match(overview, /positiveToneForCount/);
 assert.ok(!overview.includes('eyebrow="Overview"'));
 
 for (const label of [

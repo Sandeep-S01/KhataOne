@@ -1,5 +1,13 @@
 import type { LucideIcon } from "lucide-react";
-import { AlertTriangle, ArrowRight, ClipboardList, Info, LockKeyhole, RefreshCw } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowRight,
+  ClipboardList,
+  Info,
+  LockKeyhole,
+  RefreshCw,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
@@ -297,6 +305,29 @@ export function Input({ className, type, ...props }: InputProps) {
   );
 }
 
+type InputWithIconProps = InputProps & {
+  icon?: LucideIcon;
+  inputClassName?: string;
+};
+
+export function InputWithIcon({
+  icon: Icon = Search,
+  className,
+  inputClassName,
+  ...props
+}: InputWithIconProps) {
+  return (
+    <div className={cn("relative", className)}>
+      <Icon
+        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-khata-muted"
+        strokeWidth={functionalIconStrokeWidth}
+        aria-hidden="true"
+      />
+      <Input className={cn("pl-9", inputClassName)} {...props} />
+    </div>
+  );
+}
+
 export function Select({
   className,
   ...props
@@ -357,6 +388,27 @@ export function Field({
       <Label>{label}</Label>
       {children}
       {error && <p className="text-xs font-medium text-destructive-foreground">{error}</p>}
+    </div>
+  );
+}
+
+export function FilterField({
+  label,
+  htmlFor,
+  children,
+  className,
+}: {
+  label: string;
+  htmlFor: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("grid gap-1.5", className)}>
+      <label htmlFor={htmlFor} className={fieldLabelClassName}>
+        {label}
+      </label>
+      {children}
     </div>
   );
 }
@@ -646,6 +698,70 @@ export function FilterBar({
     >
       {children}
     </form>
+  );
+}
+
+export function FilterGrid({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("grid gap-3 lg:items-end", className)}>
+      {children}
+    </div>
+  );
+}
+
+export function FilterActions({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex flex-wrap items-end gap-2", className)}>
+      {children}
+    </div>
+  );
+}
+
+export function TableToolbar({
+  title,
+  meta,
+  actions,
+  className,
+}: {
+  title: string;
+  meta?: React.ReactNode;
+  actions?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex flex-col gap-2 border-b border-khata-border bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between",
+        className,
+      )}
+    >
+      <div className="flex min-w-0 flex-wrap items-center gap-3">
+        <h2 className={sectionCardTitleClassName}>{title}</h2>
+        {meta && (
+          <>
+            <span className="hidden h-5 w-px bg-khata-border sm:block" aria-hidden="true" />
+            {meta}
+          </>
+        )}
+      </div>
+      {actions && (
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          {actions}
+        </div>
+      )}
+    </div>
   );
 }
 

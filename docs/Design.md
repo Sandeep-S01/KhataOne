@@ -82,7 +82,7 @@ Use green as the brand anchor, amber as a controlled attention accent, and slate
 - Buttons: clear hierarchy with primary, secondary, ghost, and danger variants.
 - Icon buttons: use lucide icons with tooltips.
 - Tables: sticky header, compact rows, clear selection state, right-aligned amounts.
-- Filters: visible and quick to adjust.
+- Filters: visible, quick to adjust, and built from shared filter primitives. Filter inputs, selects, date fields, Apply buttons, and Clear actions should share the same control height within a filter panel.
 - Status chips: compact, high contrast, consistent labels.
 - Forms: grouped by accounting meaning, not arbitrary layout.
 - Modals: use only for focused decisions or quick edits.
@@ -136,3 +136,5 @@ Search and activity controls are implemented as interactive header controls: sea
 The search dialog uses a light overlay and compact command-panel structure with a focused input row, close icon, selected target state, and concise footer action.
 
 The overview dashboard follows the reference three-tier hierarchy: metric KPI cards first, then a compact priority worklist, then a dense review queue snapshot table. KPI cards use a 4-column desktop grid, left urgency bars, large tabular counts, compact status tags, and direct text links into existing destinations. Worklist rows use a count pill, task description, and right-aligned action. Tables use 11px uppercase headers, 44px row containment, right-aligned numeric values, and contained horizontal scrolling.
+
+Review Queue uses the shared filter-panel pattern: first-row filters prioritize search, client, status, risk, and date bounds; secondary filters and Apply/Clear actions sit below a subtle divider. The page header may use the right-side action slot for existing destinations, but must not expose bulk actions or direct exports unless the underlying workflow exists. List/table cards use the shared table toolbar so the title, count, and future view controls align consistently across dashboard pages.

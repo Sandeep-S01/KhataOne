@@ -1,12 +1,18 @@
+import { FileDown } from "lucide-react";
+
 import { StatusChip } from "@/components/status-chip";
 import {
   ActionLink,
   Button,
   DataTable,
   EmptyState,
+  FilterActions,
   FilterBar,
+  FilterField,
+  FilterGrid,
   InlineAlert,
   Input,
+  InputWithIcon,
   PageBody,
   PageHeader,
   PaginationControls,
@@ -15,11 +21,11 @@ import {
   SectionCard,
   Select,
   SetupRequired,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
-  fieldLabelClassName,
   tableHeadCellClass,
   tableHeaderClass,
   tableNumericTextClass,
@@ -388,33 +394,27 @@ export default async function ReviewQueuePage({
         eyebrow="Review Queue"
         title="AI extraction review"
         description="Review AI-created draft and needs-review transactions before approval."
+        actions={
+          <ActionLink href="/dashboard/exports" size="md">
+            <FileDown aria-hidden="true" />
+            Open exports
+          </ActionLink>
+        }
       />
 
       <PageBody>
         {clientsResult.error && <QueryError message="Client filters could not be loaded. Please retry." />}
         <FilterBar action="/dashboard/review-queue">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_190px_170px_170px] 2xl:grid-cols-[minmax(0,1fr)_190px_160px_160px_150px_150px_auto] 2xl:items-end">
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-search"
-                className={fieldLabelClassName}
-              >
-                Search
-              </label>
-              <Input
+          <FilterGrid className="xl:grid-cols-[minmax(260px,1fr)_180px_160px_160px_160px_160px]">
+            <FilterField label="Search" htmlFor="review-search">
+              <InputWithIcon
                 id="review-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Client, party, invoice"
               />
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-client"
-                className={fieldLabelClassName}
-              >
-                Client
-              </label>
+            </FilterField>
+            <FilterField label="Client" htmlFor="review-client">
               <Select
                 id="review-client"
                 name="client"
@@ -427,14 +427,8 @@ export default async function ReviewQueuePage({
                   </option>
                 ))}
               </Select>
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-status"
-                className={fieldLabelClassName}
-              >
-                Status
-              </label>
+            </FilterField>
+            <FilterField label="Status" htmlFor="review-status">
               <Select
                 id="review-status"
                 name="status"
@@ -446,14 +440,8 @@ export default async function ReviewQueuePage({
                   </option>
                 ))}
               </Select>
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-risk"
-                className={fieldLabelClassName}
-              >
-                Risk
-              </label>
+            </FilterField>
+            <FilterField label="Risk" htmlFor="review-risk">
               <Select
                 id="review-risk"
                 name="risk"
@@ -463,14 +451,27 @@ export default async function ReviewQueuePage({
                 <option value="risk">Risk flags</option>
                 <option value="low_confidence">Low confidence</option>
               </Select>
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-document-type"
-                className={fieldLabelClassName}
-              >
-                Document
-              </label>
+            </FilterField>
+            <FilterField label="From" htmlFor="review-from">
+              <Input
+                id="review-from"
+                name="from"
+                type="date"
+                defaultValue={filters.from ?? ""}
+              />
+            </FilterField>
+            <FilterField label="To" htmlFor="review-to">
+              <Input
+                id="review-to"
+                name="to"
+                type="date"
+                defaultValue={filters.to ?? ""}
+              />
+            </FilterField>
+          </FilterGrid>
+
+          <FilterGrid className="border-t border-khata-border/70 pt-3 lg:grid-cols-[minmax(220px,24rem)_minmax(0,1fr)_auto]">
+            <FilterField label="Document" htmlFor="review-document-type">
               <Select
                 id="review-document-type"
                 name="document_type"
@@ -482,51 +483,26 @@ export default async function ReviewQueuePage({
                   </option>
                 ))}
               </Select>
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-from"
-                className={fieldLabelClassName}
-              >
-                From
-              </label>
-              <Input
-                id="review-from"
-                name="from"
-                type="date"
-                defaultValue={filters.from ?? ""}
-              />
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="review-to"
-                className={fieldLabelClassName}
-              >
-                To
-              </label>
-              <Input
-                id="review-to"
-                name="to"
-                type="date"
-                defaultValue={filters.to ?? ""}
-              />
-            </div>
-            <div className="flex flex-wrap gap-2 lg:col-span-4 2xl:col-span-1">
-              <Button type="submit" size="sm">
+            </FilterField>
+            <div aria-hidden="true" className="hidden lg:block" />
+            <FilterActions className="lg:justify-end">
+              <Button type="submit" size="md" className="min-w-24">
                 Apply
               </Button>
-              <ActionLink href="/dashboard/review-queue" size="sm">
+              <ActionLink href="/dashboard/review-queue" size="md" className="min-w-20">
                 Clear
               </ActionLink>
-            </div>
-          </div>
+            </FilterActions>
+          </FilterGrid>
         </FilterBar>
 
         <SectionCard
-          title="Extracted transactions"
-          actions={<RecordCount value={pageTransactions.length} label="shown" />}
           bodyClassName="p-0"
         >
+        <TableToolbar
+          title="Extracted transactions"
+          meta={<RecordCount value={pageTransactions.length} label="shown" />}
+        />
 
         {error && (
           <QueryError message="Review queue records could not be loaded. Please retry." />

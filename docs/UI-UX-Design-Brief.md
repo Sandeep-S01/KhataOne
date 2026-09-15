@@ -128,6 +128,7 @@ Do not expose complex accounting language to SMB users unless necessary.
 - Compact rows and controls.
 - 6px controls, 8px navigation pills, and 12px cards/panels unless a documented shell exception requires square edges.
 - Soft borders, limited shadows.
+- Dashboard filter panels should use shared filter field, grid, and action primitives so input/select/date controls and Apply/Clear actions align to one height rhythm.
 - Shared numeric role for amounts, invoice numbers, GSTINs, and tabular financial values, using the primary interface font with tabular numerals.
 - Clear status chips.
 - Tooltips for icon-only actions.
