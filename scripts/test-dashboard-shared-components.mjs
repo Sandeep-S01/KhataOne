@@ -15,8 +15,15 @@ const inbox = read("src/app/(dashboard)/dashboard/inbox/page.tsx");
 const clientsPage = read("src/app/(dashboard)/dashboard/clients/page.tsx");
 const clientDetail = read("src/app/(dashboard)/dashboard/clients/[clientId]/page.tsx");
 const ledger = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
+const ledgerDetail = read("src/app/(dashboard)/dashboard/ledger/[entryId]/page.tsx");
 const operations = read("src/app/(dashboard)/dashboard/operations/page.tsx");
 const auditLogs = read("src/app/(dashboard)/dashboard/audit-logs/page.tsx");
+const gstSummary = read("src/app/(dashboard)/dashboard/gst-summary/page.tsx");
+const gstPeriodDetail = read("src/app/(dashboard)/dashboard/gst-summary/[periodId]/page.tsx");
+const reports = read("src/app/(dashboard)/dashboard/reports/page.tsx");
+const exportsPage = read("src/app/(dashboard)/dashboard/exports/page.tsx");
+const settings = read("src/app/(dashboard)/dashboard/settings/page.tsx");
+const platform = read("src/app/(dashboard)/dashboard/platform/page.tsx");
 const exportForm = read("src/components/export-form.tsx");
 const documentEvidencePanel = read("src/components/document-evidence-panel.tsx");
 const statusChip = read("src/components/status-chip.tsx");
@@ -115,11 +122,18 @@ for (const [name, source] of [
   ["audit logs", auditLogs],
 ]) {
   assert.match(source, /<FilterGrid/, `${name} should use shared FilterGrid`);
-  assert.match(source, /<FilterField/, `${name} should use shared FilterField`);
-  assert.match(source, /<FilterActions className=\{filterActionRowClassName\}>/, `${name} should use the shared compact action row`);
-  assert.match(source, /filterControlCompactClassName/, `${name} filter controls should use compact shared sizing`);
-  assert.match(source, /<Button type="submit" size="sm" className="min-w-24">/, `${name} submit control should match compact field height`);
+  assert.match(source, /<FilterInlineField/, `${name} filters should use shared inline filter fields`);
+  assert.match(source, /<FilterActions className=\{filterInlineActionsClassName\}>/, `${name} should keep actions in the shared inline filter row`);
+  assert.match(source, /filterInlineControlClassName/, `${name} filter controls should use inline shared sizing`);
+  assert.match(source, /<Button type="submit" size="sm" className=\{filterInlineButtonClassName\}>/, `${name} submit control should match inline field height`);
   assert.match(source, /<TableToolbar/, `${name} table/list card should use shared TableToolbar`);
+}
+
+for (const [name, source] of [
+  ["ledger", ledger],
+  ["audit logs", auditLogs],
+]) {
+  assert.match(source, /<FilterDateRangeField/, `${name} should use the shared grouped date range filter`);
 }
 
 for (const [name, source] of [
@@ -129,6 +143,21 @@ for (const [name, source] of [
   ["audit logs", auditLogs],
 ]) {
   assert.match(source, /<InputWithIcon/, `${name} search-like filters should use icon input`);
+}
+
+for (const [name, source] of [
+  ["overview", overview],
+  ["GST summary", gstSummary],
+  ["GST period detail", gstPeriodDetail],
+  ["reports", reports],
+  ["exports", exportsPage],
+  ["settings", settings],
+  ["platform", platform],
+  ["client detail", clientDetail],
+  ["ledger detail", ledgerDetail],
+]) {
+  assert.match(source, /<SectionCard bodyClassName="p-0">[\s\S]*<TableToolbar/, `${name} table cards should use the shared table toolbar`);
+  assert.match(source, /<DataTable/, `${name} should keep shared table rendering`);
 }
 assert.match(overview, /aria-label=\{item\.actionLabel\}/);
 assert.ok(!clientDetail.includes('|| "Pending"'));

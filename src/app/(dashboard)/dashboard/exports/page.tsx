@@ -17,6 +17,7 @@ import {
   RecordCount,
   SectionCard,
   SetupRequired,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -176,12 +177,12 @@ export default async function ExportsPage({
           </SectionCard>
         )}
 
-      <SectionCard
-        title="Export history"
-        description="Newest export jobs are shown first. Use refresh after queueing an export or when a worker is processing a file."
-        actions={<RecordCount value={pageExports.length} />}
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Export history"
+          description="Newest export jobs are shown first. Use refresh after queueing an export or when a worker is processing a file."
+          meta={<RecordCount value={pageExports.length} />}
+        />
 
         {error && (
           <QueryError message={error.message} />

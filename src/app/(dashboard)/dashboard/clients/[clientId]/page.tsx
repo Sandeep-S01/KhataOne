@@ -14,6 +14,7 @@ import {
   SectionCard,
   SetupRequired,
   StatTile,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -270,11 +271,11 @@ export default async function ClientDetailPage({
           />
         </SectionCard>
 
-        <SectionCard
-          title="Recent documents"
-          actions={<RecordCount value={recentDocuments.length} label="latest" />}
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Recent documents"
+            meta={<RecordCount value={recentDocuments.length} label="latest" />}
+          />
           {documentsResult.error ? (
             <QueryError message="Recent documents could not be loaded. Refresh to retry." />
           ) : recentDocuments.length === 0 ? (
@@ -319,17 +320,17 @@ export default async function ClientDetailPage({
           )}
         </SectionCard>
 
-        <SectionCard
-          title="GST readiness"
-          actions={
-            <RecordCount
-              value={gstPeriodsResult.error ? 0 : gstPeriods.length}
-              label="periods"
-              singularLabel="period"
-            />
-          }
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="GST readiness"
+            meta={
+              <RecordCount
+                value={gstPeriodsResult.error ? 0 : gstPeriods.length}
+                label="periods"
+                singularLabel="period"
+              />
+            }
+          />
           {gstPeriodsResult.error ? (
             <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
           ) : gstPeriods.length === 0 ? (
@@ -396,7 +397,8 @@ export default async function ClientDetailPage({
           )}
         </SectionCard>
 
-        <SectionCard title="Audit history" bodyClassName="p-0">
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar title="Audit history" />
           {auditsResult.error ? (
             <QueryError message="Client audit history could not be loaded. Refresh to retry." />
           ) : !audits || audits.length === 0 ? (

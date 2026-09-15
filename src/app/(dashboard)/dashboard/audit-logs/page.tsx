@@ -5,11 +5,13 @@ import {
   EmptyState,
   FilterActions,
   FilterBar,
-  FilterField,
+  FilterDateRangeField,
   FilterGrid,
-  filterActionRowClassName,
-  filterControlCompactClassName,
-  Input,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  filterInlineGridClassName,
+  FilterInlineField,
   InputWithIcon,
   PageBody,
   PageHeader,
@@ -159,22 +161,22 @@ export default async function AuditLogsPage({
 
       <PageBody>
       <FilterBar action="/dashboard/audit-logs" className="min-w-0">
-        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(170px,1fr)_minmax(150px,0.75fr)_minmax(170px,1fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)]">
-          <FilterField label="Action contains" htmlFor="audit-action">
+        <FilterGrid className={filterInlineGridClassName}>
+          <FilterInlineField label="Action contains" htmlFor="audit-action">
             <InputWithIcon
               id="audit-action"
               name="action"
               defaultValue={action}
-              placeholder="approved, generated, corrected"
-              inputClassName={filterControlCompactClassName}
+              placeholder="Action contains"
+              inputClassName={filterInlineControlClassName}
             />
-          </FilterField>
-          <FilterField label="Entity" htmlFor="audit-entity-type">
+          </FilterInlineField>
+          <FilterInlineField label="Entity" htmlFor="audit-entity-type">
             <Select
               id="audit-entity-type"
               name="entity_type"
               defaultValue={entityType}
-              className={filterControlCompactClassName}
+              className={filterInlineControlClassName}
             >
               <option value="">All entities</option>
               {uniqueEntityTypes.map((type) => (
@@ -183,43 +185,34 @@ export default async function AuditLogsPage({
                 </option>
               ))}
             </Select>
-          </FilterField>
-          <FilterField label="Actor" htmlFor="audit-actor">
+          </FilterInlineField>
+          <FilterInlineField label="Actor" htmlFor="audit-actor">
             <InputWithIcon
               id="audit-actor"
               name="actor"
               defaultValue={actor}
-              placeholder="User id"
-              inputClassName={filterControlCompactClassName}
+              placeholder="Actor user id"
+              inputClassName={filterInlineControlClassName}
             />
-          </FilterField>
-          <FilterField label="From date" htmlFor="audit-from">
-            <Input
-              id="audit-from"
-              name="from"
-              type="date"
-              defaultValue={from}
-              className={filterControlCompactClassName}
-            />
-          </FilterField>
-          <FilterField label="To date" htmlFor="audit-to">
-            <Input
-              id="audit-to"
-              name="to"
-              type="date"
-              defaultValue={to}
-              className={filterControlCompactClassName}
-            />
-          </FilterField>
+          </FilterInlineField>
+          <FilterDateRangeField
+            fromId="audit-from"
+            toId="audit-to"
+            fromName="from"
+            toName="to"
+            fromDefaultValue={from}
+            toDefaultValue={to}
+            className="md:col-span-2 xl:col-span-1"
+          />
+          <FilterActions className={filterInlineActionsClassName}>
+            <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+              Filter
+            </Button>
+            <ActionLink href="/dashboard/audit-logs" size="sm" className={filterInlineButtonClassName}>
+              Reset
+            </ActionLink>
+          </FilterActions>
         </FilterGrid>
-        <FilterActions className={filterActionRowClassName}>
-          <Button type="submit" size="sm" className="min-w-24">
-            Filter
-          </Button>
-          <ActionLink href="/dashboard/audit-logs" size="sm" className="min-w-20">
-            Reset
-          </ActionLink>
-        </FilterActions>
       </FilterBar>
 
       <SectionCard bodyClassName="p-0">

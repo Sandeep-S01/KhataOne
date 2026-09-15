@@ -12,6 +12,7 @@ import {
   SectionCard,
   SetupRequired,
   StatTile,
+  TableToolbar,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -239,18 +240,18 @@ export default async function GstPeriodPage({
         </SectionCard>
 
       <div className="min-w-0 xl:col-span-2">
-      <SectionCard
-        title="Current period transactions"
-        description="Live transactions currently in this client and date range. Their statuses explain blockers; this list is not a persisted generation snapshot."
-        bodyClassName="p-0"
-        actions={
-          typeof currentBlockerCount === "number" ? (
-            <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
-              {currentBlockerCount} current blockers
-            </StatusChip>
-          ) : undefined
-        }
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Current period transactions"
+          description="Live transactions currently in this client and date range. Their statuses explain blockers; this list is not a persisted generation snapshot."
+          actions={
+            typeof currentBlockerCount === "number" ? (
+              <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
+                {currentBlockerCount} current blockers
+              </StatusChip>
+            ) : undefined
+          }
+        />
         {sourceTransactionsError ? (
           <QueryError message="Source transactions could not be loaded. Refresh to retry." />
         ) : !sourceTransactions || sourceTransactions.length === 0 ? (
@@ -310,7 +311,8 @@ export default async function GstPeriodPage({
       </div>
 
       <div className="min-w-0 xl:col-span-2">
-      <SectionCard title="Generation audit" bodyClassName="p-0">
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar title="Generation audit" />
         {auditsError ? (
           <QueryError message="Generation audit could not be loaded. Refresh to retry." />
         ) : !audits || audits.length === 0 ? (

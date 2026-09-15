@@ -8,10 +8,11 @@ import {
   EmptyState,
   FilterActions,
   FilterBar,
-  FilterField,
   FilterGrid,
-  filterActionRowClassName,
-  filterControlCompactClassName,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  FilterInlineField,
   FormMessage,
   functionalIconClassName,
   functionalIconStrokeWidth,
@@ -505,11 +506,11 @@ export default async function OperationsPage({
       </div>
 
       {canRunExtractionJobs && (
-        <SectionCard
-          title="WhatsApp pipeline recovery"
-          description="Aggregate delivery health for the event-driven path and its scheduled recovery sweep."
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="WhatsApp pipeline recovery"
+            description="Aggregate delivery health for the event-driven path and its scheduled recovery sweep."
+          />
           {pipelineHealth.error ? (
             <QueryError message={pipelineHealth.error} />
           ) : (
@@ -604,11 +605,11 @@ export default async function OperationsPage({
       )}
 
       {jobHealth.length > 0 && (
-        <SectionCard
-          title="Queue health by job type"
-          description={`Active jobs older than ${staleJobWarningMinutes} minutes need operator attention.`}
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Queue health by job type"
+            description={`Active jobs older than ${staleJobWarningMinutes} minutes need operator attention.`}
+          />
           <DataTable minWidth={760} ariaLabel="Queue health by job type">
             <thead className={tableHeaderClass}>
               <tr>
@@ -667,13 +668,13 @@ export default async function OperationsPage({
       )}
 
       <FilterBar action="/dashboard/operations" className="min-w-0">
-        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(180px,1fr)_minmax(180px,1fr)]">
-          <FilterField label="Status" htmlFor="operations-status">
+        <FilterGrid className="min-w-0 items-center md:grid-cols-2 xl:grid-cols-[minmax(180px,0.5fr)_minmax(220px,1fr)_auto]">
+          <FilterInlineField label="Status" htmlFor="operations-status">
             <Select
               id="operations-status"
               name="status"
               defaultValue={status}
-              className={filterControlCompactClassName}
+              className={filterInlineControlClassName}
             >
               <option value="">All statuses</option>
               <option value="queued">Queued</option>
@@ -681,13 +682,13 @@ export default async function OperationsPage({
               <option value="completed">Completed</option>
               <option value="failed">Failed</option>
             </Select>
-          </FilterField>
-          <FilterField label="Job type" htmlFor="operations-job-type">
+          </FilterInlineField>
+          <FilterInlineField label="Job type" htmlFor="operations-job-type">
             <Select
               id="operations-job-type"
               name="job_type"
               defaultValue={jobType}
-              className={filterControlCompactClassName}
+              className={filterInlineControlClassName}
             >
               <option value="">All jobs</option>
               {uniqueJobTypes.map((type) => (
@@ -696,20 +697,20 @@ export default async function OperationsPage({
                 </option>
               ))}
             </Select>
-          </FilterField>
+          </FilterInlineField>
+          <FilterActions className={filterInlineActionsClassName}>
+            <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+              Filter
+            </Button>
+            <ActionLink
+              href={"/dashboard/operations" as Route}
+              size="sm"
+              className={filterInlineButtonClassName}
+            >
+              Reset
+            </ActionLink>
+          </FilterActions>
         </FilterGrid>
-        <FilterActions className={filterActionRowClassName}>
-          <Button type="submit" size="sm" className="min-w-24">
-            Filter
-          </Button>
-          <ActionLink
-            href={"/dashboard/operations" as Route}
-            size="sm"
-            className="min-w-20"
-          >
-            Reset
-          </ActionLink>
-        </FilterActions>
       </FilterBar>
 
       <SectionCard bodyClassName="p-0">

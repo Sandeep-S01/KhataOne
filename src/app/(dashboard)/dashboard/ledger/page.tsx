@@ -6,11 +6,12 @@ import {
   FieldLabel,
   FilterActions,
   FilterBar,
-  FilterField,
+  FilterDateRangeField,
   FilterGrid,
-  filterActionRowClassName,
-  filterControlCompactClassName,
-  Input,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  FilterInlineField,
   InputWithIcon,
   PageBody,
   PageHeader,
@@ -165,13 +166,13 @@ export default async function LedgerPage({
 
       <PageBody>
       <FilterBar action="/dashboard/ledger" className="min-w-0">
-        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(180px,1fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)_minmax(180px,1fr)]">
-          <FilterField label="Client" htmlFor="ledger-client">
+        <FilterGrid className="min-w-0 items-center md:grid-cols-2 xl:grid-cols-[minmax(160px,0.8fr)_minmax(180px,0.85fr)_minmax(260px,1fr)_auto]">
+          <FilterInlineField label="Client" htmlFor="ledger-client">
             <Select
               id="ledger-client"
               name="client"
               defaultValue={filters.client ?? ""}
-              className={filterControlCompactClassName}
+              className={filterInlineControlClassName}
             >
               <option value="">All clients</option>
               {clients?.map((client) => (
@@ -180,49 +181,38 @@ export default async function LedgerPage({
                 </option>
               ))}
             </Select>
-          </FilterField>
+          </FilterInlineField>
 
-          <FilterField label="From" htmlFor="ledger-from">
-            <Input
-              id="ledger-from"
-              name="from"
-              type="date"
-              defaultValue={filters.from ?? ""}
-              className={filterControlCompactClassName}
-            />
-          </FilterField>
-
-          <FilterField label="To" htmlFor="ledger-to">
-            <Input
-              id="ledger-to"
-              name="to"
-              type="date"
-              defaultValue={filters.to ?? ""}
-              className={filterControlCompactClassName}
-            />
-          </FilterField>
-
-          <FilterField label="Account" htmlFor="ledger-account">
+          <FilterInlineField label="Account" htmlFor="ledger-account">
             <InputWithIcon
               id="ledger-account"
               name="account"
               type="search"
               defaultValue={filters.account ?? ""}
               placeholder="Account name"
-              inputClassName={filterControlCompactClassName}
+              inputClassName={filterInlineControlClassName}
             />
-          </FilterField>
+          </FilterInlineField>
 
+          <FilterDateRangeField
+            fromId="ledger-from"
+            toId="ledger-to"
+            fromName="from"
+            toName="to"
+            fromDefaultValue={filters.from ?? ""}
+            toDefaultValue={filters.to ?? ""}
+            className="md:col-span-2 xl:col-span-1"
+          />
+
+          <FilterActions className={filterInlineActionsClassName}>
+            <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+              Apply
+            </Button>
+            <ActionLink href="/dashboard/ledger" size="sm" className={filterInlineButtonClassName}>
+              Clear
+            </ActionLink>
+          </FilterActions>
         </FilterGrid>
-
-        <FilterActions className={filterActionRowClassName}>
-          <Button type="submit" size="sm" className="min-w-24">
-            Apply
-          </Button>
-          <ActionLink href="/dashboard/ledger" size="sm" className="min-w-20">
-            Clear
-          </ActionLink>
-        </FilterActions>
 
         {activeFilters.length > 0 && (
           <div>

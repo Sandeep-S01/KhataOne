@@ -6,10 +6,11 @@ import {
   FieldLabel,
   FilterActions,
   FilterBar,
-  FilterField,
   FilterGrid,
-  filterActionRowClassName,
-  filterControlCompactClassName,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  FilterInlineField,
   FormMessage,
   InputWithIcon,
   PageBody,
@@ -206,40 +207,40 @@ export default async function ClientsPage({
         )}
 
         <FilterBar action="/dashboard/clients" className="min-w-0">
-          <FilterGrid className="min-w-0 md:grid-cols-[minmax(180px,1fr)_minmax(150px,180px)]">
-            <FilterField label="Search" htmlFor="client-search">
+          <FilterGrid className="min-w-0 items-center md:grid-cols-2 xl:grid-cols-[minmax(220px,1fr)_minmax(150px,0.25fr)_auto]">
+            <FilterInlineField label="Search" htmlFor="client-search">
               <InputWithIcon
                 id="client-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Business, GSTIN, phone"
-                inputClassName={filterControlCompactClassName}
+                inputClassName={filterInlineControlClassName}
               />
-            </FilterField>
-            <FilterField label="Status" htmlFor="client-status">
+            </FilterInlineField>
+            <FilterInlineField label="Status" htmlFor="client-status">
               <Select
                 id="client-status"
                 name="status"
                 defaultValue={selectedStatus}
-                className={filterControlCompactClassName}
+                className={filterInlineControlClassName}
               >
                 {statusOptions.map((status) => (
                   <option key={status} value={status}>
-                    {status.replaceAll("_", " ")}
+                    {status === "all" ? "All statuses" : status.replaceAll("_", " ")}
                   </option>
                 ))}
               </Select>
-            </FilterField>
+            </FilterInlineField>
+            <FilterActions className={filterInlineActionsClassName}>
+              <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+                Apply
+              </Button>
+              <ActionLink href="/dashboard/clients" size="sm" className={filterInlineButtonClassName}>
+                Clear
+              </ActionLink>
+            </FilterActions>
           </FilterGrid>
-          <FilterActions className={filterActionRowClassName}>
-            <Button type="submit" size="sm" className="min-w-24">
-              Apply
-            </Button>
-            <ActionLink href="/dashboard/clients" size="sm" className="min-w-20">
-              Clear
-            </ActionLink>
-          </FilterActions>
-          <div>
+          <div className="border-t border-khata-border/70 pt-3">
             <FieldLabel>Current page status counts</FieldLabel>
             <div className="mt-2 flex flex-wrap gap-2">
               {statusCounts.map((item) => (

@@ -14,6 +14,7 @@ import {
   RecordCount,
   SectionCard,
   SetupRequired,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -122,12 +123,12 @@ export default async function GstSummaryPage({
           </SectionCard>
         )}
 
-      <SectionCard
-        title="Generated periods"
-        description="Newest generated periods are shown first. Use pagination to reach older GST periods."
-        actions={<RecordCount value={pagePeriods.length} />}
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Generated periods"
+          description="Newest generated periods are shown first. Use pagination to reach older GST periods."
+          meta={<RecordCount value={pagePeriods.length} />}
+        />
 
         {error && (
           <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />

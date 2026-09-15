@@ -5,10 +5,11 @@ import {
   EmptyState,
   FilterActions,
   FilterBar,
-  FilterField,
   FilterGrid,
-  filterActionRowClassName,
-  filterControlCompactClassName,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  FilterInlineField,
   InputWithIcon,
   PageBody,
   PageHeader,
@@ -246,39 +247,39 @@ export default async function InboxPage({
 
       <PageBody>
         <FilterBar action="/dashboard/inbox" className="min-w-0">
-          <FilterGrid className="min-w-0 md:grid-cols-[minmax(180px,1fr)_minmax(150px,190px)]">
-            <FilterField label="Search" htmlFor="inbox-search">
+          <FilterGrid className="min-w-0 items-center md:grid-cols-2 xl:grid-cols-[minmax(220px,1fr)_minmax(150px,0.25fr)_auto]">
+            <FilterInlineField label="Search" htmlFor="inbox-search">
               <InputWithIcon
                 id="inbox-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Sender, client, type"
-                inputClassName={filterControlCompactClassName}
+                inputClassName={filterInlineControlClassName}
               />
-            </FilterField>
-            <FilterField label="Status" htmlFor="inbox-status">
+            </FilterInlineField>
+            <FilterInlineField label="Status" htmlFor="inbox-status">
               <Select
                 id="inbox-status"
                 name="status"
                 defaultValue={selectedStatus}
-                className={filterControlCompactClassName}
+                className={filterInlineControlClassName}
               >
                 {inboxStatusOptions.map((status) => (
                   <option key={status} value={status}>
-                    {status.replaceAll("_", " ")}
+                    {status === "all" ? "All statuses" : status.replaceAll("_", " ")}
                   </option>
                 ))}
               </Select>
-            </FilterField>
+            </FilterInlineField>
+            <FilterActions className={filterInlineActionsClassName}>
+              <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+                Apply
+              </Button>
+              <ActionLink href="/dashboard/inbox" size="sm" className={filterInlineButtonClassName}>
+                Clear
+              </ActionLink>
+            </FilterActions>
           </FilterGrid>
-          <FilterActions className={filterActionRowClassName}>
-            <Button type="submit" size="sm" className="min-w-24">
-              Apply
-            </Button>
-            <ActionLink href="/dashboard/inbox" size="sm" className="min-w-20">
-              Clear
-            </ActionLink>
-          </FilterActions>
         </FilterBar>
 
         <SectionCard bodyClassName="p-0">

@@ -9,6 +9,7 @@ import {
   RecordCount,
   SectionCard,
   SetupRequired,
+  TableToolbar,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -161,17 +162,17 @@ export default async function PlatformPage() {
           />
         </SectionCard>
 
-        <SectionCard
-          title="Integration records"
-          actions={
-            <RecordCount
-              value={integrationEventCount ?? 0}
-              label="events"
-              singularLabel="event"
-            />
-          }
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Integration records"
+            meta={
+              <RecordCount
+                value={integrationEventCount ?? 0}
+                label="events"
+                singularLabel="event"
+              />
+            }
+          />
           <DataTable minWidth={680} ariaLabel="Platform integration records">
               <thead className={tableHeaderClass}>
                 <tr>

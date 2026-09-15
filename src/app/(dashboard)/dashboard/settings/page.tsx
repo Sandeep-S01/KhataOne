@@ -10,6 +10,7 @@ import {
   RecordCount,
   SectionCard,
   SetupRequired,
+  TableToolbar,
   tableCellClass,
   tableHeadCellClass,
   tableHeaderClass,
@@ -164,17 +165,17 @@ export default async function SettingsPage() {
         </SectionCard>
       </div>
 
-      <SectionCard
-        title="Workspace members"
-        actions={
-          <RecordCount
-            value={members?.length ?? 0}
-            label="users"
-            singularLabel="user"
-          />
-        }
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Workspace members"
+          meta={
+            <RecordCount
+              value={members?.length ?? 0}
+              label="users"
+              singularLabel="user"
+            />
+          }
+        />
         {!members || members.length === 0 ? (
           <EmptyState
             title="No active memberships found"

@@ -10,6 +10,7 @@ import {
   PermissionNotice,
   SectionCard,
   SetupRequired,
+  TableToolbar,
   TextLink,
   tableCellClass,
   tableHeadCellClass,
@@ -169,7 +170,8 @@ export default async function LedgerEntryPage({
         </SectionCard>
 
       <div className="xl:col-span-2">
-      <SectionCard title="Correction audit" bodyClassName="p-0">
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar title="Correction audit" />
         {!audits || audits.length === 0 ? (
           <EmptyState
             title="No corrections recorded"

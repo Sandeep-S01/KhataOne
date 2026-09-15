@@ -9,6 +9,7 @@ import {
   SectionCard,
   SetupRequired,
   StatTile,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -312,14 +313,14 @@ export default async function DashboardPage() {
           </div>
         </SectionCard>
 
-        <SectionCard
-          title="Review queue snapshot"
-          description="Newest AI-created records waiting for a CA decision."
-          actions={
-            <RecordCount value={reviewItems?.length ?? 0} label="latest" />
-          }
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Review queue snapshot"
+            description="Newest AI-created records waiting for a CA decision."
+            meta={
+              <RecordCount value={reviewItems?.length ?? 0} label="latest" />
+            }
+          />
           {reviewItemsError && (
             <QueryError message={reviewItemsError.message} />
           )}

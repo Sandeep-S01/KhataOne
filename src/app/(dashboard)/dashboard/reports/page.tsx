@@ -12,6 +12,7 @@ import {
   SectionCard,
   SetupRequired,
   StatTile,
+  TableToolbar,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -174,18 +175,18 @@ export default async function ReportsPage({
         ))}
       </div>
 
-      <SectionCard
-        title="GST readiness report"
-        description="Newest matching periods are shown first. Use pagination to reach older GST readiness rows."
-        actions={
-          <RecordCount
-            value={pagePeriods.length}
-            label="periods"
-            singularLabel="period"
-          />
-        }
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="GST readiness report"
+          description="Newest matching periods are shown first. Use pagination to reach older GST readiness rows."
+          meta={
+            <RecordCount
+              value={pagePeriods.length}
+              label="periods"
+              singularLabel="period"
+            />
+          }
+        />
 
         {error && (
           <QueryError message="GST readiness report could not be loaded. Refresh to retry." />
