@@ -731,11 +731,13 @@ export function FilterActions({
 
 export function TableToolbar({
   title,
+  description,
   meta,
   actions,
   className,
 }: {
   title: string;
+  description?: React.ReactNode;
   meta?: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
@@ -747,13 +749,18 @@ export function TableToolbar({
         className,
       )}
     >
-      <div className="flex min-w-0 flex-wrap items-center gap-3">
-        <h2 className={sectionCardTitleClassName}>{title}</h2>
-        {meta && (
-          <>
-            <span className="hidden h-5 w-px bg-khata-border sm:block" aria-hidden="true" />
-            {meta}
-          </>
+      <div className="min-w-0 space-y-1">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
+          <h2 className={sectionCardTitleClassName}>{title}</h2>
+          {meta && (
+            <>
+              <span className="hidden h-5 w-px bg-khata-border sm:block" aria-hidden="true" />
+              {meta}
+            </>
+          )}
+        </div>
+        {description && (
+          <p className={sectionCardDescriptionClassName}>{description}</p>
         )}
       </div>
       {actions && (

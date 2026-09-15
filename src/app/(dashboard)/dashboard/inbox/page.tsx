@@ -3,8 +3,11 @@ import {
   Button,
   DataTable,
   EmptyState,
+  FilterActions,
   FilterBar,
-  Input,
+  FilterField,
+  FilterGrid,
+  InputWithIcon,
   PageBody,
   PageHeader,
   PaginationControls,
@@ -16,7 +19,7 @@ import {
   tableActionCellClass,
   tableActionHeadCellClass,
   tableCellClass,
-  fieldLabelClassName,
+  TableToolbar,
   tableHeadCellClass,
   tableHeaderClass,
   tableNumericTextClass,
@@ -241,28 +244,16 @@ export default async function InboxPage({
 
       <PageBody>
         <FilterBar action="/dashboard/inbox">
-          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_190px_auto] md:items-end">
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="inbox-search"
-                className={fieldLabelClassName}
-              >
-                Search
-              </label>
-              <Input
+          <FilterGrid className="md:grid-cols-[minmax(0,1fr)_190px_auto]">
+            <FilterField label="Search" htmlFor="inbox-search">
+              <InputWithIcon
                 id="inbox-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Sender, client, type"
               />
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="inbox-status"
-                className={fieldLabelClassName}
-              >
-                Status
-              </label>
+            </FilterField>
+            <FilterField label="Status" htmlFor="inbox-status">
               <Select
                 id="inbox-status"
                 name="status"
@@ -274,23 +265,23 @@ export default async function InboxPage({
                   </option>
                 ))}
               </Select>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" size="sm">
+            </FilterField>
+            <FilterActions>
+              <Button type="submit" size="md" className="min-w-24">
                 Apply
               </Button>
-              <ActionLink href="/dashboard/inbox" size="sm">
+              <ActionLink href="/dashboard/inbox" size="md" className="min-w-20">
                 Clear
               </ActionLink>
-            </div>
-          </div>
+            </FilterActions>
+          </FilterGrid>
         </FilterBar>
 
-        <SectionCard
-          title="Inbound messages"
-          actions={<RecordCount value={pageMessages.length} label="shown" />}
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Inbound messages"
+            meta={<RecordCount value={pageMessages.length} label="shown" />}
+          />
 
         {error && (
           <QueryError message="Inbound messages could not be loaded. Please retry." />

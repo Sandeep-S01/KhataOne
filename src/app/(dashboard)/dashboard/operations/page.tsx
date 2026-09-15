@@ -6,8 +6,10 @@ import {
   Button,
   DataTable,
   EmptyState,
-  FieldLabel,
+  FilterActions,
   FilterBar,
+  FilterField,
+  FilterGrid,
   FormMessage,
   functionalIconClassName,
   functionalIconStrokeWidth,
@@ -21,6 +23,7 @@ import {
   RetryIcon,
   SectionCard,
   Select,
+  TableToolbar,
   SetupRequired,
   StatTile,
   dashboardMetaNumericClassName,
@@ -661,59 +664,56 @@ export default async function OperationsPage({
         </SectionCard>
       )}
 
-      <FilterBar action="/dashboard/operations" className="md:grid-cols-[1fr_1fr_auto]">
-        <label className="block">
-          <FieldLabel>
-            Status
-          </FieldLabel>
-          <Select
-            name="status"
-            defaultValue={status}
-            className="mt-1"
-          >
-            <option value="">All statuses</option>
-            <option value="queued">Queued</option>
-            <option value="processing">Processing</option>
-            <option value="completed">Completed</option>
-            <option value="failed">Failed</option>
-          </Select>
-        </label>
-        <label className="block">
-          <FieldLabel>
-            Job type
-          </FieldLabel>
-          <Select
-            name="job_type"
-            defaultValue={jobType}
-            className="mt-1"
-          >
-            <option value="">All jobs</option>
-            {uniqueJobTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </Select>
-        </label>
-        <div className="flex items-end gap-2">
-          <Button type="submit" size="sm">
-            Filter
-          </Button>
-          <ActionLink
-            href={"/dashboard/operations" as Route}
-            size="sm"
-          >
-            Reset
-          </ActionLink>
-        </div>
+      <FilterBar action="/dashboard/operations">
+        <FilterGrid className="md:grid-cols-[minmax(200px,1fr)_minmax(200px,1fr)_auto]">
+          <FilterField label="Status" htmlFor="operations-status">
+            <Select
+              id="operations-status"
+              name="status"
+              defaultValue={status}
+            >
+              <option value="">All statuses</option>
+              <option value="queued">Queued</option>
+              <option value="processing">Processing</option>
+              <option value="completed">Completed</option>
+              <option value="failed">Failed</option>
+            </Select>
+          </FilterField>
+          <FilterField label="Job type" htmlFor="operations-job-type">
+            <Select
+              id="operations-job-type"
+              name="job_type"
+              defaultValue={jobType}
+            >
+              <option value="">All jobs</option>
+              {uniqueJobTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </Select>
+          </FilterField>
+          <FilterActions className="md:justify-end">
+            <Button type="submit" size="md" className="min-w-24">
+              Filter
+            </Button>
+            <ActionLink
+              href={"/dashboard/operations" as Route}
+              size="md"
+              className="min-w-20"
+            >
+              Reset
+            </ActionLink>
+          </FilterActions>
+        </FilterGrid>
       </FilterBar>
 
-      <SectionCard
-        title="Processing jobs"
-        description="Newest matching jobs are shown first. Use pagination to reach older processing history."
-        actions={<RecordCount value={pageJobs.length} />}
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Processing jobs"
+          description="Newest matching jobs are shown first. Use pagination to reach older processing history."
+          meta={<RecordCount value={pageJobs.length} />}
+        />
 
         {error && (
           <QueryError message="Processing jobs could not be loaded. Refresh to retry." />

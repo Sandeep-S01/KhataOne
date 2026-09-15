@@ -4,14 +4,19 @@ import {
   DataTable,
   EmptyState,
   FieldLabel,
+  FilterActions,
   FilterBar,
+  FilterField,
+  FilterGrid,
   Input,
+  InputWithIcon,
   PageBody,
   PageHeader,
   PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
+  TableToolbar,
   Select,
   SetupRequired,
   StatusBadge,
@@ -157,72 +162,63 @@ export default async function LedgerPage({
       />
 
       <PageBody>
-      <FilterBar action="/dashboard/ledger" className="md:grid-cols-5">
-        <label className="block">
-          <FieldLabel>
-            Client
-          </FieldLabel>
-          <Select
-            name="client"
-            defaultValue={filters.client ?? ""}
-            className="mt-1"
-          >
-            <option value="">All clients</option>
-            {clients?.map((client) => (
-              <option key={client.id} value={client.id}>
-                {client.business_name}
-              </option>
-            ))}
-          </Select>
-        </label>
+      <FilterBar action="/dashboard/ledger">
+        <FilterGrid className="lg:grid-cols-[minmax(190px,1fr)_160px_160px_minmax(190px,1fr)_auto]">
+          <FilterField label="Client" htmlFor="ledger-client">
+            <Select
+              id="ledger-client"
+              name="client"
+              defaultValue={filters.client ?? ""}
+            >
+              <option value="">All clients</option>
+              {clients?.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.business_name}
+                </option>
+              ))}
+            </Select>
+          </FilterField>
 
-        <label className="block">
-          <FieldLabel>
-            From
-          </FieldLabel>
-          <Input
-            name="from"
-            type="date"
-            defaultValue={filters.from ?? ""}
-            className="mt-1"
-          />
-        </label>
+          <FilterField label="From" htmlFor="ledger-from">
+            <Input
+              id="ledger-from"
+              name="from"
+              type="date"
+              defaultValue={filters.from ?? ""}
+            />
+          </FilterField>
 
-        <label className="block">
-          <FieldLabel>
-            To
-          </FieldLabel>
-          <Input
-            name="to"
-            type="date"
-            defaultValue={filters.to ?? ""}
-            className="mt-1"
-          />
-        </label>
+          <FilterField label="To" htmlFor="ledger-to">
+            <Input
+              id="ledger-to"
+              name="to"
+              type="date"
+              defaultValue={filters.to ?? ""}
+            />
+          </FilterField>
 
-        <label className="block">
-          <FieldLabel>
-            Account
-          </FieldLabel>
-          <Input
-            name="account"
-            type="search"
-            defaultValue={filters.account ?? ""}
-            className="mt-1"
-          />
-        </label>
+          <FilterField label="Account" htmlFor="ledger-account">
+            <InputWithIcon
+              id="ledger-account"
+              name="account"
+              type="search"
+              defaultValue={filters.account ?? ""}
+              placeholder="Account name"
+            />
+          </FilterField>
 
-        <div className="flex items-end gap-2">
-          <Button type="submit" size="sm">
-            Apply
-          </Button>
-          <ActionLink href="/dashboard/ledger" size="sm">
-            Clear
-          </ActionLink>
-        </div>
+          <FilterActions className="lg:justify-end">
+            <Button type="submit" size="md" className="min-w-24">
+              Apply
+            </Button>
+            <ActionLink href="/dashboard/ledger" size="md" className="min-w-20">
+              Clear
+            </ActionLink>
+          </FilterActions>
+        </FilterGrid>
 
         {activeFilters.length > 0 && (
-          <div className="md:col-span-5">
+          <div>
             <FieldLabel>Active filters</FieldLabel>
             <div className="mt-2 flex flex-wrap gap-2">
               {activeFilters.map((filter) => (
@@ -254,11 +250,11 @@ export default async function LedgerPage({
         ))}
       </div>
 
-      <SectionCard
-        title="Ledger entries"
-        actions={<RecordCount value={pageEntries.length} label="shown" />}
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Ledger entries"
+          meta={<RecordCount value={pageEntries.length} label="shown" />}
+        />
 
         {error && (
           <QueryError message={error.message} />

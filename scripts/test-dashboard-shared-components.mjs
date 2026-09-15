@@ -11,9 +11,12 @@ const globalStyles = read("src/app/globals.css");
 const formatSource = read("src/lib/format.ts");
 const overview = read("src/app/(dashboard)/dashboard/page.tsx");
 const reviewQueue = read("src/app/(dashboard)/dashboard/review-queue/page.tsx");
+const inbox = read("src/app/(dashboard)/dashboard/inbox/page.tsx");
+const clientsPage = read("src/app/(dashboard)/dashboard/clients/page.tsx");
 const clientDetail = read("src/app/(dashboard)/dashboard/clients/[clientId]/page.tsx");
 const ledger = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
 const operations = read("src/app/(dashboard)/dashboard/operations/page.tsx");
+const auditLogs = read("src/app/(dashboard)/dashboard/audit-logs/page.tsx");
 const exportForm = read("src/components/export-form.tsx");
 const documentEvidencePanel = read("src/components/document-evidence-panel.tsx");
 const statusChip = read("src/components/status-chip.tsx");
@@ -36,6 +39,8 @@ assert.match(designSystem, /export function FilterField/);
 assert.match(designSystem, /export function FilterGrid/);
 assert.match(designSystem, /export function FilterActions/);
 assert.match(designSystem, /export function TableToolbar/);
+assert.match(designSystem, /description\?: React\.ReactNode/);
+assert.match(designSystem, /sectionCardDescriptionClassName/);
 assert.match(designSystem, /export const externalActionLinkClassName = cn\(/);
 assert.match(designSystem, /export const panelTitleClassName =/);
 assert.match(designSystem, /export const mutedPanelClassName =/);
@@ -75,6 +80,29 @@ assert.match(reviewQueue, /<ActionLink href="\/dashboard\/review-queue" size="md
 assert.match(reviewQueue, /<TableToolbar/);
 assert.match(reviewQueue, /Open exports/);
 assert.doesNotMatch(reviewQueue, /Bulk Approve/);
+
+for (const [name, source] of [
+  ["inbox", inbox],
+  ["clients", clientsPage],
+  ["ledger", ledger],
+  ["operations", operations],
+  ["audit logs", auditLogs],
+]) {
+  assert.match(source, /<FilterGrid/, `${name} should use shared FilterGrid`);
+  assert.match(source, /<FilterField/, `${name} should use shared FilterField`);
+  assert.match(source, /<FilterActions/, `${name} should use shared FilterActions`);
+  assert.match(source, /<Button type="submit" size="md" className="min-w-24">/, `${name} submit control should match field height`);
+  assert.match(source, /<TableToolbar/, `${name} table/list card should use shared TableToolbar`);
+}
+
+for (const [name, source] of [
+  ["inbox", inbox],
+  ["clients", clientsPage],
+  ["ledger", ledger],
+  ["audit logs", auditLogs],
+]) {
+  assert.match(source, /<InputWithIcon/, `${name} search-like filters should use icon input`);
+}
 assert.match(overview, /aria-label=\{item\.actionLabel\}/);
 assert.ok(!clientDetail.includes('|| "Pending"'));
 assert.match(operations, /return "No samples"/);

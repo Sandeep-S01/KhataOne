@@ -4,9 +4,12 @@ import {
   DataTable,
   EmptyState,
   FieldLabel,
+  FilterActions,
   FilterBar,
+  FilterField,
+  FilterGrid,
   FormMessage,
-  Input,
+  InputWithIcon,
   PageBody,
   PageHeader,
   PaginationControls,
@@ -25,7 +28,7 @@ import {
   tablePrimaryTextClass,
   tableSecondaryTextClass,
   tableRowClass,
-  fieldLabelClassName,
+  TableToolbar,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import {
@@ -201,28 +204,16 @@ export default async function ClientsPage({
         )}
 
         <FilterBar action="/dashboard/clients">
-          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_auto] md:items-end">
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="client-search"
-                className={fieldLabelClassName}
-              >
-                Search
-              </label>
-              <Input
+          <FilterGrid className="md:grid-cols-[minmax(0,1fr)_180px_auto]">
+            <FilterField label="Search" htmlFor="client-search">
+              <InputWithIcon
                 id="client-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Business, GSTIN, phone"
               />
-            </div>
-            <div className="grid gap-1.5">
-              <label
-                htmlFor="client-status"
-                className={fieldLabelClassName}
-              >
-                Status
-              </label>
+            </FilterField>
+            <FilterField label="Status" htmlFor="client-status">
               <Select
                 id="client-status"
                 name="status"
@@ -234,16 +225,16 @@ export default async function ClientsPage({
                   </option>
                 ))}
               </Select>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" size="sm">
+            </FilterField>
+            <FilterActions>
+              <Button type="submit" size="md" className="min-w-24">
                 Apply
               </Button>
-              <ActionLink href="/dashboard/clients" size="sm">
+              <ActionLink href="/dashboard/clients" size="md" className="min-w-20">
                 Clear
               </ActionLink>
-            </div>
-          </div>
+            </FilterActions>
+          </FilterGrid>
           <div>
             <FieldLabel>Current page status counts</FieldLabel>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -256,11 +247,11 @@ export default async function ClientsPage({
           </div>
         </FilterBar>
 
-        <SectionCard
-          title="Client list"
-          actions={<RecordCount value={pageClients.length} label="shown" />}
-          bodyClassName="p-0"
-        >
+        <SectionCard bodyClassName="p-0">
+          <TableToolbar
+            title="Client list"
+            meta={<RecordCount value={pageClients.length} label="shown" />}
+          />
 
         {error && (
           <QueryError message={error.message} />

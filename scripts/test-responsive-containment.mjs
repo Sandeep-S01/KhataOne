@@ -9,18 +9,18 @@ const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 
 assert.match(
   reviewQueue,
-  /lg:grid-cols-\[minmax\(0,1fr\)_190px_170px_170px\]/,
-  "review filters keep a contained four-column desktop layout below extra-wide screens",
+  /<FilterGrid className="xl:grid-cols-\[minmax\(260px,1fr\)_180px_160px_160px_160px_160px\]">/,
+  "review primary filters keep a contained six-column layout at wide screens",
 );
 assert.match(
   reviewQueue,
-  /2xl:grid-cols-\[minmax\(0,1fr\)_190px_160px_160px_150px_150px_auto\]/,
-  "review filters use the dense seven-column layout only at extra-wide screens",
+  /<FilterGrid className="border-t border-khata-border\/70 pt-3 lg:grid-cols-\[minmax\(220px,24rem\)_minmax\(0,1fr\)_auto\]">/,
+  "review secondary filters and actions stay on a controlled wrapped row",
 );
 assert.match(
   reviewQueue,
-  /lg:col-span-4 2xl:col-span-1/,
-  "review filter actions wrap to their own row before the extra-wide layout",
+  /<FilterActions className="lg:justify-end">/,
+  "review filter actions use the shared right-aligned action group",
 );
 assert.doesNotMatch(
   reviewQueue,

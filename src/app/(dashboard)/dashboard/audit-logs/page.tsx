@@ -3,9 +3,12 @@ import {
   Button,
   DataTable,
   EmptyState,
-  FieldLabel,
+  FilterActions,
   FilterBar,
+  FilterField,
+  FilterGrid,
   Input,
+  InputWithIcon,
   PageBody,
   PageHeader,
   PaginationControls,
@@ -13,6 +16,7 @@ import {
   RecordCount,
   SectionCard,
   Select,
+  TableToolbar,
   SetupRequired,
   StatusBadge,
   tableCellClass,
@@ -152,84 +156,71 @@ export default async function AuditLogsPage({
       />
 
       <PageBody>
-      <FilterBar action="/dashboard/audit-logs" className="md:grid-cols-5">
-        <label className="block">
-          <FieldLabel>
-            Action contains
-          </FieldLabel>
-          <Input
-            name="action"
-            defaultValue={action}
-            placeholder="approved, generated, corrected"
-            className="mt-1"
-          />
-        </label>
-        <label className="block">
-          <FieldLabel>
-            Entity
-          </FieldLabel>
-          <Select
-            name="entity_type"
-            defaultValue={entityType}
-            className="mt-1"
-          >
-            <option value="">All entities</option>
-            {uniqueEntityTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </Select>
-        </label>
-        <label className="block">
-          <FieldLabel>
-            Actor
-          </FieldLabel>
-          <Input
-            name="actor"
-            defaultValue={actor}
-            placeholder="User id"
-            className="mt-1"
-          />
-        </label>
-        <label className="block">
-          <FieldLabel>
-            From date
-          </FieldLabel>
-          <Input
-            name="from"
-            type="date"
-            defaultValue={from}
-            className="mt-1"
-          />
-        </label>
-        <label className="block">
-          <FieldLabel>
-            To date
-          </FieldLabel>
-          <Input
-            name="to"
-            type="date"
-            defaultValue={to}
-            className="mt-1"
-          />
-        </label>
-        <div className="flex items-end gap-2">
-          <Button type="submit" size="sm">
-            Filter
-          </Button>
-          <ActionLink href="/dashboard/audit-logs" size="sm">
-            Reset
-          </ActionLink>
-        </div>
+      <FilterBar action="/dashboard/audit-logs">
+        <FilterGrid className="xl:grid-cols-[minmax(200px,1fr)_180px_minmax(180px,1fr)_150px_150px_auto]">
+          <FilterField label="Action contains" htmlFor="audit-action">
+            <InputWithIcon
+              id="audit-action"
+              name="action"
+              defaultValue={action}
+              placeholder="approved, generated, corrected"
+            />
+          </FilterField>
+          <FilterField label="Entity" htmlFor="audit-entity-type">
+            <Select
+              id="audit-entity-type"
+              name="entity_type"
+              defaultValue={entityType}
+            >
+              <option value="">All entities</option>
+              {uniqueEntityTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </Select>
+          </FilterField>
+          <FilterField label="Actor" htmlFor="audit-actor">
+            <InputWithIcon
+              id="audit-actor"
+              name="actor"
+              defaultValue={actor}
+              placeholder="User id"
+            />
+          </FilterField>
+          <FilterField label="From date" htmlFor="audit-from">
+            <Input
+              id="audit-from"
+              name="from"
+              type="date"
+              defaultValue={from}
+            />
+          </FilterField>
+          <FilterField label="To date" htmlFor="audit-to">
+            <Input
+              id="audit-to"
+              name="to"
+              type="date"
+              defaultValue={to}
+            />
+          </FilterField>
+          <FilterActions className="xl:justify-end">
+            <Button type="submit" size="md" className="min-w-24">
+              Filter
+            </Button>
+            <ActionLink href="/dashboard/audit-logs" size="md" className="min-w-20">
+              Reset
+            </ActionLink>
+          </FilterActions>
+        </FilterGrid>
       </FilterBar>
 
-      <SectionCard
-        title="Audit events"
-        description="Newest matching events are shown first. Use pagination to reach older matching audit records."
-        actions={<RecordCount value={pageLogs.length} />}
-        bodyClassName="p-0"
-      >
+      <SectionCard bodyClassName="p-0">
+        <TableToolbar
+          title="Audit events"
+          description="Newest matching events are shown first. Use pagination to reach older matching audit records."
+          meta={<RecordCount value={pageLogs.length} />}
+        />
 
         {error && (
           <QueryError message={error.message} />
