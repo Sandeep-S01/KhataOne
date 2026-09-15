@@ -521,8 +521,8 @@ export default async function ReviewQueuePage({
 
       <PageBody>
         {clientsResult.error && <QueryError message="Client filters could not be loaded. Please retry." />}
-        <FilterBar action="/dashboard/review-queue" className="gap-0 overflow-hidden p-0">
-          <div className="flex flex-col gap-3 border-b border-khata-border bg-khata-paperMuted/40 px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
+        <FilterBar action="/dashboard/review-queue" className="min-w-0 gap-0 overflow-hidden p-0">
+          <div className="flex min-w-0 flex-col gap-2 border-b border-khata-border bg-khata-paperMuted/40 px-3 py-2.5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-wrap items-center gap-2">
               <FilterPresetLink
                 href={reviewQueueHref(filters, { risk: null, status: null })}
@@ -566,7 +566,7 @@ export default async function ReviewQueuePage({
               </FilterPresetLink>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 lg:justify-end">
               <FilterPresetLink
                 href={reviewQueueHref(filters, {
                   from: todayRange.start,
@@ -605,7 +605,7 @@ export default async function ReviewQueuePage({
             </div>
           </div>
 
-          <div className="grid gap-4 p-4">
+          <div className="grid min-w-0 gap-3 p-3">
             {selectedStatus !== "all" && (
               <input type="hidden" name="status" value={selectedStatus} />
             )}
@@ -615,15 +615,17 @@ export default async function ReviewQueuePage({
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Search client, party, invoice, file, or type"
+                inputClassName="md:h-8 md:text-[13px]"
               />
             </FilterField>
 
-            <FilterGrid className="md:grid-cols-2 xl:grid-cols-[220px_220px_200px_160px_160px_auto]">
+            <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(160px,1fr)_minmax(160px,1fr)_minmax(140px,0.8fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)]">
               <FilterField label="Client" htmlFor="review-client">
                 <Select
                   id="review-client"
                   name="client"
                   defaultValue={filters.client ?? ""}
+                  className="md:h-8 md:text-[13px]"
                 >
                   <option value="">All clients</option>
                   {clients.map((client) => (
@@ -639,6 +641,7 @@ export default async function ReviewQueuePage({
                   id="review-document-type"
                   name="document_type"
                   defaultValue={selectedDocumentType}
+                  className="md:h-8 md:text-[13px]"
                 >
                   {documentTypeOptions.map((type) => (
                     <option key={type} value={type}>
@@ -652,6 +655,7 @@ export default async function ReviewQueuePage({
                   id="review-risk"
                   name="risk"
                   defaultValue={selectedRisk}
+                  className="md:h-8 md:text-[13px]"
                 >
                   <option value="all">All</option>
                   <option value="risk">Risk flags</option>
@@ -664,6 +668,7 @@ export default async function ReviewQueuePage({
                   name="from"
                   type="date"
                   defaultValue={filters.from ?? ""}
+                  className="md:h-8 md:text-[13px]"
                 />
               </FilterField>
               <FilterField label="To" htmlFor="review-to">
@@ -672,19 +677,20 @@ export default async function ReviewQueuePage({
                   name="to"
                   type="date"
                   defaultValue={filters.to ?? ""}
+                  className="md:h-8 md:text-[13px]"
                 />
               </FilterField>
-
-              <FilterActions className="xl:justify-end">
-                <Button type="submit" size="md" className="min-w-24">
-                  <Filter aria-hidden="true" />
-                  Apply
-                </Button>
-                <ActionLink href="/dashboard/review-queue" size="md" className="min-w-20">
-                  Clear
-                </ActionLink>
-              </FilterActions>
             </FilterGrid>
+
+            <FilterActions className="justify-start border-t border-khata-border/70 pt-3 sm:justify-end">
+              <Button type="submit" size="sm" className="min-w-24">
+                <Filter aria-hidden="true" />
+                Apply
+              </Button>
+              <ActionLink href="/dashboard/review-queue" size="sm" className="min-w-20">
+                Clear
+              </ActionLink>
+            </FilterActions>
           </div>
         </FilterBar>
 

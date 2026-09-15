@@ -769,7 +769,7 @@ export function FilterPresetLink({
     <Link
       href={href as ComponentPropsWithoutRef<typeof Link>["href"]}
       className={cn(
-        "inline-flex h-9 max-w-full items-center gap-2 rounded-full border px-3 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+        "inline-flex h-8 max-w-full items-center gap-1.5 rounded-full border px-2.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
         active
           ? "border-khata-green bg-khata-green text-white shadow-sm hover:bg-khata-greenDark"
           : "border-khata-border bg-white text-khata-ink hover:border-khata-green/40 hover:bg-khata-paperMuted",
@@ -787,7 +787,7 @@ export function FilterPresetLink({
       {count !== undefined && (
         <span
           className={cn(
-            "num inline-flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 text-xs font-semibold",
+            "num inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold",
             active
               ? "bg-white/20 text-white"
               : filterPresetCountToneClasses[countTone],
