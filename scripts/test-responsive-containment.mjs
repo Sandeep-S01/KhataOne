@@ -19,8 +19,8 @@ assert.match(
 );
 assert.match(
   reviewQueue,
-  /<FilterActions className="justify-start border-t border-khata-border\/70 pt-3 sm:justify-end">/,
-  "review filter actions stay visible in a dedicated action row",
+  /<FilterActions className=\{filterActionRowClassName\}>/,
+  "review filter actions use the shared dedicated compact action row",
 );
 assert.doesNotMatch(
   reviewQueue,

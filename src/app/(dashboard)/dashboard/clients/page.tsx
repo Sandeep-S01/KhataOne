@@ -8,6 +8,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   FormMessage,
   InputWithIcon,
   PageBody,
@@ -203,14 +205,15 @@ export default async function ClientsPage({
           />
         )}
 
-        <FilterBar action="/dashboard/clients">
-          <FilterGrid className="md:grid-cols-[minmax(0,1fr)_180px_auto]">
+        <FilterBar action="/dashboard/clients" className="min-w-0">
+          <FilterGrid className="min-w-0 md:grid-cols-[minmax(180px,1fr)_minmax(150px,180px)]">
             <FilterField label="Search" htmlFor="client-search">
               <InputWithIcon
                 id="client-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Business, GSTIN, phone"
+                inputClassName={filterControlCompactClassName}
               />
             </FilterField>
             <FilterField label="Status" htmlFor="client-status">
@@ -218,6 +221,7 @@ export default async function ClientsPage({
                 id="client-status"
                 name="status"
                 defaultValue={selectedStatus}
+                className={filterControlCompactClassName}
               >
                 {statusOptions.map((status) => (
                   <option key={status} value={status}>
@@ -226,15 +230,15 @@ export default async function ClientsPage({
                 ))}
               </Select>
             </FilterField>
-            <FilterActions>
-              <Button type="submit" size="md" className="min-w-24">
-                Apply
-              </Button>
-              <ActionLink href="/dashboard/clients" size="md" className="min-w-20">
-                Clear
-              </ActionLink>
-            </FilterActions>
           </FilterGrid>
+          <FilterActions className={filterActionRowClassName}>
+            <Button type="submit" size="sm" className="min-w-24">
+              Apply
+            </Button>
+            <ActionLink href="/dashboard/clients" size="sm" className="min-w-20">
+              Clear
+            </ActionLink>
+          </FilterActions>
           <div>
             <FieldLabel>Current page status counts</FieldLabel>
             <div className="mt-2 flex flex-wrap gap-2">

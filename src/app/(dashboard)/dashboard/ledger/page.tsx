@@ -8,6 +8,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   Input,
   InputWithIcon,
   PageBody,
@@ -162,13 +164,14 @@ export default async function LedgerPage({
       />
 
       <PageBody>
-      <FilterBar action="/dashboard/ledger">
-        <FilterGrid className="lg:grid-cols-[minmax(190px,1fr)_160px_160px_minmax(190px,1fr)_auto]">
+      <FilterBar action="/dashboard/ledger" className="min-w-0">
+        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(180px,1fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)_minmax(180px,1fr)]">
           <FilterField label="Client" htmlFor="ledger-client">
             <Select
               id="ledger-client"
               name="client"
               defaultValue={filters.client ?? ""}
+              className={filterControlCompactClassName}
             >
               <option value="">All clients</option>
               {clients?.map((client) => (
@@ -185,6 +188,7 @@ export default async function LedgerPage({
               name="from"
               type="date"
               defaultValue={filters.from ?? ""}
+              className={filterControlCompactClassName}
             />
           </FilterField>
 
@@ -194,6 +198,7 @@ export default async function LedgerPage({
               name="to"
               type="date"
               defaultValue={filters.to ?? ""}
+              className={filterControlCompactClassName}
             />
           </FilterField>
 
@@ -204,18 +209,20 @@ export default async function LedgerPage({
               type="search"
               defaultValue={filters.account ?? ""}
               placeholder="Account name"
+              inputClassName={filterControlCompactClassName}
             />
           </FilterField>
 
-          <FilterActions className="lg:justify-end">
-            <Button type="submit" size="md" className="min-w-24">
-              Apply
-            </Button>
-            <ActionLink href="/dashboard/ledger" size="md" className="min-w-20">
-              Clear
-            </ActionLink>
-          </FilterActions>
         </FilterGrid>
+
+        <FilterActions className={filterActionRowClassName}>
+          <Button type="submit" size="sm" className="min-w-24">
+            Apply
+          </Button>
+          <ActionLink href="/dashboard/ledger" size="sm" className="min-w-20">
+            Clear
+          </ActionLink>
+        </FilterActions>
 
         {activeFilters.length > 0 && (
           <div>

@@ -7,6 +7,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   Input,
   InputWithIcon,
   PageBody,
@@ -156,14 +158,15 @@ export default async function AuditLogsPage({
       />
 
       <PageBody>
-      <FilterBar action="/dashboard/audit-logs">
-        <FilterGrid className="xl:grid-cols-[minmax(200px,1fr)_180px_minmax(180px,1fr)_150px_150px_auto]">
+      <FilterBar action="/dashboard/audit-logs" className="min-w-0">
+        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(170px,1fr)_minmax(150px,0.75fr)_minmax(170px,1fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)]">
           <FilterField label="Action contains" htmlFor="audit-action">
             <InputWithIcon
               id="audit-action"
               name="action"
               defaultValue={action}
               placeholder="approved, generated, corrected"
+              inputClassName={filterControlCompactClassName}
             />
           </FilterField>
           <FilterField label="Entity" htmlFor="audit-entity-type">
@@ -171,6 +174,7 @@ export default async function AuditLogsPage({
               id="audit-entity-type"
               name="entity_type"
               defaultValue={entityType}
+              className={filterControlCompactClassName}
             >
               <option value="">All entities</option>
               {uniqueEntityTypes.map((type) => (
@@ -186,6 +190,7 @@ export default async function AuditLogsPage({
               name="actor"
               defaultValue={actor}
               placeholder="User id"
+              inputClassName={filterControlCompactClassName}
             />
           </FilterField>
           <FilterField label="From date" htmlFor="audit-from">
@@ -194,6 +199,7 @@ export default async function AuditLogsPage({
               name="from"
               type="date"
               defaultValue={from}
+              className={filterControlCompactClassName}
             />
           </FilterField>
           <FilterField label="To date" htmlFor="audit-to">
@@ -202,17 +208,18 @@ export default async function AuditLogsPage({
               name="to"
               type="date"
               defaultValue={to}
+              className={filterControlCompactClassName}
             />
           </FilterField>
-          <FilterActions className="xl:justify-end">
-            <Button type="submit" size="md" className="min-w-24">
-              Filter
-            </Button>
-            <ActionLink href="/dashboard/audit-logs" size="md" className="min-w-20">
-              Reset
-            </ActionLink>
-          </FilterActions>
         </FilterGrid>
+        <FilterActions className={filterActionRowClassName}>
+          <Button type="submit" size="sm" className="min-w-24">
+            Filter
+          </Button>
+          <ActionLink href="/dashboard/audit-logs" size="sm" className="min-w-20">
+            Reset
+          </ActionLink>
+        </FilterActions>
       </FilterBar>
 
       <SectionCard bodyClassName="p-0">

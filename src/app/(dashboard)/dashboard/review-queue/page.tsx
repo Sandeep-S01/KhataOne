@@ -10,6 +10,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   FilterPresetLink,
   InlineAlert,
   Input,
@@ -615,7 +617,7 @@ export default async function ReviewQueuePage({
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Search client, party, invoice, file, or type"
-                inputClassName="md:h-8 md:text-[13px]"
+                inputClassName={filterControlCompactClassName}
               />
             </FilterField>
 
@@ -625,7 +627,7 @@ export default async function ReviewQueuePage({
                   id="review-client"
                   name="client"
                   defaultValue={filters.client ?? ""}
-                  className="md:h-8 md:text-[13px]"
+                  className={filterControlCompactClassName}
                 >
                   <option value="">All clients</option>
                   {clients.map((client) => (
@@ -641,7 +643,7 @@ export default async function ReviewQueuePage({
                   id="review-document-type"
                   name="document_type"
                   defaultValue={selectedDocumentType}
-                  className="md:h-8 md:text-[13px]"
+                  className={filterControlCompactClassName}
                 >
                   {documentTypeOptions.map((type) => (
                     <option key={type} value={type}>
@@ -655,7 +657,7 @@ export default async function ReviewQueuePage({
                   id="review-risk"
                   name="risk"
                   defaultValue={selectedRisk}
-                  className="md:h-8 md:text-[13px]"
+                  className={filterControlCompactClassName}
                 >
                   <option value="all">All</option>
                   <option value="risk">Risk flags</option>
@@ -668,7 +670,7 @@ export default async function ReviewQueuePage({
                   name="from"
                   type="date"
                   defaultValue={filters.from ?? ""}
-                  className="md:h-8 md:text-[13px]"
+                  className={filterControlCompactClassName}
                 />
               </FilterField>
               <FilterField label="To" htmlFor="review-to">
@@ -677,12 +679,12 @@ export default async function ReviewQueuePage({
                   name="to"
                   type="date"
                   defaultValue={filters.to ?? ""}
-                  className="md:h-8 md:text-[13px]"
+                  className={filterControlCompactClassName}
                 />
               </FilterField>
             </FilterGrid>
 
-            <FilterActions className="justify-start border-t border-khata-border/70 pt-3 sm:justify-end">
+            <FilterActions className={filterActionRowClassName}>
               <Button type="submit" size="sm" className="min-w-24">
                 <Filter aria-hidden="true" />
                 Apply

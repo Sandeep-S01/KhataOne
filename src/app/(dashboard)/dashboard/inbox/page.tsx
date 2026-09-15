@@ -7,6 +7,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   InputWithIcon,
   PageBody,
   PageHeader,
@@ -243,14 +245,15 @@ export default async function InboxPage({
       />
 
       <PageBody>
-        <FilterBar action="/dashboard/inbox">
-          <FilterGrid className="md:grid-cols-[minmax(0,1fr)_190px_auto]">
+        <FilterBar action="/dashboard/inbox" className="min-w-0">
+          <FilterGrid className="min-w-0 md:grid-cols-[minmax(180px,1fr)_minmax(150px,190px)]">
             <FilterField label="Search" htmlFor="inbox-search">
               <InputWithIcon
                 id="inbox-search"
                 name="q"
                 defaultValue={filters.q ?? ""}
                 placeholder="Sender, client, type"
+                inputClassName={filterControlCompactClassName}
               />
             </FilterField>
             <FilterField label="Status" htmlFor="inbox-status">
@@ -258,6 +261,7 @@ export default async function InboxPage({
                 id="inbox-status"
                 name="status"
                 defaultValue={selectedStatus}
+                className={filterControlCompactClassName}
               >
                 {inboxStatusOptions.map((status) => (
                   <option key={status} value={status}>
@@ -266,15 +270,15 @@ export default async function InboxPage({
                 ))}
               </Select>
             </FilterField>
-            <FilterActions>
-              <Button type="submit" size="md" className="min-w-24">
-                Apply
-              </Button>
-              <ActionLink href="/dashboard/inbox" size="md" className="min-w-20">
-                Clear
-              </ActionLink>
-            </FilterActions>
           </FilterGrid>
+          <FilterActions className={filterActionRowClassName}>
+            <Button type="submit" size="sm" className="min-w-24">
+              Apply
+            </Button>
+            <ActionLink href="/dashboard/inbox" size="sm" className="min-w-20">
+              Clear
+            </ActionLink>
+          </FilterActions>
         </FilterBar>
 
         <SectionCard bodyClassName="p-0">

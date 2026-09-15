@@ -294,6 +294,8 @@ export const controlClassName =
     "aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:ring-destructive",
   );
 export const authControlClassName = cn(controlClassName, "bg-transparent");
+export const filterControlCompactClassName = "md:h-8 md:text-[13px]";
+export const filterActionRowClassName = "justify-start border-t border-khata-border/70 pt-3 sm:justify-end";
 
 export function Input({ className, type, ...props }: InputProps) {
   return (

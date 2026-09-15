@@ -38,6 +38,8 @@ assert.match(designSystem, /export function InputWithIcon/);
 assert.match(designSystem, /export function FilterField/);
 assert.match(designSystem, /export function FilterGrid/);
 assert.match(designSystem, /export function FilterActions/);
+assert.match(designSystem, /export const filterControlCompactClassName = "md:h-8 md:text-\[13px\]"/);
+assert.match(designSystem, /export const filterActionRowClassName = "justify-start border-t border-khata-border\/70 pt-3 sm:justify-end"/);
 assert.match(designSystem, /export function FilterPresetLink/);
 assert.match(designSystem, /inline-flex h-8 max-w-full items-center gap-1\.5 rounded-full/);
 assert.match(designSystem, /num inline-flex h-5 min-w-5 items-center justify-center/);
@@ -83,9 +85,9 @@ assert.match(reviewQueue, /<FilterField label="Search" htmlFor="review-search">/
 assert.match(reviewQueue, /<InputWithIcon/);
 assert.match(reviewQueue, /placeholder="Search client, party, invoice, file, or type"/);
 assert.match(reviewQueue, /<input type="hidden" name="status" value=\{selectedStatus\} \/>/);
-assert.match(reviewQueue, /inputClassName="md:h-8 md:text-\[13px\]"/);
+assert.match(reviewQueue, /inputClassName=\{filterControlCompactClassName\}/);
 assert.match(reviewQueue, /<FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-\[minmax\(160px,1fr\)_minmax\(160px,1fr\)_minmax\(140px,0\.8fr\)_minmax\(140px,0\.65fr\)_minmax\(140px,0\.65fr\)\]">/);
-assert.match(reviewQueue, /<FilterActions className="justify-start border-t border-khata-border\/70 pt-3 sm:justify-end">/);
+assert.match(reviewQueue, /<FilterActions className=\{filterActionRowClassName\}>/);
 assert.match(reviewQueue, /<Button type="submit" size="sm" className="min-w-24">/);
 assert.match(reviewQueue, /<ActionLink href="\/dashboard\/review-queue" size="sm" className="min-w-20">/);
 assert.match(reviewQueue, /<TableToolbar/);
@@ -103,8 +105,9 @@ for (const [name, source] of [
 ]) {
   assert.match(source, /<FilterGrid/, `${name} should use shared FilterGrid`);
   assert.match(source, /<FilterField/, `${name} should use shared FilterField`);
-  assert.match(source, /<FilterActions/, `${name} should use shared FilterActions`);
-  assert.match(source, /<Button type="submit" size="md" className="min-w-24">/, `${name} submit control should match field height`);
+  assert.match(source, /<FilterActions className=\{filterActionRowClassName\}>/, `${name} should use the shared compact action row`);
+  assert.match(source, /filterControlCompactClassName/, `${name} filter controls should use compact shared sizing`);
+  assert.match(source, /<Button type="submit" size="sm" className="min-w-24">/, `${name} submit control should match compact field height`);
   assert.match(source, /<TableToolbar/, `${name} table/list card should use shared TableToolbar`);
 }
 

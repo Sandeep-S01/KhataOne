@@ -10,6 +10,8 @@ import {
   FilterBar,
   FilterField,
   FilterGrid,
+  filterActionRowClassName,
+  filterControlCompactClassName,
   FormMessage,
   functionalIconClassName,
   functionalIconStrokeWidth,
@@ -664,13 +666,14 @@ export default async function OperationsPage({
         </SectionCard>
       )}
 
-      <FilterBar action="/dashboard/operations">
-        <FilterGrid className="md:grid-cols-[minmax(200px,1fr)_minmax(200px,1fr)_auto]">
+      <FilterBar action="/dashboard/operations" className="min-w-0">
+        <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(180px,1fr)_minmax(180px,1fr)]">
           <FilterField label="Status" htmlFor="operations-status">
             <Select
               id="operations-status"
               name="status"
               defaultValue={status}
+              className={filterControlCompactClassName}
             >
               <option value="">All statuses</option>
               <option value="queued">Queued</option>
@@ -684,6 +687,7 @@ export default async function OperationsPage({
               id="operations-job-type"
               name="job_type"
               defaultValue={jobType}
+              className={filterControlCompactClassName}
             >
               <option value="">All jobs</option>
               {uniqueJobTypes.map((type) => (
@@ -693,19 +697,19 @@ export default async function OperationsPage({
               ))}
             </Select>
           </FilterField>
-          <FilterActions className="md:justify-end">
-            <Button type="submit" size="md" className="min-w-24">
-              Filter
-            </Button>
-            <ActionLink
-              href={"/dashboard/operations" as Route}
-              size="md"
-              className="min-w-20"
-            >
-              Reset
-            </ActionLink>
-          </FilterActions>
         </FilterGrid>
+        <FilterActions className={filterActionRowClassName}>
+          <Button type="submit" size="sm" className="min-w-24">
+            Filter
+          </Button>
+          <ActionLink
+            href={"/dashboard/operations" as Route}
+            size="sm"
+            className="min-w-20"
+          >
+            Reset
+          </ActionLink>
+        </FilterActions>
       </FilterBar>
 
       <SectionCard bodyClassName="p-0">
