@@ -8,13 +8,17 @@ import {
   EmptyState,
   FilterActions,
   FilterBar,
+  FilterDateRangeField,
   FilterField,
   FilterGrid,
-  filterActionRowClassName,
   filterControlCompactClassName,
+  filterInlineActionsClassName,
+  filterInlineButtonClassName,
+  filterInlineControlClassName,
+  filterInlineGridClassName,
+  FilterInlineField,
   FilterPresetLink,
   InlineAlert,
-  Input,
   InputWithIcon,
   PageBody,
   PageHeader,
@@ -621,78 +625,72 @@ export default async function ReviewQueuePage({
               />
             </FilterField>
 
-            <FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-[minmax(160px,1fr)_minmax(160px,1fr)_minmax(140px,0.8fr)_minmax(140px,0.65fr)_minmax(140px,0.65fr)]">
-              <FilterField label="Client" htmlFor="review-client">
+            <FilterGrid className={filterInlineGridClassName}>
+              <FilterInlineField label="Client" htmlFor="review-client">
                 <Select
                   id="review-client"
                   name="client"
                   defaultValue={filters.client ?? ""}
-                  className={filterControlCompactClassName}
+                  className={filterInlineControlClassName}
                 >
-                  <option value="">All clients</option>
+                  <option value="">All Clients</option>
                   {clients.map((client) => (
                     <option key={client.id} value={client.id}>
                       {client.business_name}
                     </option>
                   ))}
                 </Select>
-              </FilterField>
+              </FilterInlineField>
 
-              <FilterField label="Document" htmlFor="review-document-type">
+              <FilterInlineField label="Document" htmlFor="review-document-type">
                 <Select
                   id="review-document-type"
                   name="document_type"
                   defaultValue={selectedDocumentType}
-                  className={filterControlCompactClassName}
+                  className={filterInlineControlClassName}
                 >
                   {documentTypeOptions.map((type) => (
                     <option key={type} value={type}>
-                      {type.replaceAll("_", " ")}
+                      {type === "all" ? "All Documents" : type.replaceAll("_", " ")}
                     </option>
                   ))}
                 </Select>
-              </FilterField>
-              <FilterField label="Risk" htmlFor="review-risk">
+              </FilterInlineField>
+              <FilterInlineField label="Risk" htmlFor="review-risk">
                 <Select
                   id="review-risk"
                   name="risk"
                   defaultValue={selectedRisk}
-                  className={filterControlCompactClassName}
+                  className={filterInlineControlClassName}
                 >
-                  <option value="all">All</option>
+                  <option value="all">All Risk</option>
                   <option value="risk">Risk flags</option>
                   <option value="low_confidence">Low confidence</option>
                 </Select>
-              </FilterField>
-              <FilterField label="From" htmlFor="review-from">
-                <Input
-                  id="review-from"
-                  name="from"
-                  type="date"
-                  defaultValue={filters.from ?? ""}
-                  className={filterControlCompactClassName}
-                />
-              </FilterField>
-              <FilterField label="To" htmlFor="review-to">
-                <Input
-                  id="review-to"
-                  name="to"
-                  type="date"
-                  defaultValue={filters.to ?? ""}
-                  className={filterControlCompactClassName}
-                />
-              </FilterField>
+              </FilterInlineField>
+              <FilterDateRangeField
+                fromId="review-from"
+                toId="review-to"
+                fromName="from"
+                toName="to"
+                fromDefaultValue={filters.from ?? ""}
+                toDefaultValue={filters.to ?? ""}
+                className="md:col-span-2 xl:col-span-1"
+              />
+              <FilterActions className={filterInlineActionsClassName}>
+                <Button type="submit" size="sm" className={filterInlineButtonClassName}>
+                  <Filter aria-hidden="true" />
+                  Apply
+                </Button>
+                <ActionLink
+                  href="/dashboard/review-queue"
+                  size="sm"
+                  className={filterInlineButtonClassName}
+                >
+                  Clear
+                </ActionLink>
+              </FilterActions>
             </FilterGrid>
-
-            <FilterActions className={filterActionRowClassName}>
-              <Button type="submit" size="sm" className="min-w-24">
-                <Filter aria-hidden="true" />
-                Apply
-              </Button>
-              <ActionLink href="/dashboard/review-queue" size="sm" className="min-w-20">
-                Clear
-              </ActionLink>
-            </FilterActions>
           </div>
         </FilterBar>
 

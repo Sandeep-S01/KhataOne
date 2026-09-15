@@ -14,13 +14,13 @@ assert.match(
 );
 assert.match(
   reviewQueue,
-  /<FilterGrid className="min-w-0 md:grid-cols-2 xl:grid-cols-\[minmax\(160px,1fr\)_minmax\(160px,1fr\)_minmax\(140px,0\.8fr\)_minmax\(140px,0\.65fr\)_minmax\(140px,0\.65fr\)\]">/,
-  "review secondary filters stay controlled and wrap before wide desktop",
+  /<FilterGrid className=\{filterInlineGridClassName\}>/,
+  "review secondary filters use the shared inline grid and wrap before wide desktop",
 );
 assert.match(
   reviewQueue,
-  /<FilterActions className=\{filterActionRowClassName\}>/,
-  "review filter actions use the shared dedicated compact action row",
+  /<FilterActions className=\{filterInlineActionsClassName\}>/,
+  "review filter actions stay visible inside the shared inline filter row",
 );
 assert.doesNotMatch(
   reviewQueue,

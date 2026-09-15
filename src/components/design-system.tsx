@@ -296,6 +296,14 @@ export const controlClassName =
 export const authControlClassName = cn(controlClassName, "bg-transparent");
 export const filterControlCompactClassName = "md:h-8 md:text-[13px]";
 export const filterActionRowClassName = "justify-start border-t border-khata-border/70 pt-3 sm:justify-end";
+export const filterInlineGridClassName =
+  "min-w-0 items-center md:grid-cols-2 xl:grid-cols-[minmax(130px,0.8fr)_minmax(140px,0.8fr)_minmax(120px,0.7fr)_minmax(250px,1fr)_auto]";
+export const filterInlineControlClassName = "h-10 text-[13px] md:h-9 md:text-[13px]";
+export const filterInlineButtonClassName = "h-10 min-w-24 px-4 text-sm md:h-9";
+export const filterInlineActionsClassName =
+  "min-w-0 items-center self-end border-0 pt-0 md:col-span-2 xl:col-span-1 xl:flex-nowrap xl:justify-start";
+export const filterDateRangeInputClassName =
+  "h-10 rounded-none border-0 bg-transparent px-3 text-[13px] shadow-none focus:bg-transparent focus-visible:ring-0 md:h-9 md:text-[13px]";
 
 export function Input({ className, type, ...props }: InputProps) {
   return (
@@ -411,6 +419,78 @@ export function FilterField({
         {label}
       </label>
       {children}
+    </div>
+  );
+}
+
+export function FilterInlineField({
+  label,
+  htmlFor,
+  children,
+  className,
+}: {
+  label: string;
+  htmlFor: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("min-w-0", className)}>
+      <label htmlFor={htmlFor} className="sr-only">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+export function FilterDateRangeField({
+  fromId,
+  toId,
+  fromName,
+  toName,
+  fromDefaultValue,
+  toDefaultValue,
+  className,
+}: {
+  fromId: string;
+  toId: string;
+  fromName: string;
+  toName: string;
+  fromDefaultValue?: string;
+  toDefaultValue?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "grid min-w-0 grid-cols-[minmax(0,1fr)_36px_minmax(0,1fr)] overflow-hidden rounded-md border border-khata-border bg-khata-paper shadow-sm transition focus-within:border-khata-green focus-within:bg-white focus-within:ring-1 focus-within:ring-khata-green",
+        className,
+      )}
+    >
+      <label htmlFor={fromId} className="sr-only">
+        From date
+      </label>
+      <Input
+        id={fromId}
+        name={fromName}
+        type="date"
+        defaultValue={fromDefaultValue}
+        className={filterDateRangeInputClassName}
+      />
+      <span className="flex h-10 items-center justify-center border-x border-khata-border bg-white/55 text-xs font-medium text-khata-muted md:h-9">
+        to
+      </span>
+      <label htmlFor={toId} className="sr-only">
+        To date
+      </label>
+      <Input
+        id={toId}
+        name={toName}
+        type="date"
+        defaultValue={toDefaultValue}
+        className={filterDateRangeInputClassName}
+      />
     </div>
   );
 }
