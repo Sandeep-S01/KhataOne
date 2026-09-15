@@ -6,7 +6,14 @@ import { DashboardMobileMenu } from "@/components/dashboard-mobile-menu";
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { DashboardTopbarActions } from "@/components/dashboard-topbar-actions";
 import { Button } from "@/components/design-system";
-import { getFirmContext } from "@/lib/firms";
+import { countOrUnavailable } from "@/lib/availability";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
+import { withServerTiming } from "@/lib/request-performance";
+
+export type SidebarCounts = {
+  inbox: number | null;
+  reviewQueue: number | null;
+};
 
 export const metadata: Metadata = {
   title: "Dashboard | KhataOne",
@@ -16,6 +23,36 @@ export const metadata: Metadata = {
     follow: false,
   },
 };
+
+async function getSidebarCounts(context: FirmContext | null): Promise<SidebarCounts> {
+  if (!context) {
+    return { inbox: null, reviewQueue: null };
+  }
+
+  const { firm, supabase } = context;
+
+  const reviewQueuePromise = supabase
+    .from("transactions")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("status", ["draft", "needs_review", "duplicate"]);
+
+  const inboxPromise = supabase
+    .from("whatsapp_messages")
+    .select("id", { count: "exact", head: true })
+    .eq("firm_id", firm.id)
+    .in("processing_status", ["received", "unmatched", "failed", "media_failed"]);
+
+  const [reviewQueue, inbox] = await Promise.all([
+    withServerTiming("dashboard_sidebar.review_queue_count", () => reviewQueuePromise),
+    withServerTiming("dashboard_sidebar.inbox_count", () => inboxPromise),
+  ]);
+
+  return {
+    inbox: countOrUnavailable(inbox),
+    reviewQueue: countOrUnavailable(reviewQueue),
+  };
+}
 
 export default async function DashboardLayout({
   children,
@@ -29,6 +66,7 @@ export default async function DashboardLayout({
     : "CA-approved records";
   const userEmail = context?.user.email ?? "CA user";
   const profileInitial = userEmail.trim().charAt(0).toUpperCase() || "U";
+  const sidebarCounts = await getSidebarCounts(context);
 
   return (
     <main className="min-h-screen bg-khata-paper text-khata-ink">
@@ -39,7 +77,11 @@ export default async function DashboardLayout({
         Skip to dashboard content
       </a>
       <div className="flex min-h-screen p-0">
-        <DashboardSidebar firmName={firmName} roleLabel={roleLabel} />
+        <DashboardSidebar
+          firmName={firmName}
+          roleLabel={roleLabel}
+          counts={sidebarCounts}
+        />
 
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-20 flex min-h-14 items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-8">

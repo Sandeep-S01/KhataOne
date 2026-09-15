@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { PanelLeft, PanelLeftClose } from "lucide-react";
+import { ChevronsUpDown, PanelLeft, PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
@@ -47,12 +47,19 @@ function writeSidebarCollapsed(value: boolean) {
   window.dispatchEvent(new Event(SIDEBAR_STORAGE_EVENT));
 }
 
+export type DashboardSidebarCounts = {
+  inbox: number | null;
+  reviewQueue: number | null;
+};
+
 export function DashboardSidebar({
   firmName,
   roleLabel,
+  counts,
 }: {
   firmName: string;
   roleLabel: string;
+  counts?: DashboardSidebarCounts;
 }) {
   const isCollapsed = useSyncExternalStore(
     subscribeToSidebarCollapsed,
@@ -139,14 +146,14 @@ export function DashboardSidebar({
         </button>
       </div>
 
-      <div className="border-b border-khata-border p-3">
+      <div className="border-b border-khata-border p-2.5">
         {!isCollapsed ? (
           <div
-            className="flex cursor-default items-center gap-2.5 rounded-xl border border-warning/25 bg-warning/10 p-2.5"
+            className="flex cursor-default items-center gap-2.5 rounded-xl border border-warning/25 bg-warning/10 p-2"
             title={`${firmName} (${roleLabel})`}
           >
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-khata-ink text-sm font-bold text-white shadow-sm">
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm">
                 {firmInitial}
               </div>
               <div className="min-w-0 flex-1">
@@ -158,10 +165,23 @@ export function DashboardSidebar({
                 </p>
               </div>
             </div>
+            <Link
+              href="/dashboard/settings"
+              prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
+              aria-label="Manage firm workspace"
+              title="Manage firm workspace"
+              className="flex size-8 shrink-0 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-white/70 hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            >
+              <ChevronsUpDown
+                className={functionalIconClassName}
+                strokeWidth={functionalIconStrokeWidth}
+                aria-hidden="true"
+              />
+            </Link>
           </div>
         ) : (
           <div
-            className="mx-auto flex size-9 cursor-default items-center justify-center rounded-[10px] bg-khata-ink text-sm font-bold text-white shadow-sm"
+            className="mx-auto flex size-9 cursor-default items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm"
             title={`${firmName} (${roleLabel})`}
           >
             {firmInitial}
@@ -169,7 +189,7 @@ export function DashboardSidebar({
         )}
       </div>
 
-      <DashboardNav collapsed={isCollapsed} />
+      <DashboardNav collapsed={isCollapsed} counts={counts} />
       <DashboardUtilityNav collapsed={isCollapsed} />
     </aside>
   );
