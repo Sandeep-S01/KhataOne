@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr";
-import type { UserResponse } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getPublicEnv, hasSupabaseConfig } from "@/lib/env";
@@ -93,26 +92,45 @@ export async function updateSession(request: NextRequest) {
     response.cookies.getAll().forEach((cookie) => result.cookies.set(cookie));
     return result;
   };
-  let authResult: UserResponse;
+  let authError: { name?: string; status?: number; code?: string } | null = null;
+  let authenticated = false;
   try {
-    authResult = await withServerTiming(
-      "middleware.auth_get_user",
-      () => withAuthDeadline((signal) => {
-        authSignal = signal;
-        return createAuthClient().auth.getUser();
-      }),
-      { route_class: routeClass },
-      trace,
-    );
+    if (isProtectedPath(pathname)) {
+      // The page/action still checks getUser() and firm membership. This gate
+      // only needs a verified JWT, avoiding a duplicate Auth user lookup.
+      const result = await withServerTiming(
+        "middleware.auth_get_claims",
+        () => withAuthDeadline((signal) => {
+          authSignal = signal;
+          return createAuthClient().auth.getClaims();
+        }),
+        { route_class: routeClass },
+        trace,
+      );
+      authError = result.error;
+      authenticated = Boolean(result.data?.claims?.sub);
+    } else {
+      const result = await withServerTiming(
+        "middleware.auth_get_user",
+        () => withAuthDeadline((signal) => {
+          authSignal = signal;
+          return createAuthClient().auth.getUser();
+        }),
+        { route_class: routeClass },
+        trace,
+      );
+      authError = result.error;
+      authenticated = Boolean(result.data.user);
+    }
   } catch {
     return unavailable();
   } finally {
     authFinished = true;
   }
-  if (authResult.error && !isInvalidSession(authResult.error)) return unavailable();
-  const user = authResult.error ? null : authResult.data.user;
+  if (authError && !isInvalidSession(authError)) return unavailable();
+  authenticated = !authError && authenticated;
 
-  if (!user && isProtectedPath(pathname)) {
+  if (!authenticated && isProtectedPath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", pathname);
@@ -121,7 +139,7 @@ export async function updateSession(request: NextRequest) {
     return redirect;
   }
 
-  if (user && isAuthPath(pathname)) {
+  if (authenticated && isAuthPath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     const redirect = NextResponse.redirect(url);

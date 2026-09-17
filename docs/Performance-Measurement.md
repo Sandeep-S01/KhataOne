@@ -388,3 +388,113 @@ sanitized renderer trace had a largest FunctionCall event of 162 ms. The
 hosted run did not attempt a save or pagination. It supports measuring both
 server/network and client work; it does not connect those events to a specific
 source function or establish a field percentile.
+
+## Live small-workspace read-only audit, 2026-09-17
+
+The authorized test account was used to open every top-level dashboard route on
+the live site. No client, transaction, financial, export, or job mutation was
+submitted. Browser reports contain route names and aggregate timings only; no
+credential, user identifier, customer field, screenshot, or document content was
+recorded. The deployed application commit was not independently verified.
+The workspace had no visible Review Queue, Inbox, Ledger, GST, Reports, or Export
+rows, but other administrative/client table rows existed; call it *lightly
+populated*, not a proven empty database. The raw sanitized results are in
+[desktop/mobile route samples](performance/2026-09-17-live-small-firm-routes.json),
+[constrained one-pass samples](performance/2026-09-17-live-constrained-onepass.json),
+[constrained repeats](performance/2026-09-17-live-constrained-repeat.json),
+[focused Review Queue recheck](performance/2026-09-17-live-review-recheck.json),
+and [filter cycles](performance/2026-09-17-live-small-firm-filters.json).
+
+| Check | Observation |
+| --- | --- |
+| Direct authenticated requests | Six core routes returned HTTP 200. Overview took 2,195 ms end-to-end; the other five took 584-1,030 ms in one server-side request pass. |
+| Chromium, normal desktop | Two full loads of each of 12 routes completed. Overview settled in 1,296-1,711 ms. Inbox was 1,240 and 3,132 ms; the other routes were 766-1,505 ms. |
+| Chromium, normal 390px mobile emulation | Two full loads of each of 12 routes completed in 750-1,204 ms. This was a warmed synthetic browser, not a physical phone. |
+| Chromium, constrained 390px mobile emulation | Requested 150 ms network latency and 4x CPU slowdown. First full loads of Overview, Inbox, Review Queue, Clients, Ledger and GST settled in 4,448, 2,708, 3,658, 2,415, 2,150 and 2,303 ms respectively. |
+| Constrained repeat | Three attempts each of Overview, Inbox, Review Queue. Successful warm Overview loads settled in 1,926-2,137 ms, Inbox in 1,379-2,288 ms, and Review Queue in 2,090-2,244 ms. One Review Queue attempt timed out and cannot be counted as a fast or successful load; a separate five-attempt Review Queue recheck completed in 1,544-4,346 ms. |
+| Internal navigation | Desktop sidebar links kept the document mounted and generally settled in about 0.6-1.5 seconds. Four constrained-mobile links settled in 0.9-1.6 seconds. |
+| Read-only filter Apply/Clear | Review Queue, Inbox and Clients each passed on desktop and normal mobile. Apply committed filtered results in 643-899 ms; Clear returned in 586-812 ms. These transitions kept the document mounted. Review Queue and Inbox show generic “no items yet” copy for a no-match search, while Clients uses a filtered-empty message. |
+
+All 12 routes returned HTTP 200 in the normal browser pass, with no page or
+console errors or HTTP 5xx responses there. The constrained run had one
+unclassified failed resource and the repeat had one console event; neither was
+captured with enough context to diagnose. The original browser runner also
+recorded network-failed requests during full navigations, which may include
+cancelled prefetches; classify them before calling them application failures.
+
+Initial document first byte arrived in approximately 70-260 ms on the
+constrained samples, but full response delivery and visible heading came much
+later. For example, the first constrained Overview response ended around 1.1
+seconds while its heading appeared around 4.2 seconds. This supports profiling
+streaming completion and browser main-thread work separately; it does not prove
+which component or query caused the wait. Two samples per route and three core
+repeats do not establish p95 or physical-phone performance. The 1-4 second
+wait remains **unresolved**, especially on constrained devices and first loads.
+Next, correlate a repeatable cold/warm browser trace with sampled server auth,
+membership, primary-query and React/render spans, then test a real Android and
+iPhone before attributing or changing the critical path.
+
+## First-load attribution follow-up, 2026-09-17
+
+Two further fresh-context Overview loads used 390×844 Chromium touch emulation,
+requested 150 ms network latency and 200 KB/s download, and 4× CPU slowdown.
+The sanitized [attribution summary](performance/2026-09-17-initial-load-attribution.json)
+contains no credentials, account identifiers, private record data, or screenshots.
+The document response ended at 0.88–1.11 seconds, first contentful paint was
+2.60–2.72 seconds, the CA operations heading appeared at 6.00–6.04 seconds,
+and the page settled at 6.66–6.75 seconds. A shared React DOM/runtime chunk
+transferred approximately 73 KB (229 KB uncompressed) and took 2.44–2.93
+seconds to evaluate under the requested 4× CPU slowdown. Browser long-task
+observation also recorded a 2.45–2.98-second task around that point. This
+identifies a substantial **browser main-thread cost** on these simulated cold
+loads; it does not identify an application component to remove. One earlier
+Overview trial took about 26 seconds, but it was not reproduced and its cause
+remains unclassified.
+
+For a separate local production-build pass against the configured hosted
+Supabase project, six authenticated Overview/Inbox/Review Queue navigations
+completed in 1.01–1.99 seconds to visible heading without CPU/network
+throttling. Correlated server spans show sequential middleware `getUser`
+(213–566 ms), server firm-context `getUser` (224–339 ms), and firm membership
+lookup (205–268 ms). The route's list/count queries then ran concurrently:
+typical spans were 218–319 ms, with one Overview export-attention count at
+543 ms. These are local-to-hosted measurements, **not** production Vercel
+server spans; they establish where the local critical path spends time but
+cannot be subtracted from the live browser trace as an exact decomposition.
+
+The largest confirmed simulated browser cost is shared React runtime
+evaluation; a speculative dashboard component or prefetch edit would not
+remove that runtime and the earlier prefetch crossover showed no stable win.
+The controlled server path also has multiple sequential remote auth/membership
+calls, so an independently measured auth gate is a suitable small candidate.
+
+### Protected-route auth-gate candidate
+
+The configured Supabase project publishes one ES256 verification key. Supabase
+[documents `getClaims()`](https://supabase.com/docs/reference/javascript/auth-getclaims)
+as verified JWT checking that can run locally with asymmetric signing keys,
+while `getUser()` always fetches the current user from Auth. For protected
+dashboard/onboarding requests, middleware now uses `getClaims()` as its first
+gate. Login/signup middleware still uses `getUser()`. The dashboard's server
+`getUser()` and firm membership lookup, onboarding's server `getUser()`, and
+server-action authorization checks remain unchanged. This preserves the
+authoritative current-user and firm checks before private data is read or
+mutated. Invalid sessions still redirect; unexpected auth errors remain 503.
+
+In a local production build against the same hosted Supabase project, the
+middleware gate took **5–9 ms in six candidate protected navigations**, versus
+**213–566 ms in six original navigations**. The server-side `getUser()` and
+membership checks still took 243–532 ms and 251–309 ms respectively in the
+candidate. Visible headings across Overview, Inbox and Review Queue took
+893–1,252 ms in the candidate versus 1,008–1,993 ms in the original local
+sample. The before/after samples were sequential, small, and subject to
+network/cache variance, so this is a promising local improvement rather than
+a field latency percentile or proof that all users save the entire auth-span
+difference. The focused auth/timeout test, security-boundary and tracing
+tests, lint, typecheck, production build, and unauthenticated redirect passed.
+
+This candidate does **not** change the measured shared React runtime cost on
+slow simulated phones. It has not been deployed or checked on physical
+Android/iPhone devices. The reported 3–4-second wait remains open until a
+same-revision deployed browser/server trace and real-device check establish
+the net effect.

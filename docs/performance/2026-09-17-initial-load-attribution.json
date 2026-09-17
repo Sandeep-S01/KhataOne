@@ -1,0 +1,60 @@
+{
+  "date": "2026-09-17",
+  "scope": "Read-only authenticated Overview trace and local production-build server-span correlation",
+  "live_profile": "390x844 Chromium touch emulation; requested 150 ms RTT, 200 KB/s download, 4x CPU; fresh context per load",
+  "live_overview_runs": [
+    {
+      "http_status": 200,
+      "response_end_ms": 1113,
+      "first_contentful_paint_ms": 2724,
+      "heading_visible_ms": 6035,
+      "settled_ms": 6748,
+      "shared_react_runtime_evaluation_ms": 2441,
+      "longest_observed_long_task_ms": 2451
+    },
+    {
+      "http_status": 200,
+      "response_end_ms": 883,
+      "first_contentful_paint_ms": 2596,
+      "heading_visible_ms": 6002,
+      "settled_ms": 6663,
+      "shared_react_runtime_evaluation_ms": 2932,
+      "longest_observed_long_task_ms": 2978
+    }
+  ],
+  "shared_runtime_chunk": {
+    "transfer_bytes_approx": 73432,
+    "uncompressed_chars_approx": 229383,
+    "identification": "Contains React DOM hydration/runtime symbols; no page-specific component attribution"
+  },
+  "local_production_build": {
+    "sample_count": 6,
+    "routes": ["/dashboard", "/dashboard/inbox", "/dashboard/review-queue"],
+    "heading_visible_range_ms": [1008, 1993],
+    "middleware_get_user_range_ms": [213, 566],
+    "firm_context_get_user_range_ms": [224, 339],
+    "membership_lookup_range_ms": [205, 268],
+    "typical_parallel_query_range_ms": [218, 319],
+    "largest_parallel_query_ms": 543
+  },
+  "protected_auth_gate_candidate": {
+    "scope": "Middleware verified JWT claims on protected routes only; server current-user and firm membership checks preserved",
+    "project_jwks_algorithm": "ES256",
+    "sample_count": 6,
+    "candidate_middleware_claims_range_ms": [5, 9],
+    "original_middleware_user_range_ms": [213, 566],
+    "candidate_heading_visible_range_ms": [893, 1252],
+    "original_heading_visible_range_ms": [1008, 1993],
+    "candidate_server_get_user_range_ms": [243, 532],
+    "candidate_membership_lookup_range_ms": [251, 309],
+    "validation": ["Focused auth and timeout test", "Security-boundary test", "Performance-tracing test", "Lint", "Typecheck", "Production build", "Unauthenticated dashboard redirect"]
+  },
+  "limits": [
+    "Simulated browser, not physical phone",
+    "Local-to-hosted Supabase spans are not production Vercel spans",
+    "The deployed revision was not independently verified",
+    "One earlier 26-second outlier was not reproduced or classified",
+    "Candidate is local only and not yet deployed",
+    "Sequential small-sample comparison cannot establish field improvement or percentile"
+  ]
+}

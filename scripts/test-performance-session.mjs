@@ -7,6 +7,8 @@ const require = createRequire(import.meta.url);
 const { NextRequest, NextResponse } = require("next/server");
 let currentUser = null;
 let authCalls = 0;
+let claimCalls = 0;
+let userCalls = 0;
 let authError = null;
 let authMode = "normal";
 let lateCookies;
@@ -32,18 +34,24 @@ const dependencies = {
     withServerTiming: (_, operation) => operation(),
   },
   "@supabase/ssr": {
-    createServerClient: (_, __, options) => ({ auth: { getUser: async () => {
-      authCalls++;
-      lateCookies = options.cookies;
-      authFetch = options.global.fetch;
-      if (authMode === "transport") await authFetch("https://example.test/auth/v1/user");
-      if (authMode === "stall") await new Promise(() => {});
-      if (authMode === "throw") throw new Error("PRIVATE upstream error");
-      options.cookies.setAll([{ name: "test-refresh", value: "rotated", options: { httpOnly: true, path: "/" } }]);
-      return { data: { user: currentUser }, error: authError };
-    } } }),
+    createServerClient: (_, __, options) => ({ auth: {
+      getClaims: async () => authenticate("claims", options),
+      getUser: async () => authenticate("user", options),
+    } }),
   },
 };
+async function authenticate(method, options) {
+  authCalls++;
+  if (method === "claims") claimCalls++;
+  else userCalls++;
+  lateCookies = options.cookies;
+  authFetch = options.global.fetch;
+  if (authMode === "transport") await authFetch("https://example.test/auth/v1/user");
+  if (authMode === "stall") await new Promise(() => {});
+  if (authMode === "throw") throw new Error("PRIVATE upstream error");
+  options.cookies.setAll([{ name: "test-refresh", value: "rotated", options: { httpOnly: true, path: "/" } }]);
+  return { data: method === "claims" ? { claims: currentUser ? { sub: currentUser.id } : null } : { user: currentUser }, error: authError };
+}
 new Function("require", "module", "exports", code)((id) => {
   assert.ok(id in dependencies, `Unexpected dependency ${id}`);
   return dependencies[id];
@@ -65,6 +73,8 @@ assert.equal(request.headers.get("x-khataone-perf-id"), "trusted-id");
 assert.equal(response.headers.get("x-middleware-request-x-khataone-perf-id"), "trusted-id");
 assert.ok(response.headers.get("server-timing").startsWith("middleware_auth;dur="));
 assert.equal(authCalls, 4);
+assert.equal(claimCalls, 3, "Protected requests verify JWT claims");
+assert.equal(userCalls, 1, "Auth pages still obtain the current user");
 for (const error of [{ name: "AuthRetryableFetchError", status: 503 }, { status: 429 }, { status: 0 }]) {
   authError = error;
   for (const headers of [{}, { rsc: "1", "next-router-prefetch": "1" }]) {

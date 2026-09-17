@@ -1,0 +1,66 @@
+{
+  "measured_at_utc": "2026-09-17T09:06:35.506Z",
+  "method": "authenticated read-only browser Apply/Clear on an empty or small workspace",
+  "trials": [
+    {
+      "profile": "desktop",
+      "route": "/dashboard/review-queue",
+      "url_ms": 796,
+      "result_ms": 828,
+      "document_changed": false,
+      "empty_state": "generic",
+      "clear_ms": 757,
+      "status": "pass"
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/inbox",
+      "url_ms": 619,
+      "result_ms": 649,
+      "document_changed": false,
+      "empty_state": "generic",
+      "clear_ms": 731,
+      "status": "pass"
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/clients",
+      "url_ms": 613,
+      "result_ms": 643,
+      "document_changed": false,
+      "empty_state": "filtered",
+      "clear_ms": 607,
+      "status": "pass"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/review-queue",
+      "url_ms": 858,
+      "result_ms": 899,
+      "document_changed": false,
+      "empty_state": "generic",
+      "clear_ms": 611,
+      "status": "pass"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/inbox",
+      "url_ms": 745,
+      "result_ms": 784,
+      "document_changed": false,
+      "empty_state": "generic",
+      "clear_ms": 586,
+      "status": "pass"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/clients",
+      "url_ms": 693,
+      "result_ms": 718,
+      "document_changed": false,
+      "empty_state": "filtered",
+      "clear_ms": 812,
+      "status": "pass"
+    }
+  ]
+}

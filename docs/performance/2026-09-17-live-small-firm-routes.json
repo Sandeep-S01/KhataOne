@@ -1,0 +1,1469 @@
+{
+  "measured_at_utc": "2026-09-17T08:52:21.938Z",
+  "origin": "https://khataone.vercel.app",
+  "method": "authenticated read-only Chromium; fresh user; sequential hard navigations",
+  "routes": [
+    {
+      "profile": "desktop",
+      "route": "/dashboard",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard",
+      "dom_ready_ms": 1527,
+      "heading_ms": 1669,
+      "settled_ms": 1711,
+      "busy_timeout": false,
+      "ttfb_ms": 91,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard",
+      "dom_ready_ms": 1154,
+      "heading_ms": 1252,
+      "settled_ms": 1296,
+      "busy_timeout": false,
+      "ttfb_ms": 70,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/inbox",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/inbox",
+      "dom_ready_ms": 2876,
+      "heading_ms": 2920,
+      "settled_ms": 3132,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/inbox",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/inbox",
+      "dom_ready_ms": 1175,
+      "heading_ms": 1211,
+      "settled_ms": 1240,
+      "busy_timeout": false,
+      "ttfb_ms": 328,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/review-queue",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/review-queue",
+      "dom_ready_ms": 1005,
+      "heading_ms": 1067,
+      "settled_ms": 1277,
+      "busy_timeout": false,
+      "ttfb_ms": 116,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/review-queue",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/review-queue",
+      "dom_ready_ms": 910,
+      "heading_ms": 994,
+      "settled_ms": 1028,
+      "busy_timeout": false,
+      "ttfb_ms": 84,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/clients",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/clients",
+      "dom_ready_ms": 1128,
+      "heading_ms": 1189,
+      "settled_ms": 1398,
+      "busy_timeout": false,
+      "ttfb_ms": 98,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/clients",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/clients",
+      "dom_ready_ms": 682,
+      "heading_ms": 730,
+      "settled_ms": 766,
+      "busy_timeout": false,
+      "ttfb_ms": 81,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/ledger",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/ledger",
+      "dom_ready_ms": 785,
+      "heading_ms": 829,
+      "settled_ms": 1047,
+      "busy_timeout": false,
+      "ttfb_ms": 80,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/ledger",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/ledger",
+      "dom_ready_ms": 935,
+      "heading_ms": 973,
+      "settled_ms": 1000,
+      "busy_timeout": false,
+      "ttfb_ms": 83,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/gst-summary",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/gst-summary",
+      "dom_ready_ms": 1240,
+      "heading_ms": 1358,
+      "settled_ms": 1472,
+      "busy_timeout": false,
+      "ttfb_ms": 92,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/gst-summary",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/gst-summary",
+      "dom_ready_ms": 844,
+      "heading_ms": 919,
+      "settled_ms": 959,
+      "busy_timeout": false,
+      "ttfb_ms": 76,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/reports",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/reports",
+      "dom_ready_ms": 721,
+      "heading_ms": 797,
+      "settled_ms": 823,
+      "busy_timeout": false,
+      "ttfb_ms": 72,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/reports",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/reports",
+      "dom_ready_ms": 690,
+      "heading_ms": 752,
+      "settled_ms": 781,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/exports",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/exports",
+      "dom_ready_ms": 890,
+      "heading_ms": 1057,
+      "settled_ms": 1101,
+      "busy_timeout": false,
+      "ttfb_ms": 87,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/exports",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/exports",
+      "dom_ready_ms": 1265,
+      "heading_ms": 1319,
+      "settled_ms": 1505,
+      "busy_timeout": false,
+      "ttfb_ms": 74,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/audit-logs",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/audit-logs",
+      "dom_ready_ms": 832,
+      "heading_ms": 903,
+      "settled_ms": 931,
+      "busy_timeout": false,
+      "ttfb_ms": 92,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/audit-logs",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/audit-logs",
+      "dom_ready_ms": 948,
+      "heading_ms": 1020,
+      "settled_ms": 1047,
+      "busy_timeout": false,
+      "ttfb_ms": 110,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/operations",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/operations",
+      "dom_ready_ms": 941,
+      "heading_ms": 993,
+      "settled_ms": 1188,
+      "busy_timeout": false,
+      "ttfb_ms": 78,
+      "table_rows": 2,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/operations",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/operations",
+      "dom_ready_ms": 999,
+      "heading_ms": 1068,
+      "settled_ms": 1097,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 2,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/settings",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/settings",
+      "dom_ready_ms": 783,
+      "heading_ms": 878,
+      "settled_ms": 915,
+      "busy_timeout": false,
+      "ttfb_ms": 80,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/settings",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/settings",
+      "dom_ready_ms": 835,
+      "heading_ms": 880,
+      "settled_ms": 1095,
+      "busy_timeout": false,
+      "ttfb_ms": 80,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/platform",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/platform",
+      "dom_ready_ms": 766,
+      "heading_ms": 823,
+      "settled_ms": 864,
+      "busy_timeout": false,
+      "ttfb_ms": 86,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/platform",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/platform",
+      "dom_ready_ms": 766,
+      "heading_ms": 801,
+      "settled_ms": 1040,
+      "busy_timeout": false,
+      "ttfb_ms": 74,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard",
+      "dom_ready_ms": 1026,
+      "heading_ms": 1138,
+      "settled_ms": 1179,
+      "busy_timeout": false,
+      "ttfb_ms": 254,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard",
+      "dom_ready_ms": 816,
+      "heading_ms": 891,
+      "settled_ms": 921,
+      "busy_timeout": false,
+      "ttfb_ms": 77,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/inbox",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/inbox",
+      "dom_ready_ms": 779,
+      "heading_ms": 832,
+      "settled_ms": 857,
+      "busy_timeout": false,
+      "ttfb_ms": 76,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/inbox",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/inbox",
+      "dom_ready_ms": 918,
+      "heading_ms": 973,
+      "settled_ms": 999,
+      "busy_timeout": false,
+      "ttfb_ms": 74,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/review-queue",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/review-queue",
+      "dom_ready_ms": 855,
+      "heading_ms": 898,
+      "settled_ms": 925,
+      "busy_timeout": false,
+      "ttfb_ms": 85,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/review-queue",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/review-queue",
+      "dom_ready_ms": 941,
+      "heading_ms": 974,
+      "settled_ms": 1204,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/clients",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/clients",
+      "dom_ready_ms": 856,
+      "heading_ms": 921,
+      "settled_ms": 957,
+      "busy_timeout": false,
+      "ttfb_ms": 91,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/clients",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/clients",
+      "dom_ready_ms": 739,
+      "heading_ms": 788,
+      "settled_ms": 816,
+      "busy_timeout": false,
+      "ttfb_ms": 90,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/ledger",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/ledger",
+      "dom_ready_ms": 729,
+      "heading_ms": 775,
+      "settled_ms": 805,
+      "busy_timeout": false,
+      "ttfb_ms": 85,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/ledger",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/ledger",
+      "dom_ready_ms": 1058,
+      "heading_ms": 1106,
+      "settled_ms": 1137,
+      "busy_timeout": false,
+      "ttfb_ms": 84,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/gst-summary",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/gst-summary",
+      "dom_ready_ms": 642,
+      "heading_ms": 691,
+      "settled_ms": 750,
+      "busy_timeout": false,
+      "ttfb_ms": 76,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/gst-summary",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/gst-summary",
+      "dom_ready_ms": 682,
+      "heading_ms": 748,
+      "settled_ms": 779,
+      "busy_timeout": false,
+      "ttfb_ms": 76,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/reports",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/reports",
+      "dom_ready_ms": 685,
+      "heading_ms": 736,
+      "settled_ms": 762,
+      "busy_timeout": false,
+      "ttfb_ms": 75,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/reports",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/reports",
+      "dom_ready_ms": 789,
+      "heading_ms": 842,
+      "settled_ms": 871,
+      "busy_timeout": false,
+      "ttfb_ms": 71,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/exports",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/exports",
+      "dom_ready_ms": 815,
+      "heading_ms": 876,
+      "settled_ms": 909,
+      "busy_timeout": false,
+      "ttfb_ms": 81,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/exports",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/exports",
+      "dom_ready_ms": 711,
+      "heading_ms": 748,
+      "settled_ms": 783,
+      "busy_timeout": false,
+      "ttfb_ms": 71,
+      "table_rows": 0,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/audit-logs",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/audit-logs",
+      "dom_ready_ms": 683,
+      "heading_ms": 757,
+      "settled_ms": 791,
+      "busy_timeout": false,
+      "ttfb_ms": 81,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/audit-logs",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/audit-logs",
+      "dom_ready_ms": 854,
+      "heading_ms": 894,
+      "settled_ms": 924,
+      "busy_timeout": false,
+      "ttfb_ms": 85,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/operations",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/operations",
+      "dom_ready_ms": 811,
+      "heading_ms": 842,
+      "settled_ms": 1018,
+      "busy_timeout": false,
+      "ttfb_ms": 80,
+      "table_rows": 2,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/operations",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/operations",
+      "dom_ready_ms": 724,
+      "heading_ms": 822,
+      "settled_ms": 864,
+      "busy_timeout": false,
+      "ttfb_ms": 85,
+      "table_rows": 2,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/settings",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/settings",
+      "dom_ready_ms": 900,
+      "heading_ms": 975,
+      "settled_ms": 1003,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/settings",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/settings",
+      "dom_ready_ms": 716,
+      "heading_ms": 751,
+      "settled_ms": 1008,
+      "busy_timeout": false,
+      "ttfb_ms": 79,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/platform",
+      "trial": 1,
+      "status": 200,
+      "final_route": "/dashboard/platform",
+      "dom_ready_ms": 849,
+      "heading_ms": 927,
+      "settled_ms": 950,
+      "busy_timeout": false,
+      "ttfb_ms": 81,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/platform",
+      "trial": 2,
+      "status": 200,
+      "final_route": "/dashboard/platform",
+      "dom_ready_ms": 788,
+      "heading_ms": 848,
+      "settled_ms": 872,
+      "busy_timeout": false,
+      "ttfb_ms": 78,
+      "table_rows": 1,
+      "busy_sections": 0,
+      "alert_count": 0,
+      "horizontal_overflow": false
+    }
+  ],
+  "filters": [
+    {
+      "profile": "desktop",
+      "route": "/dashboard/review-queue",
+      "apply_url_ms": 793,
+      "document_navigation": false,
+      "status": "ok"
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/inbox",
+      "apply_url_ms": 737,
+      "document_navigation": false,
+      "status": "ok"
+    },
+    {
+      "profile": "desktop",
+      "route": "/dashboard/clients",
+      "apply_url_ms": 792,
+      "document_navigation": false,
+      "status": "ok"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/review-queue",
+      "apply_url_ms": 773,
+      "document_navigation": false,
+      "status": "ok"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/inbox",
+      "apply_url_ms": 694,
+      "document_navigation": false,
+      "status": "ok"
+    },
+    {
+      "profile": "mobile",
+      "route": "/dashboard/clients",
+      "apply_url_ms": 624,
+      "document_navigation": false,
+      "status": "ok"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "desktop",
+      "errors": {
+        "console_errors": 0,
+        "page_errors": 0,
+        "http_5xx": 0,
+        "request_failures": 40
+      }
+    },
+    {
+      "name": "mobile",
+      "errors": {
+        "console_errors": 0,
+        "page_errors": 0,
+        "http_5xx": 0,
+        "request_failures": 11
+      }
+    }
+  ],
+  "aggregate": {
+    "desktop": {
+      "/dashboard": {
+        "ttfb": {
+          "samples_ms": [
+            91,
+            70
+          ],
+          "median_ms": 70,
+          "max_ms": 91
+        },
+        "heading": {
+          "samples_ms": [
+            1669,
+            1252
+          ],
+          "median_ms": 1252,
+          "max_ms": 1669
+        },
+        "settled": {
+          "samples_ms": [
+            1711,
+            1296
+          ],
+          "median_ms": 1296,
+          "max_ms": 1711
+        }
+      },
+      "/dashboard/inbox": {
+        "ttfb": {
+          "samples_ms": [
+            79,
+            328
+          ],
+          "median_ms": 79,
+          "max_ms": 328
+        },
+        "heading": {
+          "samples_ms": [
+            2920,
+            1211
+          ],
+          "median_ms": 1211,
+          "max_ms": 2920
+        },
+        "settled": {
+          "samples_ms": [
+            3132,
+            1240
+          ],
+          "median_ms": 1240,
+          "max_ms": 3132
+        }
+      },
+      "/dashboard/review-queue": {
+        "ttfb": {
+          "samples_ms": [
+            116,
+            84
+          ],
+          "median_ms": 84,
+          "max_ms": 116
+        },
+        "heading": {
+          "samples_ms": [
+            1067,
+            994
+          ],
+          "median_ms": 994,
+          "max_ms": 1067
+        },
+        "settled": {
+          "samples_ms": [
+            1277,
+            1028
+          ],
+          "median_ms": 1028,
+          "max_ms": 1277
+        }
+      },
+      "/dashboard/clients": {
+        "ttfb": {
+          "samples_ms": [
+            98,
+            81
+          ],
+          "median_ms": 81,
+          "max_ms": 98
+        },
+        "heading": {
+          "samples_ms": [
+            1189,
+            730
+          ],
+          "median_ms": 730,
+          "max_ms": 1189
+        },
+        "settled": {
+          "samples_ms": [
+            1398,
+            766
+          ],
+          "median_ms": 766,
+          "max_ms": 1398
+        }
+      },
+      "/dashboard/ledger": {
+        "ttfb": {
+          "samples_ms": [
+            80,
+            83
+          ],
+          "median_ms": 80,
+          "max_ms": 83
+        },
+        "heading": {
+          "samples_ms": [
+            829,
+            973
+          ],
+          "median_ms": 829,
+          "max_ms": 973
+        },
+        "settled": {
+          "samples_ms": [
+            1047,
+            1000
+          ],
+          "median_ms": 1000,
+          "max_ms": 1047
+        }
+      },
+      "/dashboard/gst-summary": {
+        "ttfb": {
+          "samples_ms": [
+            92,
+            76
+          ],
+          "median_ms": 76,
+          "max_ms": 92
+        },
+        "heading": {
+          "samples_ms": [
+            1358,
+            919
+          ],
+          "median_ms": 919,
+          "max_ms": 1358
+        },
+        "settled": {
+          "samples_ms": [
+            1472,
+            959
+          ],
+          "median_ms": 959,
+          "max_ms": 1472
+        }
+      },
+      "/dashboard/reports": {
+        "ttfb": {
+          "samples_ms": [
+            72,
+            79
+          ],
+          "median_ms": 72,
+          "max_ms": 79
+        },
+        "heading": {
+          "samples_ms": [
+            797,
+            752
+          ],
+          "median_ms": 752,
+          "max_ms": 797
+        },
+        "settled": {
+          "samples_ms": [
+            823,
+            781
+          ],
+          "median_ms": 781,
+          "max_ms": 823
+        }
+      },
+      "/dashboard/exports": {
+        "ttfb": {
+          "samples_ms": [
+            87,
+            74
+          ],
+          "median_ms": 74,
+          "max_ms": 87
+        },
+        "heading": {
+          "samples_ms": [
+            1057,
+            1319
+          ],
+          "median_ms": 1057,
+          "max_ms": 1319
+        },
+        "settled": {
+          "samples_ms": [
+            1101,
+            1505
+          ],
+          "median_ms": 1101,
+          "max_ms": 1505
+        }
+      },
+      "/dashboard/audit-logs": {
+        "ttfb": {
+          "samples_ms": [
+            92,
+            110
+          ],
+          "median_ms": 92,
+          "max_ms": 110
+        },
+        "heading": {
+          "samples_ms": [
+            903,
+            1020
+          ],
+          "median_ms": 903,
+          "max_ms": 1020
+        },
+        "settled": {
+          "samples_ms": [
+            931,
+            1047
+          ],
+          "median_ms": 931,
+          "max_ms": 1047
+        }
+      },
+      "/dashboard/operations": {
+        "ttfb": {
+          "samples_ms": [
+            78,
+            79
+          ],
+          "median_ms": 78,
+          "max_ms": 79
+        },
+        "heading": {
+          "samples_ms": [
+            993,
+            1068
+          ],
+          "median_ms": 993,
+          "max_ms": 1068
+        },
+        "settled": {
+          "samples_ms": [
+            1188,
+            1097
+          ],
+          "median_ms": 1097,
+          "max_ms": 1188
+        }
+      },
+      "/dashboard/settings": {
+        "ttfb": {
+          "samples_ms": [
+            80,
+            80
+          ],
+          "median_ms": 80,
+          "max_ms": 80
+        },
+        "heading": {
+          "samples_ms": [
+            878,
+            880
+          ],
+          "median_ms": 878,
+          "max_ms": 880
+        },
+        "settled": {
+          "samples_ms": [
+            915,
+            1095
+          ],
+          "median_ms": 915,
+          "max_ms": 1095
+        }
+      },
+      "/dashboard/platform": {
+        "ttfb": {
+          "samples_ms": [
+            86,
+            74
+          ],
+          "median_ms": 74,
+          "max_ms": 86
+        },
+        "heading": {
+          "samples_ms": [
+            823,
+            801
+          ],
+          "median_ms": 801,
+          "max_ms": 823
+        },
+        "settled": {
+          "samples_ms": [
+            864,
+            1040
+          ],
+          "median_ms": 864,
+          "max_ms": 1040
+        }
+      }
+    },
+    "mobile": {
+      "/dashboard": {
+        "ttfb": {
+          "samples_ms": [
+            254,
+            77
+          ],
+          "median_ms": 77,
+          "max_ms": 254
+        },
+        "heading": {
+          "samples_ms": [
+            1138,
+            891
+          ],
+          "median_ms": 891,
+          "max_ms": 1138
+        },
+        "settled": {
+          "samples_ms": [
+            1179,
+            921
+          ],
+          "median_ms": 921,
+          "max_ms": 1179
+        }
+      },
+      "/dashboard/inbox": {
+        "ttfb": {
+          "samples_ms": [
+            76,
+            74
+          ],
+          "median_ms": 74,
+          "max_ms": 76
+        },
+        "heading": {
+          "samples_ms": [
+            832,
+            973
+          ],
+          "median_ms": 832,
+          "max_ms": 973
+        },
+        "settled": {
+          "samples_ms": [
+            857,
+            999
+          ],
+          "median_ms": 857,
+          "max_ms": 999
+        }
+      },
+      "/dashboard/review-queue": {
+        "ttfb": {
+          "samples_ms": [
+            85,
+            79
+          ],
+          "median_ms": 79,
+          "max_ms": 85
+        },
+        "heading": {
+          "samples_ms": [
+            898,
+            974
+          ],
+          "median_ms": 898,
+          "max_ms": 974
+        },
+        "settled": {
+          "samples_ms": [
+            925,
+            1204
+          ],
+          "median_ms": 925,
+          "max_ms": 1204
+        }
+      },
+      "/dashboard/clients": {
+        "ttfb": {
+          "samples_ms": [
+            91,
+            90
+          ],
+          "median_ms": 90,
+          "max_ms": 91
+        },
+        "heading": {
+          "samples_ms": [
+            921,
+            788
+          ],
+          "median_ms": 788,
+          "max_ms": 921
+        },
+        "settled": {
+          "samples_ms": [
+            957,
+            816
+          ],
+          "median_ms": 816,
+          "max_ms": 957
+        }
+      },
+      "/dashboard/ledger": {
+        "ttfb": {
+          "samples_ms": [
+            85,
+            84
+          ],
+          "median_ms": 84,
+          "max_ms": 85
+        },
+        "heading": {
+          "samples_ms": [
+            775,
+            1106
+          ],
+          "median_ms": 775,
+          "max_ms": 1106
+        },
+        "settled": {
+          "samples_ms": [
+            805,
+            1137
+          ],
+          "median_ms": 805,
+          "max_ms": 1137
+        }
+      },
+      "/dashboard/gst-summary": {
+        "ttfb": {
+          "samples_ms": [
+            76,
+            76
+          ],
+          "median_ms": 76,
+          "max_ms": 76
+        },
+        "heading": {
+          "samples_ms": [
+            691,
+            748
+          ],
+          "median_ms": 691,
+          "max_ms": 748
+        },
+        "settled": {
+          "samples_ms": [
+            750,
+            779
+          ],
+          "median_ms": 750,
+          "max_ms": 779
+        }
+      },
+      "/dashboard/reports": {
+        "ttfb": {
+          "samples_ms": [
+            75,
+            71
+          ],
+          "median_ms": 71,
+          "max_ms": 75
+        },
+        "heading": {
+          "samples_ms": [
+            736,
+            842
+          ],
+          "median_ms": 736,
+          "max_ms": 842
+        },
+        "settled": {
+          "samples_ms": [
+            762,
+            871
+          ],
+          "median_ms": 762,
+          "max_ms": 871
+        }
+      },
+      "/dashboard/exports": {
+        "ttfb": {
+          "samples_ms": [
+            81,
+            71
+          ],
+          "median_ms": 71,
+          "max_ms": 81
+        },
+        "heading": {
+          "samples_ms": [
+            876,
+            748
+          ],
+          "median_ms": 748,
+          "max_ms": 876
+        },
+        "settled": {
+          "samples_ms": [
+            909,
+            783
+          ],
+          "median_ms": 783,
+          "max_ms": 909
+        }
+      },
+      "/dashboard/audit-logs": {
+        "ttfb": {
+          "samples_ms": [
+            81,
+            85
+          ],
+          "median_ms": 81,
+          "max_ms": 85
+        },
+        "heading": {
+          "samples_ms": [
+            757,
+            894
+          ],
+          "median_ms": 757,
+          "max_ms": 894
+        },
+        "settled": {
+          "samples_ms": [
+            791,
+            924
+          ],
+          "median_ms": 791,
+          "max_ms": 924
+        }
+      },
+      "/dashboard/operations": {
+        "ttfb": {
+          "samples_ms": [
+            80,
+            85
+          ],
+          "median_ms": 80,
+          "max_ms": 85
+        },
+        "heading": {
+          "samples_ms": [
+            842,
+            822
+          ],
+          "median_ms": 822,
+          "max_ms": 842
+        },
+        "settled": {
+          "samples_ms": [
+            1018,
+            864
+          ],
+          "median_ms": 864,
+          "max_ms": 1018
+        }
+      },
+      "/dashboard/settings": {
+        "ttfb": {
+          "samples_ms": [
+            79,
+            79
+          ],
+          "median_ms": 79,
+          "max_ms": 79
+        },
+        "heading": {
+          "samples_ms": [
+            975,
+            751
+          ],
+          "median_ms": 751,
+          "max_ms": 975
+        },
+        "settled": {
+          "samples_ms": [
+            1003,
+            1008
+          ],
+          "median_ms": 1003,
+          "max_ms": 1008
+        }
+      },
+      "/dashboard/platform": {
+        "ttfb": {
+          "samples_ms": [
+            81,
+            78
+          ],
+          "median_ms": 78,
+          "max_ms": 81
+        },
+        "heading": {
+          "samples_ms": [
+            927,
+            848
+          ],
+          "median_ms": 848,
+          "max_ms": 927
+        },
+        "settled": {
+          "samples_ms": [
+            950,
+            872
+          ],
+          "median_ms": 872,
+          "max_ms": 950
+        }
+      }
+    }
+  }
+}

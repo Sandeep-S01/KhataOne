@@ -1,0 +1,68 @@
+{
+  "measured_at_utc": "2026-09-17T09:05:27.097Z",
+  "origin": "https://khataone.vercel.app",
+  "method": "read-only Chromium live audit; mobile-constrained is simulated, not a physical phone",
+  "hard": [
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 2402,
+      "heading_ms": 4131,
+      "settled_ms": 4346,
+      "ttfb_ms": 238,
+      "response_end_ms": 1365,
+      "fcp_ms": 2088
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 1340,
+      "heading_ms": 1797,
+      "settled_ms": 2106,
+      "ttfb_ms": 81,
+      "response_end_ms": 702,
+      "fcp_ms": 780
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 1855,
+      "heading_ms": 2314,
+      "settled_ms": 2483,
+      "ttfb_ms": 78,
+      "response_end_ms": 730,
+      "fcp_ms": 1280
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 1437,
+      "heading_ms": 1762,
+      "settled_ms": 2072,
+      "ttfb_ms": 73,
+      "response_end_ms": 847,
+      "fcp_ms": 1228
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 941,
+      "heading_ms": 1371,
+      "settled_ms": 1544,
+      "ttfb_ms": 83,
+      "response_end_ms": 644,
+      "fcp_ms": 760
+    }
+  ],
+  "navigation": [],
+  "filters": [],
+  "errors": {
+    "mobile_constrained": {
+      "console": 0,
+      "page": 0,
+      "http_5xx": 0,
+      "request_failed_aborted": 0,
+      "request_failed_other": 0
+    }
+  }
+}

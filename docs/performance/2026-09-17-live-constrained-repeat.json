@@ -1,0 +1,102 @@
+{
+  "measured_at_utc": "2026-09-17T09:03:53.888Z",
+  "origin": "https://khataone.vercel.app",
+  "method": "read-only Chromium live audit; mobile-constrained is simulated, not a physical phone",
+  "hard": [
+    {
+      "route": "/dashboard",
+      "http_status": 200,
+      "dom_ms": 2821,
+      "heading_ms": 4449,
+      "settled_ms": 4734,
+      "ttfb_ms": 214,
+      "response_end_ms": 1068,
+      "fcp_ms": 2096
+    },
+    {
+      "route": "/dashboard/inbox",
+      "http_status": 200,
+      "dom_ms": 1632,
+      "heading_ms": 1948,
+      "settled_ms": 2288,
+      "ttfb_ms": 79,
+      "response_end_ms": 882,
+      "fcp_ms": 1092
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 1289,
+      "heading_ms": 1501,
+      "settled_ms": 2090,
+      "ttfb_ms": 85,
+      "response_end_ms": 923,
+      "fcp_ms": 1056
+    },
+    {
+      "route": "/dashboard",
+      "http_status": 200,
+      "dom_ms": 1445,
+      "heading_ms": 1934,
+      "settled_ms": 2137,
+      "ttfb_ms": 83,
+      "response_end_ms": 822,
+      "fcp_ms": 1000
+    },
+    {
+      "route": "/dashboard/inbox",
+      "http_status": 200,
+      "dom_ms": 1116,
+      "heading_ms": 1322,
+      "settled_ms": 1428,
+      "ttfb_ms": 66,
+      "response_end_ms": 738,
+      "fcp_ms": 844
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 1287,
+      "heading_ms": 2072,
+      "settled_ms": 2244,
+      "ttfb_ms": 74,
+      "response_end_ms": 744,
+      "fcp_ms": 920
+    },
+    {
+      "route": "/dashboard",
+      "http_status": 200,
+      "dom_ms": 1396,
+      "heading_ms": 1822,
+      "settled_ms": 1926,
+      "ttfb_ms": 79,
+      "response_end_ms": 910,
+      "fcp_ms": 1132
+    },
+    {
+      "route": "/dashboard/inbox",
+      "http_status": 200,
+      "dom_ms": 968,
+      "heading_ms": 1232,
+      "settled_ms": 1379,
+      "ttfb_ms": 70,
+      "response_end_ms": 878,
+      "fcp_ms": 960
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "failed": "timeout"
+    }
+  ],
+  "navigation": [],
+  "filters": [],
+  "errors": {
+    "mobile_constrained": {
+      "console": 1,
+      "page": 0,
+      "http_5xx": 0,
+      "request_failed_aborted": 0,
+      "request_failed_other": 1
+    }
+  }
+}

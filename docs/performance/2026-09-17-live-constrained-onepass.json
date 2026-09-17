@@ -1,0 +1,103 @@
+{
+  "measured_at_utc": "2026-09-17T09:02:42.324Z",
+  "origin": "https://khataone.vercel.app",
+  "method": "read-only Chromium live audit; mobile-constrained is simulated, not a physical phone",
+  "hard": [
+    {
+      "route": "/dashboard",
+      "http_status": 200,
+      "dom_ms": 3533,
+      "heading_ms": 4167,
+      "settled_ms": 4448,
+      "ttfb_ms": 258,
+      "response_end_ms": 1104,
+      "fcp_ms": 2296
+    },
+    {
+      "route": "/dashboard/inbox",
+      "http_status": 200,
+      "dom_ms": 1923,
+      "heading_ms": 2541,
+      "settled_ms": 2708,
+      "ttfb_ms": 82,
+      "response_end_ms": 796,
+      "fcp_ms": 1520
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "http_status": 200,
+      "dom_ms": 3330,
+      "heading_ms": 3562,
+      "settled_ms": 3658,
+      "ttfb_ms": 160,
+      "response_end_ms": 2590,
+      "fcp_ms": 3060
+    },
+    {
+      "route": "/dashboard/clients",
+      "http_status": 200,
+      "dom_ms": 1667,
+      "heading_ms": 2113,
+      "settled_ms": 2415,
+      "ttfb_ms": 134,
+      "response_end_ms": 785,
+      "fcp_ms": 1344
+    },
+    {
+      "route": "/dashboard/ledger",
+      "http_status": 200,
+      "dom_ms": 1303,
+      "heading_ms": 1599,
+      "settled_ms": 2150,
+      "ttfb_ms": 78,
+      "response_end_ms": 688,
+      "fcp_ms": 968
+    },
+    {
+      "route": "/dashboard/gst-summary",
+      "http_status": 200,
+      "dom_ms": 1632,
+      "heading_ms": 1925,
+      "settled_ms": 2303,
+      "ttfb_ms": 73,
+      "response_end_ms": 730,
+      "fcp_ms": 1012
+    }
+  ],
+  "navigation": [
+    {
+      "route": "/dashboard/inbox",
+      "heading_ms": 1463,
+      "settled_ms": 1593,
+      "document_changed": false
+    },
+    {
+      "route": "/dashboard/review-queue",
+      "heading_ms": 228,
+      "settled_ms": 1225,
+      "document_changed": false
+    },
+    {
+      "route": "/dashboard/clients",
+      "heading_ms": 547,
+      "settled_ms": 928,
+      "document_changed": false
+    },
+    {
+      "route": "/dashboard",
+      "heading_ms": 317,
+      "settled_ms": 1277,
+      "document_changed": false
+    }
+  ],
+  "filters": [],
+  "errors": {
+    "mobile_constrained": {
+      "console": 0,
+      "page": 0,
+      "http_5xx": 0,
+      "request_failed_aborted": 0,
+      "request_failed_other": 1
+    }
+  }
+}
