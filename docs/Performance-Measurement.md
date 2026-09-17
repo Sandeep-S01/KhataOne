@@ -556,15 +556,14 @@ is a laboratory approximation and two samples per condition cannot establish
 field percentiles or a physical-device outcome. No application code was
 changed from this evidence.
 
-An actual Android check is the next decision gate. This workspace has `adb`,
-but `adb devices -l` found **no connected device**. Once a phone with USB
-debugging is connected, use Chrome's
+`adb devices -l` found **no connected device**, so no physical-phone trace
+was taken. The product owner has since manually checked the experience and
+decided that a separate phone trace or further agent-led app testing is not
+needed for this phase. Treat the synthetic 4× finding as a recorded limitation,
+not a release blocker or proof that the wait is resolved. Resume targeted
+performance work only if a new user-visible problem is reported. If a physical
+trace is later needed, Chrome supports
 [remote-device inspection](https://developer.chrome.com/docs/devtools/remote-debugging)
-and [record-and-reload performance trace](https://developer.chrome.com/docs/devtools/performance/reference)
-on the deployed Overview, then record Inbox/Review Queue navigation and a
-filter interaction. Compare normal Wi-Fi and the connection where the wait
-was noticed; record network timing, content paint, heading/usable state, and
-long-task attribution. Keep raw authenticated traces and screenshots private
-because they may contain customer data; only sanitized aggregate findings
-belong in this repository. Revisit app code only after the physical trace
-identifies a controllable cost.
+and [record-and-reload tracing](https://developer.chrome.com/docs/devtools/performance/reference);
+raw authenticated traces should remain private because they may contain
+customer data.
