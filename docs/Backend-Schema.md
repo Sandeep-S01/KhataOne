@@ -36,6 +36,10 @@
 - `created_at`
 - `updated_at`
 
+### support_requests
+
+Firm-scoped product issue reports submitted from the dashboard Help page. Fields: `id`, `firm_id`, `created_by`, `category`, `subject`, `description`, `status`, `created_at`, and `updated_at`. Authenticated firm members may create requests only as themselves and read only their own requests. Browser roles cannot change status or edit requests. Future platform-admin triage and replies require a separate privileged access path and UI; neither exists yet.
+
 Roles:
 
 - `owner`

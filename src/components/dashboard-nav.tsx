@@ -44,7 +44,7 @@ const iconByHref: Record<string, LucideIcon> = {
   "/dashboard/operations": Wrench,
   "/dashboard/platform": PanelsTopLeft,
   "/dashboard/settings": Settings,
-  "/contact": LifeBuoy,
+  "/dashboard/help": LifeBuoy,
 };
 
 const groups = [
@@ -76,7 +76,7 @@ const groups = [
 
 const utilityItems = [
   { label: "Settings", href: "/dashboard/settings" as Route },
-  { label: "Help", href: "/contact" as Route },
+  { label: "Help", href: "/dashboard/help" as Route },
 ];
 
 type DashboardNavItem = (typeof dashboardNavItems)[number];
@@ -379,7 +379,7 @@ export function DashboardUtilityNav({
           const Icon = iconByHref[href] ?? Settings;
           const isActive =
             pathname === href ||
-            (href !== "/contact" && pathname.startsWith(`${href}/`));
+            (href !== "/dashboard/help" && pathname.startsWith(`${href}/`));
 
           return (
             <li key={href}>

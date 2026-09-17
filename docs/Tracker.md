@@ -6,6 +6,8 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-17 workspace Help release check: replaced the sidebar Help destination with a protected dashboard issue form and own-request history. The firm-scoped `support_requests` migration has requester-only read/create RLS and no browser status mutation; it is safe to reapply if a SQL-editor run was not recorded in migration history. After the user applied it, a read-only hosted check confirmed that the table exists and anonymous reads are denied. Isolated RLS tests passed, including reapplying the migration without losing requests. The configured smoke credentials were rejected, so authenticated live UI/submission remains unverified. Admin triage, replies, and notifications remain planned.
+
 - 2026-09-17 post-RPC performance gate: a local production build against the
   active database completed three populated desktop browser trials for each of
   Review Queue and Inbox. Captured RPC spans were successful (three Review Queue,

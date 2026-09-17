@@ -157,6 +157,8 @@ The dashboard header is a square-edged, top-attached 56px shell surface aligned 
 
 Search and activity controls are implemented as interactive header controls: search opens a keyboard-friendly dialog that routes into existing searchable dashboard pages, while activity opens a compact menu of existing operational destinations. The activity menu uses the same themed shell surface language, supports Escape focus return and Arrow/Home/End item movement, and keeps destination icons aligned with the sidebar. These controls do not introduce new backend claims or unimplemented data sources.
 
+Dashboard Help uses the shared page header, section cards, fields, status chips, and feedback styles. The sidebar utility link opens a protected issue form and a recent-request list scoped to the signed-in requester. Copy must distinguish saved requests from future admin triage, replies, or notifications.
+
 The search dialog uses a light overlay and compact command-panel structure with a focused input row, close icon, selected target state, and concise footer action.
 
 The overview dashboard follows the reference three-tier hierarchy: metric KPI cards first, then a compact priority worklist, then a dense review queue snapshot table. KPI cards use a 4-column desktop grid, left urgency bars, large tabular counts, compact status tags, and direct text links into existing destinations. Worklist rows use a count pill, task description, and right-aligned action. Tables use 11px uppercase headers, 44px row containment, right-aligned numeric values, and contained horizontal scrolling.

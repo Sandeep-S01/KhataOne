@@ -113,6 +113,12 @@ Needs to send receipts, invoices, PDFs, bank statements, and voice notes through
 - Basic error and processing status visibility.
 - Admin-friendly production tracker.
 
+### Workspace Help
+
+- Signed-in firm users can submit categorized product issues with a subject and description.
+- Requesters can see the status of requests they submitted; other firm members cannot read their details by default.
+- A platform-admin triage inbox, assignment, replies, and notifications are future work and must not be implied by the submission UI until implemented.
+
 ## Future Features
 
 - Direct GST integration.

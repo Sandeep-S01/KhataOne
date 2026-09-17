@@ -85,7 +85,7 @@ assert.match(navigation, /formatBadgeCount/);
 assert.match(navigation, /lg:min-h-9 lg:py-1\.5/);
 assert.match(navigation, /export function DashboardUtilityNav/);
 assert.match(navigation, /aria-label="Workspace utilities"/);
-assert.match(navigation, /label: "Help", href: "\/contact" as Route/);
+assert.match(navigation, /label: "Help", href: "\/dashboard\/help" as Route/);
 assert.match(navigation, /title: "Planned",\s*items: \["\/dashboard\/platform"\]/);
 assert.match(navigation, /aria-label=\{collapsed \? collapsedLabel : undefined\}/);
 assert.match(navigation, /role="tooltip"/);
