@@ -494,7 +494,36 @@ difference. The focused auth/timeout test, security-boundary and tracing
 tests, lint, typecheck, production build, and unauthenticated redirect passed.
 
 This candidate does **not** change the measured shared React runtime cost on
-slow simulated phones. It has not been deployed or checked on physical
-Android/iPhone devices. The reported 3–4-second wait remains open until a
-same-revision deployed browser/server trace and real-device check establish
-the net effect.
+slow simulated phones. At this local checkpoint it had not yet been deployed
+or checked on physical Android/iPhone devices. The reported 3–4-second wait
+remained open pending deployed and real-device verification.
+
+### First deployed read-only verification
+
+Commit `07a9eab` was pushed to `main`. GitHub CI and the Vercel commit status
+both completed successfully. After that status, six authenticated direct
+requests to the live Overview, Clients, Ledger, Review Queue, Inbox, and GST
+Summary routes returned HTTP 200. The Overview request took 2,547 ms; the
+other five took 531–935 ms. An unauthenticated dashboard request still
+redirected to `/login?next=%2Fdashboard`.
+
+Two fresh-context live browser loads each of Overview, Inbox, and Review Queue
+used the same requested 390×844 touch, 150 ms RTT, 200 KB/s download, and 4×
+CPU profile as the earlier attribution run. All six returned HTTP 200 and
+finished without a heading or loading-state timeout. Overview headings were
+visible in 3,491–4,265 ms, Inbox in 3,677–4,330 ms, and Review Queue in
+3,522–3,992 ms. First contentful paint was 2,076–2,808 ms. The longest
+observed browser task in each run was 804–1,517 ms, so meaningful browser
+work remains after the server response. The sanitized
+[deployed check](performance/2026-09-17-deployed-auth-gate-check.json) records
+route-level timings and excludes session or customer data.
+
+These small sequential samples show the protected routes still work and that
+the prior approximately 6-second Overview pair was not repeated in this pair.
+They do **not** establish a statistically reliable before/after improvement:
+the older broader constrained run included faster Overview samples, and the
+live server auth spans are unavailable. No physical Android or iPhone was
+connected to this workspace. The 3–4-second slow-device wait remains open;
+the next useful investigation is a physical-device trace or equivalent real
+user timing that separates network, server, shared runtime execution, and
+page hydration on the same deployed revision.

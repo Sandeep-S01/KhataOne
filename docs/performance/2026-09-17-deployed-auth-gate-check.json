@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-17",
+  "commit": "07a9eab",
+  "deployment_status": "Vercel commit status success",
+  "ci_status": "GitHub verify completed successfully",
+  "scope": "Read-only production route and constrained browser check",
+  "direct_authenticated_requests_ms": {
+    "/dashboard": 2547,
+    "/dashboard/clients": 935,
+    "/dashboard/ledger": 700,
+    "/dashboard/review-queue": 776,
+    "/dashboard/inbox": 782,
+    "/dashboard/gst-summary": 531
+  },
+  "direct_authenticated_status": 200,
+  "unauthenticated_dashboard": "307 redirect to login",
+  "browser_profile": "390x844 Chromium touch emulation; requested 150 ms RTT, 200 KB/s download, 4x CPU; fresh context per load",
+  "browser_runs": [
+    { "route": "/dashboard", "trial": 1, "status": 200, "response_end_ms": 958, "first_contentful_paint_ms": 2808, "heading_visible_ms": 4265, "settled_ms": 4461, "longest_task_ms": 1223 },
+    { "route": "/dashboard", "trial": 2, "status": 200, "response_end_ms": 922, "first_contentful_paint_ms": 2624, "heading_visible_ms": 3491, "settled_ms": 3657, "longest_task_ms": 1206 },
+    { "route": "/dashboard/inbox", "trial": 1, "status": 200, "response_end_ms": 758, "first_contentful_paint_ms": 2132, "heading_visible_ms": 4330, "settled_ms": 4690, "longest_task_ms": 1517 },
+    { "route": "/dashboard/inbox", "trial": 2, "status": 200, "response_end_ms": 1161, "first_contentful_paint_ms": 2292, "heading_visible_ms": 3677, "settled_ms": 3813, "longest_task_ms": 890 },
+    { "route": "/dashboard/review-queue", "trial": 1, "status": 200, "response_end_ms": 870, "first_contentful_paint_ms": 2076, "heading_visible_ms": 3522, "settled_ms": 3753, "longest_task_ms": 804 },
+    { "route": "/dashboard/review-queue", "trial": 2, "status": 200, "response_end_ms": 852, "first_contentful_paint_ms": 2720, "heading_visible_ms": 3992, "settled_ms": 4189, "longest_task_ms": 1439 }
+  ],
+  "limits": [
+    "Simulated browser, not a physical phone",
+    "Two trials per browser route cannot establish a field percentile",
+    "No production server auth spans were available",
+    "This check does not prove the 3–4-second wait is resolved"
+  ]
+}
