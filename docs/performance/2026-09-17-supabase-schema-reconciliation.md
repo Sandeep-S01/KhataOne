@@ -80,3 +80,27 @@ and rollout impact have been reviewed.
 
 The CLI schema-dump `--dry-run` mode prints a temporary database login in its
 command preview; avoid using or sharing that output during further analysis.
+
+## Current release decision, 2026-09-17
+
+A fresh read-only migration-list check still shows 36 applied versions and only
+`20260909153000` and `20260910113000` pending. An authenticated, one-row
+preflight confirms both dashboard search RPCs are available. No further RPC
+deployment or migration-history repair is needed for the current dashboard flow.
+
+The two pending migrations would create 24 indexes and `pg_trgm`. Seven indexes
+in the later migration have the same leading columns as indexes in the earlier
+one, so the combined write/storage cost merits review before a release. The
+available authenticated query plans cover only one review row, four inbox rows,
+and one client row; existing indexes serve their principal access paths. There
+is no measured benefit that justifies deploying these index migrations now.
+Keep them unapplied until a representative, isolated larger-firm fixture and
+authenticated `EXPLAIN ANALYZE (BUFFERS)` identify specific slow queries and
+useful indexes. Review the index creation method and production write impact
+before any later rollout. This decision made no database or application change.
+The subsequent [isolated index benchmark](2026-09-17-isolated-index-benchmark.md)
+found one useful status-filter index candidate under a larger synthetic workload,
+but no basis for applying the full pending bundle to the current hosted project.
+The [read-only live query statistics](2026-09-17-live-query-stats.md) also show
+millisecond-scale database execution for the currently recorded dashboard RPC
+calls; they do not identify a live SQL bottleneck requiring these indexes.
