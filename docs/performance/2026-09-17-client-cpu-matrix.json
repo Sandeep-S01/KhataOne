@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-17",
+  "scope": "Authenticated read-only live Overview browser attribution",
+  "environment": "Fresh Chromium context per run; requested 150 ms RTT and 200 KB/s download; not a physical phone",
+  "conditions": [
+    {
+      "viewport": "1440x900 desktop",
+      "requested_cpu_rate": 1,
+      "runs": [
+        { "response_end_ms": 865, "heading_visible_ms": 1092, "settled_ms": 1126, "longest_layout_ms": 68, "script_evaluation_total_ms": 7 },
+        { "response_end_ms": 947, "heading_visible_ms": 1216, "settled_ms": 1248, "longest_layout_ms": 72, "script_evaluation_total_ms": 7 }
+      ]
+    },
+    {
+      "viewport": "390x844 phone-sized",
+      "requested_cpu_rate": 1,
+      "runs": [
+        { "response_end_ms": 1079, "heading_visible_ms": 1538, "settled_ms": 1566, "longest_layout_ms": 74, "script_evaluation_total_ms": 10 },
+        { "response_end_ms": 912, "heading_visible_ms": 1417, "settled_ms": 1483, "longest_layout_ms": 41, "script_evaluation_total_ms": 8 }
+      ]
+    },
+    {
+      "viewport": "1440x900 desktop",
+      "requested_cpu_rate": 4,
+      "runs": [
+        { "response_end_ms": 885, "heading_visible_ms": 4176, "settled_ms": 4315, "longest_layout_ms": 1029, "script_evaluation_total_ms": 842 },
+        { "response_end_ms": 791, "heading_visible_ms": 4923, "settled_ms": 5148, "longest_layout_ms": 1668, "script_evaluation_total_ms": 977 }
+      ]
+    },
+    {
+      "viewport": "390x844 phone-sized",
+      "requested_cpu_rate": 4,
+      "runs": [
+        { "response_end_ms": 782, "heading_visible_ms": 3671, "settled_ms": 3843, "longest_layout_ms": 1153, "script_evaluation_total_ms": 755 },
+        { "response_end_ms": 929, "heading_visible_ms": 3889, "settled_ms": 4096, "longest_layout_ms": 831, "script_evaluation_total_ms": 1156 }
+      ]
+    }
+  ],
+  "physical_device": "none connected; adb devices -l returned no devices",
+  "conclusion": "Synthetic CPU constraint is associated with a much longer browser interval; no app-specific component is identified",
+  "limits": ["Two runs per condition", "CPU throttling is synthetic", "No production server spans", "No physical-device result", "No application code changed"]
+}

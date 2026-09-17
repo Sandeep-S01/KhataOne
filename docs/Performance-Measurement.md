@@ -527,3 +527,44 @@ connected to this workspace. The 3–4-second slow-device wait remains open;
 the next useful investigation is a physical-device trace or equivalent real
 user timing that separates network, server, shared runtime execution, and
 page hydration on the same deployed revision.
+
+## Controlled browser CPU and viewport follow-up, 2026-09-17
+
+After the deployed auth-gate check, the live Overview was measured in four
+fresh-context Chromium conditions. Every condition requested the same 150 ms
+RTT and 200 KB/s download; viewport and requested CPU slowdown varied. Two
+read-only runs were completed per condition. The sanitized
+[CPU/viewport matrix](performance/2026-09-17-client-cpu-matrix.json) contains
+only timings and browser event categories.
+
+| Viewport | Requested CPU | Document response end | Heading visible | Longest layout event |
+| --- | ---: | ---: | ---: | ---: |
+| Desktop 1440×900 | 1× | 865–947 ms | 1,092–1,216 ms | 68–72 ms |
+| Phone-sized 390×844 | 1× | 912–1,079 ms | 1,417–1,538 ms | 41–74 ms |
+| Desktop 1440×900 | 4× | 791–885 ms | 4,176–4,923 ms | 1,029–1,668 ms |
+| Phone-sized 390×844 | 4× | 782–929 ms | 3,671–3,889 ms | 831–1,153 ms |
+
+The similar response-end ranges and much larger 4× browser intervals point
+to main-thread work, not a proportional server or document-transfer delay,
+in this synthetic profile. Chrome attributed substantial 4× time to layout
+and script evaluation. A separate CPU sample across Overview, Inbox and Review
+Queue showed the same broad desktop-versus-constrained pattern, but most
+samples were in browser `(program)` frames and minified shared runtime code.
+That sample cannot identify a specific KhataOne component or establish that
+removing any one component would reduce user-visible latency. CPU throttling
+is a laboratory approximation and two samples per condition cannot establish
+field percentiles or a physical-device outcome. No application code was
+changed from this evidence.
+
+An actual Android check is the next decision gate. This workspace has `adb`,
+but `adb devices -l` found **no connected device**. Once a phone with USB
+debugging is connected, use Chrome's
+[remote-device inspection](https://developer.chrome.com/docs/devtools/remote-debugging)
+and [record-and-reload performance trace](https://developer.chrome.com/docs/devtools/performance/reference)
+on the deployed Overview, then record Inbox/Review Queue navigation and a
+filter interaction. Compare normal Wi-Fi and the connection where the wait
+was noticed; record network timing, content paint, heading/usable state, and
+long-task attribution. Keep raw authenticated traces and screenshots private
+because they may contain customer data; only sanitized aggregate findings
+belong in this repository. Revisit app code only after the physical trace
+identifies a controllable cost.
