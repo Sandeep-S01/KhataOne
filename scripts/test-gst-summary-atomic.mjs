@@ -108,6 +108,7 @@ const dependencies = {
   "@/lib/firms": { getFirmContext: async () => ({ firm: { id: id(10), role },
     supabase: { rpc: async (name, args) => { calls++; assert.equal(name,"generate_gst_summary");
       assert.equal(args.target_firm_id,id(10)); return { data: id(30), error }; } } }) },
+  "@/lib/permissions": { canGenerateGstSummaries: value => ["owner", "admin", "staff"].includes(value) },
 };
 const mod = { exports: {} };
 new Function("require","module","exports", ts.transpileModule(readFileSync("src/app/actions/gst.ts","utf8"), {

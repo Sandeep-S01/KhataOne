@@ -1,10 +1,12 @@
 import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
+import ts from "typescript";
 
 const documentEvidence = readFileSync("src/lib/document-evidence.ts", "utf8");
 const evidencePanel = readFileSync("src/components/document-evidence-panel.tsx", "utf8");
 const reviewPage = readFileSync("src/app/(dashboard)/dashboard/review-queue/[transactionId]/page.tsx", "utf8");
 const reviewWorkspace = readFileSync("src/components/transaction-review-workspace.tsx", "utf8");
+const deferredEvidence = readFileSync("src/components/deferred-review-evidence.tsx", "utf8");
 const gstDetail = readFileSync("src/app/(dashboard)/dashboard/gst-summary/[periodId]/page.tsx", "utf8");
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 
@@ -28,9 +30,13 @@ assert.match(evidencePanel, /Extracted source text/, "original preview remains p
 assert.match(evidencePanel, /mutedPanelClassName/, "evidence fallback panels reuse the shared muted surface recipe");
 
 assert.match(reviewPage, /getDocumentEvidence\(\{ document, supabase \}\)/, "review detail obtains evidence after firm-scoped transaction load");
-assert.match(reviewPage, /DocumentEvidencePanel evidence=\{evidence\} sourceText=\{sourceText\}/, "read-only review detail renders the evidence panel");
-assert.match(reviewWorkspace, /evidence: DocumentEvidence/, "editable review workspace receives evidence explicitly");
-assert.match(reviewWorkspace, /DocumentEvidencePanel evidence=\{evidence\} sourceText=\{sourceText\}/, "editable review workspace renders original evidence and source text");
+assert.match(reviewPage, /DeferredReviewEvidence evidence=\{evidence\} sourceText=\{sourceText\}/, "read-only review streams the shared evidence panel");
+assert.match(reviewWorkspace, /evidence: Promise<DocumentEvidence>/, "editable review workspace receives only the evidence result promise");
+assert.match(reviewWorkspace, /DeferredReviewEvidence evidence=\{evidence\} sourceText=\{sourceText\}/, "editable review streams original evidence and source text");
+assert.match(deferredEvidence, /DocumentEvidencePanel evidence=\{resolved\} sourceText=\{sourceText\}/);
+assert.match(deferredEvidence, /const resolved = use\(evidence\)/);
+assert.match(reviewWorkspace, /<DeferredReviewEvidence[\s\S]*title="Decision actions"[\s\S]*<\/DeferredReviewEvidence>/, "financial decisions retain their evidence-request wait");
+assert.doesNotMatch(reviewPage, /await getDocumentEvidence/, "signing no longer blocks the main record");
 
 assert.match(gstDetail, /title="Saved GST summary"/, "GST detail labels generated totals as a saved summary");
 assert.match(gstDetail, /not a live recalculation of the rows below/, "GST detail explains saved totals do not recalculate from live rows");
@@ -44,4 +50,28 @@ assert.doesNotMatch(gstDetail, /\.eq\("status", "approved"\)/, "GST detail does 
 
 assert.equal(packageJson.scripts["test:evidence-provenance"], "node scripts/test-evidence-provenance.mjs", "package exposes the evidence/provenance test script");
 
-console.log("Evidence and GST provenance source checks passed.");
+const compiled = ts.transpileModule(documentEvidence, {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+const { getDocumentEvidence } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
+for (const mode of ["ready", "error", "rejection", "missing-path"]) {
+  let calls = 0;
+  const evidence = await getDocumentEvidence({
+    document: { file_name: "fixture.txt", file_mime_type: "text/plain", source_text: "Fixture text", storage_path: mode === "missing-path" ? null : "firm/document.txt" },
+    supabase: { storage: { from(bucket) {
+      assert.equal(bucket, "whatsapp-media-raw");
+      return { async createSignedUrl(path, ttl) {
+        calls++;
+        assert.equal(path, "firm/document.txt");
+        assert.equal(ttl, 120);
+        if (mode === "rejection") throw Error("Private upstream diagnostic");
+        return mode === "error" ? { data: null, error: { message: "Private upstream diagnostic" } } : { data: { signedUrl: "/fixture.txt" }, error: null };
+      } };
+    } } },
+  });
+  assert.equal(evidence.status, mode === "missing-path" ? "missing_path" : mode === "ready" ? "ready" : "preview_unavailable");
+  assert.equal(calls, mode === "missing-path" ? 0 : 1);
+  assert.equal(JSON.stringify(evidence).includes("Private upstream diagnostic"), false);
+}
+
+console.log("Evidence and GST provenance checks passed, including signed URL success, failure and rejection.");

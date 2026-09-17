@@ -1,0 +1,47 @@
+{
+  "date_utc": "2026-09-17",
+  "profile": {
+    "browser": "Playwright Chromium",
+    "viewport": "390x844 touch/mobile emulation",
+    "requested_cpu_slowdown": "4x",
+    "requested_network_latency_ms": 150,
+    "requested_download_bytes_per_second": 200000,
+    "requested_upload_bytes_per_second": 93750,
+    "samples_per_navigation": 3
+  },
+  "local_disposable_fixture": {
+    "records": "one synthetic firm, one client, 64 reviewable transactions",
+    "pagination_page_2": {
+      "status": "completed",
+      "click_to_visible_dom_ms": [915, 674, 658],
+      "click_to_rsc_first_byte_ms": [256, 204, 235],
+      "rsc_first_byte_to_visible_dom_ms": [659, 470, 423],
+      "long_tasks_in_click_to_frame_window_ms": [434, 150, 324]
+    },
+    "open_transaction": {
+      "status": "completed",
+      "click_to_visible_dom_ms": [1440, 638, 877],
+      "click_to_rsc_first_byte_ms": [213, 201, 197],
+      "rsc_first_byte_to_visible_dom_ms": [1227, 437, 681],
+      "long_tasks_in_click_to_frame_window_ms": [260, 85, 211]
+    },
+    "save_review_edit": {
+      "status": "completed",
+      "click_to_action_response_and_ui_ms": 2383,
+      "persisted_after_reload": true,
+      "response_status": 200
+    }
+  },
+  "hosted_read_only": {
+    "pagination_page_2": "unavailable: current firm has fewer than 50 review records",
+    "open_transaction": {
+      "status": "completed",
+      "click_to_visible_dom_ms": [1358, 1022, 1158],
+      "click_to_rsc_first_byte_ms": [718, null, 717],
+      "rsc_first_byte_to_visible_dom_ms": [641, null, 441],
+      "long_tasks_in_click_to_frame_window_ms": [174, 185, 404]
+    },
+    "save_review_edit": "not attempted: live financial data is outside disposable fixture"
+  },
+  "interpretation": "Browser DOM observations and RSC request timings are diagnostic proxies, not INP or a clean server/render split. The hosted second sample has no valid split due to streaming/prefetch clock order. Local and hosted runs are not controlled before/after comparisons."
+}

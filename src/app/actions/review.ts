@@ -8,6 +8,7 @@ import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { captureOperationalError } from "@/lib/observability";
 import { canReviewTransactions } from "@/lib/permissions";
+import { withServerTiming } from "@/lib/request-performance";
 import {
   appendReturnContext,
   dashboardReturnHref,
@@ -86,12 +87,15 @@ async function requireReviewContext(transactionId: string) {
   }
 
   const { firm, supabase } = context;
-  const { data: transaction, error } = await supabase
-    .from("transactions")
-    .select("*")
-    .eq("id", transactionId)
-    .eq("firm_id", firm.id)
-    .single();
+  const { data: transaction, error } = await withServerTiming(
+    "review_action.transaction_lookup",
+    () => supabase
+      .from("transactions")
+      .select("*")
+      .eq("id", transactionId)
+      .eq("firm_id", firm.id)
+      .single(),
+  );
 
   if (error || !transaction) {
     return { error: error?.message ?? "Transaction not found." };
@@ -211,9 +215,9 @@ export async function updateTransactionAction(
     };
   }
 
-  const { data: updated, error } = await context.supabase.rpc(
-    "update_transaction_review",
-    {
+  const { data: updated, error } = await withServerTiming(
+    "review_action.update_rpc",
+    () => context.supabase.rpc("update_transaction_review", {
       target_firm_id: context.firm.id,
       target_transaction_id: transactionId,
       reviewed_transaction_type: transactionType,
@@ -231,7 +235,7 @@ export async function updateTransactionAction(
       reviewed_cess_amount: amounts.cess_amount,
       reviewed_total_amount: amounts.total_amount,
       reviewed_payment_mode: optional(readString(formData, "payment_mode")),
-    },
+    }),
   );
 
   if (error || !updated) {

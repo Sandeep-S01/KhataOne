@@ -70,6 +70,9 @@ const review = load("src/app/actions/review.ts", {
   "@/lib/env": { hasSupabaseConfig: () => true },
   "@/lib/firms": { getFirmContext: async () => ({ firm: { id: "firm-a", role }, supabase: reviewDb, userId: "actor" }) },
   "@/lib/observability": { captureOperationalError() {} },
+  "@/lib/permissions": load("src/lib/permissions.ts", {}),
+  "@/lib/request-performance": { withServerTiming: (_, operation) => operation() },
+  "@/lib/return-context": load("src/lib/return-context.ts", {}),
   "@/lib/whatsapp/client": { sendWhatsAppText: async () => { sends++; return { ok: true }; } },
 });
 const form = new FormData();
@@ -183,6 +186,7 @@ const exportAction = load("src/app/actions/exports.ts", {
       assert.equal(name,"queue_dashboard_export"); queuedExports.push(args);
       return { data:"export-a",error:null };
     } } }) },
+  "@/lib/permissions": load("src/lib/permissions.ts", {}),
 });
 const exportForm = new FormData();
 exportForm.set("client_id", "client-a");

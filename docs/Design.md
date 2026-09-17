@@ -79,6 +79,29 @@ Use green as the brand anchor, amber as a controlled attention accent, and slate
 
 ## Component Guidelines
 
+Performance interaction update (2026-09-16): the shared filter bar uses client
+navigation for URL-based GET filters, with pending/disabled feedback and controls
+synchronized to committed URL defaults on Clear, presets and history navigation.
+Function-action forms retain their existing mutation behavior. Shared action,
+text, preset and sidebar links, plus header search, display a themed top-edge
+pending indicator without shifting layout; reduced motion is respected. Loading
+feedback must never imply a financial write has succeeded before confirmation.
+
+Secondary loading update (2026-09-16): keep sidebar links and filter presets
+interactive while optional counts stream into their badges. Loading counts use
+an ellipsis with an accessible label; unavailable preset counts use `n/a`, never
+zero. The overview summary/worklist and review snapshot load independently with
+existing shared tiles, section cards and table skeletons. Authentication still
+precedes protected content, and a delayed badge must not remount a navigation
+control or reset an edited filter.
+
+Detail loading update (2026-09-16): show the verified primary record while secondary
+history and document sections load through shared `DeferredSection` skeletons.
+Review shows extracted text during private preview loading through shared evidence
+components. Decision actions appear after the signing request settles, retaining
+their unsaved-edit checks. Keep delayed sections contained on mobile and render
+query failures explicitly rather than suggesting an empty audit history.
+
 - Buttons: clear hierarchy with primary, secondary, ghost, and danger variants.
 - Icon buttons: use lucide icons with tooltips.
 - Tables: sticky header, compact rows, clear selection state, right-aligned amounts.

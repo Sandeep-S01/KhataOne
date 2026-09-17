@@ -12,7 +12,10 @@ import {
   useId,
   useRef,
   useState,
+  useTransition,
 } from "react";
+
+import { NavigationProgress } from "@/components/navigation-progress";
 
 import {
   CommandOption,
@@ -89,6 +92,7 @@ export function DashboardTopbarActions({
   profileInitial: string;
 }) {
   const router = useRouter();
+  const [searchPending, startSearchTransition] = useTransition();
   const searchDialogId = useId();
   const activityPanelId = useId();
   const activityButtonId = useId();
@@ -320,11 +324,12 @@ export function DashboardTopbarActions({
   const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     closeSearch();
-    router.push(buildSearchHref(targetHref, query));
+    startSearchTransition(() => router.push(buildSearchHref(targetHref, query)));
   };
 
   return (
     <>
+      <NavigationProgress pending={searchPending} label="Searching workspace…" />
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
         <TopbarIconButton
           onClick={() => {

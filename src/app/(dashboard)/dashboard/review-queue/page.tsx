@@ -1,5 +1,6 @@
 import { FileDown, Filter, List, SlidersHorizontal } from "lucide-react";
 
+import { DeferredCount } from "@/components/deferred-count";
 import { StatusChip } from "@/components/status-chip";
 import {
   ActionLink,
@@ -44,6 +45,7 @@ import {
   tableSecondaryTextClass,
   tableRowClass,
 } from "@/components/design-system";
+import { countOrUnavailable } from "@/lib/availability";
 import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
@@ -418,14 +420,18 @@ export default async function ReviewQueuePage({
     page_offset: rangeFrom,
   });
 
-  const [
-    transactionsResult,
-    clientsResult,
-    allCountResult,
-    needsReviewCountResult,
-    duplicateCountResult,
-    draftCountResult,
-  ] = await Promise.all([
+  // Start optional totals alongside the records, but only suspend their badges.
+  const reviewCounts = {
+    all: withServerTiming("dashboard.review_queue.count.all", () => reviewCountQuery(), { page })
+      .then(countOrUnavailable, () => null),
+    needsReview: withServerTiming("dashboard.review_queue.count.needs_review", () => reviewCountQuery("needs_review"), { page })
+      .then(countOrUnavailable, () => null),
+    duplicate: withServerTiming("dashboard.review_queue.count.duplicate", () => reviewCountQuery("duplicate"), { page })
+      .then(countOrUnavailable, () => null),
+    draft: withServerTiming("dashboard.review_queue.count.draft", () => reviewCountQuery("draft"), { page })
+      .then(countOrUnavailable, () => null),
+  };
+  const [transactionsResult, clientsResult] = await Promise.all([
     withServerTiming("dashboard.review_queue.query", () => query, {
       page,
       has_client_filter: Boolean(filters.client),
@@ -439,24 +445,6 @@ export default async function ReviewQueuePage({
     withServerTiming("dashboard.review_queue.clients_query", () => clientsPromise, {
       page,
     }),
-    withServerTiming("dashboard.review_queue.count.all", () => reviewCountQuery(), {
-      page,
-    }),
-    withServerTiming(
-      "dashboard.review_queue.count.needs_review",
-      () => reviewCountQuery("needs_review"),
-      { page },
-    ),
-    withServerTiming(
-      "dashboard.review_queue.count.duplicate",
-      () => reviewCountQuery("duplicate"),
-      { page },
-    ),
-    withServerTiming(
-      "dashboard.review_queue.count.draft",
-      () => reviewCountQuery("draft"),
-      { page },
-    ),
   ]);
   let { data: transactions, error } = transactionsResult;
 
@@ -502,14 +490,6 @@ export default async function ReviewQueuePage({
     end: todayDate,
   };
   const monthRange = currentMonthDateRange();
-  const reviewCounts = {
-    all: allCountResult.error ? null : allCountResult.count ?? 0,
-    needsReview: needsReviewCountResult.error
-      ? null
-      : needsReviewCountResult.count ?? 0,
-    duplicate: duplicateCountResult.error ? null : duplicateCountResult.count ?? 0,
-    draft: draftCountResult.error ? null : draftCountResult.count ?? 0,
-  };
 
   return (
     <div>
@@ -533,7 +513,7 @@ export default async function ReviewQueuePage({
               <FilterPresetLink
                 href={reviewQueueHref(filters, { risk: null, status: null })}
                 active={selectedStatus === "all" && selectedRisk === "all"}
-                count={reviewCounts.all}
+                count={<DeferredCount value={reviewCounts.all} />}
               >
                 All
               </FilterPresetLink>
@@ -543,7 +523,7 @@ export default async function ReviewQueuePage({
                   status: "needs_review",
                 })}
                 active={selectedStatus === "needs_review"}
-                count={reviewCounts.needsReview}
+                count={<DeferredCount value={reviewCounts.needsReview} />}
                 dotTone="warning"
               >
                 Needs Review
@@ -554,7 +534,7 @@ export default async function ReviewQueuePage({
                   status: "duplicate",
                 })}
                 active={selectedStatus === "duplicate"}
-                count={reviewCounts.duplicate}
+                count={<DeferredCount value={reviewCounts.duplicate} />}
                 dotTone="danger"
               >
                 Duplicate Risk
@@ -565,7 +545,7 @@ export default async function ReviewQueuePage({
                   status: "draft",
                 })}
                 active={selectedStatus === "draft"}
-                count={reviewCounts.draft}
+                count={<DeferredCount value={reviewCounts.draft} />}
                 dotTone="brand"
               >
                 AI Draft

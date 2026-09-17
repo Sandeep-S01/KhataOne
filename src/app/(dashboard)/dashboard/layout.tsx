@@ -66,7 +66,11 @@ export default async function DashboardLayout({
     : "CA-approved records";
   const userEmail = context?.user.email ?? "CA user";
   const profileInitial = userEmail.trim().charAt(0).toUpperCase() || "U";
-  const sidebarCounts = await getSidebarCounts(context);
+  // Counts are secondary: authenticate first, then stream only the badges.
+  const sidebarCounts = getSidebarCounts(context).catch(() => ({
+    inbox: null,
+    reviewQueue: null,
+  }));
 
   return (
     <main className="min-h-screen bg-khata-paper text-khata-ink">

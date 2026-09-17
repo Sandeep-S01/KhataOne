@@ -1,3 +1,4 @@
+import { DeferredSection } from "@/components/deferred-section";
 import { notFound } from "next/navigation";
 
 import {
@@ -113,7 +114,7 @@ export default async function GstPeriodPage({
   const summary = Array.isArray(period.gst_summaries)
     ? period.gst_summaries[0]
     : period.gst_summaries;
-  const { data: sourceTransactions, error: sourceTransactionsError } = await supabase
+  const sourceTransactionsQuery = supabase
     .from("transactions")
     .select(
       "id, transaction_type, transaction_date, party_name, invoice_number, taxable_amount, cgst_amount, sgst_amount, igst_amount, total_amount, status",
@@ -123,12 +124,9 @@ export default async function GstPeriodPage({
     .gte("transaction_date", period.period_start)
     .lte("transaction_date", period.period_end)
     .order("transaction_date", { ascending: false });
-  const currentBlockerCount = sourceTransactions?.filter(
-    (transaction) => transaction.status !== "approved" && transaction.status !== "exported",
-  ).length;
   const generationTime = formatDisplayDateTime(summary?.generated_at);
 
-  const { data: audits, error: auditsError } = await supabase
+  const auditsQuery = supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, created_at")
     .eq("firm_id", firm.id)
@@ -240,111 +238,126 @@ export default async function GstPeriodPage({
         </SectionCard>
 
       <div className="min-w-0 xl:col-span-2">
-      <SectionCard bodyClassName="p-0">
-        <TableToolbar
-          title="Current period transactions"
-          description="Live transactions currently in this client and date range. Their statuses explain blockers; this list is not a persisted generation snapshot."
-          actions={
-            typeof currentBlockerCount === "number" ? (
-              <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
-                {currentBlockerCount} current blockers
-              </StatusChip>
-            ) : undefined
-          }
-        />
-        {sourceTransactionsError ? (
-          <QueryError message="Source transactions could not be loaded. Refresh to retry." />
-        ) : !sourceTransactions || sourceTransactions.length === 0 ? (
-          <EmptyState
-            title="No current transactions in this period"
-            message="Live transactions in this client and date range will appear here."
-          />
-        ) : (
-          <DataTable minWidth={980} ariaLabel="GST period source transactions">
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>Date</th>
-                  <th className={tableHeadCellClass}>Party</th>
-                  <th className={tableHeadCellClass}>Invoice</th>
-                  <th className={tableHeadCellClass}>Type</th>
-                  <th className={tableHeadCellClass}>Status</th>
-                  <th className={tableNumericHeadCellClass}>Taxable</th>
-                  <th className={tableNumericHeadCellClass}>Tax</th>
-                  <th className={tableNumericHeadCellClass}>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sourceTransactions.map((transaction) => (
-                  <tr key={transaction.id} className={tableRowClass}>
-                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                      {formatDisplayDate(transaction.transaction_date)}
-                    </td>
-                    <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
-                      {transaction.party_name ?? "Not provided"}
-                    </td>
-                    <td className={`${tableCellClass} num`}>
-                      {transaction.invoice_number ?? "Not provided"}
-                    </td>
-                    <td className={`${tableCellClass} capitalize`}>
-                      {transaction.transaction_type}
-                    </td>
-                    <td className={tableCellClass}>
-                      <StatusChip tone={statusTone(transaction.status)}>
-                        {transaction.status.replaceAll("_", " ")}
+      <DeferredSection title="Current period transactions" load={() => sourceTransactionsQuery} errorMessage="Source transactions could not be loaded. Refresh to retry.">
+          {({ data: sourceTransactions, error: sourceTransactionsError }) => {
+            const currentBlockerCount = sourceTransactions?.filter(
+              (transaction) => transaction.status !== "approved" && transaction.status !== "exported",
+            ).length;
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar
+                  title="Current period transactions"
+                  description="Live transactions currently in this client and date range. Their statuses explain blockers; this list is not a persisted generation snapshot."
+                  actions={
+                    typeof currentBlockerCount === "number" ? (
+                      <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
+                        {currentBlockerCount} current blockers
                       </StatusChip>
-                    </td>
-                    <td className={tableNumericCellClass}>
-                      {formatCurrency(transaction.taxable_amount)}
-                    </td>
-                    <td className={tableNumericCellClass}>
-                      {formatTaxTotal(transaction)}
-                    </td>
-                    <td className={tableNumericCellClass}>
-                      {formatCurrency(transaction.total_amount)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-          </DataTable>
-        )}
-      </SectionCard>
+                    ) : undefined
+                  }
+                />
+                {sourceTransactionsError ? (
+                  <QueryError message="Source transactions could not be loaded. Refresh to retry." />
+                ) : !sourceTransactions || sourceTransactions.length === 0 ? (
+                  <EmptyState
+                    title="No current transactions in this period"
+                    message="Live transactions in this client and date range will appear here."
+                  />
+                ) : (
+                  <DataTable minWidth={980} ariaLabel="GST period source transactions">
+                      <thead className={tableHeaderClass}>
+                        <tr>
+                          <th className={tableHeadCellClass}>Date</th>
+                          <th className={tableHeadCellClass}>Party</th>
+                          <th className={tableHeadCellClass}>Invoice</th>
+                          <th className={tableHeadCellClass}>Type</th>
+                          <th className={tableHeadCellClass}>Status</th>
+                          <th className={tableNumericHeadCellClass}>Taxable</th>
+                          <th className={tableNumericHeadCellClass}>Tax</th>
+                          <th className={tableNumericHeadCellClass}>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sourceTransactions.map((transaction) => (
+                          <tr key={transaction.id} className={tableRowClass}>
+                            <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                              {formatDisplayDate(transaction.transaction_date)}
+                            </td>
+                            <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
+                              {transaction.party_name ?? "Not provided"}
+                            </td>
+                            <td className={`${tableCellClass} num`}>
+                              {transaction.invoice_number ?? "Not provided"}
+                            </td>
+                            <td className={`${tableCellClass} capitalize`}>
+                              {transaction.transaction_type}
+                            </td>
+                            <td className={tableCellClass}>
+                              <StatusChip tone={statusTone(transaction.status)}>
+                                {transaction.status.replaceAll("_", " ")}
+                              </StatusChip>
+                            </td>
+                            <td className={tableNumericCellClass}>
+                              {formatCurrency(transaction.taxable_amount)}
+                            </td>
+                            <td className={tableNumericCellClass}>
+                              {formatTaxTotal(transaction)}
+                            </td>
+                            <td className={tableNumericCellClass}>
+                              {formatCurrency(transaction.total_amount)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
       </div>
 
       <div className="min-w-0 xl:col-span-2">
-      <SectionCard bodyClassName="p-0">
-        <TableToolbar title="Generation audit" />
-        {auditsError ? (
-          <QueryError message="Generation audit could not be loaded. Refresh to retry." />
-        ) : !audits || audits.length === 0 ? (
-          <EmptyState
-            title="No GST summary audit entries yet"
-            message="Generation and export activity for this period will appear here."
-          />
-        ) : (
-          <DataTable minWidth={640} ariaLabel="GST period audit entries">
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>Action</th>
-                  <th className={tableHeadCellClass}>Actor</th>
-                  <th className={tableNumericHeadCellClass}>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {audits.map((audit) => (
-                  <tr key={audit.id} className={tableRowClass}>
-                    <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
-                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                      {audit.actor_user_id ?? "system"}
-                    </td>
-                    <td className={`${tableNumericCellClass} text-xs`}>
-                      {formatDisplayDateTime(audit.created_at)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-          </DataTable>
-        )}
-      </SectionCard>
+      <DeferredSection title="Generation audit" load={() => auditsQuery} errorMessage="Generation audit could not be loaded. Refresh to retry.">
+          {({ data: audits, error: auditsError }) => {
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar title="Generation audit" />
+                {auditsError ? (
+                  <QueryError message="Generation audit could not be loaded. Refresh to retry." />
+                ) : !audits || audits.length === 0 ? (
+                  <EmptyState
+                    title="No GST summary audit entries yet"
+                    message="Generation and export activity for this period will appear here."
+                  />
+                ) : (
+                  <DataTable minWidth={640} ariaLabel="GST period audit entries">
+                      <thead className={tableHeaderClass}>
+                        <tr>
+                          <th className={tableHeadCellClass}>Action</th>
+                          <th className={tableHeadCellClass}>Actor</th>
+                          <th className={tableNumericHeadCellClass}>Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {audits.map((audit) => (
+                          <tr key={audit.id} className={tableRowClass}>
+                            <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
+                            <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                              {audit.actor_user_id ?? "system"}
+                            </td>
+                            <td className={`${tableNumericCellClass} text-xs`}>
+                              {formatDisplayDateTime(audit.created_at)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
       </div>
       </PageBody>
     </div>

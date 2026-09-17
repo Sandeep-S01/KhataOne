@@ -59,7 +59,7 @@ export function DashboardSidebar({
 }: {
   firmName: string;
   roleLabel: string;
-  counts?: DashboardSidebarCounts;
+  counts?: DashboardSidebarCounts | Promise<DashboardSidebarCounts>;
 }) {
   const isCollapsed = useSyncExternalStore(
     subscribeToSidebarCollapsed,

@@ -12,7 +12,7 @@ import {
   SectionCard,
   SetupRequired,
 } from "@/components/design-system";
-import { DocumentEvidencePanel } from "@/components/document-evidence-panel";
+import { DeferredReviewEvidence } from "@/components/deferred-review-evidence";
 import { StatusChip } from "@/components/status-chip";
 import { type TransactionReviewValues } from "@/components/transaction-review-form";
 import { TransactionReviewWorkspace } from "@/components/transaction-review-workspace";
@@ -20,6 +20,7 @@ import { hasSupabaseConfig } from "@/lib/env";
 import { getDocumentEvidence } from "@/lib/document-evidence";
 import { getFirmContext } from "@/lib/firms";
 import { canReviewTransactions, readOnlyRoleMessage } from "@/lib/permissions";
+import { withServerTiming } from "@/lib/request-performance";
 import {
   dashboardReturnHref,
   reviewQueueReturnKeys,
@@ -89,14 +90,17 @@ export default async function TransactionReviewPage({
   }
 
   const { firm, supabase } = context;
-  const { data: transaction } = await supabase
-    .from("transactions")
-    .select(
-      "*, clients(business_name, whatsapp_phone, phone), documents(source_text, storage_path, file_name, file_mime_type), ai_extractions(risk_flags, normalized_output, confidence_score, model, prompt_version)",
-    )
-    .eq("id", transactionId)
-    .eq("firm_id", firm.id)
-    .single();
+  const { data: transaction } = await withServerTiming(
+    "review_detail.transaction_lookup",
+    () => supabase
+      .from("transactions")
+      .select(
+        "*, clients(business_name, whatsapp_phone, phone), documents(source_text, storage_path, file_name, file_mime_type), ai_extractions(risk_flags, normalized_output, confidence_score, model, prompt_version)",
+      )
+      .eq("id", transactionId)
+      .eq("firm_id", firm.id)
+      .single(),
+  );
 
   if (!transaction) {
     notFound();
@@ -125,7 +129,7 @@ export default async function TransactionReviewPage({
   const sourceText =
     document?.source_text ||
     "No source text available yet. OCR/PDF/audio text extraction is required before media-only documents can be trusted.";
-  const evidence = await getDocumentEvidence({ document, supabase });
+  const evidence = getDocumentEvidence({ document, supabase });
 
   return (
     <div>
@@ -183,12 +187,7 @@ export default async function TransactionReviewPage({
                 )}
               </SectionCard>
 
-              <SectionCard
-                title="Source evidence"
-                description="Use the original file and extracted text as the reviewer reference before saving field edits or approving."
-              >
-                <DocumentEvidencePanel evidence={evidence} sourceText={sourceText} />
-              </SectionCard>
+              <DeferredReviewEvidence evidence={evidence} sourceText={sourceText} />
             </div>
           </>
         ) : (

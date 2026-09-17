@@ -1,0 +1,19 @@
+{
+  "measured_at_utc": "2026-09-17T05:34:43.188Z",
+  "target": "Existing live application after database RPC migration; deployed application commit unverified",
+  "route": "/dashboard/review-queue",
+  "browser_version": "153.0.8010.12",
+  "profile": "mobile-constrained",
+  "viewport": { "width": 390, "height": 844 },
+  "network_conditions": "CDP requested: 150 ms latency, 200000 B/s down, 93750 B/s up; 4x CPU slowdown (not a real phone)",
+  "sample_count": 3,
+  "completed_samples": 3,
+  "failed_samples": 0,
+  "timings_ms": {
+    "click_to_visible_dom": [1217, 1625, 941],
+    "automation_click_to_rows": [1468, 2055, 1270],
+    "hard_navigation_to_rows": [2135, 1764, 2902],
+    "document_ttfb": [674, 661, 756]
+  },
+  "interpretation": "Exploratory post-release sample only; three attempts cannot establish p95 or a speed improvement. Raw response and browser diagnostics remain in ignored local evidence."
+}

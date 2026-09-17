@@ -20,6 +20,8 @@ function load(file, dependencies = {}) {
 }
 const designSystem = load("src/components/design-system.tsx", {
   "@/lib/utils": load("src/lib/utils.ts"),
+  "@/components/filter-navigation-form": { FilterNavigationForm: () => null },
+  "@/components/navigation-progress": { LinkNavigationProgress: () => null },
 });
 const errorSource = readFileSync("src/app/(dashboard)/error.tsx", "utf8");
 assert.match(errorSource, /RetryIcon/);

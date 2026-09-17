@@ -19,7 +19,7 @@ assert.match(availability, /formatNullablePercent\(value: number \| null \| unde
 const designSystem = read("src/components/design-system.tsx");
 assert.match(
   designSystem,
-  /"k-card relative w-full overflow-hidden/,
+  /"k-card relative (?![^"\n]*k-card-hover)[^"\n]*w-full[^"\n]*overflow-hidden/,
   "StatTile should not apply hover styling to every static tile.",
 );
 assert.match(

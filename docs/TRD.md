@@ -238,6 +238,26 @@ Server workspace recovery (2026-09-12): `getFirmContext` preserves fresh server 
 
 ## Technical Risks
 
+Detail progressive rendering (2026-09-16, local implementation): after the existing
+firm-scoped primary record lookup succeeds, compose secondary Client, Ledger and
+GST reads through shared server `DeferredSection` boundaries. Query rejection
+feedback remains local and generic. Review URL signing streams through a shared
+client Suspense boundary while the form and its dirty state stay mounted; decision
+actions retain the original signing-request wait. No permissions, Supabase clients
+or query functions are serialized through this boundary. Signed URLs retain their
+existing private bucket and 120-second lifetime. SQL scope/limits, mutation actions
+and request-scoped authorization remain unchanged.
+
+Dashboard progressive rendering (2026-09-16, local implementation): retain fresh
+request-scoped firm authorization before protected content. Optional sidebar
+counts stream as nullable numeric data into leaf Suspense boundaries; no Supabase
+client or firm context crosses that client boundary. Review Queue streams preset
+counts separately from records/client filters, and Overview streams summary and
+snapshot independently. Preserve existing firm predicates, RLS, query timing
+names, pagination and mutation behavior. Do not introduce cross-request caching
+of tenant data or permissions. This reduces blocking dependencies rather than
+query execution time; authenticated production measurements remain outstanding.
+
 - AI hallucination or extraction error.
 - WhatsApp media expiry and retry handling.
 - GST integration complexity and compliance requirements.

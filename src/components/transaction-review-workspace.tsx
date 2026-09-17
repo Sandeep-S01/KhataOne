@@ -6,7 +6,7 @@ import {
   rejectTransactionAction,
   requestClarificationAction,
 } from "@/app/actions/review";
-import { DocumentEvidencePanel } from "@/components/document-evidence-panel";
+import { DeferredReviewEvidence } from "@/components/deferred-review-evidence";
 import {
   Button,
   DetailList,
@@ -36,7 +36,7 @@ type TransactionReviewWorkspaceProps = {
   reviewError?: string;
   summaryItems: ReviewSummaryItem[];
   riskFlags: string[];
-  evidence: DocumentEvidence;
+  evidence: Promise<DocumentEvidence>;
   sourceText: string;
   returnContext?: string;
 };
@@ -159,129 +159,124 @@ export function TransactionReviewWorkspace({
           )}
         </SectionCard>
 
-        <SectionCard
-          title="Source evidence"
-          description="Use the original file and extracted text as the reviewer reference before saving field edits or approving."
-        >
-          <DocumentEvidencePanel evidence={evidence} sourceText={sourceText} />
-        </SectionCard>
+        <DeferredReviewEvidence evidence={evidence} sourceText={sourceText}>
+          <SectionCard title="Decision actions">
+            <div className="grid gap-3">
+              <InfoNote>
+                Approval creates a ledger handoff entry and records the reviewer
+                decision in audit logs.
+              </InfoNote>
 
-        <SectionCard title="Decision actions">
-          <div className="grid gap-3">
-            <InfoNote>
-              Approval creates a ledger handoff entry and records the reviewer
-              decision in audit logs.
-            </InfoNote>
+              {reviewError && <FormMessage message={reviewError} />}
 
-            {reviewError && <FormMessage message={reviewError} />}
-
-            {hasUnsavedChanges && (
-              <FormMessage
-                id={dirtyDescriptionId}
-                message={unsavedDecisionMessage}
-                tone="warning"
-                role="status"
-              />
-            )}
-
-            <form action={approveTransactionAction}>
-              <input
-                type="hidden"
-                name="transaction_id"
-                value={transaction.id}
-              />
-              {returnContext && (
-                <input type="hidden" name="return_context" value={returnContext} />
+              {hasUnsavedChanges && (
+                <FormMessage
+                  id={dirtyDescriptionId}
+                  message={unsavedDecisionMessage}
+                  tone="warning"
+                  role="status"
+                />
               )}
-              <DecisionSubmitButton
-                className="w-full"
-                blocked={hasUnsavedChanges}
-                pendingLabel="Approving..."
-                aria-describedby={
-                  hasUnsavedChanges ? dirtyDescriptionId : undefined
-                }
-              >
-                Approve and create ledger handoff
-              </DecisionSubmitButton>
-            </form>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              <form action={rejectTransactionAction}>
+              <form action={approveTransactionAction}>
                 <input
                   type="hidden"
                   name="transaction_id"
                   value={transaction.id}
                 />
-                <input
-                  type="hidden"
-                  name="review_note"
-                  value="Rejected during CA review"
-                />
                 {returnContext && (
                   <input type="hidden" name="return_context" value={returnContext} />
                 )}
                 <DecisionSubmitButton
-                  variant="danger"
                   className="w-full"
                   blocked={hasUnsavedChanges}
-                  pendingLabel="Rejecting..."
+                  pendingLabel="Approving..."
                   aria-describedby={
                     hasUnsavedChanges ? dirtyDescriptionId : undefined
                   }
                 >
-                  Reject
+                  Approve and create ledger handoff
                 </DecisionSubmitButton>
               </form>
-              <form action={markDuplicateTransactionAction}>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <form action={rejectTransactionAction}>
+                  <input
+                    type="hidden"
+                    name="transaction_id"
+                    value={transaction.id}
+                  />
+                  <input
+                    type="hidden"
+                    name="review_note"
+                    value="Rejected during CA review"
+                  />
+                  {returnContext && (
+                    <input type="hidden" name="return_context" value={returnContext} />
+                  )}
+                  <DecisionSubmitButton
+                    variant="danger"
+                    className="w-full"
+                    blocked={hasUnsavedChanges}
+                    pendingLabel="Rejecting..."
+                    aria-describedby={
+                      hasUnsavedChanges ? dirtyDescriptionId : undefined
+                    }
+                  >
+                    Reject
+                  </DecisionSubmitButton>
+                </form>
+                <form action={markDuplicateTransactionAction}>
+                  <input
+                    type="hidden"
+                    name="transaction_id"
+                    value={transaction.id}
+                  />
+                  <input
+                    type="hidden"
+                    name="review_note"
+                    value="Marked duplicate during CA review"
+                  />
+                  {returnContext && (
+                    <input type="hidden" name="return_context" value={returnContext} />
+                  )}
+                  <DecisionSubmitButton
+                    variant="secondary"
+                    className="w-full"
+                    blocked={hasUnsavedChanges}
+                    pendingLabel="Marking duplicate..."
+                    aria-describedby={
+                      hasUnsavedChanges ? dirtyDescriptionId : undefined
+                    }
+                  >
+                    Mark duplicate
+                  </DecisionSubmitButton>
+                </form>
+              </div>
+
+              <form
+                action={requestClarificationAction}
+                className="grid gap-2"
+                aria-describedby={clarificationHelpId}
+              >
                 <input
                   type="hidden"
                   name="transaction_id"
                   value={transaction.id}
                 />
-                <input
-                  type="hidden"
-                  name="review_note"
-                  value="Marked duplicate during CA review"
-                />
                 {returnContext && (
                   <input type="hidden" name="return_context" value={returnContext} />
                 )}
-                <DecisionSubmitButton
-                  variant="secondary"
-                  className="w-full"
+                <ClarificationFields
                   blocked={hasUnsavedChanges}
-                  pendingLabel="Marking duplicate..."
-                  aria-describedby={
-                    hasUnsavedChanges ? dirtyDescriptionId : undefined
-                  }
-                >
-                  Mark duplicate
-                </DecisionSubmitButton>
+                  clarificationLabelId={clarificationLabelId}
+                  clarificationHelpId={clarificationHelpId}
+                  dirtyDescriptionId={dirtyDescriptionId}
+                />
               </form>
             </div>
-
-            <form
-              action={requestClarificationAction}
-              className="grid gap-2"
-              aria-describedby={clarificationHelpId}
-            >
-              <input
-                type="hidden"
-                name="transaction_id"
-                value={transaction.id}
-              />
-              {returnContext && (
-                <input type="hidden" name="return_context" value={returnContext} />
-              )}
-              <ClarificationFields
-                blocked={hasUnsavedChanges}
-                clarificationLabelId={clarificationLabelId}
-                clarificationHelpId={clarificationHelpId}
-                dirtyDescriptionId={dirtyDescriptionId}
-              />
-            </form>
-          </div>
-        </SectionCard>
+          </SectionCard>
+        </DeferredReviewEvidence>
       </div>
     </>
   );

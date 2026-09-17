@@ -128,6 +128,13 @@ try {
 } finally { await db.close(); }
 
 let role = "staff", status = "needs_review", rpcError = null, rpcCalls = [];
+function loadDependency(path) {
+  const loadedModule = { exports: {} };
+  new Function("module", "exports", ts.transpileModule(readFileSync(path, "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  }).outputText)(loadedModule, loadedModule.exports);
+  return loadedModule.exports;
+}
 const query = { select() { return this; }, eq() { return this; }, single: async () => ({
   data: { id: id(12), firm_id: id(10), client_id: id(11), status }, error: null,
 }) };
@@ -138,6 +145,9 @@ const dependencies = {
   "@/lib/firms": { getFirmContext: async () => ({ firm: { id: id(10), role }, userId: id(1),
     supabase: { from: () => query, rpc: async (name,args) => { rpcCalls.push([name,args]); return { data: rpcError ? null : id(12), error: rpcError }; } } }) },
   "@/lib/observability": { captureOperationalError() {} },
+  "@/lib/permissions": loadDependency("src/lib/permissions.ts"),
+  "@/lib/request-performance": { withServerTiming: (_, operation) => operation() },
+  "@/lib/return-context": loadDependency("src/lib/return-context.ts"),
   "@/lib/whatsapp/client": { sendWhatsAppText: async () => ({ok:true}) },
 };
 const source = ts.transpileModule(readFileSync("src/app/actions/review.ts","utf8"), {

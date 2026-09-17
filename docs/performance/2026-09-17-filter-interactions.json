@@ -1,0 +1,101 @@
+{
+  "description": "Bounded read-only browser harness validation; not a comparable baseline/candidate speed test",
+  "hosted_harness_validation_failure": {
+    "measured_at_utc": "2026-09-16T18:38:21.682Z",
+    "route": "/dashboard/review-queue",
+    "browser_profile": "mobile-constrained",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "attempted_samples": 1,
+    "completed_samples": 1,
+    "failed_samples": 0,
+    "outcome": "incomplete",
+    "click_to_rows_ms": [
+      1490
+    ],
+    "hard_navigation_to_rows_ms": [
+      2590
+    ],
+    "filter": {
+      "status": "failed",
+      "failure_phase": "apply",
+      "failure_kind": "timeout"
+    },
+    "request_failed_events": 1,
+    "http_error_responses": 0,
+    "private_no_store_responses": 15,
+    "correlated_request_ids": 0,
+    "cause": "The check expected filtered-empty copy, while the existing page rendered generic empty copy; harness expectation corrected"
+  },
+  "hosted": {
+    "measured_at_utc": "2026-09-16T18:39:16.748Z",
+    "route": "/dashboard/review-queue",
+    "browser_profile": "mobile-constrained",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "attempted_samples": 1,
+    "completed_samples": 1,
+    "failed_samples": 0,
+    "outcome": "completed",
+    "click_to_rows_ms": [
+      1362
+    ],
+    "hard_navigation_to_rows_ms": [
+      1738
+    ],
+    "filter": {
+      "status": "completed",
+      "empty_state_kind": "generic",
+      "apply_to_empty_ms": 1474,
+      "apply_feedback_ms": null,
+      "clear_to_rows_ms": 1214,
+      "clear_feedback_ms": null
+    },
+    "request_failed_events": 1,
+    "http_error_responses": 0,
+    "private_no_store_responses": 13,
+    "correlated_request_ids": 0
+  },
+  "local_candidate": {
+    "measured_at_utc": "2026-09-16T18:40:45.114Z",
+    "route": "/dashboard/review-queue",
+    "browser_profile": "mobile-constrained",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "attempted_samples": 1,
+    "completed_samples": 1,
+    "failed_samples": 0,
+    "outcome": "completed",
+    "click_to_rows_ms": [
+      2178
+    ],
+    "hard_navigation_to_rows_ms": [
+      2501
+    ],
+    "filter": {
+      "status": "completed",
+      "empty_state_kind": "generic",
+      "apply_to_empty_ms": 1662,
+      "apply_feedback_ms": 83,
+      "clear_to_rows_ms": 1815,
+      "clear_feedback_ms": 15
+    },
+    "request_failed_events": 2,
+    "http_error_responses": 0,
+    "private_no_store_responses": 15,
+    "correlated_request_ids": 0
+  },
+  "limitations": [
+    "One completed sample per environment. No percentile claim.",
+    "Local and hosted execution environments differ; do not calculate improvement from these timings.",
+    "Feedback is a DOM status signal; null means the probe did not observe it, not proof of no feedback.",
+    "The two completed runs preceded request instrumentation for filter phases; filter request timings are not in these outputs.",
+    "Network-failed events with HTTP 200 headers remain unclassified."
+  ]
+}

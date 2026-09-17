@@ -114,6 +114,10 @@ try {
 } finally { await db.close(); }
 
 let role = "viewer", calls = 0, error = null;
+const returnContextModule = { exports: {} };
+new Function("module", "exports", ts.transpileModule(readFileSync("src/lib/return-context.ts", "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+}).outputText)(returnContextModule, returnContextModule.exports);
 const dependencies = {
   "next/cache": { revalidatePath() {} },
   "next/navigation": { redirect: () => { throw new Error("REDIRECT"); } },
@@ -122,6 +126,8 @@ const dependencies = {
     supabase: { rpc: async (name, args) => { calls++; assert.equal(name,"correct_ledger_entry");
       assert.equal(args.target_firm_id,id(10)); assert.equal(args.target_entry_id,id(31));
       assert.equal(args.corrected_debit_amount,125); return { data: id(31), error }; } } }) },
+  "@/lib/permissions": { canCorrectLedgerEntries: value => ["owner", "admin", "staff"].includes(value) },
+  "@/lib/return-context": returnContextModule.exports,
 };
 const source = ts.transpileModule(readFileSync("src/app/actions/ledger.ts","utf8"), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },

@@ -1,0 +1,64 @@
+{
+  "date_utc": "2026-09-17",
+  "environment": "isolated local production-mode app build, loopback Supabase, one synthetic firm, one client, 64 reviewable transactions",
+  "browser_profile": "390x844 touch emulation, requested 4x CPU slowdown and 150 ms network latency; not a real phone",
+  "review_detail_crossover": {
+    "original_first_run": {
+      "completed_samples": 5,
+      "click_to_visible_dom_ms": [1464, 984, 1204, 1256, 946],
+      "median_ms": 1204,
+      "other_row_prefetch_requests_captured_per_sample": [15, 12, 15, 15, 11],
+      "selected_rsc_encoded_response_bytes": "3257-3258",
+      "selected_rsc_response_end_to_visible_dom_ms": [1206, 774, 987, 1046, 717]
+    },
+    "row_prefetch_disabled_in_disposable_copy_only": {
+      "completed_samples": 5,
+      "click_to_visible_dom_ms": [820, 818, 609, 690, 835],
+      "median_ms": 818,
+      "other_prefetch_requests_captured_per_sample": [4, 4, 4, 2, 3]
+    },
+    "original_restored": {
+      "completed_samples": 5,
+      "click_to_visible_dom_ms": [1382, 797, 728, 780, 906],
+      "median_ms": 797,
+      "other_prefetch_requests_captured_per_sample": [15, 9, 9, null, 8]
+    },
+    "interpretation": "The candidate reduced prefetch requests but the restored original also had a low median. Order, warm state and two setup timeouts prevent attribution of a speed gain. No repository prefetch change was made."
+  },
+  "single_chrome_renderer_trace": {
+    "detail_click_to_visible_dom_ms": 1077,
+    "observed_long_tasks_ms": 235,
+    "main_thread_function_call_event_total_ms": 786,
+    "largest_function_call_event_ms": 160,
+    "function_call_events_over_50ms": 2,
+    "note": "Sanitized Chrome duration events from one trace; event durations can nest and are not wall time or source attribution."
+  },
+  "hosted_read_only_follow_up": {
+    "completed_detail_samples": 3,
+    "click_to_visible_dom_ms": [1038, 1205, 736],
+    "valid_click_to_first_byte_ms": [519, null, 464],
+    "valid_response_end_to_visible_dom_ms": [424, null, 149],
+    "single_trace_largest_function_call_event_ms": 162,
+    "save_attempted": false,
+    "pagination": "unavailable: fewer than 50 review records",
+    "overall_runner_outcome": "incomplete only because pagination was unavailable",
+    "note": "Read-only hosted sample. One streamed/prefetched navigation had no valid phase split; deployment revision and server logs were not controlled."
+  },
+  "disposable_save": {
+    "successful_persisted_samples": 2,
+    "browser_click_to_pending_dom_ms": [30, 81],
+    "browser_click_to_button_ready_dom_ms": [874, 954],
+    "browser_click_to_action_request_start_ms": [26, 81],
+    "action_request_to_first_byte_ms": [194, 261],
+    "action_first_byte_to_response_end_ms": [95, 126],
+    "server_review_context_transaction_lookup_ms": [9, 9, 11],
+    "server_review_update_rpc_ms": [53, 54, 15],
+    "note": "Browser click measurements correct the older automation-duration proxy. Server span ranges include a third disposable save from the same profiling session. No live financial data was edited."
+  },
+  "setup_failures": {
+    "count": 2,
+    "type": "timeout before measurements",
+    "cause": "unclassified; later successful login/list runs used the same synthetic account",
+    "excluded_from_timing_samples": true
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "measured_at_utc": "2026-09-16T18:25:30.738Z",
+  "target": "Existing live deployment; deployed commit unverified; local remediation not deployed",
+  "route": "/dashboard/review-queue",
+  "browser_version": "153.0.8010.12",
+  "profile": "mobile-constrained",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "network_conditions": "CDP requested: 150 ms latency, 200000 B/s down, 93750 B/s up; 4x CPU slowdown (not a real phone)",
+  "warm_state": "destination warmed; function cold state unverified",
+  "sample_count": 3,
+  "timings_ms": {
+    "click_to_visible_dom": [
+      1384,
+      1451,
+      1225
+    ],
+    "automation_click_to_rows": [
+      1700,
+      1861,
+      1773
+    ],
+    "hard_navigation_to_rows": [
+      2665,
+      2704,
+      2064
+    ],
+    "document_ttfb": [
+      1170,
+      1359,
+      728
+    ]
+  },
+  "long_tasks": {
+    "document": [
+      {
+        "count": 3,
+        "total_ms": 375,
+        "max_ms": 213
+      },
+      {
+        "count": 1,
+        "total_ms": 136,
+        "max_ms": 136
+      },
+      {
+        "count": 2,
+        "total_ms": 172,
+        "max_ms": 96
+      }
+    ],
+    "navigation_including_mobile_drawer": [
+      {
+        "count": 6,
+        "total_ms": 649,
+        "max_ms": 253
+      },
+      {
+        "count": 6,
+        "total_ms": 703,
+        "max_ms": 253
+      },
+      {
+        "count": 5,
+        "total_ms": 585,
+        "max_ms": 306
+      }
+    ]
+  },
+  "requests": {
+    "observed": 39,
+    "http_error_responses": 0,
+    "network_failed_events": 3,
+    "responses_with_private_no_store": 33,
+    "responses_without_evidence": 6,
+    "correlated_request_ids": 0,
+    "interruptions": [
+      {
+        "sample": 1,
+        "phase": "click_navigation",
+        "kind": "client_navigation",
+        "http_status": 200
+      },
+      {
+        "sample": 2,
+        "phase": "click_navigation",
+        "kind": "client_navigation",
+        "http_status": 200
+      },
+      {
+        "sample": 3,
+        "phase": "click_navigation",
+        "kind": "client_navigation",
+        "http_status": 200
+      }
+    ]
+  },
+  "caveats": [
+    "Three warm-route observations, not reliable p95 or a before/after comparison.",
+    "DOM visibility is not a presentation timestamp, INP, or usability certification.",
+    "Request interruptions were observed despite successful rows; cause unclassified.",
+    "No server correlation, SQL plans, real-device traces, financial mutations or load test.",
+    "Browser runner location, dataset size and deployed commit unverified."
+  ]
+}

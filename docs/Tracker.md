@@ -6,6 +6,117 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-17 post-RPC performance gate: a local production build against the
+  active database completed three populated desktop browser trials for each of
+  Review Queue and Inbox. Captured RPC spans were successful (three Review Queue,
+  five Inbox), with no compatibility-query spans. Ten read-only plans executed
+  under the signed-in firm's authenticated role and RLS; the principal queries
+  used existing firm/status indexes on the small live dataset. Index migrations
+  remain pending until a populated isolated fixture and execution/buffer plans
+  justify them. Hosted server spans and large-firm behavior are unverified. See
+  [post-release query evidence](performance/2026-09-17-post-rpc-query-plans.md).
+- 2026-09-17 dashboard RPC release: reconciled the active Supabase schema with
+  an isolated replay of all 37 repository migrations, then recorded 34 verified
+  historical versions as applied without replaying their SQL. An isolated dry
+  run and push applied only the existing `20260913110000` search RPC migration.
+  Post-release grant inspection found direct `anon` EXECUTE grants; a narrow
+  forward migration `20260917060000` revoked them. Both RPCs now pass the
+  authenticated one-row preflight, reject `anon` execution by catalog grant,
+  and remain security-invoker. Migration history has 36 applied versions and
+  two pending index versions (`20260909153000`, `20260910113000`). A three-sample
+  hosted constrained-mobile Review Queue check completed but does not establish
+  a speed gain or p95. Next: hosted server spans and representative populated
+  authenticated execution plans before any index release. See the
+  [reconciliation](performance/2026-09-17-supabase-schema-reconciliation.md)
+  and [measurement handoff](Performance-Measurement.md).
+- 2026-09-17 direct RPC preflight: the configured Supabase project returned
+  `PGRST202` for both authenticated list RPC calls with the exact page argument
+  names. Added `preflight:dashboard-rpcs`, a read-only one-row deployment check
+  that stores only status/error codes, plus sanitized evidence. This confirms
+  the earlier local fallback finding but does not distinguish a missing database
+  migration from a stale PostgREST schema cache. The existing `20260913110000`
+  migration and full pending-migration list require verification in the target
+  project before any remote push. No database connection or CLI deployment access
+  is configured here. Lint, typecheck, production build, RPC compatibility,
+  filter semantics and performance source checks passed. See
+  [measurement handoff](Performance-Measurement.md).
+- 2026-09-17 performance root-cause follow-up: local production-build server
+  timings showed three `search_review_queue` errors and three
+  `search_whatsapp_inbox` errors, each followed by a successful compatibility
+  query. The failed RPC round trip took 207–308 ms in these samples before the
+  fallback. The branch is reserved for missing RPC/schema-cache conditions; the
+  exact error code and hosted migration state are unverified. The existing
+  `20260913110000` RPC migration and schema cache are the next release prerequisite.
+  The read-only SQL diagnostic now checks both function signatures before plans.
+  No database connection is configured here, so migration verification/application
+  and post-migration timing remain pending. See [measurement handoff](Performance-Measurement.md).
+- 2026-09-17 performance measurement harness follow-up: authenticated browser
+  timing now records every requested navigation attempt, safe failure phase/kind,
+  and an optional read-only Review Queue Apply/Clear/status cycle. A hosted and a
+  local production-build constrained-mobile sample both completed; local status
+  feedback appeared within 83 ms for Apply and 15 ms for Clear. The app execution
+  environments differ, so these are not comparative performance claims. The
+  first incomplete filter check is retained as a harness empty-state expectation
+  error. Lint, typecheck, production build and targeted source checks passed.
+  No database query plans, real-phone timings or financial actions were tested.
+  See [measurement handoff](Performance-Measurement.md).
+- 2026-09-17 performance measurement follow-up: collected three read-only,
+  authenticated constrained-mobile Review Queue observations from the existing
+  live deployment (2026-09-16 UTC). Click-to-visible-DOM median was 1,384 ms;
+  full-navigation-to-rows median was 2,665 ms. These do not measure the unpushed
+  candidate or establish p95. Three interrupted request events remain unclassified;
+  server correlation and SQL plans are unavailable. Added sanitized numeric
+  evidence and a read-only psql diagnostic for existing list RPCs/counts and client
+  options, with authenticated RLS and timeouts. Database execution is unverified
+  because no database connection/runtime is available. No app, schema or hosted
+  settings changed in this follow-up. See [measurement handoff](Performance-Measurement.md).
+- 2026-09-16 performance remediation third slice implemented: Review detail streams
+  private evidence independently of editable fields while decision actions retain
+  their evidence-request wait. Client detail uses independent summary/documents/
+  GST/history sections; Ledger audit and GST source/audit tables also stream after
+  their firm-scoped primary record is verified. Shared `DeferredSection` handles
+  loading and rejected secondary reads. Signing rejections use the existing safe
+  preview fallback; no schema, auth, role, financial-action or source-row predicate
+  changes. A scoped Ledger audit containment fix addresses mobile overflow found
+  during verification. Lint, typecheck, build and relevant regression checks
+  passed; all four detail routes passed the synthetic production browser harness
+  at 390/834/1440px, plus eight failure/role/primary-loading scenarios. The harness
+  never submits real mutations. See the third-slice verification in
+  [Performance and Latency Audit](Performance-Latency-Audit.md). Not deployed;
+  hosted mobile traces and query plans are the next measurement gate.
+- 2026-09-16 performance remediation second slice implemented locally: authenticated
+  dashboard shell no longer awaits sidebar totals; only badges suspend. Review
+  Queue records no longer await its four preset counts, and overview summary and
+  review snapshot stream independently. Existing firm scope, auth, SQL predicates,
+  pagination and financial actions are retained. Synthetic production-mode browser
+  checks exercise the actual pages with delayed/failed counts at 390/834/1440px,
+  preserved sidebar state and typed filters, zero/unavailable states and inverse
+  slow-record ordering. Lint, typecheck, production build and relevant source
+  regressions passed. This is local work, not a deployment or production latency
+  claim. Next: detail-page evidence/history boundaries and hosted measurements.
+  See [Performance and Latency Audit](Performance-Latency-Audit.md).
+- 2026-09-16 performance remediation first slice locally verified: shared GET
+  filters now use Next Form client navigation, preserve shell state, synchronize
+  controls on Clear/presets/Back/Forward, and show pending/disabled feedback.
+  Shared links, sidebar navigation and header search use shared pending feedback.
+  An isolated production-mode browser fixture verified 390/834/1440px behavior,
+  changing Apply from one document reload to zero while retaining Server Action
+  forms and no-JavaScript fallback. Mobile profiles were added to the existing
+  authenticated timing runner. Typecheck, lint, production build, shared UI,
+  navigation, accessibility, responsive, query/filter, tracing/session, action
+  outcome and return-context checks passed. No database, authorization, financial
+  action or deployment changes. Authenticated production timings remain pending;
+  next slice is independent loading of secondary shell/page data. Details and
+  remaining packages: [Performance and Latency Audit](Performance-Latency-Audit.md).
+- 2026-09-16 performance diagnosis completed at source baseline `f9ee4f3`:
+  [Performance and Latency Audit](Performance-Latency-Audit.md) records native
+  filter document navigation, blocking shell/page counts, repeated auth service
+  checks, search/index alignment risks, growing secondary reads, detail/action
+  waits, and mobile measurement gaps. Existing query, tracing, and session tests
+  passed; four unauthenticated public browser observations were collected.
+  Authenticated mobile latency, SQL plans, and current hosted settings remain
+  unverified. Remediation is proposed only; application/backend code, database,
+  deployment, and financial records were not changed.
 - 2026-09-14 UI consistency Phase 5 shell overlay slice locally verified:
   `DashboardTopbarActions` now keeps the activity menu as a lightweight
   disclosure while adding labeled menu semantics, Escape focus return,
@@ -689,3 +800,9 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 | 2026-09-15 | Applied the compact Review Queue filter treatment dashboard-wide after tracing each affected page flow. Inbox, Clients, Ledger, Operations, Audit Logs, and Review Queue now use shared compact filter-control sizing and a shared dedicated action row so filter typography is calmer and Apply/Clear or Filter/Reset controls do not overflow constrained dashboard widths. Existing URL filters, pagination, table headers, Supabase queries, server actions, auth, schema, and backend behavior were preserved. |
 | 2026-09-15 | Refined the Review Queue lower filter row to match the approved reference direction after tracing the existing URL-filter flow. Added shared inline filter-field and grouped date-range primitives, removed visible labels from the secondary filter row while preserving screen-reader labels, grouped From/To into one segmented control, and kept Apply/Clear visible in the same responsive row. Existing query params, RPC/fallback data access, pagination, auth, Supabase schema, server actions, and backend behavior were preserved. |
 | 2026-09-15 | Rolled the proven Review Queue inline-filter and table-toolbar treatment across the remaining dashboard pages after tracing each filter/table flow. Inbox, Clients, Ledger, Operations, and Audit Logs now use shared inline filter fields, compact controls, visible same-row actions, and grouped date ranges where applicable. Overview, GST Summary, Reports, Exports, Settings, Platform, Client detail, Ledger detail, GST period detail, and Operations health tables now use shared table-toolbar chrome. Data rows, columns, URL filters, pagination, Supabase queries, server actions, auth, schema, and backend behavior were not changed. |
+| 2026-09-17 | Verified read-only Supabase CLI access to the project matching KhataOne's configured URL. The live database has core tables but no Supabase migration-history table or dashboard search RPCs. The CLI dry run would replay all 37 repository migrations, so no remote push or schema change was made. Recorded the reconciliation prerequisite in the performance handoff. |
+| 2026-09-17 | Compared repository migration objects with the live Supabase catalog without changing the database. All 28 existing repository function bodies match their latest local versions; two dashboard search RPCs, 24 dashboard indexes, and `pg_trgm` are absent. Existing tables, triggers, and policy names are present, with legacy transaction constraints and recovery schedules sampled. A complete historical baseline remains unverified, so neither migration-history repair nor production schema deployment was performed. |
+| 2026-09-17 | Replayed all 37 migrations successfully in an isolated temporary Supabase database and compared its catalog with live KhataOne. Shared function bodies/signatures/grants, policies, triggers, indexes, storage buckets, RLS settings, and Cron schedules match; live lacks two search RPCs, 24 dashboard indexes, `pg_trgm`, and two client checks, and retains a stricter legacy `clients.phone` rule. No production schema or migration history was changed; a targeted baseline/forward release remains necessary. |
+| 2026-09-17 | Added an opt-in Review Queue workflow benchmark and measured pagination, transaction opening, and one persisted review edit using 64 synthetic records in an isolated local Supabase fixture. A separate hosted run opened transactions read-only; hosted pagination was unavailable because the firm has fewer than 50 review records. Recorded sanitized timings and limits in `docs/performance/2026-09-17-workflow-baseline.json`. No live financial data was edited. Real-device and representative large-firm comparison remain pending. |
+| 2026-09-17 | Instrumented the review detail lookup and review-save lookup/update RPC through existing opt-in performance spans, then profiled them in a disposable 64-record local fixture. Browser click probes corrected the earlier save automation proxy; two saves persisted with the button ready in 874/954 ms. A disposable-copy row-prefetch crossover reduced extra requests but did not yield a stable latency win after restoring the original build, so repository prefetch behavior was left unchanged. A separate hosted read-only detail trace completed three trials without a save. Sanitized evidence is in `docs/performance/2026-09-17-review-detail-attribution.json`; real-phone and hosted representative-firm checks remain pending. |
+| 2026-09-17 | Prepared the performance and latency changes for GitHub release. Updated stale test harness imports for the existing permission helpers and shared navigation components. The production lint, typecheck, and build pass; focused filter navigation, overview/review count streaming, detail streaming, dashboard RPC/fallback, evidence provenance, and unavailable-state checks pass in isolated fixtures. These checks do not establish that the reported 3–4 second wait is resolved on real devices or in production. |

@@ -1,0 +1,172 @@
+{
+  "description": "Local production-build, authenticated read-only spans with diagnostics enabled; not hosted server timing or SQL plans",
+  "review_queue": {
+    "captured_at_utc": "2026-09-16T18:46:29.362Z",
+    "browser_outcome": "completed",
+    "route": "/dashboard/review-queue",
+    "browser_profile": "mobile-constrained",
+    "attempted_samples": 1,
+    "completed_samples": 1,
+    "click_to_rows_ms": [
+      2043
+    ],
+    "spans": [
+      {
+        "name": "firm_context.auth_get_user",
+        "samples_ms": [
+          220,
+          213,
+          231,
+          259,
+          310
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok"
+        ]
+      },
+      {
+        "name": "firm_context.membership_lookup",
+        "samples_ms": [
+          256,
+          206,
+          310,
+          184,
+          204
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok"
+        ]
+      },
+      {
+        "name": "dashboard.review_queue.query",
+        "samples_ms": [
+          263,
+          308,
+          226
+        ],
+        "statuses": [
+          "error",
+          "error",
+          "error"
+        ]
+      },
+      {
+        "name": "dashboard.review_queue.compat_query",
+        "samples_ms": [
+          289,
+          256,
+          279
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok"
+        ]
+      },
+      {
+        "name": "dashboard.review_queue.clients_query",
+        "samples_ms": [
+          232,
+          308,
+          218
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok"
+        ]
+      }
+    ]
+  },
+  "inbox": {
+    "captured_at_utc": "2026-09-16T18:47:57.455Z",
+    "browser_outcome": "completed",
+    "route": "/dashboard/inbox",
+    "browser_profile": "mobile-constrained",
+    "attempted_samples": 1,
+    "completed_samples": 1,
+    "click_to_rows_ms": [
+      1923
+    ],
+    "spans": [
+      {
+        "name": "firm_context.auth_get_user",
+        "samples_ms": [
+          350,
+          292,
+          471,
+          208,
+          222,
+          278
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok"
+        ]
+      },
+      {
+        "name": "firm_context.membership_lookup",
+        "samples_ms": [
+          511,
+          237,
+          215,
+          242,
+          208,
+          303
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok"
+        ]
+      },
+      {
+        "name": "dashboard.inbox.query",
+        "samples_ms": [
+          225,
+          207,
+          307
+        ],
+        "statuses": [
+          "error",
+          "error",
+          "error"
+        ]
+      },
+      {
+        "name": "dashboard.inbox.compat_query",
+        "samples_ms": [
+          221,
+          202,
+          198
+        ],
+        "statuses": [
+          "ok",
+          "ok",
+          "ok"
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Individual spans across separate page requests; do not add as wall time.",
+    "RPC error code not logged; source fallback branch ran, which accepts missing RPC or schema-cache errors.",
+    "Local server and browser location are not comparable to deployed hosting.",
+    "No migration or schema cache change was made."
+  ]
+}

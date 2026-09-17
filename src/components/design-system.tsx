@@ -12,6 +12,8 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
 import { cn } from "@/lib/utils";
+import { FilterNavigationForm } from "@/components/filter-navigation-form";
+import { LinkNavigationProgress } from "@/components/navigation-progress";
 
 export const functionalIconClassName = "size-4 shrink-0";
 export const functionalIconStrokeWidth = 2;
@@ -258,6 +260,7 @@ export function ActionLink({
       )}
     >
       {children}
+      <LinkNavigationProgress />
     </Link>
   );
 }
@@ -282,6 +285,7 @@ export function TextLink({
       {...props}
     >
       {children}
+      <LinkNavigationProgress />
     </Link>
   );
 }
@@ -768,15 +772,35 @@ export function PaginationControls({
 export function FilterBar({
   children,
   className,
+  action,
+  method,
+  encType,
+  target,
   ...props
 }: ComponentPropsWithoutRef<"form">) {
+  const formClassName = cn(
+    "grid gap-3 rounded-md border border-khata-border bg-white p-4 shadow-sm",
+    className,
+  );
+
+  // Only URL filters use soft navigation. Server Actions and explicit native
+  // form modes retain their existing submission and pending-state behavior.
+  if (typeof action === "string" && !method && !encType && !target) {
+    return (
+      <FilterNavigationForm {...props} action={action} className={formClassName}>
+        {children}
+      </FilterNavigationForm>
+    );
+  }
+
   return (
     <form
-      className={cn(
-        "grid gap-3 rounded-md border border-khata-border bg-white p-4 shadow-sm",
-        className,
-      )}
       {...props}
+      action={action}
+      method={method}
+      encType={encType}
+      target={target}
+      className={formClassName}
     >
       {children}
     </form>
@@ -817,7 +841,7 @@ type FilterPresetLinkProps = Omit<
 > & {
   href: ComponentPropsWithoutRef<typeof Link>["href"] | string;
   active?: boolean;
-  count?: number | null;
+  count?: React.ReactNode;
   dotTone?: "brand" | "warning" | "danger" | "info";
   className?: string;
 };
@@ -878,6 +902,7 @@ export function FilterPresetLink({
           {count === null ? "n/a" : count}
         </span>
       )}
+      <LinkNavigationProgress />
     </Link>
   );
 }

@@ -1,3 +1,4 @@
+import { DeferredSection } from "@/components/deferred-section";
 import { notFound } from "next/navigation";
 
 import {
@@ -8,6 +9,7 @@ import {
   PageBody,
   PageHeader,
   PermissionNotice,
+  QueryError,
   SectionCard,
   SetupRequired,
   TableToolbar,
@@ -90,7 +92,7 @@ export default async function LedgerEntryPage({
     ? entry.transactions[0]
     : entry.transactions;
   const canCorrectEntry = canCorrectLedgerEntries(firm.role);
-  const { data: audits } = await supabase
+  const auditsQuery = supabase
     .from("audit_logs")
     .select("id, action, actor_user_id, metadata, created_at")
     .eq("firm_id", firm.id)
@@ -169,52 +171,60 @@ export default async function LedgerEntryPage({
           )}
         </SectionCard>
 
-      <div className="xl:col-span-2">
-      <SectionCard bodyClassName="p-0">
-        <TableToolbar title="Correction audit" />
-        {!audits || audits.length === 0 ? (
-          <EmptyState
-            title="No corrections recorded"
-            message="Correction notes and ledger-entry audit activity will appear here."
-          />
-        ) : (
-          <DataTable minWidth={720}>
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>Action</th>
-                  <th className={tableHeadCellClass}>Actor</th>
-                  <th className={tableHeadCellClass}>Note</th>
-                  <th className={tableNumericHeadCellClass}>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {audits.map((audit) => {
-                  const metadata =
-                    audit.metadata &&
-                    typeof audit.metadata === "object" &&
-                    "correction_note" in audit.metadata
-                      ? audit.metadata
-                      : null;
+      <div className="min-w-0 xl:col-span-2">
+      <DeferredSection title="Correction audit" load={() => auditsQuery} errorMessage="Correction audit could not be loaded. Refresh to retry.">
+          {({ data: audits, error: auditsError }) => {
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar title="Correction audit" />
+                {auditsError ? (
+                  <QueryError message="Correction audit could not be loaded. Refresh to retry." />
+                ) : !audits || audits.length === 0 ? (
+                  <EmptyState
+                    title="No corrections recorded"
+                    message="Correction notes and ledger-entry audit activity will appear here."
+                  />
+                ) : (
+                  <DataTable minWidth={720}>
+                      <thead className={tableHeaderClass}>
+                        <tr>
+                          <th className={tableHeadCellClass}>Action</th>
+                          <th className={tableHeadCellClass}>Actor</th>
+                          <th className={tableHeadCellClass}>Note</th>
+                          <th className={tableNumericHeadCellClass}>Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {audits.map((audit) => {
+                          const metadata =
+                            audit.metadata &&
+                            typeof audit.metadata === "object" &&
+                            "correction_note" in audit.metadata
+                              ? audit.metadata
+                              : null;
 
-                  return (
-                    <tr key={audit.id} className={tableRowClass}>
-                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
-                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                        {audit.actor_user_id ?? "system"}
-                      </td>
-                      <td className={`${tableCellClass} ${tableSecondaryTextClass}`}>
-                        {metadata?.correction_note || "No note"}
-                      </td>
-                      <td className={`${tableNumericCellClass} text-xs`}>
-                        {formatDisplayDateTime(audit.created_at)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-          </DataTable>
-        )}
-      </SectionCard>
+                          return (
+                            <tr key={audit.id} className={tableRowClass}>
+                              <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
+                              <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                                {audit.actor_user_id ?? "system"}
+                              </td>
+                              <td className={`${tableCellClass} ${tableSecondaryTextClass}`}>
+                                {metadata?.correction_note || "No note"}
+                              </td>
+                              <td className={`${tableNumericCellClass} text-xs`}>
+                                {formatDisplayDateTime(audit.created_at)}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
       </div>
       </PageBody>
     </div>

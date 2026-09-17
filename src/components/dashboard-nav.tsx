@@ -19,7 +19,7 @@ import {
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { Suspense, use, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { dashboardNavItems } from "@/lib/dashboard/nav";
@@ -29,6 +29,7 @@ import {
   sidebarSectionLabelClassName,
 } from "@/components/design-system";
 import { cn } from "@/lib/utils";
+import { LinkNavigationProgress } from "@/components/navigation-progress";
 
 const iconByHref: Record<string, LucideIcon> = {
   "/dashboard": LayoutDashboard,
@@ -110,6 +111,33 @@ function formatBadgeCount(value: number) {
   return value > 99 ? "99+" : String(value);
 }
 
+function NavBadge({ badge, collapsed }: { badge: NavCountBadge; collapsed: boolean }) {
+  return (
+    <span
+      className={cn(
+        collapsed
+          ? "absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full text-[9px] font-bold leading-none tabular-nums ring-2 ring-white"
+          : "ml-auto inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-[11px] font-bold leading-none tabular-nums",
+        badge.tone === "warning"
+          ? collapsed ? "bg-warning/20 text-warning" : "bg-warning/15 text-warning"
+          : "bg-khata-paperMuted text-khata-ink/70",
+      )}
+      aria-label={`${formatBadgeCount(badge.value)} open`}
+    >
+      {formatBadgeCount(badge.value)}
+    </span>
+  );
+}
+
+function DeferredNavBadge({ counts, href, collapsed }: {
+  counts: Promise<DashboardNavCounts>;
+  href: string;
+  collapsed: boolean;
+}) {
+  const badge = countBadgeForHref(href, use(counts));
+  return badge ? <NavBadge badge={badge} collapsed={collapsed} /> : null;
+}
+
 function DashboardNavLink({
   item,
   icon: Icon,
@@ -118,6 +146,7 @@ function DashboardNavLink({
   pathname,
   onNavigate,
   badge,
+  countsPromise,
 }: {
   item: DashboardNavItem;
   icon: LucideIcon;
@@ -126,9 +155,11 @@ function DashboardNavLink({
   pathname: string;
   onNavigate?: () => void;
   badge?: NavCountBadge | null;
+  countsPromise?: Promise<DashboardNavCounts>;
 }) {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const tooltipId = useId();
+  const countId = useId();
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
 
@@ -203,7 +234,10 @@ function DashboardNavLink({
         onBlur={hideTooltip}
         aria-current={isActive ? "page" : undefined}
         aria-label={collapsed ? collapsedLabel : undefined}
-        aria-describedby={collapsed && tooltipVisible ? tooltipId : undefined}
+        aria-describedby={[
+          collapsed && tooltipVisible ? tooltipId : null,
+          countsPromise ? countId : null,
+        ].filter(Boolean).join(" ") || undefined}
         className={cn(
           "relative flex items-center rounded-lg text-[13px] font-medium leading-[18px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
           collapsed
@@ -222,34 +256,20 @@ function DashboardNavLink({
         {!collapsed && (
           <>
             <span className="min-w-0 flex-1 truncate">{item.label}</span>
-            {badge && (
-              <span
-                className={cn(
-                  "ml-auto inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-[11px] font-bold leading-none tabular-nums",
-                  badge.tone === "warning"
-                    ? "bg-warning/15 text-warning"
-                    : "bg-khata-paperMuted text-khata-ink/70",
-                )}
-                aria-label={badgeLabel ?? undefined}
-              >
-                {formatBadgeCount(badge.value)}
-              </span>
-            )}
           </>
         )}
-        {collapsed && badge && (
-          <span
-            className={cn(
-              "absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full text-[9px] font-bold leading-none tabular-nums ring-2 ring-white",
-              badge.tone === "warning"
-                ? "bg-warning/20 text-warning"
-                : "bg-khata-paperMuted text-khata-ink/70",
-            )}
-            aria-hidden="true"
-          >
-            {formatBadgeCount(badge.value)}
+        {badge && <NavBadge badge={badge} collapsed={collapsed} />}
+        {countsPromise && (
+          <span id={countId} className="contents">
+            <Suspense fallback={
+              <span className={collapsed ? "sr-only" : "ml-auto text-xs text-khata-muted"}
+                aria-label={`${item.label} count loading`}>…</span>
+            }>
+              <DeferredNavBadge counts={countsPromise} href={href} collapsed={collapsed} />
+            </Suspense>
           </span>
         )}
+        <LinkNavigationProgress />
       </Link>
       {collapsed && tooltipVisible && typeof document !== "undefined" &&
         createPortal(
@@ -274,7 +294,7 @@ export function DashboardNav({
 }: {
   onNavigate?: () => void;
   collapsed?: boolean;
-  counts?: DashboardNavCounts;
+  counts?: DashboardNavCounts | Promise<DashboardNavCounts>;
 }) {
   const pathname = usePathname();
   const itemByHref = new Map(
@@ -310,7 +330,8 @@ export function DashboardNav({
                 const isActive =
                   pathname === item.href ||
                   (item.href !== "/dashboard" && pathname.startsWith(`${href}/`));
-                const badge = countBadgeForHref(href, counts);
+                const countsPromise = counts && "then" in counts ? counts : undefined;
+                const badge = countBadgeForHref(href, counts && !("then" in counts) ? counts : undefined);
 
                 return (
                   <li key={href}>
@@ -322,6 +343,7 @@ export function DashboardNav({
                       pathname={pathname}
                       onNavigate={onNavigate}
                       badge={badge}
+                      countsPromise={href === "/dashboard/inbox" || href === "/dashboard/review-queue" ? countsPromise : undefined}
                     />
                   </li>
                 );

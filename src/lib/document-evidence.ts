@@ -167,7 +167,8 @@ export async function getDocumentEvidence({
 
   const { data, error } = await supabase.storage
     .from(DOCUMENT_EVIDENCE_BUCKET)
-    .createSignedUrl(storagePath, DOCUMENT_EVIDENCE_SIGNED_URL_TTL_SECONDS);
+    .createSignedUrl(storagePath, DOCUMENT_EVIDENCE_SIGNED_URL_TTL_SECONDS)
+    .catch(() => ({ data: null, error: { message: "Preview unavailable" } }));
 
   if (error || !data?.signedUrl) {
     return { ...baseEvidence, status: "preview_unavailable" };

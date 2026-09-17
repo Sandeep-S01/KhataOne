@@ -1,0 +1,14 @@
+{
+  "checked_at_utc": "2026-09-17T03:45:40.425Z",
+  "target": "Supabase project configured by NEXT_PUBLIC_SUPABASE_URL",
+  "auth": "active firm member",
+  "operations": "read-only RPCs, at most one row requested each; no row data retained",
+  "review_queue": {
+    "status": "unresolved_schema_cache",
+    "code": "PGRST202"
+  },
+  "inbox": {
+    "status": "unresolved_schema_cache",
+    "code": "PGRST202"
+  }
+}

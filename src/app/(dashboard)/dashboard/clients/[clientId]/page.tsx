@@ -1,3 +1,4 @@
+import { DeferredSection } from "@/components/deferred-section";
 import { notFound } from "next/navigation";
 
 import { archiveClientAction } from "@/app/actions/clients";
@@ -115,14 +116,14 @@ export default async function ClientDetailPage({
     );
   }
 
-  const documentsPromise = supabase
+  const documentsPromise = Promise.resolve(supabase
     .from("documents")
     .select("id, document_type, file_name, status, received_at, created_at")
     .eq("client_id", client.id)
     .eq("firm_id", firm.id)
     .order("received_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
-    .limit(6);
+    .limit(6)).catch(() => ({ data: null, error: { message: "Recent documents unavailable" } }));
   const reviewCountPromise = supabase
     .from("transactions")
     .select("id", { count: "exact", head: true })
@@ -150,25 +151,7 @@ export default async function ClientDetailPage({
     .order("created_at", { ascending: false })
     .limit(8);
 
-  const [
-    documentsResult,
-    reviewCountResult,
-    approvedCountResult,
-    gstPeriodsResult,
-    auditsResult,
-  ] = await Promise.all([
-    documentsPromise,
-    reviewCountPromise,
-    approvedCountPromise,
-    gstPeriodsPromise,
-    auditsPromise,
-  ]);
-  const recentDocuments = documentsResult.data ?? [];
-  const gstPeriods = gstPeriodsResult.data ?? [];
-  const audits = auditsResult.data ?? [];
   const canManageClientRecords = canManageClients(firm.role);
-  const reviewCount = countOrUnavailable(reviewCountResult);
-  const approvedCount = countOrUnavailable(approvedCountResult);
 
   return (
     <div>
@@ -224,36 +207,54 @@ export default async function ClientDetailPage({
           </SectionCard>
         )}
 
-        <div className="grid gap-3 md:grid-cols-3">
-          <StatTile
-            label="Pending review"
-            value={displayCount(reviewCount)}
-            tone={attentionToneForCount(reviewCount)}
-            hint={countHint(reviewCount, "Draft, needs-review, and duplicate-risk records.")}
-          />
-          <StatTile
-            label="Approved records"
-            value={displayCount(approvedCount)}
-            tone={approvedCount === null ? "danger" : approvedCount > 0 ? "success" : "neutral"}
-            hint={countHint(approvedCount, "Approved transaction records.")}
-          />
-          <StatTile
-            label="Recent documents"
-            value={documentsResult.error ? "Unavailable" : recentDocuments.length}
-            tone={
-              documentsResult.error
-                ? "danger"
-                : recentDocuments.length > 0
-                  ? "brand"
-                  : "neutral"
-            }
-            hint={
-              documentsResult.error
-                ? "Could not load recent documents. Refresh to retry."
-                : "Latest linked document records."
-            }
-          />
-        </div>
+        <DeferredSection
+          title="Client summary"
+          load={() => Promise.all([documentsPromise, reviewCountPromise, approvedCountPromise])}
+          errorMessage="Client summary could not be loaded. Refresh to retry."
+          fallback={<div className="grid gap-3 md:grid-cols-3" aria-busy="true" aria-label="Loading client summary">
+            {["Pending review", "Approved records", "Recent documents"].map((label) => (
+              <StatTile key={label} label={label} value="Loading..." />
+            ))}
+          </div>}
+        >
+          {([documentsResult, reviewCountResult, approvedCountResult]) => {
+            const recentDocuments = documentsResult.data ?? [];
+            const reviewCount = countOrUnavailable(reviewCountResult);
+            const approvedCount = countOrUnavailable(approvedCountResult);
+            return (
+              <div className="grid gap-3 md:grid-cols-3">
+                <StatTile
+                  label="Pending review"
+                  value={displayCount(reviewCount)}
+                  tone={attentionToneForCount(reviewCount)}
+                  hint={countHint(reviewCount, "Draft, needs-review, and duplicate-risk records.")}
+                />
+                <StatTile
+                  label="Approved records"
+                  value={displayCount(approvedCount)}
+                  tone={approvedCount === null ? "danger" : approvedCount > 0 ? "success" : "neutral"}
+                  hint={countHint(approvedCount, "Approved transaction records.")}
+                />
+                <StatTile
+                  label="Recent documents"
+                  value={documentsResult.error ? "Unavailable" : recentDocuments.length}
+                  tone={
+                    documentsResult.error
+                      ? "danger"
+                      : recentDocuments.length > 0
+                        ? "brand"
+                        : "neutral"
+                  }
+                  hint={
+                    documentsResult.error
+                      ? "Could not load recent documents. Refresh to retry."
+                      : "Latest linked document records."
+                  }
+                />
+              </div>
+            );
+          }}
+        </DeferredSection>
 
         <div className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
         <SectionCard title="Client profile">
@@ -271,166 +272,187 @@ export default async function ClientDetailPage({
           />
         </SectionCard>
 
-        <SectionCard bodyClassName="p-0">
-          <TableToolbar
-            title="Recent documents"
-            meta={<RecordCount value={recentDocuments.length} label="latest" />}
-          />
-          {documentsResult.error ? (
-            <QueryError message="Recent documents could not be loaded. Refresh to retry." />
-          ) : recentDocuments.length === 0 ? (
-            <EmptyState
-              title="No documents received"
-              message="Recent WhatsApp documents and text notes for this client will appear here."
-            />
-          ) : (
-            <DataTable minWidth={680} ariaLabel="Recent client documents">
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>Document</th>
-                  <th className={tableHeadCellClass}>Status</th>
-                  <th className={tableNumericHeadCellClass}>Received</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentDocuments.map((document) => (
-                  <tr key={document.id} className={tableRowClass}>
-                    <td className={tableCellClass}>
-                      <p className={tablePrimaryTextClass}>
-                        {document.file_name ?? document.document_type}
-                      </p>
-                      <p className={`${tableSecondaryTextClass} capitalize`}>
-                        {document.document_type.replaceAll("_", " ")}
-                      </p>
-                    </td>
-                    <td className={tableCellClass}>
-                      <StatusChip tone={statusTone(document.status)}>
-                        {document.status.replaceAll("_", " ")}
-                      </StatusChip>
-                    </td>
-                    <td className={`${tableNumericCellClass} text-xs`}>
-                      {formatDisplayDateTime(
-                        document.received_at ?? document.created_at,
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </DataTable>
-          )}
-        </SectionCard>
+        <DeferredSection title="Recent documents" load={() => documentsPromise} errorMessage="Recent documents could not be loaded. Refresh to retry.">
+          {(documentsResult) => {
+            const recentDocuments = documentsResult.data ?? [];
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar
+                  title="Recent documents"
+                  meta={<RecordCount value={recentDocuments.length} label="latest" />}
+                />
+                {documentsResult.error ? (
+                  <QueryError message="Recent documents could not be loaded. Refresh to retry." />
+                ) : recentDocuments.length === 0 ? (
+                  <EmptyState
+                    title="No documents received"
+                    message="Recent WhatsApp documents and text notes for this client will appear here."
+                  />
+                ) : (
+                  <DataTable minWidth={680} ariaLabel="Recent client documents">
+                    <thead className={tableHeaderClass}>
+                      <tr>
+                        <th className={tableHeadCellClass}>Document</th>
+                        <th className={tableHeadCellClass}>Status</th>
+                        <th className={tableNumericHeadCellClass}>Received</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {recentDocuments.map((document) => (
+                        <tr key={document.id} className={tableRowClass}>
+                          <td className={tableCellClass}>
+                            <p className={tablePrimaryTextClass}>
+                              {document.file_name ?? document.document_type}
+                            </p>
+                            <p className={`${tableSecondaryTextClass} capitalize`}>
+                              {document.document_type.replaceAll("_", " ")}
+                            </p>
+                          </td>
+                          <td className={tableCellClass}>
+                            <StatusChip tone={statusTone(document.status)}>
+                              {document.status.replaceAll("_", " ")}
+                            </StatusChip>
+                          </td>
+                          <td className={`${tableNumericCellClass} text-xs`}>
+                            {formatDisplayDateTime(
+                              document.received_at ?? document.created_at,
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
 
-        <SectionCard bodyClassName="p-0">
-          <TableToolbar
-            title="GST readiness"
-            meta={
-              <RecordCount
-                value={gstPeriodsResult.error ? 0 : gstPeriods.length}
-                label="periods"
-                singularLabel="period"
-              />
-            }
-          />
-          {gstPeriodsResult.error ? (
-            <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
-          ) : gstPeriods.length === 0 ? (
-            <EmptyState
-              title="No GST periods generated"
-              message="Generate a GST summary after transactions are approved for this client."
-            />
-          ) : (
-            <DataTable minWidth={760} ariaLabel="Client GST readiness">
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>Period</th>
-                  <th className={tableHeadCellClass}>Readiness</th>
-                  <th className={tableNumericHeadCellClass}>Issues</th>
-                  <th className={tableNumericHeadCellClass}>Net tax</th>
-                  <th className={tableActionHeadCellClass}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {gstPeriods.map((period) => {
-                  const summary = Array.isArray(period.gst_summaries)
-                    ? period.gst_summaries[0]
-                    : period.gst_summaries;
-                  const issueCount = summary
-                    ? Number(summary.mismatch_count ?? 0) +
-                      Number(summary.missing_document_count ?? 0)
-                    : null;
+        <DeferredSection title="GST readiness" load={() => gstPeriodsPromise} errorMessage="GST readiness periods could not be loaded. Refresh to retry.">
+          {(gstPeriodsResult) => {
+            const gstPeriods = gstPeriodsResult.data ?? [];
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar
+                  title="GST readiness"
+                  meta={
+                    <RecordCount
+                      value={gstPeriodsResult.error ? 0 : gstPeriods.length}
+                      label="periods"
+                      singularLabel="period"
+                    />
+                  }
+                />
+                {gstPeriodsResult.error ? (
+                  <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
+                ) : gstPeriods.length === 0 ? (
+                  <EmptyState
+                    title="No GST periods generated"
+                    message="Generate a GST summary after transactions are approved for this client."
+                  />
+                ) : (
+                  <DataTable minWidth={760} ariaLabel="Client GST readiness">
+                    <thead className={tableHeaderClass}>
+                      <tr>
+                        <th className={tableHeadCellClass}>Period</th>
+                        <th className={tableHeadCellClass}>Readiness</th>
+                        <th className={tableNumericHeadCellClass}>Issues</th>
+                        <th className={tableNumericHeadCellClass}>Net tax</th>
+                        <th className={tableActionHeadCellClass}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {gstPeriods.map((period) => {
+                        const summary = Array.isArray(period.gst_summaries)
+                          ? period.gst_summaries[0]
+                          : period.gst_summaries;
+                        const issueCount = summary
+                          ? Number(summary.mismatch_count ?? 0) +
+                            Number(summary.missing_document_count ?? 0)
+                          : null;
 
-                  return (
-                    <tr key={period.id} className={tableRowClass}>
-                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                        {formatDisplayDateRange(
-                          period.period_start,
-                          period.period_end,
-                        )}
-                        <p className={`${tableSecondaryTextClass} capitalize`}>
-                          {period.filing_type}
-                        </p>
-                      </td>
-                      <td className={tableCellClass}>
-                        <StatusChip tone={statusTone(period.status)}>
-                          {period.status.replaceAll("_", " ")}
-                        </StatusChip>
-                      </td>
-                      <td className={tableNumericCellClass}>
-                        {issueCount ?? "Unavailable"}
-                      </td>
-                      <td className={tableNumericCellClass}>
-                        {formatNullableCurrency(summary?.net_tax_payable)}
-                      </td>
-                      <td className={tableActionCellClass}>
-                        <TextLink
-                          href={`/dashboard/gst-summary/${period.id}`}
-                          aria-label={`Open GST period for ${client.business_name}`}
-                        >
-                          Open
-                        </TextLink>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </DataTable>
-          )}
-        </SectionCard>
+                        return (
+                          <tr key={period.id} className={tableRowClass}>
+                            <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                              {formatDisplayDateRange(
+                                period.period_start,
+                                period.period_end,
+                              )}
+                              <p className={`${tableSecondaryTextClass} capitalize`}>
+                                {period.filing_type}
+                              </p>
+                            </td>
+                            <td className={tableCellClass}>
+                              <StatusChip tone={statusTone(period.status)}>
+                                {period.status.replaceAll("_", " ")}
+                              </StatusChip>
+                            </td>
+                            <td className={tableNumericCellClass}>
+                              {issueCount ?? "Unavailable"}
+                            </td>
+                            <td className={tableNumericCellClass}>
+                              {formatNullableCurrency(summary?.net_tax_payable)}
+                            </td>
+                            <td className={tableActionCellClass}>
+                              <TextLink
+                                href={`/dashboard/gst-summary/${period.id}`}
+                                aria-label={`Open GST period for ${client.business_name}`}
+                              >
+                                Open
+                              </TextLink>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
 
-        <SectionCard bodyClassName="p-0">
-          <TableToolbar title="Audit history" />
-          {auditsResult.error ? (
-            <QueryError message="Client audit history could not be loaded. Refresh to retry." />
-          ) : !audits || audits.length === 0 ? (
-            <EmptyState
-              title="No audit entries yet"
-              message="Client changes and sensitive workflow actions will appear here."
-            />
-          ) : (
-            <DataTable minWidth={520} ariaLabel="Client audit history">
-                <thead className={tableHeaderClass}>
-                  <tr>
-                    <th className={tableHeadCellClass}>Action</th>
-                    <th className={tableHeadCellClass}>Actor</th>
-                    <th className={tableNumericHeadCellClass}>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {audits.map((audit) => (
-                    <tr key={audit.id} className={tableRowClass}>
-                      <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
-                      <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                        {audit.actor_user_id || "system"}
-                      </td>
-                      <td className={`${tableNumericCellClass} text-xs`}>
-                        {formatDisplayDateTime(audit.created_at)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-            </DataTable>
-          )}
-        </SectionCard>
+        <DeferredSection title="Audit history" load={() => auditsPromise} errorMessage="Client audit history could not be loaded. Refresh to retry.">
+          {(auditsResult) => {
+            const audits = auditsResult.data ?? [];
+            return (
+              <SectionCard bodyClassName="p-0">
+                <TableToolbar title="Audit history" />
+                {auditsResult.error ? (
+                  <QueryError message="Client audit history could not be loaded. Refresh to retry." />
+                ) : !audits || audits.length === 0 ? (
+                  <EmptyState
+                    title="No audit entries yet"
+                    message="Client changes and sensitive workflow actions will appear here."
+                  />
+                ) : (
+                  <DataTable minWidth={520} ariaLabel="Client audit history">
+                      <thead className={tableHeaderClass}>
+                        <tr>
+                          <th className={tableHeadCellClass}>Action</th>
+                          <th className={tableHeadCellClass}>Actor</th>
+                          <th className={tableNumericHeadCellClass}>Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {audits.map((audit) => (
+                          <tr key={audit.id} className={tableRowClass}>
+                            <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
+                            <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                              {audit.actor_user_id || "system"}
+                            </td>
+                            <td className={`${tableNumericCellClass} text-xs`}>
+                              {formatDisplayDateTime(audit.created_at)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                  </DataTable>
+                )}
+              </SectionCard>
+            );
+          }}
+        </DeferredSection>
         </div>
       </PageBody>
     </div>

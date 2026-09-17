@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   ActionLink,
   DataTable,
@@ -10,6 +11,7 @@ import {
   SetupRequired,
   StatTile,
   TableToolbar,
+  TableSkeleton,
   TextLink,
   tableActionCellClass,
   tableActionHeadCellClass,
@@ -32,7 +34,7 @@ import {
   positiveToneForCount,
 } from "@/lib/availability";
 import { hasSupabaseConfig } from "@/lib/env";
-import { getFirmContext } from "@/lib/firms";
+import { getFirmContext, type FirmContext } from "@/lib/firms";
 import { withServerTiming } from "@/lib/request-performance";
 
 export const dynamic = "force-dynamic";
@@ -84,6 +86,43 @@ export default async function DashboardPage() {
     return null;
   }
 
+  const counts = getOverviewCounts(context);
+  const reviewItems = getReviewSnapshot(context);
+
+  return (
+    <div>
+      <PageHeader
+        title="CA operations console"
+        description={`Prioritize intake, review, GST, and export work for ${context.firm.name ?? "this firm"}.`}
+        actions={
+          <>
+            <ActionLink href="/dashboard/review-queue" variant="primary">
+              Review queue
+            </ActionLink>
+            <ActionLink href="/dashboard/clients">
+              Clients
+            </ActionLink>
+          </>
+        }
+      />
+
+      <PageBody>
+        <Suspense fallback={<OverviewSummarySkeleton />}>
+          <OverviewSummary counts={counts} />
+        </Suspense>
+        <Suspense fallback={
+          <SectionCard title="Review queue snapshot" bodyClassName="p-0">
+            <TableSkeleton rows={8} cols={8} />
+          </SectionCard>
+        }>
+          <ReviewSnapshot result={reviewItems} />
+        </Suspense>
+      </PageBody>
+    </div>
+  );
+}
+
+function getOverviewCounts(context: FirmContext) {
   const { firm, supabase } = context;
   const monthStart = new Date();
   monthStart.setDate(1);
@@ -120,6 +159,21 @@ export default async function DashboardPage() {
     .eq("firm_id", firm.id)
     .eq("status", "completed")
     .gte("created_at", monthStart.toISOString());
+  return Promise.all([
+    withServerTiming("dashboard.pending_review_count", () => pendingReviewPromise),
+    withServerTiming("dashboard.gst_ready_count", () => gstReadyPromise),
+    withServerTiming("dashboard.gst_blocked_count", () => gstBlockedPromise),
+    withServerTiming("dashboard.intake_count", () => intakeAttentionPromise),
+    withServerTiming("dashboard.exports_attention_count", () => exportsAttentionPromise),
+    withServerTiming("dashboard.exports_month_count", () => exportsThisMonthPromise),
+  ].map((query) => query.catch(() => ({
+    count: null,
+    error: { message: "Count unavailable" },
+  }))));
+}
+
+function getReviewSnapshot(context: FirmContext) {
+  const { firm, supabase } = context;
   const reviewItemsPromise = supabase
     .from("transactions")
     .select(
@@ -131,24 +185,13 @@ export default async function DashboardPage() {
     .order("id", { ascending: false })
     .limit(8);
 
+  return withServerTiming("dashboard.review_snapshot", () => reviewItemsPromise);
+}
+
+async function OverviewSummary({ counts }: { counts: ReturnType<typeof getOverviewCounts> }) {
   const [
-    pendingReview,
-    gstReady,
-    gstBlocked,
-    intakeAttention,
-    exportsAttention,
-    exportsThisMonth,
-    reviewItemsResult,
-  ] = await Promise.all([
-    withServerTiming("dashboard.pending_review_count", () => pendingReviewPromise),
-    withServerTiming("dashboard.gst_ready_count", () => gstReadyPromise),
-    withServerTiming("dashboard.gst_blocked_count", () => gstBlockedPromise),
-    withServerTiming("dashboard.intake_count", () => intakeAttentionPromise),
-    withServerTiming("dashboard.exports_attention_count", () => exportsAttentionPromise),
-    withServerTiming("dashboard.exports_month_count", () => exportsThisMonthPromise),
-    withServerTiming("dashboard.review_snapshot", () => reviewItemsPromise),
-  ]);
-  const { data: reviewItems, error: reviewItemsError } = reviewItemsResult;
+    pendingReview, gstReady, gstBlocked, intakeAttention, exportsAttention, exportsThisMonth,
+  ] = await counts;
   const pendingReviewCount = countOrUnavailable(pendingReview);
   const gstReadyCount = countOrUnavailable(gstReady);
   const gstBlockedCount = countOrUnavailable(gstBlocked);
@@ -199,205 +242,225 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div>
-      <PageHeader
-        title="CA operations console"
-        description={`Prioritize intake, review, GST, and export work for ${firm.name ?? "this firm"}.`}
-        actions={
-          <>
-            <ActionLink href="/dashboard/review-queue" variant="primary">
-              Review queue
-            </ActionLink>
-            <ActionLink href="/dashboard/clients">
-              Clients
-            </ActionLink>
-          </>
+    <>
+      {hasUnavailableOverviewCount && (
+        <QueryError message="One or more overview counts could not be loaded. Refresh to retry." />
+      )}
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <StatTile
+          label="Pending review"
+          value={displayCount(pendingReviewCount)}
+          tone={attentionToneForCount(pendingReviewCount)}
+          hint={countHint(
+            pendingReviewCount,
+            "Draft, needs-review, and duplicate-risk transactions.",
+          )}
+          tags={[
+            { label: openCountLabel(pendingReviewCount), tone: attentionToneForCount(pendingReviewCount) },
+            { label: "CA decision", tone: "neutral" },
+          ]}
+          href="/dashboard/review-queue"
+          actionLabel="View review queue"
+        />
+        <StatTile
+          label="Intake attention"
+          value={displayCount(intakeAttentionCount)}
+          tone={attentionToneForCount(intakeAttentionCount)}
+          hint={countHint(
+            intakeAttentionCount,
+            "Received, unmatched, failed, or media-failed WhatsApp intake records.",
+          )}
+          tags={[
+            { label: openCountLabel(intakeAttentionCount), tone: attentionToneForCount(intakeAttentionCount) },
+            { label: "WhatsApp intake", tone: "brand" },
+          ]}
+          href="/dashboard/inbox"
+          actionLabel="Open intake queue"
+        />
+        <StatTile
+          label="GST ready periods"
+          value={displayCount(gstReadyCount)}
+          tone={positiveToneForCount(gstReadyCount)}
+          hint={countHint(
+            gstReadyCount,
+            "Generated periods marked ready for review/export.",
+          )}
+          tags={[
+            { label: openCountLabel(gstBlockedCount), tone: attentionToneForCount(gstBlockedCount) },
+            { label: "GST prep only", tone: "info" },
+          ]}
+          href="/dashboard/gst-summary"
+          actionLabel="Go to GST summary"
+        />
+        <StatTile
+          label="Exports this month"
+          value={displayCount(exportsThisMonthCount)}
+          tone={positiveToneForCount(exportsThisMonthCount)}
+          hint={countHint(
+            exportsThisMonthCount,
+            "Completed files created this month from approved records.",
+          )}
+          tags={[
+            { label: openCountLabel(exportsAttentionCount), tone: attentionToneForCount(exportsAttentionCount) },
+            { label: "CSV/PDF ready", tone: "neutral" },
+          ]}
+          href="/dashboard/exports"
+          actionLabel="View exports"
+        />
+      </div>
+
+      <SectionCard
+        title="Priority worklist"
+        description="Start with the queues that can block ledger handoff, GST readiness, or private exports."
+        bodyClassName="p-0"
+      >
+        <div className="divide-y divide-khata-border">
+          {priorityItems.map((item) => (
+            <div
+              key={item.label}
+              className="grid gap-3 px-4 py-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
+            >
+              <StatusChip tone={item.tone}>
+                {openCountLabel(item.count)}
+              </StatusChip>
+              <div className="min-w-0">
+                <h2 className="text-sm font-semibold text-khata-ink">
+                  {item.label}
+                </h2>
+                <p className="mt-1 text-xs leading-5 text-khata-muted">
+                  {item.description}
+                </p>
+              </div>
+              <TextLink href={item.href} aria-label={item.actionLabel}>
+                {item.actionLabel}
+              </TextLink>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+    </>
+  );
+}
+
+async function ReviewSnapshot({ result }: { result: ReturnType<typeof getReviewSnapshot> }) {
+  const { data: reviewItems, error: reviewItemsError } = await result;
+  return (
+    <SectionCard bodyClassName="p-0">
+      <TableToolbar
+        title="Review queue snapshot"
+        description="Newest AI-created records waiting for a CA decision."
+        meta={
+          <RecordCount value={reviewItems?.length ?? 0} label="latest" />
         }
       />
+      {reviewItemsError && (
+        <QueryError message={reviewItemsError.message} />
+      )}
 
-      <PageBody>
-        {hasUnavailableOverviewCount && (
-          <QueryError message="One or more overview counts could not be loaded. Refresh to retry." />
-        )}
+      {!reviewItemsError && (!reviewItems || reviewItems.length === 0) && (
+        <EmptyState
+          title="No review items pending"
+          message="New WhatsApp documents and draft extractions will appear here when they need a reviewer decision."
+          action={
+            <ActionLink href="/dashboard/inbox">
+              Open inbox
+            </ActionLink>
+          }
+        />
+      )}
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <StatTile
-            label="Pending review"
-            value={displayCount(pendingReviewCount)}
-            tone={attentionToneForCount(pendingReviewCount)}
-            hint={countHint(
-              pendingReviewCount,
-              "Draft, needs-review, and duplicate-risk transactions.",
-            )}
-            tags={[
-              { label: openCountLabel(pendingReviewCount), tone: attentionToneForCount(pendingReviewCount) },
-              { label: "CA decision", tone: "neutral" },
-            ]}
-            href="/dashboard/review-queue"
-            actionLabel="View review queue"
-          />
-          <StatTile
-            label="Intake attention"
-            value={displayCount(intakeAttentionCount)}
-            tone={attentionToneForCount(intakeAttentionCount)}
-            hint={countHint(
-              intakeAttentionCount,
-              "Received, unmatched, failed, or media-failed WhatsApp intake records.",
-            )}
-            tags={[
-              { label: openCountLabel(intakeAttentionCount), tone: attentionToneForCount(intakeAttentionCount) },
-              { label: "WhatsApp intake", tone: "brand" },
-            ]}
-            href="/dashboard/inbox"
-            actionLabel="Open intake queue"
-          />
-          <StatTile
-            label="GST ready periods"
-            value={displayCount(gstReadyCount)}
-            tone={positiveToneForCount(gstReadyCount)}
-            hint={countHint(
-              gstReadyCount,
-              "Generated periods marked ready for review/export.",
-            )}
-            tags={[
-              { label: openCountLabel(gstBlockedCount), tone: attentionToneForCount(gstBlockedCount) },
-              { label: "GST prep only", tone: "info" },
-            ]}
-            href="/dashboard/gst-summary"
-            actionLabel="Go to GST summary"
-          />
-          <StatTile
-            label="Exports this month"
-            value={displayCount(exportsThisMonthCount)}
-            tone={positiveToneForCount(exportsThisMonthCount)}
-            hint={countHint(
-              exportsThisMonthCount,
-              "Completed files created this month from approved records.",
-            )}
-            tags={[
-              { label: openCountLabel(exportsAttentionCount), tone: attentionToneForCount(exportsAttentionCount) },
-              { label: "CSV/PDF ready", tone: "neutral" },
-            ]}
-            href="/dashboard/exports"
-            actionLabel="View exports"
-          />
-        </div>
+      {!reviewItemsError && reviewItems && reviewItems.length > 0 && (
+      <DataTable minWidth={940} ariaLabel="Latest review queue records">
+        <thead className={tableHeaderClass}>
+          <tr>
+            <th className={tableHeadCellClass}>Client</th>
+            <th className={tableHeadCellClass}>Party</th>
+            <th className={tableHeadCellClass}>Invoice</th>
+            <th className={tableHeadCellClass}>Type</th>
+            <th className={tableHeadCellClass}>Status</th>
+            <th className={tableNumericHeadCellClass}>Confidence</th>
+            <th className={tableNumericHeadCellClass}>Amount</th>
+            <th className={tableActionHeadCellClass}>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reviewItems.map((item) => {
+            const client = Array.isArray(item.clients)
+              ? item.clients[0]
+              : item.clients;
 
-        <SectionCard
-          title="Priority worklist"
-          description="Start with the queues that can block ledger handoff, GST readiness, or private exports."
-          bodyClassName="p-0"
-        >
-          <div className="divide-y divide-khata-border">
-            {priorityItems.map((item) => (
-              <div
-                key={item.label}
-                className="grid gap-3 px-4 py-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
-              >
-                <StatusChip tone={item.tone}>
-                  {openCountLabel(item.count)}
+            return (
+            <tr key={item.id} className={tableRowClass}>
+              <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
+                {client?.business_name ?? "Unknown client"}
+              </td>
+              <td className={tableCellClass}>
+                {item.party_name ?? "Not provided"}
+              </td>
+              <td className={`${tableCellClass} ${tableNumericTextClass}`}>
+                {item.invoice_number ?? "Not provided"}
+              </td>
+              <td className={`${tableCellClass} capitalize`}>
+                {item.transaction_type}
+              </td>
+              <td className={tableCellClass}>
+                <StatusChip tone={statusTone(item.status)}>
+                  {item.status.replaceAll("_", " ")}
                 </StatusChip>
-                <div className="min-w-0">
-                  <h2 className="text-sm font-semibold text-khata-ink">
-                    {item.label}
-                  </h2>
-                  <p className="mt-1 text-xs leading-5 text-khata-muted">
-                    {item.description}
-                  </p>
-                </div>
-                <TextLink href={item.href} aria-label={item.actionLabel}>
-                  {item.actionLabel}
+              </td>
+              <td className={tableNumericCellClass}>
+                {formatNullablePercent(item.confidence_score)}
+              </td>
+              <td className={tableNumericCellClass}>
+                {formatCurrency(item.total_amount)}
+              </td>
+              <td className={tableActionCellClass}>
+                <TextLink
+                  href={`/dashboard/review-queue/${item.id}`}
+                  aria-label={`Review ${item.invoice_number ?? item.party_name ?? "transaction"}`}
+                >
+                  Review
                 </TextLink>
-              </div>
-            ))}
-          </div>
-        </SectionCard>
+              </td>
+            </tr>
+            );
+          })}
+        </tbody>
+      </DataTable>
+      )}
+    </SectionCard>
+  );
+}
 
-        <SectionCard bodyClassName="p-0">
-          <TableToolbar
-            title="Review queue snapshot"
-            description="Newest AI-created records waiting for a CA decision."
-            meta={
-              <RecordCount value={reviewItems?.length ?? 0} label="latest" />
-            }
+function OverviewSummarySkeleton() {
+  return (
+    <div className="space-y-4" aria-busy="true" aria-label="Loading overview counts">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          { label: "Pending review", href: "/dashboard/review-queue", action: "View review queue" },
+          { label: "Intake attention", href: "/dashboard/inbox", action: "Open intake queue" },
+          { label: "GST ready periods", href: "/dashboard/gst-summary", action: "Go to GST summary" },
+          { label: "Exports this month", href: "/dashboard/exports", action: "View exports" },
+        ].map(({ label, href, action }) => (
+          <StatTile
+            key={label}
+            label={label}
+            value={<span className="inline-block h-8 w-16 rounded bg-khata-paperMuted" aria-hidden="true" />}
+            hint="Fetching latest count."
+            tags={[{ label: "Loading…" }]}
+            href={href}
+            actionLabel={action}
           />
-          {reviewItemsError && (
-            <QueryError message={reviewItemsError.message} />
-          )}
-
-          {!reviewItemsError && (!reviewItems || reviewItems.length === 0) && (
-            <EmptyState
-              title="No review items pending"
-              message="New WhatsApp documents and draft extractions will appear here when they need a reviewer decision."
-              action={
-                <ActionLink href="/dashboard/inbox">
-                  Open inbox
-                </ActionLink>
-              }
-            />
-          )}
-
-          {!reviewItemsError && reviewItems && reviewItems.length > 0 && (
-          <DataTable minWidth={940} ariaLabel="Latest review queue records">
-            <thead className={tableHeaderClass}>
-              <tr>
-                <th className={tableHeadCellClass}>Client</th>
-                <th className={tableHeadCellClass}>Party</th>
-                <th className={tableHeadCellClass}>Invoice</th>
-                <th className={tableHeadCellClass}>Type</th>
-                <th className={tableHeadCellClass}>Status</th>
-                <th className={tableNumericHeadCellClass}>Confidence</th>
-                <th className={tableNumericHeadCellClass}>Amount</th>
-                <th className={tableActionHeadCellClass}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reviewItems.map((item) => {
-                const client = Array.isArray(item.clients)
-                  ? item.clients[0]
-                  : item.clients;
-
-                return (
-                <tr key={item.id} className={tableRowClass}>
-                  <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>
-                    {client?.business_name ?? "Unknown client"}
-                  </td>
-                  <td className={tableCellClass}>
-                    {item.party_name ?? "Not provided"}
-                  </td>
-                  <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                    {item.invoice_number ?? "Not provided"}
-                  </td>
-                  <td className={`${tableCellClass} capitalize`}>
-                    {item.transaction_type}
-                  </td>
-                  <td className={tableCellClass}>
-                    <StatusChip tone={statusTone(item.status)}>
-                      {item.status.replaceAll("_", " ")}
-                    </StatusChip>
-                  </td>
-                  <td className={tableNumericCellClass}>
-                    {formatNullablePercent(item.confidence_score)}
-                  </td>
-                  <td className={tableNumericCellClass}>
-                    {formatCurrency(item.total_amount)}
-                  </td>
-                  <td className={tableActionCellClass}>
-                    <TextLink
-                      href={`/dashboard/review-queue/${item.id}`}
-                      aria-label={`Review ${item.invoice_number ?? item.party_name ?? "transaction"}`}
-                    >
-                      Review
-                    </TextLink>
-                  </td>
-                </tr>
-                );
-              })}
-            </tbody>
-          </DataTable>
-          )}
-        </SectionCard>
-      </PageBody>
+        ))}
+      </div>
+      <SectionCard
+        title="Priority worklist"
+        description="Start with the queues that can block ledger handoff, GST readiness, or private exports."
+        bodyClassName="p-0"
+      >
+        <TableSkeleton rows={6} cols={3} />
+      </SectionCard>
     </div>
   );
 }

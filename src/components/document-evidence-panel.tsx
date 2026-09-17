@@ -67,6 +67,17 @@ function EvidencePreview({ evidence }: { evidence: DocumentEvidence }) {
   );
 }
 
+export function ExtractedSourceText({ sourceText }: { sourceText: string }) {
+  return (
+    <div>
+      <FieldLabel>Extracted source text</FieldLabel>
+      <pre className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded-md border border-khata-border bg-khata-paper p-3 text-xs leading-5 text-khata-muted">
+        {sourceText}
+      </pre>
+    </div>
+  );
+}
+
 export function DocumentEvidencePanel({
   evidence,
   sourceText,
@@ -95,12 +106,7 @@ export function DocumentEvidencePanel({
         )}
       </div>
 
-      <div>
-        <FieldLabel>Extracted source text</FieldLabel>
-        <pre className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded-md border border-khata-border bg-khata-paper p-3 text-xs leading-5 text-khata-muted">
-          {sourceText}
-        </pre>
-      </div>
+      <ExtractedSourceText sourceText={sourceText} />
     </div>
   );
 }
