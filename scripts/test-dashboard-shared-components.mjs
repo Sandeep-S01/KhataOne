@@ -151,7 +151,6 @@ for (const [name, source] of [
   ["GST period detail", gstPeriodDetail],
   ["reports", reports],
   ["exports", exportsPage],
-  ["settings", settings],
   ["platform", platform],
   ["client detail", clientDetail],
   ["ledger detail", ledgerDetail],
@@ -159,6 +158,8 @@ for (const [name, source] of [
   assert.match(source, /<SectionCard bodyClassName="p-0">[\s\S]*<TableToolbar/, `${name} table cards should use the shared table toolbar`);
   assert.match(source, /<DataTable/, `${name} should keep shared table rendering`);
 }
+assert.match(settings, /<SectionCard[\s\S]*<DetailList/, "settings should reuse shared detail components");
+assert.doesNotMatch(settings, /Configuration status|SUPABASE_SERVICE_ROLE_KEY|<DataTable/, "settings should not display developer diagnostics or raw member rows");
 assert.match(overview, /aria-label=\{item\.actionLabel\}/);
 assert.ok(!clientDetail.includes('|| "Pending"'));
 assert.match(operations, /return "No samples"/);

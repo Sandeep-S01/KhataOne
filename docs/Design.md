@@ -159,6 +159,8 @@ Search and activity controls are implemented as interactive header controls: sea
 
 Dashboard Help uses the shared page header, section cards, fields, status chips, and feedback styles. The sidebar utility link opens a protected issue form and a recent-request list scoped to the signed-in requester. Copy must distinguish saved requests from future admin triage, replies, or notifications.
 
+Customer-facing dashboard navigation should prioritize usable CA workflows. Settings shows firm contact details and the signed-in user's access role, without service configuration, raw membership IDs, or production verification notes. The planned Platform roadmap is omitted from regular sidebar navigation until it becomes a usable, appropriately authorized workflow. Operational queue health and audit history remain available because they support CA investigation and traceability.
+
 The search dialog uses a light overlay and compact command-panel structure with a focused input row, close icon, selected target state, and concise footer action.
 
 The overview dashboard follows the reference three-tier hierarchy: metric KPI cards first, then a compact priority worklist, then a dense review queue snapshot table. KPI cards use a 4-column desktop grid, left urgency bars, large tabular counts, compact status tags, and direct text links into existing destinations. Worklist rows use a count pill, task description, and right-aligned action. Tables use 11px uppercase headers, 44px row containment, right-aligned numeric values, and contained horizontal scrolling.

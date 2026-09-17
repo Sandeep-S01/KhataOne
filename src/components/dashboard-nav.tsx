@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   Users,
   Wrench,
-  PanelsTopLeft,
   type LucideIcon,
 } from "lucide-react";
 import type { Route } from "next";
@@ -42,7 +41,6 @@ const iconByHref: Record<string, LucideIcon> = {
   "/dashboard/exports": FileDown,
   "/dashboard/audit-logs": ScrollText,
   "/dashboard/operations": Wrench,
-  "/dashboard/platform": PanelsTopLeft,
   "/dashboard/settings": Settings,
   "/dashboard/help": LifeBuoy,
 };
@@ -67,10 +65,6 @@ const groups = [
   {
     title: "Administration",
     items: ["/dashboard/audit-logs", "/dashboard/operations"],
-  },
-  {
-    title: "Planned",
-    items: ["/dashboard/platform"],
   },
 ];
 

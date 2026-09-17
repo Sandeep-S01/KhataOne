@@ -6,6 +6,8 @@ Status: Implementation started. Phase 0 and Phase 1 are complete; Phase 2 throug
 
 ## Current Focus
 
+- 2026-09-17 customer-facing information cleanup: Settings now keeps firm identity and current account access, while removing provider/secret presence checks, raw membership IDs, and production check notes. It no longer fetches the unused firm member list or probes server environment variables. The planned Platform route remains in the codebase but is no longer linked from the ordinary dashboard sidebar. Help now describes its reply limitation in customer-facing terms. Operations and Audit Logs remain visible because their job state and traceability serve active CA workflows. No backend, schema, financial action, or data mutation changed. Local lint, typecheck, build, and dashboard navigation/shared-component checks passed; authenticated visual review remains pending a valid test session.
+
 - 2026-09-17 workspace Help release check: replaced the sidebar Help destination with a protected dashboard issue form and own-request history. The firm-scoped `support_requests` migration has requester-only read/create RLS and no browser status mutation; it is safe to reapply if a SQL-editor run was not recorded in migration history. After the user applied it, a read-only hosted check confirmed that the table exists and anonymous reads are denied. Isolated RLS tests passed, including reapplying the migration without losing requests. The configured smoke credentials were rejected, so authenticated live UI/submission remains unverified. Admin triage, replies, and notifications remain planned.
 
 - 2026-09-17 post-RPC performance gate: a local production build against the

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default async function HelpPage() {
   if (!hasSupabaseConfig()) {
-    return <SetupRequired message="Connect Supabase before submitting support requests." />;
+    return <SetupRequired message="Help requests are temporarily unavailable. Please try again later." />;
   }
 
   const context = await getFirmContext();
@@ -69,7 +69,7 @@ export default async function HelpPage() {
           </SectionCard>
         </div>
         <p className="text-xs leading-5 text-khata-muted">
-          Requests are saved in your workspace. Admin triage and replies are planned for a later release; submitting a request does not yet send a notification to an admin.
+          Your requests are saved here. Replies are not available through this page yet.
         </p>
       </PageBody>
     </div>

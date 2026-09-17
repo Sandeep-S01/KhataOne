@@ -11,6 +11,5 @@ export const dashboardNavItems: Array<{ label: string; href: Route }> = [
   { label: "Exports", href: "/dashboard/exports" },
   { label: "Audit Logs", href: "/dashboard/audit-logs" },
   { label: "Operations", href: "/dashboard/operations" as Route },
-  { label: "Platform", href: "/dashboard/platform" as Route },
   { label: "Settings", href: "/dashboard/settings" },
 ];

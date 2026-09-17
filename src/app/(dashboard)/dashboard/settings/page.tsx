@@ -1,234 +1,74 @@
-import { CheckCircle2, CircleAlert } from "lucide-react";
-
 import {
-  DataTable,
   DetailList,
-  EmptyState,
-  IconPanel,
+  FormMessage,
   PageBody,
   PageHeader,
-  RecordCount,
   SectionCard,
   SetupRequired,
-  TableToolbar,
-  tableCellClass,
-  tableHeadCellClass,
-  tableHeaderClass,
-  tableNumericTextClass,
-  tableNumericCellClass,
-  tableNumericHeadCellClass,
-  tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
-import { getExtractionProviderOrder } from "@/lib/ai/extraction-providers";
-import { getOptionalServerEnv, hasSupabaseConfig } from "@/lib/env";
+import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
-import { formatDisplayDateTime } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
-function ConfigStatus({
-  label,
-  present,
-}: {
-  label: string;
-  present: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3 border-b border-khata-border py-3 last:border-b-0">
-      <span className="text-sm font-medium">{label}</span>
-      <StatusChip tone={present ? "success" : "warning"}>
-        {present ? "Present" : "Missing"}
-      </StatusChip>
-    </div>
-  );
-}
-
 export default async function SettingsPage() {
   if (!hasSupabaseConfig()) {
-    return (
-      <SetupRequired message="Connect Supabase environment variables and migrations before viewing firm configuration." />
-    );
+    return <SetupRequired message="Your workspace is temporarily unavailable. Please try again later." />;
   }
 
   const context = await getFirmContext();
+  if (!context) return null;
 
-  if (!context) {
-    return null;
-  }
-
-  const { firm, supabase } = context;
-  const firmRecordQuery = supabase
+  const { firm, supabase, user } = context;
+  const { data: firmRecord, error } = await supabase
     .from("firms")
-    .select("id, name, slug, gstin, phone, email, address, status, created_at")
+    .select("name, gstin, phone, email, address, status")
     .eq("id", firm.id)
     .single();
-  const membersQuery = supabase
-    .from("firm_users")
-    .select("id, user_id, role, status, created_at")
-    .eq("firm_id", firm.id)
-    .order("created_at", { ascending: true });
-
-  const [{ data: firmRecord }, { data: members }] = await Promise.all([
-    firmRecordQuery,
-    membersQuery,
-  ]);
-
-  const integrationRows = [
-    ["Supabase public URL", hasSupabaseConfig()],
-    ["Supabase service role", Boolean(getOptionalServerEnv("SUPABASE_SERVICE_ROLE_KEY"))],
-    ["WhatsApp app secret", Boolean(getOptionalServerEnv("WHATSAPP_APP_SECRET"))],
-    ["WhatsApp access token", Boolean(getOptionalServerEnv("WHATSAPP_ACCESS_TOKEN"))],
-    ["OpenAI API key", Boolean(getOptionalServerEnv("OPENAI_API_KEY"))],
-    ["AI extraction model", Boolean(getOptionalServerEnv("OPENAI_EXTRACTION_MODEL"))],
-    ["Rule-based fallback", getExtractionProviderOrder().includes("rule_based_text")],
-    ["Job runner secret", Boolean(getOptionalServerEnv("JOB_RUNNER_SECRET"))],
-    ["Cron secret", Boolean(getOptionalServerEnv("CRON_SECRET"))],
-    [
-      "Readiness check secret",
-      (getOptionalServerEnv("READINESS_CHECK_SECRET")?.length ?? 0) >= 32,
-    ],
-    [
-      "Rate-limit key secret",
-      (getOptionalServerEnv("RATE_LIMIT_KEY_SECRET")?.length ?? 0) >= 32,
-    ],
-    [
-      "Shared rate-limit store",
-      getOptionalServerEnv("RATE_LIMIT_SHARED_ENFORCEMENT") === "shared-store",
-    ],
-  ] as const;
-
-  const configuredCount = integrationRows.filter(([, configured]) => configured)
-    .length;
 
   return (
     <div>
       <PageHeader
         eyebrow="Settings"
-        title="Firm configuration"
-        description="Review workspace identity, roles, configuration presence, and verified checks."
+        title="Workspace settings"
+        description="View your firm's contact details and your account access."
       />
-
       <PageBody>
-      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-        <SectionCard
-          title="Firm profile"
-          actions={
-            <StatusChip
-              tone={
-                !firmRecord?.status
-                  ? "neutral"
-                  : firmRecord.status === "active"
-                    ? "success"
-                    : "warning"
-              }
-            >
-              {firmRecord?.status ?? "Not available"}
-            </StatusChip>
-          }
-        >
-          <DetailList
-            labelWidth="100px"
-            items={[
-              { label: "Name", value: firmRecord?.name ?? firm?.name ?? "Not provided" },
-              { label: "Slug", value: firmRecord?.slug ?? "Not provided", mono: true },
-              { label: "GSTIN", value: firmRecord?.gstin ?? "Not provided", mono: true },
-              { label: "Phone", value: firmRecord?.phone ?? "Not provided", mono: true },
-              { label: "Email", value: firmRecord?.email ?? "Not provided" },
-              { label: "Address", value: firmRecord?.address ?? "Not provided" },
-            ]}
-          />
-        </SectionCard>
-
-        <SectionCard
-          title="Configuration status"
-          description="Presence confirms that required configuration is available to the app; it does not verify provider connectivity or delivery health."
-          actions={
-            <RecordCount
-              value={configuredCount}
-              label={`of ${integrationRows.length} present`}
-            />
-          }
-        >
-          <p className="num mt-2 text-xs text-khata-muted">
-            Configured AI order: {getExtractionProviderOrder().join(", ")}
-          </p>
-          <div className="mt-3">
-            {integrationRows.map(([label, configured]) => (
-              <ConfigStatus
-                key={label}
-                label={label}
-                present={configured}
-              />
-            ))}
-          </div>
-        </SectionCard>
-      </div>
-
-      <SectionCard bodyClassName="p-0">
-        <TableToolbar
-          title="Workspace members"
-          meta={
-            <RecordCount
-              value={members?.length ?? 0}
-              label="users"
-              singularLabel="user"
-            />
-          }
-        />
-        {!members || members.length === 0 ? (
-          <EmptyState
-            title="No active memberships found"
-            message="Active firm users and role boundaries will appear here."
-          />
-        ) : (
-          <DataTable minWidth={760} ariaLabel="Workspace members">
-              <thead className={tableHeaderClass}>
-                <tr>
-                  <th className={tableHeadCellClass}>User</th>
-                  <th className={tableHeadCellClass}>Role</th>
-                  <th className={tableHeadCellClass}>Status</th>
-                  <th className={tableNumericHeadCellClass}>Joined</th>
-                </tr>
-              </thead>
-              <tbody>
-                {members.map((member) => (
-                  <tr key={member.id} className={tableRowClass}>
-                    <td className={`${tableCellClass} ${tableNumericTextClass}`}>
-                      {member.user_id}
-                    </td>
-                    <td className={`${tableCellClass} capitalize`}>{member.role}</td>
-                    <td className={tableCellClass}>
-                      <StatusChip
-                        tone={member.status === "active" ? "success" : "warning"}
-                      >
-                        {member.status}
-                      </StatusChip>
-                    </td>
-                    <td className={`${tableNumericCellClass} text-xs`}>
-                      {formatDisplayDateTime(member.created_at)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-          </DataTable>
+        {error && (
+          <FormMessage message="Some firm details could not be loaded. Refresh the page to try again." />
         )}
-      </SectionCard>
+        <div className="grid items-start gap-4 xl:grid-cols-2">
+          <SectionCard
+            title="Firm profile"
+            actions={firmRecord?.status && (
+              <StatusChip tone={firmRecord.status === "active" ? "success" : "warning"}>
+                {firmRecord.status}
+              </StatusChip>
+            )}
+          >
+            <DetailList
+              labelWidth="100px"
+              items={[
+                { label: "Name", value: firmRecord?.name ?? firm.name ?? "Not provided" },
+                { label: "GSTIN", value: firmRecord?.gstin ?? "Not provided", mono: true },
+                { label: "Phone", value: firmRecord?.phone ?? "Not provided" },
+                { label: "Email", value: firmRecord?.email ?? "Not provided" },
+                { label: "Address", value: firmRecord?.address ?? "Not provided" },
+              ]}
+            />
+          </SectionCard>
 
-      <section className="grid gap-3 md:grid-cols-2">
-        <IconPanel
-          icon={CheckCircle2}
-          title="Security boundaries"
-          description="Firm data uses RLS and server-side firm checks. Sensitive files use private storage plus authenticated downloads."
-          tone="success"
-        />
-        <IconPanel
-          icon={CircleAlert}
-          title="Production checks pending"
-          description="Live RLS isolation, webhook retries, extraction accuracy, export formats, backups, and monitoring still need verification."
-          tone="warning"
-        />
-      </section>
+          <SectionCard title="Your account">
+            <DetailList
+              labelWidth="100px"
+              items={[
+                { label: "Email", value: user.email ?? "Not provided" },
+                { label: "Role", value: firm.role.replaceAll("_", " ") },
+              ]}
+            />
+          </SectionCard>
+        </div>
       </PageBody>
     </div>
   );
