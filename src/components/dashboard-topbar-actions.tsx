@@ -14,6 +14,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { createPortal } from "react-dom";
 
 import { NavigationProgress } from "@/components/navigation-progress";
 
@@ -100,9 +101,15 @@ export function DashboardTopbarActions({
   const searchPanelRef = useRef<HTMLDivElement>(null);
   const searchReturnFocusRef = useRef<HTMLElement | null>(null);
   const activityRef = useRef<HTMLDivElement>(null);
+  const activityPanelRef = useRef<HTMLDivElement>(null);
   const activityItemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activityOpen, setActivityOpen] = useState(false);
+  const [activityPosition, setActivityPosition] = useState<{
+    left: number;
+    top: number;
+    width: number;
+  } | null>(null);
   const [query, setQuery] = useState("");
   const [targetHref, setTargetHref] = useState<Route>("/dashboard/review-queue");
 
@@ -111,13 +118,34 @@ export function DashboardTopbarActions({
     [activityButtonId],
   );
 
+  const updateActivityPosition = useCallback(() => {
+    const trigger = activityButton();
+
+    if (!trigger) {
+      return;
+    }
+
+    const triggerBounds = trigger.getBoundingClientRect();
+    const width = Math.min(352, window.innerWidth - 24);
+    setActivityPosition({
+      left: Math.max(
+        12,
+        Math.min(triggerBounds.right - width, window.innerWidth - width - 12),
+      ),
+      top: triggerBounds.bottom + 8,
+      width,
+    });
+  }, [activityButton]);
+
   const openSearch = useCallback(() => {
     const activeElement =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
     searchReturnFocusRef.current =
-      activeElement && activityRef.current?.contains(activeElement)
+      activeElement &&
+      (activityRef.current?.contains(activeElement) ||
+        activityPanelRef.current?.contains(activeElement))
         ? activityButton()
         : activeElement;
     setSearchOpen(true);
@@ -161,6 +189,7 @@ export function DashboardTopbarActions({
 
   const openActivity = useCallback(
     (focusFirstItem = false) => {
+      updateActivityPosition();
       setActivityOpen(true);
       setSearchOpen(false);
 
@@ -168,20 +197,16 @@ export function DashboardTopbarActions({
         requestAnimationFrame(() => focusActivityItem(0));
       }
     },
-    [focusActivityItem],
+    [focusActivityItem, updateActivityPosition],
   );
 
   const toggleActivity = useCallback(() => {
-    setActivityOpen((value) => {
-      const nextValue = !value;
-
-      if (nextValue) {
-        setSearchOpen(false);
-      }
-
-      return nextValue;
-    });
-  }, []);
+    if (!activityOpen) {
+      openActivity();
+    } else {
+      setActivityOpen(false);
+    }
+  }, [activityOpen, openActivity]);
 
   const handleActivityButtonKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLButtonElement>) => {
@@ -307,11 +332,25 @@ export function DashboardTopbarActions({
       return;
     }
 
+    window.addEventListener("resize", updateActivityPosition);
+    window.addEventListener("scroll", updateActivityPosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updateActivityPosition);
+      window.removeEventListener("scroll", updateActivityPosition, true);
+    };
+  }, [activityOpen, updateActivityPosition]);
+
+  useEffect(() => {
+    if (!activityOpen) {
+      return;
+    }
+
     const handlePointerDown = (event: PointerEvent) => {
       if (
-        activityRef.current &&
         event.target instanceof Node &&
-        !activityRef.current.contains(event.target)
+        !activityRef.current?.contains(event.target) &&
+        !activityPanelRef.current?.contains(event.target)
       ) {
         closeActivity(false);
       }
@@ -367,13 +406,15 @@ export function DashboardTopbarActions({
             <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-white" aria-hidden="true" />
           </TopbarIconButton>
 
-          {activityOpen && (
+          {activityOpen && activityPosition && createPortal(
             <div
+              ref={activityPanelRef}
               id={activityPanelId}
               role="menu"
               aria-labelledby={activityButtonId}
               onKeyDown={handleActivityMenuKeyDown}
-              className="absolute right-0 top-11 z-40 w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg"
+              style={activityPosition}
+              className="fixed z-[60] max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg"
             >
               <div className="border-b border-khata-border bg-khata-paperMuted/50 px-4 py-3">
                 <p className="text-sm font-semibold text-khata-ink">Activity center</p>
@@ -409,7 +450,8 @@ export function DashboardTopbarActions({
                   );
                 })}
               </div>
-            </div>
+            </div>,
+            document.body,
           )}
         </div>
 
@@ -420,9 +462,9 @@ export function DashboardTopbarActions({
         />
       </div>
 
-      {searchOpen && (
+      {searchOpen && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-khata-ink/20 px-3 pt-[76px] sm:px-4"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-khata-ink/30 px-3 pb-3 pt-[68px] sm:px-4 sm:pt-20"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
@@ -440,7 +482,7 @@ export function DashboardTopbarActions({
             tabIndex={-1}
           >
             <form onSubmit={submitSearch}>
-              <div className="flex items-center gap-3 border-b border-khata-border px-4 py-2.5">
+              <div className="flex items-center gap-3 border-b border-khata-border px-3 py-2 sm:px-4">
                 <Search
                   className={`${functionalIconClassName} text-khata-muted`}
                   strokeWidth={functionalIconStrokeWidth}
@@ -456,13 +498,13 @@ export function DashboardTopbarActions({
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     className={commandInputClassName}
-                    placeholder="Search clients, inbox, or review queue"
+                    placeholder="Search workspace"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={closeSearch}
-                  className="inline-flex size-8 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:size-8"
                   aria-label="Close search"
                   title="Close search"
                 >
@@ -474,7 +516,7 @@ export function DashboardTopbarActions({
                 </button>
               </div>
 
-              <div className="grid gap-1.5 p-2">
+              <div className="grid gap-1 p-2">
                 {searchTargets.map((target) => (
                   <CommandOption
                     key={target.href}
@@ -486,20 +528,21 @@ export function DashboardTopbarActions({
                 ))}
               </div>
 
-              <div className="flex items-center justify-between gap-3 border-t border-khata-border bg-khata-paperMuted/45 px-4 py-2.5">
-                <p className="text-xs text-khata-muted">
+              <div className="flex items-center justify-between gap-3 border-t border-khata-border bg-khata-paperMuted/45 px-3 py-2.5 sm:px-4">
+                <p className="hidden text-xs text-khata-muted sm:block">
                   Press Enter to search the selected workspace area.
                 </p>
                 <button
                   type="submit"
-                  className="inline-flex h-9 items-center justify-center rounded-md bg-khata-green px-3 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+                  className="inline-flex h-11 w-full items-center justify-center rounded-md bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:h-9 sm:w-auto"
                 >
                   Search
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

@@ -35,6 +35,7 @@ KhataOne should feel like a modern digital khata for CA firms: compact, precise,
 
 - Persistent left sidebar attached to the left edge with a rectangular desktop panel and compact icon-only collapsed state.
 - Rectangular top-attached dashboard header aligned to the 64px sidebar logo area, with firm context, search access, activity alert icon, profile context, and logout action.
+- Header search and activity overlays sit above the page, fit within narrow viewports, and preserve keyboard focus and navigation when opened or closed.
 - Main content optimized for tables, filters, split panes, and review workflows.
 - Avoid nested cards.
 - Use cards only for repeated items, compact stat tiles, and modals.

@@ -48,7 +48,7 @@ write("src/app/layout.tsx", `import './globals.css';
 import FixtureState from '@/components/fixture-state';
 import { DashboardMobileMenu } from '@/components/dashboard-mobile-menu';
 import { DashboardTopbarActions } from '@/components/dashboard-topbar-actions';
-export default function Layout({children}: {children: React.ReactNode}) { return <html lang="en"><body><header className="flex items-center gap-2 p-3"><FixtureState/><DashboardMobileMenu/><DashboardTopbarActions userEmail="fixture@example.test" roleLabel="Owner" profileInitial="F"/></header>{children}</body></html>; }
+export default function Layout({children}: {children: React.ReactNode}) { return <html lang="en"><body className="font-sans antialiased"><header className="sticky top-0 z-20 flex min-h-14 items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-8"><DashboardMobileMenu/><div className="min-w-0 flex-1"><FixtureState/></div><DashboardTopbarActions userEmail="fixture@example.test" roleLabel="Owner" profileInitial="F"/><button type="button" className="size-9 shrink-0" aria-label="Fixture sign out">Out</button></header>{children}</body></html>; }
 `);
 write("src/app/actions.ts", `'use server';
 import { redirect } from 'next/navigation';
@@ -113,12 +113,56 @@ try {
     write("streaming-results.json", JSON.stringify(streamingResults, null, 2));
     console.log(JSON.stringify(streamingResults, null, 2));
   }
-  for (const width of details ? [] : [390, 834, 1440]) {
+  for (const width of details ? [] : [320, 390, 834, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.goto(`${origin}/dashboard/clients`);
+    if (!baseline) {
+      const activityButton = page.getByRole("button", { name: "Open activity center" });
+      await activityButton.click();
+      const activityMenu = page.getByRole("menu");
+      await activityMenu.waitFor();
+      assert(await activityMenu.evaluate(element => element.parentElement === document.body),
+        "Activity menu must render outside the sticky header");
+      const activityBounds = await activityMenu.boundingBox();
+      assert(activityBounds && activityBounds.x >= 8 && activityBounds.x + activityBounds.width <= width - 8,
+        `Activity menu escapes ${width}px viewport: ${JSON.stringify(activityBounds)}`);
+      await page.screenshot({ path: join(fixture, `activity-${width}.png`) });
+      await page.keyboard.press("Escape");
+      await activityMenu.waitFor({ state: "hidden" });
+      await page.waitForFunction(() => document.activeElement?.getAttribute("aria-label") === "Open activity center");
+      await activityButton.click();
+      await page.getByRole("menuitem", { name: /Operations/ }).click();
+      await page.waitForURL(`${origin}/dashboard/operations`);
+      await page.goBack();
+      await page.waitForURL(`${origin}/dashboard/clients`);
+
+      const searchButton = page.getByRole("button", { name: "Search workspace", exact: true });
+      await searchButton.click();
+      const searchDialog = page.getByRole("dialog", { name: "Search workspace" });
+      await searchDialog.waitFor();
+      const searchGeometry = await page.evaluate(() => {
+        const dialog = document.querySelector('[role="dialog"]');
+        const overlay = dialog?.parentElement;
+        const bounds = dialog?.getBoundingClientRect();
+        const backdrop = overlay?.getBoundingClientRect();
+        return {
+          directBodyChild: overlay?.parentElement === document.body,
+          dialogLeft: bounds?.left, dialogRight: bounds?.right,
+          backdropWidth: backdrop?.width, backdropHeight: backdrop?.height,
+        };
+      });
+      assert(searchGeometry.directBodyChild && searchGeometry.dialogLeft >= 8 && searchGeometry.dialogRight <= width - 8,
+        `Search dialog escapes ${width}px viewport: ${JSON.stringify(searchGeometry)}`);
+      assert(searchGeometry.backdropWidth === width && searchGeometry.backdropHeight === 900,
+        `Search backdrop does not cover ${width}px viewport: ${JSON.stringify(searchGeometry)}`);
+      await page.screenshot({ path: join(fixture, `search-${width}.png`) });
+      await page.keyboard.press("Escape");
+      await searchDialog.waitFor({ state: "hidden" });
+      await page.waitForFunction(() => document.activeElement?.getAttribute("aria-label") === "Search workspace");
+    }
     await page.locator("#shell-state").click();
     await page.getByLabel("Search", { exact: true }).fill("invoice & receipt");
     await page.getByLabel("Status", { exact: true }).selectOption("active");

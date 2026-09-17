@@ -25,8 +25,8 @@ export const dashboardMetaNumericClassName = "num mt-1 text-[11px] text-khata-mu
 export const dashboardStatValueClassName = "num mt-2 text-4xl font-bold leading-10 tracking-[-0.03em] text-khata-ink";
 export const topbarIconButtonClassName = "inline-flex size-9 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green";
 export const profilePillClassName = "hidden h-9 min-w-0 items-center gap-2 rounded-full bg-khata-paperMuted/70 px-2 py-1 sm:flex";
-export const commandDialogPanelClassName = "w-full max-w-2xl overflow-hidden rounded-xl border border-khata-border/90 bg-khata-surface shadow-lg";
-export const commandInputClassName = "h-10 w-full border-0 bg-transparent text-base text-khata-ink outline-none placeholder:text-khata-muted md:text-sm";
+export const commandDialogPanelClassName = "max-h-[calc(100dvh-5rem)] w-full max-w-xl overflow-y-auto rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg";
+export const commandInputClassName = "h-11 w-full border-0 bg-transparent text-base text-khata-ink outline-none placeholder:text-khata-muted sm:h-10 sm:text-sm";
 export const commandSelectedBadgeClassName = `${tinyLabelClassName} rounded-full bg-khata-surface px-2 py-0.5 text-khata-green`;
 export const mutedPanelClassName = "rounded-md border border-khata-border bg-khata-paperMuted px-3 py-3 text-sm leading-6 text-khata-muted";
 export const authSidePanelSurfaceClassName = "mt-8 rounded-md border border-khata-border bg-khata-surface p-4 shadow-sm";
@@ -163,7 +163,7 @@ export function CommandOption({
       type={type}
       aria-pressed={selected}
       className={cn(
-        "rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
+        "min-h-11 rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:py-2.5",
         selected
           ? "border-khata-green/35 bg-khata-green/10 shadow-sm"
           : "border-transparent hover:bg-khata-paperMuted",
@@ -177,7 +177,7 @@ export function CommandOption({
           <span className={commandSelectedBadgeClassName}>Selected</span>
         )}
       </span>
-      <span className="mt-1 block text-xs leading-5 text-khata-muted">
+      <span className="mt-0.5 block text-xs leading-4 text-khata-muted">
         {description}
       </span>
     </button>
