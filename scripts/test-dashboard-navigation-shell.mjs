@@ -7,6 +7,7 @@ function read(path) {
 
 const layout = read("src/app/(dashboard)/dashboard/layout.tsx");
 const sidebar = read("src/components/dashboard-sidebar.tsx");
+const firmSwitcher = read("src/components/firm-switcher.tsx");
 const navigation = read("src/components/dashboard-nav.tsx");
 const mobileMenu = read("src/components/dashboard-mobile-menu.tsx");
 const topbarActions = read("src/components/dashboard-topbar-actions.tsx");
@@ -61,7 +62,7 @@ assert.ok(!topbarActions.includes("icon: Settings"));
 assert.match(layout, /AI drafts require CA approval\./);
 assert.ok(!layout.includes("Draft AI outputs require CA approval before ledger impact."));
 
-assert.equal((sidebar.match(/onClick=\{toggleSidebar\}/g) ?? []).length, 1);
+assert.equal((sidebar.match(/onClick=\{toggleSidebar\}/g) ?? []).length, 2);
 assert.match(sidebar, /isCollapsed && "mx-auto"/);
 assert.match(sidebar, /sticky top-0 hidden h-screen/);
 assert.match(sidebar, /border-r border-khata-border/);
@@ -69,9 +70,10 @@ assert.ok(!sidebar.includes("rounded-[1.375rem]"));
 assert.match(sidebar, /shadow-sm/);
 assert.match(sidebar, /DashboardUtilityNav/);
 assert.match(sidebar, /rounded-full bg-khata-ink/);
-assert.match(sidebar, /ChevronsUpDown/);
-assert.match(sidebar, /aria-label="Manage firm workspace"/);
-assert.match(sidebar, /href="\/dashboard\/settings"/);
+assert.match(sidebar, /<FirmSwitcher activeFirm=\{activeFirm\} availableFirms=\{availableFirms\} \/>/);
+assert.match(firmSwitcher, /ChevronsUpDown/);
+assert.match(firmSwitcher, /action=\{switchFirm\}/);
+assert.match(firmSwitcher, /name="firm_id"/);
 assert.match(sidebar, /<DashboardNav collapsed=\{isCollapsed\} counts=\{counts\} \/>/);
 assert.ok(!sidebar.includes('isCollapsed && "mx-auto mt-2 hidden"'));
 assert.match(sidebar, /isCollapsed \? "w-16" : "w-\[240px\]"/);
@@ -94,6 +96,7 @@ assert.match(navigation, /onFocus=\{showTooltip\}/);
 assert.match(navigation, /onBlur=\{hideTooltip\}/);
 
 assert.match(mobileMenu, /<dialog/);
+assert.match(mobileMenu, /<FirmSwitcher activeFirm=\{activeFirm\} availableFirms=\{availableFirms\} \/>/);
 assert.match(mobileMenu, /showModal\(\)/);
 assert.match(mobileMenu, /onCancel=/);
 assert.match(mobileMenu, /event\.target === event\.currentTarget/);

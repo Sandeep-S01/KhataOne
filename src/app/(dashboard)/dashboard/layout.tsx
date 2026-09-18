@@ -60,6 +60,8 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const context = await getFirmContext();
+  const activeFirm = context?.firm ?? { id: "", role: "", name: "Firm Workspace" };
+  const availableFirms = context?.availableFirms ?? [];
   const firmName = context?.firm.name ?? "Firm Workspace";
   const roleLabel = context?.firm.role
     ? context.firm.role.replaceAll("_", " ")
@@ -82,14 +84,14 @@ export default async function DashboardLayout({
       </a>
       <div className="flex min-h-screen p-0">
         <DashboardSidebar
-          firmName={firmName}
-          roleLabel={roleLabel}
+          activeFirm={activeFirm}
+          availableFirms={availableFirms}
           counts={sidebarCounts}
         />
 
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-20 flex min-h-14 items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-8">
-            <DashboardMobileMenu />
+            <DashboardMobileMenu activeFirm={activeFirm} availableFirms={availableFirms} />
 
             <div className="min-w-0 flex-1 pr-1">
               <p className="truncate text-sm font-semibold">{firmName}</p>

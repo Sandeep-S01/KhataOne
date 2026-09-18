@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { ChevronsUpDown, PanelLeft, PanelLeftClose } from "lucide-react";
+import { PanelLeft, PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { DashboardNav, DashboardUtilityNav } from "@/components/dashboard-nav";
+import { FirmSwitcher } from "@/components/firm-switcher";
 import {
   functionalIconClassName,
   functionalIconStrokeWidth,
 } from "@/components/design-system";
 import { cn } from "@/lib/utils";
+import type { ActiveFirm } from "@/lib/firms";
 
 const SIDEBAR_STORAGE_KEY = "khataone_sidebar_collapsed";
 const SIDEBAR_STORAGE_EVENT = "khataone-sidebar-collapsed-change";
@@ -53,12 +55,12 @@ export type DashboardSidebarCounts = {
 };
 
 export function DashboardSidebar({
-  firmName,
-  roleLabel,
+  activeFirm,
+  availableFirms,
   counts,
 }: {
-  firmName: string;
-  roleLabel: string;
+  activeFirm: ActiveFirm;
+  availableFirms: ActiveFirm[];
   counts?: DashboardSidebarCounts | Promise<DashboardSidebarCounts>;
 }) {
   const isCollapsed = useSyncExternalStore(
@@ -83,6 +85,7 @@ export function DashboardSidebar({
     writeSidebarCollapsed(!isCollapsed);
   };
 
+  const firmName = activeFirm.name ?? "Firm Workspace";
   const firmInitial = firmName.trim().charAt(0).toUpperCase() || "F";
 
   return (
@@ -148,44 +151,17 @@ export function DashboardSidebar({
 
       <div className="border-b border-khata-border p-2.5">
         {!isCollapsed ? (
-          <div
-            className="flex cursor-default items-center gap-2.5 rounded-xl border border-warning/25 bg-warning/10 p-2"
-            title={`${firmName} (${roleLabel})`}
-          >
-            <div className="flex min-w-0 flex-1 items-center gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm">
-                {firmInitial}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-bold leading-tight text-khata-ink">
-                  {firmName}
-                </p>
-                <p className="mt-0.5 truncate text-xs capitalize text-khata-muted">
-                  {roleLabel}
-                </p>
-              </div>
-            </div>
-            <Link
-              href="/dashboard/settings"
-              prefetch={process.env.NEXT_PUBLIC_KHATAONE_PREFETCH_EXPERIMENT === "1" ? false : undefined}
-              aria-label="Manage firm workspace"
-              title="Manage firm workspace"
-              className="flex size-8 shrink-0 items-center justify-center rounded-md text-khata-muted transition-colors hover:bg-white/70 hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
-            >
-              <ChevronsUpDown
-                className={functionalIconClassName}
-                strokeWidth={functionalIconStrokeWidth}
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
+          <FirmSwitcher activeFirm={activeFirm} availableFirms={availableFirms} />
         ) : (
-          <div
-            className="mx-auto flex size-9 cursor-default items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm"
-            title={`${firmName} (${roleLabel})`}
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="mx-auto flex size-9 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            aria-label={`Expand sidebar to switch firm. Current firm: ${firmName}`}
+            title={`${firmName} — expand to switch firm`}
           >
             {firmInitial}
-          </div>
+          </button>
         )}
       </div>
 

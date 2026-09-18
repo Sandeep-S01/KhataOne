@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import type { User } from "@supabase/supabase-js";
 import { cache } from "react";
 
@@ -13,11 +14,14 @@ export type ActiveFirm = {
   name?: string;
 };
 
+export const ACTIVE_FIRM_COOKIE = "khataone_active_firm";
+
 export type FirmContext = {
   supabase: Awaited<ReturnType<typeof createClient>>;
   user: User;
   userId: string;
   firm: ActiveFirm;
+  availableFirms: ActiveFirm[];
 };
 
 export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
@@ -43,7 +47,7 @@ export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
     redirect("/login");
   }
 
-  const { data: membership, error: membershipError } = await withServerTiming(
+  const { data: memberships, error: membershipError } = await withServerTiming(
     "firm_context.membership_lookup",
     () =>
       supabase
@@ -51,8 +55,7 @@ export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
         .select("firm_id, role, firms(name)")
         .eq("user_id", user.id)
         .eq("status", "active")
-        .limit(1)
-        .maybeSingle(),
+        .order("created_at", { ascending: true }),
     { component: "firm_context" },
   );
 
@@ -60,23 +63,34 @@ export const getFirmContext = cache(async (): Promise<FirmContext | null> => {
     throw new Error("Workspace membership could not be verified.");
   }
 
-  if (!membership) {
+  if (!memberships?.length) {
     redirect("/onboarding");
   }
 
-  const firm = Array.isArray(membership.firms)
-    ? membership.firms[0]
-    : membership.firms;
+  const availableFirms = memberships.map((membership) => {
+    const firm = Array.isArray(membership.firms)
+      ? membership.firms[0]
+      : membership.firms;
+
+    return {
+      id: membership.firm_id,
+      role: membership.role,
+      name: firm?.name,
+    };
+  });
+  // The cookie is a preference, never proof of membership. Every request checks
+  // it against the authenticated user's current active memberships.
+  const preferredFirmId = (await cookies()).get(ACTIVE_FIRM_COOKIE)?.value;
+  const activeFirm =
+    availableFirms.find((firm) => firm.id === preferredFirmId) ??
+    availableFirms[0];
 
   return {
     supabase,
     user,
     userId: user.id,
-    firm: {
-      id: membership.firm_id,
-      role: membership.role,
-      name: firm?.name,
-    },
+    firm: activeFirm,
+    availableFirms,
   };
 });
 

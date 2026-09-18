@@ -11,15 +11,14 @@ function assert(condition, message) {
 }
 
 const sidebar = read("src/components/dashboard-sidebar.tsx");
+const firmSwitcher = read("src/components/firm-switcher.tsx");
 const landing = read("src/app/page.tsx");
-const firmBlockStart = sidebar.indexOf('title={`${firmName} (${roleLabel})`}');
-const firmBlock = sidebar.slice(Math.max(0, firmBlockStart - 180), firmBlockStart + 180);
 
 assert(
-  !sidebar.includes("ChevronRight") &&
-    !firmBlock.includes("hover:bg-khata-paperMuted") &&
-    !firmBlock.includes("group flex cursor-default"),
-  "Sidebar firm identity block must not use chevron or hover styling that implies an unavailable firm switcher.",
+  sidebar.includes("<FirmSwitcher") &&
+    firmSwitcher.includes("action={switchFirm}") &&
+    firmSwitcher.includes("No other firms available."),
+  "Sidebar firm identity must offer only the authenticated user's available workspaces.",
 );
 
 assert(

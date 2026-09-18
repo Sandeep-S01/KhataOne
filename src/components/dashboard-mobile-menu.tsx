@@ -6,12 +6,20 @@ import { useRef, useState } from "react";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { DashboardNav, DashboardUtilityNav } from "@/components/dashboard-nav";
+import { FirmSwitcher } from "@/components/firm-switcher";
 import {
   functionalIconClassName,
   functionalIconStrokeWidth,
 } from "@/components/design-system";
+import type { ActiveFirm } from "@/lib/firms";
 
-export function DashboardMobileMenu() {
+export function DashboardMobileMenu({
+  activeFirm,
+  availableFirms,
+}: {
+  activeFirm: ActiveFirm;
+  availableFirms: ActiveFirm[];
+}) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -88,6 +96,9 @@ export function DashboardMobileMenu() {
                 aria-hidden="true"
               />
             </button>
+          </div>
+          <div className="border-b border-khata-border p-2.5">
+            <FirmSwitcher activeFirm={activeFirm} availableFirms={availableFirms} />
           </div>
           <DashboardNav onNavigate={closeMenu} />
           <DashboardUtilityNav onNavigate={closeMenu} />
