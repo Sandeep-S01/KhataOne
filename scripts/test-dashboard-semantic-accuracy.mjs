@@ -11,12 +11,9 @@ const ledger = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
 const operations = read("src/app/(dashboard)/dashboard/operations/page.tsx");
 const gst = read("src/app/(dashboard)/dashboard/gst-summary/page.tsx");
 
-assert.match(settings, /title="Configuration status"/);
-assert.match(settings, /Present/);
-assert.match(settings, /Missing/);
-assert.match(settings, /does not verify provider connectivity or delivery health/);
-assert.match(settings, /of \$\{integrationRows\.length\} present/);
-assert.ok(!settings.includes('title="Integration readiness"'));
+assert.match(settings, /title="Firm profile"/);
+assert.match(settings, /title="Your account"/);
+assert.doesNotMatch(settings, /Configuration status|Integration readiness|integrationRows/);
 
 assert.match(settings, /Not provided/);
 assert.match(clients, /Not provided/);

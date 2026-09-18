@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { canManageClients } from "@/lib/permissions";
+import { normalizeWhatsAppPhone } from "@/lib/whatsapp/phone";
 import {
   appendReturnContext,
   clientReturnKeys,
@@ -42,7 +43,7 @@ function collectClientInput(formData: FormData) {
   const businessName = readString(formData, "business_name");
   const contactName = readString(formData, "contact_name");
   const phone = normalizePhone(readString(formData, "phone"));
-  const whatsappPhone = normalizePhone(readString(formData, "whatsapp_phone"));
+  const whatsappPhone = readString(formData, "whatsapp_phone");
   const email = readString(formData, "email");
   const gstin = readString(formData, "gstin").toUpperCase();
   const stateCode = readString(formData, "state_code").toUpperCase();
@@ -86,8 +87,9 @@ function validateClientInput(input: ReturnType<typeof collectClientInput>) {
     fieldErrors.phone = "Enter a valid phone number.";
   }
 
-  if (input.whatsappPhone && input.whatsappPhone.length < 8) {
-    fieldErrors.whatsapp_phone = "Enter a valid WhatsApp number.";
+  if (input.whatsappPhone && !normalizeWhatsAppPhone(input.whatsappPhone)) {
+    fieldErrors.whatsapp_phone =
+      "Include the country code, for example +91 98765 43210.";
   }
 
   if (input.gstin && input.gstin.length !== 15) {
@@ -115,7 +117,9 @@ function clientRpcInput(firmId: string, input: ReturnType<typeof collectClientIn
     target_business_name: input.businessName,
     target_contact_name: optional(input.contactName),
     target_phone: optional(input.phone),
-    target_whatsapp_phone: optional(input.whatsappPhone),
+    target_whatsapp_phone: input.whatsappPhone
+      ? normalizeWhatsAppPhone(input.whatsappPhone)
+      : null,
     target_email: optional(input.email),
     target_gstin: optional(input.gstin),
     target_state_code: optional(input.stateCode),

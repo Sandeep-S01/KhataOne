@@ -50,6 +50,7 @@ export function ClientForm({
 
   const errorId = (name: string) =>
     state.fieldErrors?.[name] ? `client-${name.replaceAll("_", "-")}-error` : undefined;
+  const whatsappHelpId = "client-whatsapp-phone-help";
 
   return (
     <form
@@ -106,16 +107,20 @@ export function ClientForm({
 
         <label className="block">
           <FieldLabel>
-            WhatsApp phone
+            Client WhatsApp number
           </FieldLabel>
           <Input
             name="whatsapp_phone"
             aria-invalid={Boolean(state.fieldErrors?.whatsapp_phone)}
-            aria-describedby={errorId("whatsapp_phone")}
+            aria-describedby={[whatsappHelpId, errorId("whatsapp_phone")].filter(Boolean).join(" ")}
             type="tel"
             defaultValue={client?.whatsapp_phone ?? ""}
+            placeholder="+91 98765 43210"
             className="mt-2"
           />
+          <p id={whatsappHelpId} className="mt-1 text-xs text-khata-muted">
+            Use the number this client sends documents from, including its country code.
+          </p>
           <FieldError id={errorId("whatsapp_phone")} message={state.fieldErrors?.whatsapp_phone} />
         </label>
 

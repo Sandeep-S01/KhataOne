@@ -32,6 +32,7 @@ async function withServerTiming(name, operation, metadata = {}) {
 }
 
 const verify = load("src/lib/whatsapp/verify.ts", { crypto: await import("node:crypto") });
+const phone = load("src/lib/whatsapp/phone.ts", {});
 const keyedWorkerPool = load("src/lib/jobs/keyed-worker-pool.ts", {});
 const signedBody = JSON.stringify({ object: "whatsapp_business_account", entry: [] });
 const secret = "fixture-app-secret";
@@ -133,9 +134,10 @@ assert.equal(
   assert.equal(immediateAiRuns, 1);
 }
 
-function createScenario({ matched = true, duplicate = false, existingJob = false, ackStatus = "not_sent", ackAttempts = 0 } = {}) {
+function createScenario({ matched = true, matchingClients = matched ? 1 : 0, duplicate = false, existingJob = false, ackStatus = "not_sent", ackAttempts = 0 } = {}) {
   const state = {
     matched,
+    matchingClients,
     duplicate,
     existingJob,
     ack: {
@@ -161,7 +163,7 @@ function createScenario({ matched = true, duplicate = false, existingJob = false
     }
 
     select() { return this; }
-    or() { return this; }
+    or(filter) { if (this.table === "clients") state.clientFilter = filter; return this; }
     neq() { return this; }
     limit() { return this; }
     eq() { return this; }
@@ -175,9 +177,11 @@ function createScenario({ matched = true, duplicate = false, existingJob = false
     async execute() {
       if (this.table === "clients") {
         return {
-          data: state.matched
-            ? [{ id: "client-a", firm_id: "firm-a", business_name: "Fixture Books" }]
-            : [],
+          data: Array.from({ length: state.matchingClients }, (_, index) => ({
+            id: `client-${index}`,
+            firm_id: `firm-${index}`,
+            business_name: "Fixture Books",
+          })),
           error: null,
         };
       }
@@ -191,6 +195,7 @@ function createScenario({ matched = true, duplicate = false, existingJob = false
 
       if (this.table === "whatsapp_messages") {
         if (this.action === "upsert") {
+          state.messageUpsert = this.payload;
           return { data: state.duplicate ? null : { id: "message-row-a" }, error: null };
         }
         return { data: null, error: null };
@@ -261,6 +266,7 @@ function loadIngestion(scenario) {
         return { ok: true, data: Buffer.from("fixture"), contentType: "image/jpeg" };
       },
     },
+    "@/lib/whatsapp/phone": phone,
   });
 }
 
@@ -286,6 +292,7 @@ const message = (id, type, extra = {}) => ({
   assert.match(scenario.state.sends[0].body, /Fixture Books/);
   assert.equal(scenario.state.documentInserts, 0);
   assert.equal(scenario.state.jobInserts, 0);
+  assert.match(scenario.state.clientFilter, /\+919999999999/);
 }
 
 {
@@ -297,8 +304,34 @@ const message = (id, type, extra = {}) => ({
     { eventId: "event-unmatched" },
   );
   assert.equal(result.terminalStatus, "unmatched");
+  assert.equal(scenario.state.messageUpsert.raw_payload.unmatched_reason, "no_match");
   assert.equal(scenario.state.sends.length, 0);
   assert.equal(scenario.state.documentInserts, 0);
+}
+
+{
+  const scenario = createScenario({ matchingClients: 2 });
+  const ingestion = loadIngestion(scenario);
+  const result = await ingestion.processWhatsAppInboundMessage(
+    message("shared-sender", "text", { text: { body: "invoice 100" } }),
+    value,
+    { eventId: "event-shared-sender" },
+  );
+  assert.equal(result.terminalStatus, "unmatched");
+  assert.equal(result.firmId, null);
+  assert.equal(scenario.state.messageUpsert.raw_payload.unmatched_reason, "multiple_matches");
+  assert.equal(scenario.state.documentInserts, 0);
+}
+
+{
+  const scenario = createScenario({ matchingClients: 2 });
+  const ingestion = loadIngestion(scenario);
+  await ingestion.processWhatsAppInboundMessage(
+    message("shared-help", "text", { text: { body: "hi" } }),
+    value,
+    { eventId: "event-shared-help" },
+  );
+  assert.match(scenario.state.sends[0].body, /could not be linked to one client workspace/);
 }
 
 {

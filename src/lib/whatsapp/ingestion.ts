@@ -5,6 +5,7 @@ import {
   getWhatsAppMediaUrl,
   sendWhatsAppText,
 } from "@/lib/whatsapp/client";
+import { whatsappSenderCandidates } from "@/lib/whatsapp/phone";
 import type {
   WhatsAppChangeValue,
   WhatsAppInboundMessage,
@@ -16,6 +17,11 @@ type ClientMatch = {
   id: string;
   firm_id: string;
   business_name: string;
+};
+
+type ClientLookup = {
+  client: ClientMatch | null;
+  unmatchedReason?: "invalid_sender" | "no_match" | "multiple_matches" | "lookup_failed";
 };
 
 export type WhatsAppInboundItem = {
@@ -78,11 +84,6 @@ export function extractWhatsAppInboundItems(
   });
 }
 
-function phoneCandidates(phone: string) {
-  const digits = phone.replace(/[^\d]/g, "");
-  return Array.from(new Set([phone, digits, `+${digits}`].filter(Boolean)));
-}
-
 function receivedAtFor(message: WhatsAppInboundMessage) {
   return message.timestamp
     ? new Date(Number(message.timestamp) * 1000).toISOString()
@@ -141,12 +142,15 @@ Website:
 ${khataOneWebsiteUrl}`;
 }
 
-function buildUnmatchedHelpMenu() {
+function buildUnmatchedHelpMenu(multipleMatches = false) {
+  const guidance = multipleMatches
+    ? "This WhatsApp number could not be linked to one client workspace. Please ask your CA team to check your registered WhatsApp number in KhataOne."
+    : "This WhatsApp number is not linked to a client workspace yet. Please ask your CA team to add your WhatsApp number in KhataOne.";
   return `Hello! This is KhataOne.
 
 You can send invoices, receipts, PDFs, payment proofs, or accounting notes here. Your CA team reviews the data before it affects your books.
 
-This WhatsApp number is not linked to a client workspace yet. Please ask your CA team to add your WhatsApp number in KhataOne.
+${guidance}
 
 Website:
 ${khataOneWebsiteUrl}`;
@@ -192,15 +196,18 @@ async function updateWebhookEvent(
   await supabase.from("whatsapp_webhook_events").update(values).eq("id", eventId);
 }
 
-async function findClientBySender(senderPhone: string) {
+async function findClientBySender(senderPhone: string): Promise<ClientLookup> {
   const supabase = createAdminClient();
 
   if (!supabase) {
-    return null;
+    return { client: null, unmatchedReason: "lookup_failed" };
   }
 
-  const candidates = phoneCandidates(senderPhone);
-  const { data } = await supabase
+  const candidates = whatsappSenderCandidates(senderPhone);
+  if (candidates.length === 0) {
+    return { client: null, unmatchedReason: "invalid_sender" };
+  }
+  const { data, error } = await supabase
     .from("clients")
     .select("id, firm_id, business_name")
     .or(
@@ -209,11 +216,18 @@ async function findClientBySender(senderPhone: string) {
     .neq("status", "archived")
     .limit(2);
 
-  if (!data || data.length !== 1) {
-    return null;
+  if (error) {
+    return { client: null, unmatchedReason: "lookup_failed" };
   }
 
-  return data[0] as ClientMatch;
+  if (!data || data.length !== 1) {
+    return {
+      client: null,
+      unmatchedReason: data && data.length > 1 ? "multiple_matches" : "no_match",
+    };
+  }
+
+  return { client: data[0] as ClientMatch };
 }
 
 async function createProcessingJob({
@@ -517,7 +531,7 @@ export async function processWhatsAppInboundMessage(
     };
   }
 
-  const client = await withServerTiming(
+  const { client, unmatchedReason } = await withServerTiming(
     "whatsapp.ingestion.client_match",
     () => findClientBySender(message.from),
     { message_type: message.type },
@@ -525,6 +539,7 @@ export async function processWhatsAppInboundMessage(
   const rawPayload = {
     message,
     value,
+    ...(unmatchedReason ? { unmatched_reason: unmatchedReason } : {}),
   };
   const receivedAt = receivedAtFor(message);
 
@@ -607,13 +622,13 @@ export async function processWhatsAppInboundMessage(
               to: message.from,
               body: client
                 ? buildMatchedHelpMenu(client.business_name)
-                : buildUnmatchedHelpMenu(),
+                : buildUnmatchedHelpMenu(unmatchedReason === "multiple_matches"),
             })
           : sendWhatsAppText({
               to: message.from,
               body: client
                 ? buildMatchedHelpMenu(client.business_name)
-                : buildUnmatchedHelpMenu(),
+                : buildUnmatchedHelpMenu(unmatchedReason === "multiple_matches"),
             }),
       { message_type: message.type, response_kind: "help" },
     );

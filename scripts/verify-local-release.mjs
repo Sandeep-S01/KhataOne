@@ -16,6 +16,7 @@ const checks = [
   npmCheck("run", "test:capacity-safety"),
   npmCheck("run", "test:security-boundaries"),
   npmCheck("run", "test:whatsapp-latency-baseline"),
+  npmCheck("run", "test:whatsapp-client-mapping"),
   npmCheck("run", "test:provider-resilience"),
   npmCheck("run", "test:whatsapp-job-recovery"),
   npmCheck("run", "test:keyed-worker-pool"),
