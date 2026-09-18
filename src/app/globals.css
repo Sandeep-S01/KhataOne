@@ -137,7 +137,7 @@
 }
 
 :root[data-theme="dark"] .dashboard-theme .theme-brand-mark {
-  background-color: #f8fafc;
+  filter: drop-shadow(0 0 1px rgba(237, 242, 245, 0.85));
 }
 
 * {
