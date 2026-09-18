@@ -39,6 +39,7 @@ for (const unsafe of [
 }
 
 for (const route of [
+  "/dashboard/settings",
   "/dashboard/clients/",
   "/dashboard/gst-summary/",
   "/dashboard/ledger/",
@@ -51,6 +52,12 @@ for (const route of [
     `Audit entity links must be allowlisted to internal route: ${route}.`,
   );
 }
+
+for (const field of ["Firm name", "Phone", "Email", "Address"]) {
+  assert(auditDisplay.includes(`label: "${field}"`), `Firm profile audit must show ${field} changes.`);
+}
+assert(auditDisplay.includes("firm_user:") && auditDisplay.includes('status: { label: "Access" }'),
+  "Team access audit must show safe role and status changes.");
 
 assert(
   auditPage.includes("before_data, after_data, metadata") &&

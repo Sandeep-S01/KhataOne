@@ -78,6 +78,9 @@ assert.match(designSystem, /text-success-foreground/, "success feedback uses the
 assert.match(designSystem, /text-info-foreground/, "info feedback uses the accessible foreground token");
 assert.match(designSystem, /text-warning-foreground/, "warning inline alerts use the accessible foreground token");
 assert.match(designSystem, /export const authControlClassName = cn\(controlClassName, "bg-transparent"\)/, "auth forms reuse the shared control recipe");
+const inputIconRecipe = designSystem.match(/export const inputIconButtonClassName = "[^"]*"/)?.[0] ?? "";
+assert.match(inputIconRecipe, /size-11.*hover:text-khata-ink.*focus-visible:outline.*md:size-9/, "password visibility controls keep a large target and visible focus");
+assert.doesNotMatch(inputIconRecipe, /hover:bg-/, "input icon hover does not add a nested button surface");
 assert.match(designSystem, /export const authSidePanelSurfaceClassName =/, "auth side panels reuse a shared surface recipe");
 assert.match(designSystem, /export const publicBrandHomeLinkClassName =/, "public logo links reuse a shared focus/touch recipe");
 assert.match(designSystem, /export const authBackLinkClassName =/, "auth back links reuse a shared focus/touch recipe");
@@ -95,7 +98,7 @@ assert.match(authForm, /authControlClassName/, "login/signup inputs use the shar
 assert.match(authForm, /functionalIconClassName/, "login/signup password visibility icons use the shared icon size");
 assert.match(authForm, /functionalIconStrokeWidth/, "login/signup password visibility icons use the shared icon stroke");
 assert.doesNotMatch(authForm, /className="size-4"/, "login/signup password visibility icons avoid local size recipes");
-assert.match(authForm, /size-11/, "login/signup password toggle uses 44px touch target on mobile");
+assert.match(authForm, /inputIconButtonClassName/, "login/signup password toggle uses the shared input icon target");
 assert.match(authForm, /pr-12 md:pr-10/, "login/signup password input reserves space for the larger mobile toggle");
 assert.match(authForm, /text-destructive-foreground/, "login/signup inline validation uses accessible error foreground");
 for (const [label, source] of [
@@ -126,7 +129,7 @@ assert.match(updatePassword, /feedbackToneClassName/, "update-password feedback 
 assert.match(updatePassword, /functionalIconClassName/, "update-password icons use the shared icon size");
 assert.match(updatePassword, /functionalIconStrokeWidth/, "update-password icons use the shared icon stroke");
 assert.doesNotMatch(updatePassword, /className="size-4"/, "update-password visibility icons avoid local size recipes");
-assert.match(updatePassword, /size-11/, "update-password visibility toggle uses 44px touch target on mobile");
+assert.match(updatePassword, /inputIconButtonClassName/, "update-password visibility toggle uses the shared input icon target");
 assert.match(updatePassword, /aria-invalid=\{errorField === "password"\}/, "update-password length error is associated with the new-password field");
 assert.match(updatePassword, /aria-invalid=\{errorField === "confirm_password"\}/, "update-password mismatch error is associated with the confirm-password field");
 assert.match(updatePassword, /id="update-password-error"/, "update-password message has a stable description id");

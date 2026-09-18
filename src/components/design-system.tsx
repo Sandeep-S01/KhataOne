@@ -65,7 +65,7 @@ type ProfilePillProps = {
 export function ProfilePill({ email, roleLabel, initial, className }: ProfilePillProps) {
   return (
     <div className={cn(profilePillClassName, className)} title={email}>
-      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-khata-ink text-[11px] font-semibold text-white shadow-sm">
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-khata-ink text-[11px] font-semibold text-ink-foreground shadow-sm">
         {initial}
       </span>
       <span className="hidden min-w-0 items-baseline gap-1.5 lg:flex">
@@ -190,14 +190,14 @@ type ButtonProps = ComponentPropsWithoutRef<"button"> & {
 };
 
 const buttonVariants = {
-  primary: "bg-khata-green text-white shadow-sm hover:bg-khata-greenDark",
+  primary: "bg-khata-green text-primary-foreground shadow-sm hover:bg-khata-greenDark",
   outline:
-    "border border-khata-border bg-white text-khata-ink shadow-sm hover:bg-khata-paperMuted",
+    "border border-khata-border bg-khata-surface text-khata-ink shadow-sm hover:bg-khata-paperMuted",
   ghost: "text-khata-muted hover:bg-khata-paperMuted hover:text-khata-ink",
   secondary:
     "bg-khata-paperMuted text-khata-ink shadow-sm hover:bg-khata-border/40",
   danger:
-    "bg-destructive text-white shadow-sm hover:bg-destructive/90",
+    "bg-destructive text-destructive-button-foreground shadow-sm hover:bg-destructive/90",
 };
 
 const buttonSizes = {
@@ -294,10 +294,11 @@ type InputProps = ComponentPropsWithoutRef<"input">;
 
 export const controlClassName =
   cn(
-    "flex h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm",
+    "flex h-11 w-full rounded-md border border-khata-border bg-khata-paper px-3 py-1 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-khata-surface focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:h-9 md:text-sm",
     "aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:ring-destructive",
   );
 export const authControlClassName = cn(controlClassName, "bg-transparent");
+export const inputIconButtonClassName = "absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md bg-transparent text-khata-muted transition-colors hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9";
 export const filterControlCompactClassName = "md:h-8 md:text-[13px]";
 export const filterActionRowClassName = "justify-start border-t border-khata-border/70 pt-3 sm:justify-end";
 export const filterInlineGridClassName =
@@ -356,7 +357,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "flex min-h-24 w-full resize-y rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-white focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "flex min-h-24 w-full resize-y rounded-md border border-khata-border bg-khata-paper px-3 py-2 text-base text-khata-ink shadow-sm outline-none transition placeholder:text-khata-muted focus:border-khata-green focus:bg-khata-surface focus-visible:ring-1 focus-visible:ring-khata-green disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         "aria-[invalid=true]:border-destructive aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:ring-destructive",
         className,
       )}
@@ -468,7 +469,7 @@ export function FilterDateRangeField({
   return (
     <div
       className={cn(
-        "grid min-w-0 grid-cols-[minmax(0,1fr)_36px_minmax(0,1fr)] overflow-hidden rounded-md border border-khata-border bg-khata-paper shadow-sm transition focus-within:border-khata-green focus-within:bg-white focus-within:ring-1 focus-within:ring-khata-green",
+        "grid min-w-0 grid-cols-[minmax(0,1fr)_36px_minmax(0,1fr)] overflow-hidden rounded-md border border-khata-border bg-khata-paper shadow-sm transition focus-within:border-khata-green focus-within:bg-khata-surface focus-within:ring-1 focus-within:ring-khata-green",
         className,
       )}
     >
@@ -482,7 +483,7 @@ export function FilterDateRangeField({
         defaultValue={fromDefaultValue}
         className={filterDateRangeInputClassName}
       />
-      <span className="flex h-10 items-center justify-center border-x border-khata-border bg-white/55 text-xs font-medium text-khata-muted md:h-9">
+      <span className="flex h-10 items-center justify-center border-x border-khata-border bg-khata-surface/55 text-xs font-medium text-khata-muted md:h-9">
         to
       </span>
       <label htmlFor={toId} className="sr-only">
@@ -589,7 +590,7 @@ type PageHeaderProps = {
 };
 
 export const pageHeaderClassName =
-  "flex flex-col gap-3 border-b border-khata-border bg-white px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between";
+  "flex flex-col gap-3 border-b border-khata-border bg-khata-surface px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between";
 export const pageTitleClassName =
   "text-[1.375rem] font-bold leading-7 tracking-[-0.02em] text-khata-ink";
 export const pageDescriptionClassName =
@@ -779,7 +780,7 @@ export function FilterBar({
   ...props
 }: ComponentPropsWithoutRef<"form">) {
   const formClassName = cn(
-    "grid gap-3 rounded-md border border-khata-border bg-white p-4 shadow-sm",
+    "grid gap-3 rounded-md border border-khata-border bg-khata-surface p-4 shadow-sm",
     className,
   );
 
@@ -877,8 +878,8 @@ export function FilterPresetLink({
       className={cn(
         "inline-flex h-8 max-w-full items-center gap-1.5 rounded-full border px-2.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green",
         active
-          ? "border-khata-green bg-khata-green text-white shadow-sm hover:bg-khata-greenDark"
-          : "border-khata-border bg-white text-khata-ink hover:border-khata-green/40 hover:bg-khata-paperMuted",
+          ? "border-khata-green bg-khata-green text-primary-foreground shadow-sm hover:bg-khata-greenDark"
+          : "border-khata-border bg-khata-surface text-khata-ink hover:border-khata-green/40 hover:bg-khata-paperMuted",
         className,
       )}
       {...props}
@@ -895,7 +896,7 @@ export function FilterPresetLink({
           className={cn(
             "num inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold",
             active
-              ? "bg-white/20 text-white"
+              ? "bg-khata-surface/20 text-primary-foreground"
               : filterPresetCountToneClasses[countTone],
           )}
         >
@@ -923,7 +924,7 @@ export function TableToolbar({
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 border-b border-khata-border bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between",
+        "flex flex-col gap-2 border-b border-khata-border bg-khata-surface px-4 py-3 sm:flex-row sm:items-center sm:justify-between",
         className,
       )}
     >

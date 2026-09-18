@@ -13,5 +13,11 @@ export const canGenerateGstSummaries = canMutateFirmData;
 export const canCreateExports = canMutateFirmData;
 export const canRunOperationsJobs = canMutateFirmData;
 
+export function canManageFirmProfile(role: FirmRole) {
+  return role === "owner" || role === "admin";
+}
+
+export const canManageFirmMembers = canManageFirmProfile;
+
 export const readOnlyRoleMessage =
   "Your workspace role is read-only. You can inspect records, but owner, admin or staff access is required for changes.";

@@ -16,7 +16,7 @@ export function PublicPageShell({
 }) {
   return (
     <div className="min-h-screen bg-khata-paper text-khata-ink">
-      <header className="border-b border-khata-border bg-white">
+      <header className="border-b border-khata-border bg-khata-surface">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <Link
             href="/"

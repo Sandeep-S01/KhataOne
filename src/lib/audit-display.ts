@@ -33,6 +33,16 @@ const metadataAllowlist: Record<string, { label: string; mono?: boolean }> = {
 };
 
 const changeAllowlist: Record<string, Record<string, { label: string; mono?: boolean }>> = {
+  firm: {
+    name: { label: "Firm name" },
+    phone: { label: "Phone" },
+    email: { label: "Email" },
+    address: { label: "Address" },
+  },
+  firm_user: {
+    role: { label: "Role" },
+    status: { label: "Access" },
+  },
   client: {
     business_name: { label: "Business name" },
     contact_name: { label: "Contact" },
@@ -148,6 +158,9 @@ export function auditEntityHref(
   }
 
   switch (entityType) {
+    case "firm":
+    case "firm_user":
+      return "/dashboard/settings" as Route;
     case "client":
       return `/dashboard/clients/${entityId}` as Route;
     case "gst_period":

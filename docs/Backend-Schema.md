@@ -36,6 +36,10 @@
 - `created_at`
 - `updated_at`
 
+Settings can change only an active firm's `name`, `phone`, `email`, and `address` through `update_firm_profile`. The function checks an active owner/admin membership and writes a `firm.profile_updated` audit event in the same transaction. Direct browser updates to `firms` are denied; `gstin`, `slug`, `owner_user_id`, and `status` remain outside this edit flow.
+
+Settings lists an active firm's existing members through `list_firm_members` for owners/admins only. `update_firm_member` changes an existing non-owner's role (`admin`, `staff`, `viewer`) or access (`active`, `disabled`) with an atomic `firm.member_updated` audit event. Admins cannot manage other admins or grant admin, and no user can edit their own membership through this flow. Direct browser updates to `firm_users` are denied; member invitations are not implemented.
+
 ### support_requests
 
 Firm-scoped product issue reports submitted from the dashboard Help page. Fields: `id`, `firm_id`, `created_by`, `category`, `subject`, `description`, `status`, `created_at`, and `updated_at`. Authenticated firm members may create requests only as themselves and read only their own requests. Browser roles cannot change status or edit requests. Future platform-admin triage and replies require a separate privileged access path and UI; neither exists yet.
@@ -375,7 +379,7 @@ Operations health note: the Operations dashboard groups queue health by `job_typ
 
 - Audit logs are available in the dashboard with action and entity filters.
 - Operations view exposes processing job status, attempts, errors, and client links.
-- Settings view exposes firm profile, workspace members, and integration readiness.
+- Settings shows the current firm's profile and the signed-in user's access role. Owners and admins can edit firm contact details and manage existing members; browser-local appearance, table density, and start-page preferences are also available. Service configuration and raw membership IDs are not shown to customers.
 - WhatsApp webhook POST, worker routes, AI extraction job POST, and landing lead requests include configurable local rate limiting and optional atomic shared-store enforcement. A selected but unavailable shared store fails closed. Readiness verifies store reachability rather than trusting configuration alone. Forwarded IP headers are used for rate-limit keys only when `TRUST_FORWARDED_IP_HEADERS=true` is explicitly configured behind a trusted proxy.
 - `captureOperationalError` writes structured server logs; production should forward these logs to Sentry or another monitoring system before launch.
 - `/api/health/live` exposes only cheap app liveness. `/api/health/ready` and compatibility `/api/health` expose deeper operational checks only after readiness bearer authentication in production and return private, no-store responses.

@@ -76,7 +76,7 @@ export function FirmSwitcher({
         className="flex min-h-14 cursor-pointer list-none items-center gap-2.5 rounded-xl border border-warning/25 bg-warning/10 p-2 transition-colors hover:bg-warning/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green [&::-webkit-details-marker]:hidden"
         aria-label={`Switch firm workspace. Current firm: ${firmName}`}
       >
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-ink-foreground shadow-sm">
           {firmInitial}
         </span>
         <span className="min-w-0 flex-1">
@@ -94,7 +94,7 @@ export function FirmSwitcher({
         />
       </summary>
 
-      <div className="absolute left-0 right-0 top-full z-30 mt-1 max-h-64 overflow-y-auto rounded-xl border border-khata-border bg-white p-1 shadow-lg">
+      <div className="absolute left-0 right-0 top-full z-30 mt-1 max-h-64 overflow-y-auto rounded-xl border border-khata-border bg-khata-surface p-1 shadow-lg">
         <p className="px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-khata-muted">
           Your firms
         </p>

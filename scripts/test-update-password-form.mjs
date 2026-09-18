@@ -65,6 +65,7 @@ function loadUpdatePasswordForm(createClient) {
         return {
           Button: (props) => require("react/jsx-runtime").jsx("button", props),
           authControlClassName: "shared-auth-control",
+          inputIconButtonClassName: "shared-input-icon-button",
           feedbackToneClassName: {
             success: "shared-success-feedback",
             danger: "shared-danger-feedback",

@@ -78,7 +78,7 @@ export default async function DashboardLayout({
     <main className="min-h-screen bg-khata-paper text-khata-ink">
       <a
         href="#dashboard-content"
-        className="sr-only z-50 rounded-md bg-white px-3 py-2 text-sm font-semibold text-khata-green shadow focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-khata-green"
+        className="sr-only z-50 rounded-md bg-khata-surface px-3 py-2 text-sm font-semibold text-khata-green shadow focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-khata-green"
       >
         Skip to dashboard content
       </a>
@@ -90,7 +90,7 @@ export default async function DashboardLayout({
         />
 
         <section className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-20 flex min-h-14 items-center gap-3 border-b border-khata-border bg-white/95 px-4 shadow-xs backdrop-blur-md md:px-8">
+          <header className="sticky top-0 z-20 flex min-h-14 items-center gap-3 border-b border-khata-border bg-khata-surface/95 px-4 shadow-xs backdrop-blur-md md:px-8">
             <DashboardMobileMenu activeFirm={activeFirm} availableFirms={availableFirms} />
 
             <div className="min-w-0 flex-1 pr-1">

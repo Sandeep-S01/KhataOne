@@ -21,6 +21,7 @@ import {
   authControlClassName,
   functionalIconClassName,
   functionalIconStrokeWidth,
+  inputIconButtonClassName,
 } from "@/components/design-system";
 import { cn } from "@/lib/utils";
 import {
@@ -219,7 +220,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             type="button"
             onClick={() => setShowPassword((value) => !value)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9"
+            className={inputIconButtonClassName}
           >
             {showPassword ? (
               <EyeOff

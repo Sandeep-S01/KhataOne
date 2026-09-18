@@ -82,8 +82,8 @@ export function LandingNavigation() {
               aria-current={isActive ? "location" : undefined}
               className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green ${
                 isActive
-                  ? "bg-white text-khata-green shadow-sm"
-                  : "text-khata-muted hover:bg-white/60 hover:text-khata-ink"
+                  ? "bg-khata-surface text-khata-green shadow-sm"
+                  : "text-khata-muted hover:bg-khata-surface/60 hover:text-khata-ink"
               }`}
             >
               {item.label}
@@ -102,7 +102,7 @@ export function LandingNavigation() {
         <span className="h-4 w-px bg-khata-border" aria-hidden="true" />
         <a
           href="#demo"
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-xs font-semibold text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green active:scale-[0.98]"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-xs font-semibold text-primary-foreground shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green active:scale-[0.98]"
         >
           <span>Book a demo</span>
           <ArrowRight
@@ -114,7 +114,7 @@ export function LandingNavigation() {
       </div>
 
       <details ref={detailsRef} className="group relative md:hidden">
-        <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg border border-khata-border bg-white text-khata-ink shadow-sm transition hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
+        <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg border border-khata-border bg-khata-surface text-khata-ink shadow-sm transition hover:bg-khata-paperMuted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-khata-green">
           <span className="sr-only">Open navigation menu</span>
           <Menu
             className={functionalIconClassName}
@@ -122,7 +122,7 @@ export function LandingNavigation() {
             aria-hidden="true"
           />
         </summary>
-        <div className="absolute right-0 top-12 w-[min(21rem,calc(100vw-2rem))] rounded-lg border border-khata-border bg-white p-2.5 shadow-lg">
+        <div className="absolute right-0 top-12 w-[min(21rem,calc(100vw-2rem))] rounded-lg border border-khata-border bg-khata-surface p-2.5 shadow-lg">
           <nav aria-label="Mobile primary" className="grid gap-1">
             {navItems.map((item) => (
               <a
@@ -148,7 +148,7 @@ export function LandingNavigation() {
             <a
               href="#demo"
               onClick={closeMobileMenu}
-              className="mt-1 inline-flex h-11 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark"
+              className="mt-1 inline-flex h-11 items-center justify-center gap-1.5 rounded-lg bg-khata-green px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-khata-greenDark"
             >
               <span>Book a demo</span>
               <ArrowRight

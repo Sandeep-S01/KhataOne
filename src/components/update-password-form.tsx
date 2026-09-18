@@ -9,6 +9,7 @@ import {
   feedbackToneClassName,
   functionalIconClassName,
   functionalIconStrokeWidth,
+  inputIconButtonClassName,
 } from "@/components/design-system";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -108,7 +109,7 @@ export function UpdatePasswordForm() {
             onClick={() => setShowPassword((value) => !value)}
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-controls="new-password confirm-password"
-            className="absolute right-0 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-md text-khata-muted transition hover:bg-khata-paperMuted hover:text-khata-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green md:right-1 md:size-9"
+            className={inputIconButtonClassName}
           >
             {showPassword ? (
               <EyeOff

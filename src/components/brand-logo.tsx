@@ -10,7 +10,7 @@ export function BrandLogo({ compact = false }: { compact?: boolean }) {
           width={180}
           height={180}
           priority
-          className="size-8 object-contain drop-shadow-sm"
+          className="theme-brand-mark size-8 object-contain drop-shadow-sm"
         />
       </span>
       {!compact && (

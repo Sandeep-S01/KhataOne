@@ -91,7 +91,7 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "sticky top-0 hidden h-screen shrink-0 select-none overflow-hidden border-r border-khata-border bg-white shadow-sm transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
+        "sticky top-0 hidden h-screen shrink-0 select-none overflow-hidden border-r border-khata-border bg-khata-surface shadow-sm transition-[width] duration-200 ease-in-out lg:flex lg:flex-col",
         isCollapsed ? "w-16" : "w-[240px]",
       )}
     >
@@ -156,7 +156,7 @@ export function DashboardSidebar({
           <button
             type="button"
             onClick={toggleSidebar}
-            className="mx-auto flex size-9 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
+            className="mx-auto flex size-9 items-center justify-center rounded-full bg-khata-ink text-sm font-bold text-ink-foreground shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green"
             aria-label={`Expand sidebar to switch firm. Current firm: ${firmName}`}
             title={`${firmName} — expand to switch firm`}
           >

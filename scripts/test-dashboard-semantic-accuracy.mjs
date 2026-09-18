@@ -6,16 +6,18 @@ function read(path) {
 }
 
 const settings = read("src/app/(dashboard)/dashboard/settings/page.tsx");
+const firmProfile = read("src/components/firm-profile-section.tsx");
 const clients = read("src/app/(dashboard)/dashboard/clients/page.tsx");
 const ledger = read("src/app/(dashboard)/dashboard/ledger/page.tsx");
 const operations = read("src/app/(dashboard)/dashboard/operations/page.tsx");
 const gst = read("src/app/(dashboard)/dashboard/gst-summary/page.tsx");
 
-assert.match(settings, /title="Firm profile"/);
+assert.match(settings, /<FirmProfileSection/);
+assert.match(firmProfile, /title="Firm profile"/);
 assert.match(settings, /title="Your account"/);
 assert.doesNotMatch(settings, /Configuration status|Integration readiness|integrationRows/);
 
-assert.match(settings, /Not provided/);
+assert.match(firmProfile, /Not provided/);
 assert.match(clients, /Not provided/);
 assert.ok(!clients.includes('client.gstin || "Pending"'));
 

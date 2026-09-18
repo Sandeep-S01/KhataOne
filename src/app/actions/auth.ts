@@ -1,12 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 import {
   isEmailAddress,
   validateAuthFields,
 } from "@/lib/auth-validation";
 import { getPublicAppUrl, hasSupabaseConfig } from "@/lib/env";
+import { startPageCookieName, startPagePath } from "@/lib/personal-preferences";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
@@ -57,7 +59,7 @@ export async function signIn(
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -69,7 +71,10 @@ export async function signIn(
     };
   }
 
-  redirect("/dashboard");
+  const savedStartPage = data.user
+    ? (await cookies()).get(startPageCookieName(data.user.id))?.value
+    : undefined;
+  redirect(startPagePath(savedStartPage));
 }
 
 export async function signUp(

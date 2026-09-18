@@ -110,7 +110,7 @@ function NavBadge({ badge, collapsed }: { badge: NavCountBadge; collapsed: boole
     <span
       className={cn(
         collapsed
-          ? "absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full text-[9px] font-bold leading-none tabular-nums ring-2 ring-white"
+          ? "absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full text-[9px] font-bold leading-none tabular-nums ring-2 ring-khata-surface"
           : "ml-auto inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-[11px] font-bold leading-none tabular-nums",
         badge.tone === "warning"
           ? collapsed ? "bg-warning/20 text-warning" : "bg-warning/15 text-warning"
@@ -270,7 +270,7 @@ function DashboardNavLink({
           <span
             id={tooltipId}
             role="tooltip"
-            className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-md bg-khata-ink px-2 py-1 text-xs font-medium text-white shadow-lg"
+            className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-md bg-khata-ink px-2 py-1 text-xs font-medium text-ink-foreground shadow-lg"
             style={tooltipPosition}
           >
             {item.label}

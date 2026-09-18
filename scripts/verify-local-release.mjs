@@ -34,6 +34,8 @@ const checks = [
   [process.execPath, ["scripts/test-ledger-correction-atomic.mjs"]],
   [process.execPath, ["scripts/test-transaction-review-atomic.mjs"]],
   [process.execPath, ["scripts/test-controlled-audit-writers.mjs"]],
+  npmCheck("run", "test:firm-profile-settings"),
+  npmCheck("run", "test:firm-member-settings"),
   npmCheck("run", "test:ai-job-recovery"),
   npmCheck("run", "test:ai-execution-bounds"),
   npmCheck("run", "test:protection-readiness"),

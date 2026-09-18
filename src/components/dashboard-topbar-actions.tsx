@@ -403,7 +403,7 @@ export function DashboardTopbarActions({
               strokeWidth={functionalIconStrokeWidth}
               aria-hidden="true"
             />
-            <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-white" aria-hidden="true" />
+            <span className="absolute right-2 top-2 size-1.5 rounded-full bg-khata-green ring-2 ring-khata-surface" aria-hidden="true" />
           </TopbarIconButton>
 
           {activityOpen && activityPosition && createPortal(
@@ -534,7 +534,7 @@ export function DashboardTopbarActions({
                 </p>
                 <button
                   type="submit"
-                  className="inline-flex h-11 w-full items-center justify-center rounded-md bg-khata-green px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:h-9 sm:w-auto"
+                  className="inline-flex h-11 w-full items-center justify-center rounded-md bg-khata-green px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-khata-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-khata-green sm:h-9 sm:w-auto"
                 >
                   Search
                 </button>

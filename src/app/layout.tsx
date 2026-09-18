@@ -5,6 +5,9 @@ import { getPublicAppUrl } from "@/lib/env";
 
 import "./globals.css";
 
+// Resolve the browser preference before paint without making every route dynamic.
+const preferenceBootstrap = `(function(){var themeKey="khataone_theme",densityKey="khataone_table_density",media=window.matchMedia("(prefers-color-scheme: dark)");function apply(){var theme,density;try{theme=localStorage.getItem(themeKey);density=localStorage.getItem(densityKey)}catch{}document.documentElement.dataset.theme=theme==="dark"||theme==="light"?theme:media.matches?"dark":"light";document.documentElement.dataset.density=density==="compact"?"compact":"comfortable"}apply();media.addEventListener("change",apply);window.addEventListener("storage",function(event){if(event.key===themeKey||event.key===densityKey)apply()});window.addEventListener("khataone-preference-change",apply)})()`;
+
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -50,7 +53,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: preferenceBootstrap }} />
+      </head>
       <body
         className={`${manrope.variable} font-sans antialiased`}
       >

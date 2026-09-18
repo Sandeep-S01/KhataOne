@@ -161,7 +161,7 @@ const jsonLd = {
 
 function LandingHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-khata-border/80 bg-white/90 backdrop-blur-md shadow-[0_1px_3px_rgba(31,42,36,0.03)]">
+    <header className="sticky top-0 z-30 border-b border-khata-border/80 bg-khata-surface/90 backdrop-blur-md shadow-[0_1px_3px_rgba(31,42,36,0.03)]">
       <LandingNavigation />
     </header>
   );
@@ -287,7 +287,7 @@ export default function Home() {
       />
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-khata-green focus:shadow-md"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-khata-surface focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-khata-green focus:shadow-md"
       >
         Skip to content
       </a>
@@ -339,7 +339,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="how" className="border-b border-khata-border bg-white">
+        <section id="how" className="border-b border-khata-border bg-khata-surface">
           <div className="mx-auto max-w-6xl px-4 py-20">
             <SectionLabel>Four-step workflow</SectionLabel>
             <h2 className="mt-2 text-3xl font-semibold tracking-normal text-khata-ink">
@@ -371,7 +371,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-b border-khata-border bg-white">
+        <section className="border-b border-khata-border bg-khata-surface">
           <div className="mx-auto max-w-6xl px-4 py-20">
             <SectionLabel>Trust and control</SectionLabel>
             <div className="mt-3 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -481,7 +481,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-khata-border bg-white text-khata-muted">
+      <footer className="border-t border-khata-border bg-khata-surface text-khata-muted">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="space-y-4 lg:col-span-5">

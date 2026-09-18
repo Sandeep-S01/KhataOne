@@ -106,6 +106,11 @@ query failures explicitly rather than suggesting an empty audit history.
 
 - Buttons: clear hierarchy with primary, secondary, ghost, and danger variants.
 - Icon buttons: use lucide icons with tooltips.
+- Icons embedded inside text fields use a transparent hover surface with a subtle icon-color change; preserve their touch target and visible keyboard focus. Standalone icon buttons may retain a muted hover surface.
+- Settings offers a browser-local Light, Dark, or System appearance preference. The shared color tokens carry the selected appearance across the dashboard and public screens, including surfaces, action text, status colors, and input controls; the system choice follows the device theme. The preference is presentation-only and does not change firm data or accounting behavior.
+- Settings also offers Comfortable or Compact table density and an account-specific start page after sign-in. Compact density reduces shared table-row spacing only on desktop, preserving mobile touch spacing. The start page is restricted to Overview, Review Queue, or Inbox and never changes where the explicit Overview sidebar link goes. These are browser-local preferences and do not alter review permissions or financial data.
+- The firm profile remains a compact read-only detail card until an owner or admin chooses Edit profile. Its inline form uses shared controls and changes only name, phone, email, and address. GSTIN and workspace status stay visible but are not editable in this flow; staff and viewers see the details without an edit action. Saved changes receive inline feedback and an audit entry.
+- Owners and admins see a compact Team access list in Settings with member email, role, and access state. Manage opens inline controls for an existing member; the owner cannot be changed here, admins cannot manage other admins, and nobody can change their own role or access. Disabled access is explained before saving, and successful changes receive inline feedback and an audit entry.
 - Tables: sticky header, compact rows, clear selection state, right-aligned amounts.
 - Filters: visible, quick to adjust, and built from shared filter primitives. Filter inputs, selects, date fields, Apply buttons, and Clear actions should share the same control height within a filter panel.
 - Status chips: compact, high contrast, consistent labels.
