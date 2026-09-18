@@ -72,7 +72,7 @@ export function DashboardMobileMenu({
             closeMenu();
           }
         }}
-        className="m-0 h-dvh max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-khata-ink/25 lg:hidden"
+        className="m-0 h-dvh max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-slate-950/50 lg:hidden"
       >
         <div className="absolute left-0 top-0 flex h-dvh w-[min(19rem,100vw)] flex-col overflow-hidden border-r border-khata-border/80 bg-khata-surface shadow-lg">
           <div className="flex items-center justify-between gap-3 border-b border-khata-border/80 px-4 py-3">

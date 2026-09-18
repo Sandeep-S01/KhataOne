@@ -75,7 +75,7 @@ export default async function DashboardLayout({
   }));
 
   return (
-    <main className="min-h-screen bg-khata-paper text-khata-ink">
+    <main className="dashboard-theme min-h-screen bg-khata-paper text-khata-ink">
       <a
         href="#dashboard-content"
         className="sr-only z-50 rounded-md bg-khata-surface px-3 py-2 text-sm font-semibold text-khata-green shadow focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-khata-green"

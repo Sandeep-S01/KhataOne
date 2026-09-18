@@ -26,9 +26,9 @@ const densityStorageKey = "khataone_table_density";
 const preferenceChangeEvent = "khataone-preference-change";
 
 const themeChoices: Choice<ThemePreference>[] = [
-  { value: "system", label: "System", icon: Monitor },
   { value: "light", label: "Light", icon: Sun },
   { value: "dark", label: "Dark", icon: Moon },
+  { value: "system", label: "System", icon: Monitor },
 ];
 const densityChoices: Choice<TableDensity>[] = [
   { value: "comfortable", label: "Comfortable", icon: List },
@@ -43,9 +43,9 @@ const startPageChoices: Choice<StartPage>[] = [
 function readTheme(): ThemePreference {
   try {
     const value = localStorage.getItem(themeStorageKey);
-    return value === "light" || value === "dark" ? value : "system";
+    return value === "dark" || value === "system" ? value : "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 
@@ -142,7 +142,7 @@ export function PersonalPreferences({
   userId: string;
   initialStartPage: StartPage;
 }) {
-  const theme = useSyncExternalStore(subscribe, readTheme, () => "system");
+  const theme = useSyncExternalStore(subscribe, readTheme, () => "light");
   const density = useSyncExternalStore(subscribe, readDensity, () => "comfortable");
   const [startPage, setStartPage] = useState(initialStartPage);
   const [themeError, setThemeError] = useState("");
@@ -168,7 +168,7 @@ export function PersonalPreferences({
     <div className="space-y-5 divide-y divide-khata-border [&_fieldset+fieldset]:pt-5">
       <PreferenceChoices
         title="Theme"
-        description="Choose how KhataOne looks on this browser. System follows your device appearance."
+        description="Choose the dashboard appearance on this browser. System follows your device; public pages stay light."
         value={theme}
         options={themeChoices}
         onChange={(value) =>

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
   --background: #f8fafc;
   --background-rgb: 248 250 252;
   --foreground: #0f172a;
@@ -71,70 +72,71 @@
     radial-gradient(900px 460px at 96% -6%, rgba(217, 119, 6, 0.08), transparent 58%);
 }
 
-:root[data-theme="dark"] {
+/* Public and auth routes always use the light brand palette. */
+:root[data-theme="dark"] :is(.dashboard-theme, .dashboard-theme-portal) {
   color-scheme: dark;
-  --background: #0b1714;
-  --background-rgb: 11 23 20;
-  --foreground: #e9f3ed;
-  --foreground-rgb: 233 243 237;
-  --surface: #14241e;
-  --surface-rgb: 20 36 30;
-  --surface-muted: #1e352b;
-  --surface-muted-rgb: 30 53 43;
-  --card: #14241e;
-  --popover: #14241e;
-  --primary: #70dca0;
-  --primary-rgb: 112 220 160;
-  --primary-dark: #4cc681;
-  --primary-dark-rgb: 76 198 129;
-  --primary-foreground: #082017;
-  --primary-foreground-rgb: 8 32 23;
-  --saffron: #ffc078;
-  --saffron-rgb: 255 192 120;
-  --ink: #e9f3ed;
-  --ink-rgb: 233 243 237;
-  --ink-foreground-rgb: 8 32 23;
-  --secondary: #1e352b;
-  --secondary-foreground: #e9f3ed;
-  --muted: #1e352b;
-  --muted-foreground: #afc2b8;
-  --muted-foreground-rgb: 175 194 184;
-  --accent: #1e3d2c;
-  --accent-foreground: #e9f3ed;
-  --success: #70dca0;
-  --success-rgb: 112 220 160;
-  --success-foreground: #91edb8;
-  --success-foreground-rgb: 145 237 184;
-  --warning: #ffc078;
-  --warning-rgb: 255 192 120;
-  --warning-foreground: #ffd49b;
-  --warning-foreground-rgb: 255 212 155;
-  --info: #88b9f6;
-  --info-rgb: 136 185 246;
-  --info-foreground: #a9ceff;
-  --info-foreground-rgb: 169 206 255;
-  --destructive: #e78282;
-  --destructive-rgb: 231 130 130;
-  --destructive-button-foreground-rgb: 37 10 10;
-  --destructive-foreground: #ffaaaa;
-  --destructive-foreground-rgb: 255 170 170;
-  --border: #34483e;
-  --border-rgb: 52 72 62;
-  --input: #52685b;
-  --input-rgb: 82 104 91;
-  --ring: #70dca0;
-  --ring-rgb: 112 220 160;
+  --background: #101820;
+  --background-rgb: 16 24 32;
+  --foreground: #edf2f5;
+  --foreground-rgb: 237 242 245;
+  --surface: #18232d;
+  --surface-rgb: 24 35 45;
+  --surface-muted: #22313d;
+  --surface-muted-rgb: 34 49 61;
+  --card: #18232d;
+  --popover: #18232d;
+  --primary: #71cda3;
+  --primary-rgb: 113 205 163;
+  --primary-dark: #59b88e;
+  --primary-dark-rgb: 89 184 142;
+  --primary-foreground: #0b231a;
+  --primary-foreground-rgb: 11 35 26;
+  --saffron: #efb86a;
+  --saffron-rgb: 239 184 106;
+  --ink: #edf2f5;
+  --ink-rgb: 237 242 245;
+  --ink-foreground-rgb: 16 24 32;
+  --secondary: #22313d;
+  --secondary-foreground: #edf2f5;
+  --muted: #22313d;
+  --muted-foreground: #aab9c5;
+  --muted-foreground-rgb: 170 185 197;
+  --accent: #203a34;
+  --accent-foreground: #edf2f5;
+  --success: #7fd4a3;
+  --success-rgb: 127 212 163;
+  --success-foreground: #a4e8be;
+  --success-foreground-rgb: 164 232 190;
+  --warning: #efc07d;
+  --warning-rgb: 239 192 125;
+  --warning-foreground: #f4d29c;
+  --warning-foreground-rgb: 244 210 156;
+  --info: #93bdf2;
+  --info-rgb: 147 189 242;
+  --info-foreground: #bad6fa;
+  --info-foreground-rgb: 186 214 250;
+  --destructive: #f08f90;
+  --destructive-rgb: 240 143 144;
+  --destructive-button-foreground-rgb: 42 14 18;
+  --destructive-foreground: #ffb9ba;
+  --destructive-foreground-rgb: 255 185 186;
+  --border: #354653;
+  --border-rgb: 53 70 83;
+  --input: #506574;
+  --input-rgb: 80 101 116;
+  --ring: #71cda3;
+  --ring-rgb: 113 205 163;
   --gradient-surface: linear-gradient(180deg, var(--surface), var(--surface));
-  --gradient-brand: linear-gradient(135deg, #092a1a, #0b5937 55%, #0b724b);
+  --gradient-brand: linear-gradient(135deg, #14392b, #236c4e);
   --gradient-page:
-    radial-gradient(1100px 520px at 8% -12%, rgba(112, 220, 160, 0.08), transparent 60%),
-    radial-gradient(900px 460px at 96% -6%, rgba(255, 192, 120, 0.05), transparent 58%);
+    radial-gradient(1100px 520px at 8% -12%, rgba(113, 205, 163, 0.045), transparent 60%),
+    radial-gradient(900px 460px at 96% -6%, rgba(147, 189, 242, 0.035), transparent 58%);
   --elev-1: 0 1px 3px rgba(0, 0, 0, 0.2);
   --elev-2: 0 4px 10px rgba(0, 0, 0, 0.24);
   --elev-3: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-:root[data-theme="dark"] .theme-brand-mark {
+:root[data-theme="dark"] .dashboard-theme .theme-brand-mark {
   filter: brightness(0) invert(1);
 }
 

@@ -414,7 +414,7 @@ export function DashboardTopbarActions({
               aria-labelledby={activityButtonId}
               onKeyDown={handleActivityMenuKeyDown}
               style={activityPosition}
-              className="fixed z-[60] max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg"
+              className="dashboard-theme-portal fixed z-[60] max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-lg border border-khata-border/90 bg-khata-surface shadow-lg"
             >
               <div className="border-b border-khata-border bg-khata-paperMuted/50 px-4 py-3">
                 <p className="text-sm font-semibold text-khata-ink">Activity center</p>
@@ -464,7 +464,7 @@ export function DashboardTopbarActions({
 
       {searchOpen && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-khata-ink/30 px-3 pb-3 pt-[68px] sm:px-4 sm:pt-20"
+          className="dashboard-theme-portal fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-950/50 px-3 pb-3 pt-[68px] sm:px-4 sm:pt-20"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
