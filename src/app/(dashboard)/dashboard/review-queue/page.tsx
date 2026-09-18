@@ -46,7 +46,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { countOrUnavailable } from "@/lib/availability";
-import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { currentMonthDateRange, formatDisplayDate } from "@/lib/format";
@@ -89,7 +89,7 @@ function formatCurrency(value: number | null) {
 
 const reviewStatusOptions = ["all", "draft", "needs_review", "duplicate"];
 const reviewRiskOptions = ["all", "risk", "low_confidence"];
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 const fy27Q2DateRange = {
   start: "2026-07-01",
   end: "2026-09-30",

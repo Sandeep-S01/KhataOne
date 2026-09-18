@@ -5,6 +5,7 @@ import {
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   RecordCount,
   SectionCard,
@@ -34,6 +35,7 @@ import {
   positiveToneForCount,
 } from "@/lib/availability";
 import { hasSupabaseConfig } from "@/lib/env";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { getFirmContext, type FirmContext } from "@/lib/firms";
 import { withServerTiming } from "@/lib/request-performance";
 
@@ -73,7 +75,11 @@ function openCountLabel(value: number | null) {
   return value === null ? "Unavailable" : `${value} Open`;
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: {
+  searchParams: Promise<{ review_page?: string }>;
+}) {
+  const filters = await searchParams;
+  const reviewPage = normalizePage(filters.review_page);
   if (!hasSupabaseConfig()) {
     return (
       <SetupRequired message="Connect Supabase environment variables before opening the protected CA operations workspace." />
@@ -87,7 +93,7 @@ export default async function DashboardPage() {
   }
 
   const counts = getOverviewCounts(context);
-  const reviewItems = getReviewSnapshot(context);
+  const reviewItems = getReviewSnapshot(context, reviewPage);
 
   return (
     <div>
@@ -112,10 +118,10 @@ export default async function DashboardPage() {
         </Suspense>
         <Suspense fallback={
           <SectionCard title="Review queue snapshot" bodyClassName="p-0">
-            <TableSkeleton rows={8} cols={8} />
+            <TableSkeleton rows={dashboardPageSize} cols={8} />
           </SectionCard>
         }>
-          <ReviewSnapshot result={reviewItems} />
+          <ReviewSnapshot result={reviewItems} page={reviewPage} searchParams={filters} />
         </Suspense>
       </PageBody>
     </div>
@@ -172,8 +178,9 @@ function getOverviewCounts(context: FirmContext) {
   }))));
 }
 
-function getReviewSnapshot(context: FirmContext) {
+function getReviewSnapshot(context: FirmContext, page: number) {
   const { firm, supabase } = context;
+  const rangeFrom = (page - 1) * dashboardPageSize;
   const reviewItemsPromise = supabase
     .from("transactions")
     .select(
@@ -183,7 +190,7 @@ function getReviewSnapshot(context: FirmContext) {
     .in("status", ["draft", "needs_review", "duplicate"])
     .order("created_at", { ascending: false })
     .order("id", { ascending: false })
-    .limit(8);
+    .range(rangeFrom, rangeFrom + dashboardPageSize);
 
   return withServerTiming("dashboard.review_snapshot", () => reviewItemsPromise);
 }
@@ -343,34 +350,43 @@ async function OverviewSummary({ counts }: { counts: ReturnType<typeof getOvervi
   );
 }
 
-async function ReviewSnapshot({ result }: { result: ReturnType<typeof getReviewSnapshot> }) {
+async function ReviewSnapshot({ result, page, searchParams }: {
+  result: ReturnType<typeof getReviewSnapshot>;
+  page: number;
+  searchParams: { review_page?: string };
+}) {
   const { data: reviewItems, error: reviewItemsError } = await result;
+  const pageItems = reviewItems?.slice(0, dashboardPageSize);
   return (
     <SectionCard bodyClassName="p-0">
       <TableToolbar
         title="Review queue snapshot"
         description="Newest AI-created records waiting for a CA decision."
         meta={
-          <RecordCount value={reviewItems?.length ?? 0} label="latest" />
+          <RecordCount value={pageItems?.length ?? 0} label="shown" />
         }
       />
       {reviewItemsError && (
         <QueryError message={reviewItemsError.message} />
       )}
 
-      {!reviewItemsError && (!reviewItems || reviewItems.length === 0) && (
+      {!reviewItemsError && (!pageItems || pageItems.length === 0) && (
+        <>
         <EmptyState
-          title="No review items pending"
-          message="New WhatsApp documents and draft extractions will appear here when they need a reviewer decision."
+          title={page > 1 ? "No review items on this page" : "No review items pending"}
+          message={page > 1 ? "Go back to an earlier page." : "New WhatsApp documents and draft extractions will appear here when they need a reviewer decision."}
           action={
             <ActionLink href="/dashboard/inbox">
               Open inbox
             </ActionLink>
           }
         />
+        {page > 1 && <PaginationControls basePath="/dashboard" pageKey="review_page" page={page} hasNext={false} searchParams={searchParams} label="review records" />}
+        </>
       )}
 
-      {!reviewItemsError && reviewItems && reviewItems.length > 0 && (
+      {!reviewItemsError && pageItems && pageItems.length > 0 && (
+      <>
       <DataTable minWidth={940} ariaLabel="Latest review queue records">
         <thead className={tableHeaderClass}>
           <tr>
@@ -385,7 +401,7 @@ async function ReviewSnapshot({ result }: { result: ReturnType<typeof getReviewS
           </tr>
         </thead>
         <tbody>
-          {reviewItems.map((item) => {
+          {pageItems.map((item) => {
             const client = Array.isArray(item.clients)
               ? item.clients[0]
               : item.clients;
@@ -428,6 +444,8 @@ async function ReviewSnapshot({ result }: { result: ReturnType<typeof getReviewS
           })}
         </tbody>
       </DataTable>
+      <PaginationControls basePath="/dashboard" pageKey="review_page" page={page} hasNext={(reviewItems?.length ?? 0) > dashboardPageSize} searchParams={searchParams} label="review records" />
+      </>
       )}
     </SectionCard>
   );

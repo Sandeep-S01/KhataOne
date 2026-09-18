@@ -8,6 +8,7 @@ import {
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
   PermissionNotice,
   QueryError,
   SectionCard,
@@ -25,6 +26,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { hasSupabaseConfig } from "@/lib/env";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate, formatDisplayDateTime } from "@/lib/format";
 import { canCorrectLedgerEntries, readOnlyRoleMessage } from "@/lib/permissions";
@@ -50,10 +52,13 @@ export default async function LedgerEntryPage({
   searchParams,
 }: {
   params: Promise<{ entryId: string }>;
-  searchParams: Promise<{ return_to?: string }>;
+  searchParams: Promise<{ return_to?: string; audit_page?: string }>;
 }) {
   const { entryId } = await params;
-  const { return_to: rawReturnContext } = await searchParams;
+  const filters = await searchParams;
+  const { return_to: rawReturnContext } = filters;
+  const auditPage = normalizePage(filters.audit_page);
+  const auditFrom = (auditPage - 1) * dashboardPageSize;
   const returnContext = sanitizeReturnContext(rawReturnContext, ledgerReturnKeys);
   const ledgerHref = dashboardReturnHref(
     "/dashboard/ledger",
@@ -99,7 +104,8 @@ export default async function LedgerEntryPage({
     .eq("entity_type", "ledger_entry")
     .eq("entity_id", entry.id)
     .order("created_at", { ascending: false })
-    .limit(10);
+    .order("id", { ascending: false })
+    .range(auditFrom, auditFrom + dashboardPageSize);
 
   return (
     <div>
@@ -174,17 +180,22 @@ export default async function LedgerEntryPage({
       <div className="min-w-0 xl:col-span-2">
       <DeferredSection title="Correction audit" load={() => auditsQuery} errorMessage="Correction audit could not be loaded. Refresh to retry.">
           {({ data: audits, error: auditsError }) => {
+            const pageAudits = audits?.slice(0, dashboardPageSize);
             return (
               <SectionCard bodyClassName="p-0">
                 <TableToolbar title="Correction audit" />
                 {auditsError ? (
                   <QueryError message="Correction audit could not be loaded. Refresh to retry." />
-                ) : !audits || audits.length === 0 ? (
+                ) : !pageAudits || pageAudits.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No corrections recorded"
-                    message="Correction notes and ledger-entry audit activity will appear here."
+                    title={auditPage > 1 ? "No corrections on this page" : "No corrections recorded"}
+                    message={auditPage > 1 ? "Go back to an earlier page." : "Correction notes and ledger-entry audit activity will appear here."}
                   />
+                  {auditPage > 1 && <PaginationControls basePath={`/dashboard/ledger/${entryId}`} pageKey="audit_page" page={auditPage} hasNext={false} searchParams={filters} label="audit entries" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={720}>
                       <thead className={tableHeaderClass}>
                         <tr>
@@ -195,7 +206,7 @@ export default async function LedgerEntryPage({
                         </tr>
                       </thead>
                       <tbody>
-                        {audits.map((audit) => {
+                        {pageAudits.map((audit) => {
                           const metadata =
                             audit.metadata &&
                             typeof audit.metadata === "object" &&
@@ -220,6 +231,8 @@ export default async function LedgerEntryPage({
                         })}
                       </tbody>
                   </DataTable>
+                  <PaginationControls basePath={`/dashboard/ledger/${entryId}`} pageKey="audit_page" page={auditPage} hasNext={audits.length > dashboardPageSize} searchParams={filters} label="audit entries" />
+                  </>
                 )}
               </SectionCard>
             );

@@ -9,6 +9,7 @@ import {
   InfoNote,
   PageBody,
   PageHeader,
+  PaginationControls,
   QueryError,
   SectionCard,
   SetupRequired,
@@ -32,6 +33,7 @@ import {
   formatDisplayDateTime,
 } from "@/lib/format";
 import { formatNullableCurrency } from "@/lib/availability";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 
 export const dynamic = "force-dynamic";
 
@@ -77,10 +79,18 @@ function formatTaxTotal(transaction: {
 
 export default async function GstPeriodPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ periodId: string }>;
+  searchParams: Promise<{ source_page?: string; audit_page?: string }>;
 }) {
   const { periodId } = await params;
+  const filters = await searchParams;
+  const sourcePage = normalizePage(filters.source_page);
+  const auditPage = normalizePage(filters.audit_page);
+  const sourceFrom = (sourcePage - 1) * dashboardPageSize;
+  const auditFrom = (auditPage - 1) * dashboardPageSize;
+  const basePath = `/dashboard/gst-summary/${periodId}`;
 
   if (!hasSupabaseConfig()) {
     return (
@@ -123,7 +133,9 @@ export default async function GstPeriodPage({
     .eq("client_id", period.client_id)
     .gte("transaction_date", period.period_start)
     .lte("transaction_date", period.period_end)
-    .order("transaction_date", { ascending: false });
+    .order("transaction_date", { ascending: false })
+    .order("id", { ascending: false })
+    .range(sourceFrom, sourceFrom + dashboardPageSize);
   const generationTime = formatDisplayDateTime(summary?.generated_at);
 
   const auditsQuery = supabase
@@ -133,7 +145,8 @@ export default async function GstPeriodPage({
     .eq("entity_type", "gst_period")
     .eq("entity_id", period.id)
     .order("created_at", { ascending: false })
-    .limit(8);
+    .order("id", { ascending: false })
+    .range(auditFrom, auditFrom + dashboardPageSize);
 
   return (
     <div>
@@ -240,7 +253,8 @@ export default async function GstPeriodPage({
       <div className="min-w-0 xl:col-span-2">
       <DeferredSection title="Current period transactions" load={() => sourceTransactionsQuery} errorMessage="Source transactions could not be loaded. Refresh to retry.">
           {({ data: sourceTransactions, error: sourceTransactionsError }) => {
-            const currentBlockerCount = sourceTransactions?.filter(
+            const pageTransactions = sourceTransactions?.slice(0, dashboardPageSize);
+            const currentBlockerCount = pageTransactions?.filter(
               (transaction) => transaction.status !== "approved" && transaction.status !== "exported",
             ).length;
             return (
@@ -251,19 +265,23 @@ export default async function GstPeriodPage({
                   actions={
                     typeof currentBlockerCount === "number" ? (
                       <StatusChip tone={currentBlockerCount > 0 ? "warning" : "success"}>
-                        {currentBlockerCount} current blockers
+                        {currentBlockerCount} blockers on this page
                       </StatusChip>
                     ) : undefined
                   }
                 />
                 {sourceTransactionsError ? (
                   <QueryError message="Source transactions could not be loaded. Refresh to retry." />
-                ) : !sourceTransactions || sourceTransactions.length === 0 ? (
+                ) : !pageTransactions || pageTransactions.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No current transactions in this period"
-                    message="Live transactions in this client and date range will appear here."
+                    title={sourcePage > 1 ? "No transactions on this page" : "No current transactions in this period"}
+                    message={sourcePage > 1 ? "Go back to an earlier page." : "Live transactions in this client and date range will appear here."}
                   />
+                  {sourcePage > 1 && <PaginationControls basePath={basePath} pageKey="source_page" page={sourcePage} hasNext={false} searchParams={filters} label="transactions" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={980} ariaLabel="GST period source transactions">
                       <thead className={tableHeaderClass}>
                         <tr>
@@ -278,7 +296,7 @@ export default async function GstPeriodPage({
                         </tr>
                       </thead>
                       <tbody>
-                        {sourceTransactions.map((transaction) => (
+                        {pageTransactions.map((transaction) => (
                           <tr key={transaction.id} className={tableRowClass}>
                             <td className={`${tableCellClass} ${tableNumericTextClass}`}>
                               {formatDisplayDate(transaction.transaction_date)}
@@ -310,6 +328,15 @@ export default async function GstPeriodPage({
                         ))}
                       </tbody>
                   </DataTable>
+                  <PaginationControls
+                    basePath={basePath}
+                    pageKey="source_page"
+                    page={sourcePage}
+                    hasNext={sourceTransactions.length > dashboardPageSize}
+                    searchParams={filters}
+                    label="transactions"
+                  />
+                  </>
                 )}
               </SectionCard>
             );
@@ -320,17 +347,22 @@ export default async function GstPeriodPage({
       <div className="min-w-0 xl:col-span-2">
       <DeferredSection title="Generation audit" load={() => auditsQuery} errorMessage="Generation audit could not be loaded. Refresh to retry.">
           {({ data: audits, error: auditsError }) => {
+            const pageAudits = audits?.slice(0, dashboardPageSize);
             return (
               <SectionCard bodyClassName="p-0">
                 <TableToolbar title="Generation audit" />
                 {auditsError ? (
                   <QueryError message="Generation audit could not be loaded. Refresh to retry." />
-                ) : !audits || audits.length === 0 ? (
+                ) : !pageAudits || pageAudits.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No GST summary audit entries yet"
-                    message="Generation and export activity for this period will appear here."
+                    title={auditPage > 1 ? "No audit entries on this page" : "No GST summary audit entries yet"}
+                    message={auditPage > 1 ? "Go back to an earlier page." : "Generation and export activity for this period will appear here."}
                   />
+                  {auditPage > 1 && <PaginationControls basePath={basePath} pageKey="audit_page" page={auditPage} hasNext={false} searchParams={filters} label="audit entries" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={640} ariaLabel="GST period audit entries">
                       <thead className={tableHeaderClass}>
                         <tr>
@@ -340,7 +372,7 @@ export default async function GstPeriodPage({
                         </tr>
                       </thead>
                       <tbody>
-                        {audits.map((audit) => (
+                        {pageAudits.map((audit) => (
                           <tr key={audit.id} className={tableRowClass}>
                             <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{audit.action}</td>
                             <td className={`${tableCellClass} ${tableNumericTextClass}`}>
@@ -353,6 +385,15 @@ export default async function GstPeriodPage({
                         ))}
                       </tbody>
                   </DataTable>
+                  <PaginationControls
+                    basePath={basePath}
+                    pageKey="audit_page"
+                    page={auditPage}
+                    hasNext={audits.length > dashboardPageSize}
+                    searchParams={filters}
+                    label="audit entries"
+                  />
+                  </>
                 )}
               </SectionCard>
             );

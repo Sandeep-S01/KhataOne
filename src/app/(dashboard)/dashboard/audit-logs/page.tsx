@@ -39,14 +39,14 @@ import {
   safeAuditChangeEntries,
   safeAuditMetadataEntries,
 } from "@/lib/audit-display";
-import { normalizePage } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { auditDateOnlyToIndiaUtcRange, formatDisplayDateTime } from "@/lib/format";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 function actionTone(action: string) {
   if (action.includes("approved") || action.includes("generated")) {

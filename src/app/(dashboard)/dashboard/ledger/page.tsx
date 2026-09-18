@@ -37,7 +37,7 @@ import {
   tableSecondaryTextClass,
   tableRowClass,
 } from "@/components/design-system";
-import { normalizePage } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDate } from "@/lib/format";
@@ -66,7 +66,7 @@ type SearchParams = {
   page?: string;
 };
 
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 function activeFilterSummary(filters: SearchParams) {
   return [

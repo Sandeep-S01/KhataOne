@@ -32,7 +32,7 @@ import {
   tableRowClass,
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
-import { normalizePage, normalizeSearch } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage, normalizeSearch } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDateTime } from "@/lib/format";
@@ -69,7 +69,7 @@ const inboxStatusOptions = [
   "ignored",
 ];
 
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 type InboxRow = {
   id: string;

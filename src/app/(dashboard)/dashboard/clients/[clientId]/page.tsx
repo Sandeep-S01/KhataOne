@@ -9,6 +9,7 @@ import {
   EmptyState,
   PageBody,
   PageHeader,
+  PaginationControls,
   PermissionNotice,
   QueryError,
   RecordCount,
@@ -39,6 +40,7 @@ import {
   formatNullableCurrency,
 } from "@/lib/availability";
 import { hasSupabaseConfig } from "@/lib/env";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { getFirmContext } from "@/lib/firms";
 import {
   formatDisplayDateRange,
@@ -75,10 +77,18 @@ export default async function ClientDetailPage({
   searchParams,
 }: {
   params: Promise<{ clientId: string }>;
-  searchParams: Promise<{ return_to?: string }>;
+  searchParams: Promise<{ return_to?: string; documents_page?: string; gst_page?: string; audit_page?: string }>;
 }) {
   const { clientId } = await params;
-  const { return_to: rawReturnContext } = await searchParams;
+  const filters = await searchParams;
+  const { return_to: rawReturnContext } = filters;
+  const documentsPage = normalizePage(filters.documents_page);
+  const gstPage = normalizePage(filters.gst_page);
+  const auditPage = normalizePage(filters.audit_page);
+  const documentsFrom = (documentsPage - 1) * dashboardPageSize;
+  const gstFrom = (gstPage - 1) * dashboardPageSize;
+  const auditFrom = (auditPage - 1) * dashboardPageSize;
+  const basePath = `/dashboard/clients/${clientId}`;
   const returnContext = sanitizeReturnContext(rawReturnContext, clientReturnKeys);
   const clientsHref = dashboardReturnHref(
     "/dashboard/clients",
@@ -123,7 +133,13 @@ export default async function ClientDetailPage({
     .eq("firm_id", firm.id)
     .order("received_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
-    .limit(6)).catch(() => ({ data: null, error: { message: "Recent documents unavailable" } }));
+    .order("id", { ascending: false })
+    .range(documentsFrom, documentsFrom + dashboardPageSize)).catch(() => ({ data: null, error: { message: "Recent documents unavailable" } }));
+  const documentsCountPromise = supabase
+    .from("documents")
+    .select("id", { count: "exact", head: true })
+    .eq("client_id", client.id)
+    .eq("firm_id", firm.id);
   const reviewCountPromise = supabase
     .from("transactions")
     .select("id", { count: "exact", head: true })
@@ -142,14 +158,16 @@ export default async function ClientDetailPage({
     .eq("client_id", client.id)
     .eq("firm_id", firm.id)
     .order("period_start", { ascending: false })
-    .limit(3);
+    .order("id", { ascending: false })
+    .range(gstFrom, gstFrom + dashboardPageSize);
   const auditsPromise = supabase
     .from("audit_logs")
     .select("id, action, created_at, actor_user_id")
     .eq("client_id", client.id)
     .eq("firm_id", firm.id)
     .order("created_at", { ascending: false })
-    .limit(8);
+    .order("id", { ascending: false })
+    .range(auditFrom, auditFrom + dashboardPageSize);
 
   const canManageClientRecords = canManageClients(firm.role);
 
@@ -209,16 +227,16 @@ export default async function ClientDetailPage({
 
         <DeferredSection
           title="Client summary"
-          load={() => Promise.all([documentsPromise, reviewCountPromise, approvedCountPromise])}
+          load={() => Promise.all([documentsCountPromise, reviewCountPromise, approvedCountPromise])}
           errorMessage="Client summary could not be loaded. Refresh to retry."
           fallback={<div className="grid gap-3 md:grid-cols-3" aria-busy="true" aria-label="Loading client summary">
-            {["Pending review", "Approved records", "Recent documents"].map((label) => (
+            {["Pending review", "Approved records", "Documents received"].map((label) => (
               <StatTile key={label} label={label} value="Loading..." />
             ))}
           </div>}
         >
-          {([documentsResult, reviewCountResult, approvedCountResult]) => {
-            const recentDocuments = documentsResult.data ?? [];
+          {([documentsCountResult, reviewCountResult, approvedCountResult]) => {
+            const documentsCount = countOrUnavailable(documentsCountResult);
             const reviewCount = countOrUnavailable(reviewCountResult);
             const approvedCount = countOrUnavailable(approvedCountResult);
             return (
@@ -236,20 +254,10 @@ export default async function ClientDetailPage({
                   hint={countHint(approvedCount, "Approved transaction records.")}
                 />
                 <StatTile
-                  label="Recent documents"
-                  value={documentsResult.error ? "Unavailable" : recentDocuments.length}
-                  tone={
-                    documentsResult.error
-                      ? "danger"
-                      : recentDocuments.length > 0
-                        ? "brand"
-                        : "neutral"
-                  }
-                  hint={
-                    documentsResult.error
-                      ? "Could not load recent documents. Refresh to retry."
-                      : "Latest linked document records."
-                  }
+                  label="Documents received"
+                  value={displayCount(documentsCount)}
+                  tone={documentsCount === null ? "danger" : documentsCount > 0 ? "brand" : "neutral"}
+                  hint={countHint(documentsCount, "Linked document records for this client.")}
                 />
               </div>
             );
@@ -279,16 +287,20 @@ export default async function ClientDetailPage({
               <SectionCard bodyClassName="p-0">
                 <TableToolbar
                   title="Recent documents"
-                  meta={<RecordCount value={recentDocuments.length} label="latest" />}
+                  meta={<RecordCount value={recentDocuments.length} label="shown" />}
                 />
                 {documentsResult.error ? (
                   <QueryError message="Recent documents could not be loaded. Refresh to retry." />
                 ) : recentDocuments.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No documents received"
-                    message="Recent WhatsApp documents and text notes for this client will appear here."
+                    title={documentsPage > 1 ? "No documents on this page" : "No documents received"}
+                    message={documentsPage > 1 ? "Go back to an earlier page." : "Recent WhatsApp documents and text notes for this client will appear here."}
                   />
+                  {documentsPage > 1 && <PaginationControls basePath={basePath} pageKey="documents_page" page={documentsPage} hasNext={false} searchParams={filters} label="documents" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={680} ariaLabel="Recent client documents">
                     <thead className={tableHeaderClass}>
                       <tr>
@@ -322,6 +334,8 @@ export default async function ClientDetailPage({
                       ))}
                     </tbody>
                   </DataTable>
+                  <PaginationControls basePath={basePath} pageKey="documents_page" page={documentsPage} hasNext={(documentsResult.data?.length ?? 0) > dashboardPageSize} searchParams={filters} label="documents" />
+                  </>
                 )}
               </SectionCard>
             );
@@ -330,7 +344,7 @@ export default async function ClientDetailPage({
 
         <DeferredSection title="GST readiness" load={() => gstPeriodsPromise} errorMessage="GST readiness periods could not be loaded. Refresh to retry.">
           {(gstPeriodsResult) => {
-            const gstPeriods = gstPeriodsResult.data ?? [];
+            const gstPeriods = (gstPeriodsResult.data ?? []).slice(0, dashboardPageSize);
             return (
               <SectionCard bodyClassName="p-0">
                 <TableToolbar
@@ -346,11 +360,15 @@ export default async function ClientDetailPage({
                 {gstPeriodsResult.error ? (
                   <QueryError message="GST readiness periods could not be loaded. Refresh to retry." />
                 ) : gstPeriods.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No GST periods generated"
-                    message="Generate a GST summary after transactions are approved for this client."
+                    title={gstPage > 1 ? "No GST periods on this page" : "No GST periods generated"}
+                    message={gstPage > 1 ? "Go back to an earlier page." : "Generate a GST summary after transactions are approved for this client."}
                   />
+                  {gstPage > 1 && <PaginationControls basePath={basePath} pageKey="gst_page" page={gstPage} hasNext={false} searchParams={filters} label="GST periods" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={760} ariaLabel="Client GST readiness">
                     <thead className={tableHeaderClass}>
                       <tr>
@@ -406,6 +424,8 @@ export default async function ClientDetailPage({
                       })}
                     </tbody>
                   </DataTable>
+                  <PaginationControls basePath={basePath} pageKey="gst_page" page={gstPage} hasNext={(gstPeriodsResult.data?.length ?? 0) > dashboardPageSize} searchParams={filters} label="GST periods" />
+                  </>
                 )}
               </SectionCard>
             );
@@ -414,18 +434,22 @@ export default async function ClientDetailPage({
 
         <DeferredSection title="Audit history" load={() => auditsPromise} errorMessage="Client audit history could not be loaded. Refresh to retry.">
           {(auditsResult) => {
-            const audits = auditsResult.data ?? [];
+            const audits = (auditsResult.data ?? []).slice(0, dashboardPageSize);
             return (
               <SectionCard bodyClassName="p-0">
                 <TableToolbar title="Audit history" />
                 {auditsResult.error ? (
                   <QueryError message="Client audit history could not be loaded. Refresh to retry." />
                 ) : !audits || audits.length === 0 ? (
+                  <>
                   <EmptyState
-                    title="No audit entries yet"
-                    message="Client changes and sensitive workflow actions will appear here."
+                    title={auditPage > 1 ? "No audit entries on this page" : "No audit entries yet"}
+                    message={auditPage > 1 ? "Go back to an earlier page." : "Client changes and sensitive workflow actions will appear here."}
                   />
+                  {auditPage > 1 && <PaginationControls basePath={basePath} pageKey="audit_page" page={auditPage} hasNext={false} searchParams={filters} label="audit entries" />}
+                  </>
                 ) : (
+                  <>
                   <DataTable minWidth={520} ariaLabel="Client audit history">
                       <thead className={tableHeaderClass}>
                         <tr>
@@ -448,6 +472,8 @@ export default async function ClientDetailPage({
                         ))}
                       </tbody>
                   </DataTable>
+                  <PaginationControls basePath={basePath} pageKey="audit_page" page={auditPage} hasNext={(auditsResult.data?.length ?? 0) > dashboardPageSize} searchParams={filters} label="audit entries" />
+                  </>
                 )}
               </SectionCard>
             );

@@ -63,12 +63,12 @@ import {
   getPipelineHealthSnapshot,
   type PipelineHealthRow,
 } from "@/lib/jobs/worker-observability";
-import { normalizePage } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { canRunOperationsJobs, readOnlyRoleMessage } from "@/lib/permissions";
 import { safeOperationsErrorMessage } from "@/lib/audit-display";
 
 export const dynamic = "force-dynamic";
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 function statusTone(status: string) {
   switch (status) {
@@ -412,6 +412,14 @@ export default async function OperationsPage({
     ? []
     : (jobHealthResult.data ?? []) as JobHealthRow[];
   const jobHealth = summarizeJobHealth(jobHealthRows);
+  const healthPage = Math.min(
+    normalizePage(readParam(params.health_page)),
+    Math.max(1, Math.ceil(jobHealth.length / dashboardPageSize)),
+  );
+  const pageJobHealth = jobHealth.slice(
+    (healthPage - 1) * dashboardPageSize,
+    healthPage * dashboardPageSize,
+  );
   const pipelineAlerts = evaluatePipelineAlerts({ rows: pipelineHealth.rows });
   const inboundHealth = pipelineHealth.rows.find(
     (row) => row.queue_name === "whatsapp_ingestion",
@@ -622,7 +630,7 @@ export default async function OperationsPage({
               </tr>
             </thead>
             <tbody>
-              {jobHealth.map((summary) => {
+              {pageJobHealth.map((summary) => {
                 const oldestMinutes = ageMinutes(summary.oldestActive);
                 const isStale =
                   oldestMinutes !== null &&
@@ -658,6 +666,16 @@ export default async function OperationsPage({
               })}
             </tbody>
           </DataTable>
+          {jobHealth.length > dashboardPageSize && (
+            <PaginationControls
+              basePath="/dashboard/operations"
+              pageKey="health_page"
+              page={healthPage}
+              hasNext={healthPage * dashboardPageSize < jobHealth.length}
+              searchParams={{ status, job_type: jobType, page: String(page) }}
+              label="job types"
+            />
+          )}
         </SectionCard>
       )}
 

@@ -29,14 +29,14 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { formatNullableCurrency } from "@/lib/availability";
-import { normalizePage } from "@/lib/dashboard-query";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { hasSupabaseConfig } from "@/lib/env";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDateRange } from "@/lib/format";
 import { canGenerateGstSummaries, readOnlyRoleMessage } from "@/lib/permissions";
 
 export const dynamic = "force-dynamic";
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 function statusTone(status: string) {
   switch (status) {

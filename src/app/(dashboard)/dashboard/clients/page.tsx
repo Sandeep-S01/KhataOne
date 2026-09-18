@@ -35,6 +35,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import {
+  dashboardPageSize,
   normalizePage,
   normalizeSearch,
   toPostgrestContainsPattern,
@@ -75,7 +76,7 @@ const statusOptions = [
   "archived",
 ];
 
-const pageSize = 50;
+const pageSize = dashboardPageSize;
 
 function archiveResultMessage(result: string | undefined) {
   switch (result) {

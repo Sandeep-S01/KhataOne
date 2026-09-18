@@ -6,6 +6,7 @@ import {
   IconPanel,
   PageBody,
   PageHeader,
+  PaginationControls,
   RecordCount,
   SectionCard,
   SetupRequired,
@@ -21,6 +22,7 @@ import {
 } from "@/components/design-system";
 import { StatusChip } from "@/components/status-chip";
 import { hasSupabaseConfig } from "@/lib/env";
+import { dashboardPageSize, normalizePage } from "@/lib/dashboard-query";
 import { getFirmContext } from "@/lib/firms";
 import { formatDisplayDateTime } from "@/lib/format";
 import { getGstIntegrationProvider } from "@/lib/integrations/gst";
@@ -78,8 +80,14 @@ function statusTone(status: string) {
   }
 }
 
-export default async function PlatformPage() {
+export default async function PlatformPage({ searchParams }: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const provider = getGstIntegrationProvider();
+  const filters = await searchParams;
+  const page = normalizePage(filters.page);
+  const rangeFrom = (page - 1) * dashboardPageSize;
+  const rangeTo = page * dashboardPageSize;
 
   if (!hasSupabaseConfig()) {
     return (
@@ -98,12 +106,16 @@ export default async function PlatformPage() {
     .from("gst_integrations")
     .select("id, provider, status, created_at")
     .eq("firm_id", firm.id)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(0, rangeTo);
   const externalIntegrationsQuery = supabase
     .from("external_integrations")
     .select("id, integration_type, provider, status, created_at")
     .eq("firm_id", firm.id)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(0, rangeTo);
   const integrationEventCountQuery = supabase
     .from("integration_events")
     .select("id", { count: "exact", head: true })
@@ -118,6 +130,19 @@ export default async function PlatformPage() {
     externalIntegrationsQuery,
     integrationEventCountQuery,
   ]);
+
+  const integrationRows = [
+    ...(gstIntegrations ?? []).map((item) => ({
+      id: item.id, type: "gst", provider: item.provider,
+      status: item.status, created_at: item.created_at,
+    })),
+    ...(externalIntegrations ?? []).map((item) => ({
+      id: item.id, type: item.integration_type, provider: item.provider,
+      status: item.status, created_at: item.created_at,
+    })),
+  ].sort((left, right) => right.created_at.localeCompare(left.created_at) || right.id.localeCompare(left.id));
+  const pageIntegrations = integrationRows.slice(rangeFrom, rangeTo);
+  const hasNextPage = integrationRows.length > rangeTo;
 
   return (
     <div>
@@ -183,8 +208,7 @@ export default async function PlatformPage() {
                 </tr>
               </thead>
               <tbody>
-                {[...(gstIntegrations ?? []), ...(externalIntegrations ?? [])]
-                  .length === 0 ? (
+                {pageIntegrations.length === 0 ? (
                   <tr>
                     <td
                       colSpan={4}
@@ -194,22 +218,7 @@ export default async function PlatformPage() {
                     </td>
                   </tr>
                 ) : (
-                  [
-                    ...(gstIntegrations ?? []).map((item) => ({
-                      id: item.id,
-                      type: "gst",
-                      provider: item.provider,
-                      status: item.status,
-                      created_at: item.created_at,
-                    })),
-                    ...(externalIntegrations ?? []).map((item) => ({
-                      id: item.id,
-                      type: item.integration_type,
-                      provider: item.provider,
-                      status: item.status,
-                      created_at: item.created_at,
-                    })),
-                  ].map((item) => (
+                  pageIntegrations.map((item) => (
                     <tr key={item.id} className={tableRowClass}>
                       <td className={`${tableCellClass} ${tablePrimaryTextClass}`}>{item.type}</td>
                       <td className={`${tableCellClass} ${tableNumericTextClass}`}>
@@ -228,6 +237,7 @@ export default async function PlatformPage() {
                 )}
               </tbody>
           </DataTable>
+          <PaginationControls basePath="/dashboard/platform" page={page} hasNext={hasNextPage} searchParams={filters} label="integrations" />
         </SectionCard>
       </div>
       </PageBody>

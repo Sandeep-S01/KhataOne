@@ -710,6 +710,7 @@ type PaginationControlsProps = {
   page: number;
   hasNext: boolean;
   searchParams?: Record<string, string | undefined>;
+  pageKey?: string;
   label?: string;
 };
 
@@ -718,19 +719,20 @@ export function PaginationControls({
   page,
   hasNext,
   searchParams,
+  pageKey = "page",
   label = "records",
 }: PaginationControlsProps) {
   const pageHref = (targetPage: number) => {
     const params = new URLSearchParams();
 
     Object.entries(searchParams ?? {}).forEach(([key, value]) => {
-      if (key !== "page" && value) {
+      if (key !== pageKey && value) {
         params.set(key, value);
       }
     });
 
     if (targetPage > 1) {
-      params.set("page", String(targetPage));
+      params.set(pageKey, String(targetPage));
     }
 
     const queryString = params.toString();

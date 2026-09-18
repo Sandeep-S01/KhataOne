@@ -2,6 +2,8 @@ const postgrestReservedCharacters = /[(),]/g;
 const unsupportedSearchCharacters = /[^\p{L}\p{N}\s+#/_-]/gu;
 const wildcardCharacters = /[%*]/g;
 
+export const dashboardPageSize = 10;
+
 export function normalizeSearch(value: string | undefined) {
   return value?.trim().toLowerCase() ?? "";
 }

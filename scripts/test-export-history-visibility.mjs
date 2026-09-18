@@ -8,15 +8,18 @@ const gstSummaryForm = readFileSync("src/components/gst-summary-form.tsx", "utf8
 const reportsPage = readFileSync("src/app/(dashboard)/dashboard/reports/page.tsx", "utf8");
 const auditLogsPage = readFileSync("src/app/(dashboard)/dashboard/audit-logs/page.tsx", "utf8");
 const operationsPage = readFileSync("src/app/(dashboard)/dashboard/operations/page.tsx", "utf8");
+const dashboardQuery = readFileSync("src/lib/dashboard-query.ts", "utf8");
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 
 function assertPagedHistory(source, label, basePath, recordLabel) {
-  assert.match(source, /const pageSize = 50/, `${label} uses a bounded page size`);
+  assert.match(source, /const pageSize = dashboardPageSize/, `${label} uses the shared bounded page size`);
   assert.match(source, /normalizePage\(/, `${label} normalizes page input`);
   assert.match(source, /\.range\(rangeFrom, rangeTo\)/, `${label} requests one bounded lookahead page`);
   assert.match(source, /const hasNextPage = \(.+\?\.length \?\? 0\) > pageSize/, `${label} derives next-page state from lookahead`);
   assert.match(source, new RegExp(`<PaginationControls[\\s\\S]*basePath="${basePath.replaceAll("/", "\\/")}"[\\s\\S]*label="${recordLabel}"`), `${label} exposes pagination controls`);
 }
+
+assert.match(dashboardQuery, /export const dashboardPageSize = 10;/, "dashboard tables start with ten records");
 
 assertPagedHistory(exportsPage, "exports history", "/dashboard/exports", "export jobs");
 assert.match(exportsPage, /searchParams: Promise<\{ page\?: string \}>/, "exports history reads page from search params");
